@@ -1,7 +1,7 @@
 import unicodedata
 import re
 
-def normalize(text: str) -> str:
+def normalize_str(text: str) -> str:
     # Nomraliza em caixa baixa
     text = text.lower()
     # Remove acentos; Alica a normalização 'Normalization Form Compatibility Decomposition'
