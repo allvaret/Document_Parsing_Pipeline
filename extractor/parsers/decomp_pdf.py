@@ -17,10 +17,11 @@ def extract_text_page(path:str):
                             TextAtom(
                                 text=span["text"].strip(),
                                 page=page_number,
-                                y1=span["bbox"][1],
-                                y2=span["bbox"][3],
+                                y0=span["bbox"][1],
+                                y1=span["bbox"][3],
                                 size=span["size"],
-                                bold=bool(span["flags"] & 16)
+                                bold=bool(span["flags"] & 16),
+                                page_height=page.rect.height
                             )
                         )
     return atoms
