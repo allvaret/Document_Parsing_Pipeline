@@ -46,12 +46,12 @@ def detect_summary(atoms) -> list:
         if is_summary_keyword and utils.is_title.is_title(atom, body_size, atom.page_height):
             summary_sections.append(atom)
         
-        # Also check for structured content: text + page number pattern
-        # Pattern like "Sales resume 5" or "Introduction 12"
-        if re.search(r'[a-zA-Z\s]+\s+\d+\s*$', atom.text.strip()):
-            # This might be a summary entry
-            # Check if it's in the right format and position
-            if utils.is_title.is_title(atom, body_size, atom.page_height):
-                summary_sections.append(atom)
+            # Also check for structured content: text + page number pattern
+            # Pattern like "Sales resume 5" or "Introduction 12"
+            if re.search(r'[a-zA-Z\s]+\s+\d+\s*$', atom.text.strip()):
+                # This might be a summary entry
+                # Check if it's in the right format and position
+                if utils.is_title.is_title(atom, body_size, atom.page_height):
+                    summary_sections.append(atom)
     
     return summary_sections

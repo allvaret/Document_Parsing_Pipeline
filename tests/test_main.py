@@ -1,36 +1,46 @@
-import extractor.parsers.empresas
-from extractor.PdfReader import read_pdf
-from extractor.parsers import empresas
-from extractor import PdfReader
-from extractor import preprocess
-from extractor.parsers import decomp_pdf
+from extractor.parsers.decomp_pdf import extract_text_atoms
+from extractor.parsers.remove_repeated import remove_repeated
 from utils.is_title import is_title
 from utils.text_size import get_text_size
-from extractor.preprocess import clean_text
 
-path = ""
+def test_main():
+    """Test if all functions work well together
 
-def test_title_detection():
-    """Test the is_title function with detailed output and validation"""
-    print("=== Title Detection Test ===")
+    Rules: The test need to perform well all the three mains functions of extracting
+    information from this pdf, they are: extract_text_atoms (just extract, already validated);
+    remove_repeated (should remove repeated str, which 'is_title' detected in a wrong way),
+    and is_title (working well too, but getting some non really titles in his output)
+    - Debug information, to analyze and upgrade
+    """
+
+    path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
+
+    print("=== Integration Test: PDF Processing Pipeline ===")
     print(f"Testing PDF: {path}")
     print()
-    
-    # Extract text atoms from PDF
-    atoms = decomp_pdf.extract_text_page(path)
+
+    # 1. extract_text_atoms - Extração de átomos de texto
+    print("1. Extracting text atoms...")
+    atoms = extract_text_atoms(path)
+    print(f"   Total text atoms extracted: {len(atoms)}")
+
+    if not atoms:
+        print("   ERROR: No atoms extracted!")
+        return None
+
+    # 2. get_text_size - Determinar tamanho do corpo do texto
+    print("2. Determining body text size...")
     body_size = get_text_size(atoms)
-    
-    print(f"Total text atoms: {len(atoms)}")
-    print(f"Detected body text size: {body_size}")
-    print()
-    
-    # Track detected titles
+    print(f"   Detected body text size: {body_size}")
+
+    # 3. is_title - Identificar títulos
+    print("3. Identifying titles...")
     titles = []
     title_count = 0
-    
+
     for i, atom in enumerate(atoms):
         is_title_result = is_title(atom, body_size, atom.page_height)
-        
+
         if is_title_result:
             title_count += 1
             titles.append({
@@ -38,83 +48,67 @@ def test_title_detection():
                 'text': atom.text,
                 'size': atom.size,
                 'bold': atom.bold,
-                'relative_y': atom.y0 / atom.page_height
+                'relative_y': atom.y0 / atom.page_height,
+                'atom_index': i
             })
-    
-    # Print detailed results
-    print(f"Total titles detected: {title_count}")
-    print()
-    
-    print("=== Detected Titles ===")
-    for i, title in enumerate(titles, 1):
-        print(f"{i}. Page {title['page']}: '{title['text'][:50]}{'...' if len(title['text']) > 50 else ''}'")
-        print(f"   Size: {title['size']:.1f} ({title['size']/body_size:.1f}x body size)")
-        print(f"   Bold: {title['bold']}")
-        print(f"   Position: {title['relative_y']:.2f} from top")
-        print()
-    
-    # Analysis
-    print("=== Analysis ===")
-    if title_count == 0:
-        print("⚠️  No titles detected! Consider:")
-        print("   - Checking if PDF has actual titles")
-        print("   - Adjusting scoring thresholds")
-        print("   - Verifying text extraction is working")
-    elif title_count > len(atoms) * 0.3:  # More than 30% of atoms are titles
-        print("⚠️  Too many titles detected! Consider:")
-        print("   - Increasing the score threshold")
-        print("   - Adjusting size or position criteria")
-    else:
-        print("✅ Title detection seems reasonable")
-    
-    return titles
 
-def test_edge_cases():
-    """Test edge cases for the is_title function"""
-    print("\n=== Edge Case Tests ===")
-    
-    # Mock TextAtom for testing
-    from extractor.TextAtom import TextAtom
-    
-    test_cases = [
-        {
-            'name': 'Large bold text at top',
-            'atom': TextAtom("TEST TITLE", 0, 50, 70, 18.0, True, 800),
-            'expected': True,
-            'body_size': 12.0
-        },
-        {
-            'name': 'Small regular text at top',
-            'atom': TextAtom("regular text", 0, 50, 70, 10.0, False, 800),
-            'expected': False,
-            'body_size': 12.0
-        },
-        {
-            'name': 'Large text at bottom',
-            'atom': TextAtom("bottom title", 0, 600, 620, 18.0, True, 800),
-            'expected': False,  # Position too low
-            'body_size': 12.0
-        },
-        {
-            'name': 'Long text at top',
-            'atom': TextAtom("This is a very long text that should not be considered a title because it exceeds the character limit", 0, 50, 70, 18.0, True, 800),
-            'expected': False,  # Too long
-            'body_size': 12.0
-        }
-    ]
-    
-    for test in test_cases:
-        result = is_title(test['atom'], test['body_size'], test['atom'].page_height)
-        status = "✅" if result == test['expected'] else "❌"
-        print(f"{status} {test['name']}: Expected {test['expected']}, Got {result}")
+    print(f"   Total titles detected: {title_count}")
+
+    # Debug: Mostrar alguns títulos detectados
+    print("   Sample detected titles:")
+    for i, title in enumerate(titles[:5]):
+        print(f"     {i+1}. Page {title['page']}: '{title['text'][:50]}...' (Size: {title['size']}, Bold: {title['bold']})")
+
+    if len(titles) > 5:
+        print(f"     ... and {len(titles) - 5} more")
+
+    # 4. remove_repeated - Remover títulos repetidos
+    print("4. Removing repeated titles...")
+    filtered_titles = remove_repeated(titles)
+
+    print(f"   Titles before filtering: {len(titles)}")
+    print(f"   Titles after filtering: {len(filtered_titles)}")
+    print(f"   Removed titles: {len(titles) - len(filtered_titles)}")
+
+    # Debug: Análise das repetições
+    from collections import Counter
+    text_counts = Counter(title['text'] for title in titles)
+    repeated_texts = {text: count for text, count in text_counts.items() if count > 2}
+
+    if repeated_texts:
+        print("   Texts repeated more than 2 times (removed):")
+        for text, count in repeated_texts.items():
+            print(f"     '{text[:50]}...' - {count} times")
+
+    # 5. Resultados finais e validações
+    print("\n=== FINAL RESULTS ===")
+    print(f"✓ Text atoms extracted: {len(atoms)}")
+    print(f"✓ Titles detected: {len(titles)}")
+    print(f"✓ Titles after removing repetitions: {len(filtered_titles)}")
+
+    # Validações básicas
+    if len(filtered_titles) <= len(titles):
+        print("✓ Filtering working correctly (no increase in titles)")
+    else:
+        print("✗ ERROR: Filtering increased number of titles!")
+
+    if len(atoms) > 0 and len(titles) > 0:
+        print("✓ Pipeline completed successfully")
+    else:
+        print("✗ ERROR: Pipeline failed - no data extracted")
+
+    # Retornar resultados para análise
+    return {
+        'atoms_count': len(atoms),
+        'titles_detected': titles,
+        'titles_filtered': filtered_titles,
+        'removed_count': len(titles) - len(filtered_titles),
+        'repeated_texts': repeated_texts
+    }
+
 
 if __name__ == "__main__":
-    # Run the main test
-    titles = test_title_detection()
-    
-    # Run edge case tests
-    test_edge_cases()
-    
-    print(f"\n=== Summary ===")
-    print(f"Main test found {len(titles)} titles")
-    print("Review the detected titles above to see if they make sense for your PDF")
+    results = test_main()
+    if results:
+        print(f"\nTest completed. Results available for analysis.")
+
