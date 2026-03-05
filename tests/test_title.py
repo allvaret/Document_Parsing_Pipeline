@@ -1,13 +1,6 @@
-import extractor.parsers.empresas
-from extractor.PdfReader import read_pdf
-from extractor.parsers import empresas
-from extractor import PdfReader
-from extractor import preprocess
 from extractor.parsers import decomp_pdf
-from utils.is_title import is_title
+from utils.title.is_title import is_title
 from utils.text_size import get_text_size
-from extractor.preprocess import clean_text
-from extractor.parsers.remove_repeated import remove_repeated
 
 path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
 

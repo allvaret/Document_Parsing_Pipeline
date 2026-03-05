@@ -1,7 +1,6 @@
 import fitz
 
 from extractor.TextAtom import TextAtom
-from utils.is_title import is_title
 
 def extract_text_atoms(path:str):
     doc = fitz.open(path)

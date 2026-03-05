@@ -1,9 +1,10 @@
 from extractor.parsers.decomp_pdf import extract_text_atoms
 from extractor.parsers.remove_repeated import remove_repeated
-from utils.is_title import is_title
+from utils.title.is_title import is_title
+from utils.title.is_title import calculate_title_score
 from utils.text_size import get_text_size
 
-def test_main():
+def test_binary_title():
     """Test if all functions work well together
 
     Rules: The test need to perform well all the three mains functions of extracting
@@ -53,6 +54,9 @@ def test_main():
             })
 
     print(f"   Total titles detected: {title_count}")
+    # Could be useful to debug
+    for i in titles:
+        print(i)
 
     # Debug: Mostrar alguns títulos detectados
     print("   Sample detected titles:")
@@ -65,6 +69,10 @@ def test_main():
     # 4. remove_repeated - Remover títulos repetidos
     print("4. Removing repeated titles...")
     filtered_titles = remove_repeated(titles)
+
+    #debug time
+    for i in filtered_titles:
+        print(i)
 
     print(f"   Titles before filtering: {len(titles)}")
     print(f"   Titles after filtering: {len(filtered_titles)}")
@@ -108,7 +116,7 @@ def test_main():
 
 
 if __name__ == "__main__":
-    results = test_main()
+    results = test_binary_title()
     if results:
         print(f"\nTest completed. Results available for analysis.")
 

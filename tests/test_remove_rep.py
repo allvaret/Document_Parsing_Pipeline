@@ -1,6 +1,6 @@
 
 from extractor.parsers import decomp_pdf
-from utils.is_title import is_title
+from utils.title.is_title import is_title
 from utils.text_size import get_text_size
 from extractor.parsers.remove_repeated import remove_repeated
 

@@ -1,0 +1,47 @@
+from utils.text_size import get_text_size
+
+
+def is_title(atom, body_size, page_height):
+    score = 0
+
+    # 1. Tamanho relativo ao corpo
+    if atom.size >= body_size * 1.3:
+        score += 3
+
+    # 2. Bold
+    if atom.bold:
+        score += 1
+
+    # 3. Posição vertical (topo da página, PyMuPDF funciona de cima para baixo)
+    relative_y = atom.y0 / page_height
+    if relative_y <= 0.3:
+        score += 4
+
+    # 4. Texto curto (títulos não são parágrafos)
+    if 80 >= len(atom.text.strip()) >= 5:
+        score += 2
+
+    return score >= 9
+
+
+def calculate_title_score(atom, body_size, page_height):
+    score = 0
+    max_score = 100
+
+    # Fatores com pesos diferentes
+    if atom.size >= body_size * 1.3:
+        size_factor = min((atom.size / body_size - 1) * 25, 25)
+    else: size_factor = 0
+
+    bold_factor = 15 if atom.bold else 0
+
+    relative_y = atom.y0/page_height
+    if relative_y <= 0.2:
+        position_factor = max(0, (0.2 - atom.y0/page_height) * 100) * 30
+    else: position_factor = 0
+    length_factor = 20 if 5 <= len(atom.text.strip()) <= 80 else 0
+
+    if len(atom.text.strip()) == 0:
+        return 0
+
+    return min(size_factor + bold_factor + position_factor + length_factor, max_score)
