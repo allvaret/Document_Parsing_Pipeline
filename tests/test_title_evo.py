@@ -195,7 +195,7 @@ def store_test_results(results, filename):
 def test_title_evolution():
     """Teste completo da evolução do sistema de títulos"""
     
-    path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
+    path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/comunicado_petr3_33064.pdf"
     
     print("=== TITLE EVOLUTION TEST ===")
     print(f"Testing PDF: {path}")

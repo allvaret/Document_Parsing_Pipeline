@@ -1,7 +1,6 @@
 from extractor.parsers.decomp_pdf import extract_text_atoms
-from extractor.parsers.remove_repeated import remove_repeated
+from utils.title.remove_repeated import remove_repeated
 from utils.title.is_title import is_title
-from utils.title.is_title import calculate_title_score
 from utils.text_size import get_text_size
 
 def test_binary_title():
@@ -14,7 +13,7 @@ def test_binary_title():
     - Debug information, to analyze and upgrade
     """
 
-    path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
+    path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/comunicado_petr3_33064.pdf"
 
     print("=== Integration Test: PDF Processing Pipeline ===")
     print(f"Testing PDF: {path}")

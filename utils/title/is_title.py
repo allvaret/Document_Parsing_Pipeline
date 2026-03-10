@@ -29,19 +29,15 @@ def calculate_title_score(atom, body_size, page_height):
     max_score = 100
 
     # Fatores com pesos diferentes
-    if atom.size >= body_size * 1.3:
-        size_factor = min((atom.size / body_size - 1) * 25, 25)
+    if atom.size >= body_size * 1.2:
+        size_factor = min((atom.size / body_size - 1) * 30, 30)
     else: size_factor = 0
 
-    bold_factor = 15 if atom.bold else 0
+    bold_factor = 20 if atom.bold else 0
 
     relative_y = atom.y0/page_height
-    if relative_y <= 0.2:
-        position_factor = max(0, (0.2 - atom.y0/page_height) * 100) * 30
+    if relative_y <= 0.25:
+        position_factor = (0.25 - relative_y) / 0.25 * 20
     else: position_factor = 0
-    length_factor = 20 if 5 <= len(atom.text.strip()) <= 80 else 0
 
-    if len(atom.text.strip()) == 0:
-        return 0
-
-    return min(size_factor + bold_factor + position_factor + length_factor, max_score)
+    return min(size_factor + bold_factor + position_factor , max_score)

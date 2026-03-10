@@ -16,6 +16,8 @@ def extract_text_atoms(path:str):
                             TextAtom(
                                 text=span["text"].strip(),
                                 page=page_number,
+                                x0=span["bbox"][0],
+                                x1=span["bbox"][2],
                                 y0=span["bbox"][1],
                                 y1=span["bbox"][3],
                                 size=span["size"],

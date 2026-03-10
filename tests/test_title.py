@@ -1,6 +1,7 @@
 from extractor.parsers import decomp_pdf
-from utils.title.is_title import is_title
+from utils.title.is_title import calculate_title_score
 from utils.text_size import get_text_size
+from utils.title.candidate_filter import candidate_filter
 
 path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
 
@@ -21,9 +22,11 @@ def test_title_detection():
     # Track detected titles
     titles = []
     title_count = 0
-    
-    for i, atom in enumerate(atoms):
-        is_title_result = is_title(atom, body_size, atom.page_height)
+
+    cf = candidate_filter(atoms)
+
+    for i, atom in enumerate(cf):
+        is_title_result = calculate_title_score(atom, body_size, atom.page_height)
         
         if is_title_result:
             title_count += 1
@@ -32,7 +35,8 @@ def test_title_detection():
                 'text': atom.text,
                 'size': atom.size,
                 'bold': atom.bold,
-                'relative_y': atom.y0 / atom.page_height
+                'relative_y': atom.y0 / atom.page_height,
+                'score': is_title_result
             })
     
     # Print detailed results
@@ -45,6 +49,7 @@ def test_title_detection():
         print(f"   Size: {title['size']:.1f} ({title['size']/body_size:.1f}x body size)")
         print(f"   Bold: {title['bold']}")
         print(f"   Position: {title['relative_y']:.2f} from top")
+        print(f"   Score: {title['score']}")
         print()
     
     # Analysis
@@ -98,7 +103,7 @@ def test_edge_cases():
     ]
     
     for test in test_cases:
-        result = is_title(test['atom'], test['body_size'], test['atom'].page_height)
+        result = calculate_title_score(test['atom'], test['body_size'], test['atom'].page_height)
         status = "✅" if result == test['expected'] else "❌"
         print(f"{status} {test['name']}: Expected {test['expected']}, Got {result}")
 
