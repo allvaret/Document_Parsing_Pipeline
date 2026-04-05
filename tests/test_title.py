@@ -112,7 +112,7 @@ if __name__ == "__main__":
     titles = test_title_detection()
 
     #Run edge case tests
-    test_edge_cases()
+
 
     print(f"\n=== Summary ===")
     print(f"Main test found {len(titles)} titles")

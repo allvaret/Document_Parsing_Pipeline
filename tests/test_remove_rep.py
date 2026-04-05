@@ -1,49 +1,59 @@
-
+from utils.title.candidate_filter import candidate_filter
 from extractor.parsers import decomp_pdf
 from utils.title.is_title import is_title
 from utils.text_size import get_text_size
-from extractor.parsers.remove_repeated import remove_repeated
+from utils.title.is_title import calculate_title_score
+from utils.title.remove_repeated import remove_repeated
+from utils.title.group_text_line import group_atoms_into_lines  # <-- adjust to your actual path
 
-path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
+path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/Earnings Release 3T25.pdf"
 
-def test_remove_repeated():
 
-    """Test if only and all the repeated titles are removed"""
-    print("=== Title Repeated Test ===")
+def test_group_atoms_into_lines():
+    """Test if atoms are correctly grouped into visual text lines."""
+    print("=== Group Atoms Into Lines Test ===")
     print(f"Testing PDF: {path}")
     print()
 
-    # Extract text atoms from PDF
     atoms = decomp_pdf.extract_text_atoms(path)
-    body_size = get_text_size(atoms)
 
     print(f"Total text atoms: {len(atoms)}")
-    print(f"Detected body text size: {body_size}")
     print()
 
-    # Track detected titles
-    titles = []
-    title_count = 0
+    lines = group_atoms_into_lines(atoms, y_tolerance_ratio=0.004)
 
-    for i, atom in enumerate(atoms):
-        is_title_result = is_title(atom, body_size, atom.page_height)
-
-        if is_title_result:
-            title_count += 1
-            titles.append({
-                'page': atom.page,
-                'text': atom.text,
-                'size': atom.size,
-                'bold': atom.bold,
-                'relative_y': atom.y0 / atom.page_height
-            })
-    # Print detailed results
-    print(f"Total titles detected: {title_count}")
+    print(f"Total lines detected: {len(lines)}")
     print()
 
-    print(titles)
-    removed = remove_repeated(titles)
+    # Sample: print first 20 lines to inspect grouping quality
+    print("=== First 20 Lines ===")
+    for line in lines[:20]:
+        print(
+            f"[Page {line.page} | y={line.y:7.2f}] "
+            f"atoms={line.atom_count}  x_span={line.x_span:.1f}pt  "
+            f'text="{line.text}"'
+        )
 
-    print(removed)
-    return removed
-test_remove_repeated()
+    print()
+
+    # Sanity checks
+    single_atom_lines = [ln for ln in lines if ln.atom_count == 1]
+    multi_atom_lines  = [ln for ln in lines if ln.atom_count > 1]
+
+    print(f"Single-atom lines : {len(single_atom_lines)}")
+    print(f"Multi-atom lines  : {len(multi_atom_lines)}")
+    print()
+
+    # Flag suspiciously long lines that might indicate over-grouping
+    suspicious = [ln for ln in lines if ln.atom_count > 10]
+    if suspicious:
+        print(f"⚠️  {len(suspicious)} lines with more than 10 atoms (possible over-grouping):")
+        for ln in suspicious:
+            print(f"  [Page {ln.page} | y={ln.y:.2f}] atoms={ln.atom_count}  text=\"{ln.text[:80]}...\"")
+    else:
+        print("✅ No suspicious over-grouping detected.")
+
+    return lines
+
+
+test_group_atoms_into_lines()

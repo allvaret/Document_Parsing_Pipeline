@@ -40,4 +40,8 @@ def calculate_title_score(atom, body_size, page_height):
         position_factor = (0.25 - relative_y) / 0.25 * 20
     else: position_factor = 0
 
-    return min(size_factor + bold_factor + position_factor , max_score)
+    length_factor = 0
+    if 80 >= len(atom.text.strip()) >= 5:
+        length_factor = 10
+
+    return min(size_factor + bold_factor + position_factor + length_factor , max_score)
