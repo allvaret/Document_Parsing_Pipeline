@@ -49,8 +49,16 @@ def is_disqualified(atom, body_size: float) -> Optional[str]:
         return "connector_language"
 
     # 6. font size at or below body — not visually prominent
-    if atom.size <= body_size:
+    if atom.size <= body_size + 0.5:
         return "body_size"
+
+        # 7. starts with lowercase — continuation fragment, not a title
+    if text[0].islower():
+        return "starts_lowercase"
+
+    # 8. contains inline parenthetical — legal/footnote fragment
+    if '(' in text or ')' in text:
+        return "inline_parenthetical"
 
     return None  # survived — send to scorer
 
