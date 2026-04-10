@@ -1,6 +1,3 @@
-from utils.text_size import get_text_size
-
-
 def is_title(atom, body_size, page_height):
     score = 0
 

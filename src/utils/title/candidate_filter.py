@@ -1,4 +1,3 @@
-import re
 from typing import Optional
 from typing import List
 from extractor import TextAtom

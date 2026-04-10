@@ -1,7 +1,7 @@
-from extractor.parsers import decomp_pdf
-from utils.title.is_title import calculate_title_score
-from utils.text_size import get_text_size
-from utils.title.candidate_filter import candidate_filter
+from src.extractor.parsers import decomp_pdf
+from src.utils.title.is_title import calculate_title_score
+from src.utils import get_text_size
+from src.utils.title.candidate_filter import candidate_filter
 
 path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
 
@@ -73,7 +73,7 @@ def test_edge_cases():
     print("\n=== Edge Case Tests ===")
     
     # Mock TextAtom for testing
-    from extractor.TextAtom import TextAtom
+    from src.extractor.TextAtom import TextAtom
     
     test_cases = [
         {

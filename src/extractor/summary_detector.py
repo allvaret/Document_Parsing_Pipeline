@@ -1,4 +1,3 @@
-import utils.title.is_title
 import re
 from utils.text_size import get_text_size
 
@@ -42,7 +41,7 @@ def detect_summary(atoms) -> list:
         is_summary_keyword = any(keyword in text_lower for keyword in summary_keywords)
         
         # Check if it's a title using the is_title utility
-        if is_summary_keyword and utils.title.is_title.is_title(atom, body_size, atom.page_height):
+        if is_summary_keyword and src.utils.title.is_title.is_title(atom, body_size, atom.page_height):
             summary_sections.append(atom)
         
             # Also check for structured content: text + page number pattern
@@ -50,7 +49,7 @@ def detect_summary(atoms) -> list:
             if re.search(r'[a-zA-Z\s]+\s+\d+\s*$', atom.text.strip()):
                 # This might be a summary entry
                 # Check if it's in the right format and position
-                if utils.title.is_title.is_title(atom, body_size, atom.page_height):
+                if src.utils.title.is_title.is_title(atom, body_size, atom.page_height):
                     summary_sections.append(atom)
     
     return summary_sections

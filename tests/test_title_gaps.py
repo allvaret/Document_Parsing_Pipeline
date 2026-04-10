@@ -1,5 +1,4 @@
-
-from extractor.parsers import decomp_pdf
+from extractor.parsers.decomp_pdf import extract_text_atoms
 from utils.text_size import get_text_size
 from utils.title.calculate_title_gap import classify_gap
 from utils.title.candidate_filter import candidate_filter
@@ -12,7 +11,7 @@ path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/comunicado
 def test_title_gaps():
     print("=== Title Gap Test ===")
 
-    atoms = decomp_pdf.extract_text_atoms(path)
+    atoms = extract_text_atoms(path)
     body_size = get_text_size(atoms)
     page_height = atoms[0].page_height
 

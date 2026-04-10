@@ -1,6 +1,6 @@
 from collections import Counter
 from typing import List
-from utils.title.group_text_line import TextLine
+from extractor.group_text_line import TextLine
 
 
 def has_column_alignment(

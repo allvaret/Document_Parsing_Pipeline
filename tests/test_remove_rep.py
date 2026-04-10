@@ -1,10 +1,5 @@
-from utils.title.candidate_filter import candidate_filter
-from extractor.parsers import decomp_pdf
-from utils.title.is_title import is_title
-from utils.text_size import get_text_size
-from utils.title.is_title import calculate_title_score
-from utils.title.remove_repeated import remove_repeated
-from utils.title.group_text_line import group_atoms_into_lines  # <-- adjust to your actual path
+from src.extractor.parsers import decomp_pdf
+from src.extractor.group_text_line import group_atoms_into_lines  # <-- adjust to your actual path
 
 path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/Earnings Release 3T25.pdf"
 

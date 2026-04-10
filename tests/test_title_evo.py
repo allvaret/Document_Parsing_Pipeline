@@ -1,8 +1,8 @@
-from extractor.parsers.decomp_pdf import extract_text_atoms
-from utils.title.is_title import calculate_title_score
-from utils.title.classify_title_confidence import classify_title_confidence
-from utils.title.relative_title_importance import get_relative_title_importance
-from utils.text_size import get_text_size
+from src.extractor.parsers.decomp_pdf import extract_text_atoms
+from src.utils.title.is_title import calculate_title_score
+from src.utils.title.classify_title_confidence import classify_title_confidence
+from src.utils.title.relative_title_importance import get_relative_title_importance
+from src.utils import get_text_size
 from collections import Counter
 import json
 import os
