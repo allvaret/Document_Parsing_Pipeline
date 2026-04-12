@@ -1,10 +1,9 @@
-
 from extractor.parsers.decomp_pdf import extract_text_atoms
 from extractor.preprocess import clean_atoms
 from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers.prose_region import classify_line_region
 
-path = "assets\Earnings Release 3T25.pdf"
+path = "/home/danko/Computer Science/Projects/PyCharmMiscProject/Investing/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
 
 def test_classify_line_region():
     print("=== Region Classification Test ===")

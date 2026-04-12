@@ -1,7 +1,7 @@
 from src.extractor.parsers.decomp_pdf import extract_text_atoms
 from src.utils.title.remove_repeated_title import remove_repeated
 from src.utils.title.is_title import is_title
-from src.utils import get_text_size
+from src.utils.text_size import get_text_size
 
 def test_binary_title():
     """Test if all functions work well together

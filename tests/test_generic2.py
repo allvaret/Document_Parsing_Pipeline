@@ -5,8 +5,9 @@ from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers.detect_region_text import detect_regions
 from extractor.preprocess import clean_atoms
 from utils.title.is_title import calculate_title_score
+from utils.title.remove_repeated_title import remove_repeated
 
-path = 'assets\comunicado_pomo4_24733.pdf'
+path = "/home/danko/Computer Science/Projects/PyCharmMiscProject/Investing/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
 
 def test_detect_regions():
     print("=== Region Detection Test ===")
@@ -16,13 +17,25 @@ def test_detect_regions():
     body_size = get_text_size(atoms)
     lines = group_atoms_into_lines(atoms)
 
-    # Build title set
+    # Build title list
     survivors = candidate_filter(atoms, body_size)
-    title_texts = {
-        a.text.strip() for a in survivors
-        if calculate_title_score(a, body_size, a.page_height)
-    }
+    titles_list = [
+        {
+            "text": a.text.strip(),
+            "page": a.page,
+            "relative_y": a.y0 / a.page_height,
+            "score": score,
+        }
+        for a in survivors
+        if (score := calculate_title_score(a, body_size, a.page_height))
+    ]
 
+    # Remove structural repetitions — original data untouched
+    cleaned = remove_repeated(titles_list, debug=True)
+    print(f"\nAntes: {len(titles_list)}  Depois: {len(cleaned)}")
+    title_texts = {t["text"] for t in cleaned}
+
+    # Use cleaned set for region detection
     regions = detect_regions(lines, title_texts)
 
     prose_regions = [r for r in regions if r.region_type == "prose"]
