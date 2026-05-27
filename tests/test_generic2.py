@@ -7,7 +7,7 @@ from extractor.preprocess import clean_atoms
 from utils.title.is_title import calculate_title_score
 from utils.title.remove_repeated_title import remove_repeated
 
-path = "/home/danko/Computer Science/Projects/PyCharmMiscProject/Investing/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
+path = "assets\\Earnings Release 3T25.pdf"
 
 def test_detect_regions():
     print("=== Region Detection Test ===")
