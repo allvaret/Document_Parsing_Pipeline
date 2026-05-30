@@ -4,6 +4,7 @@ import requests
 from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers import decomp_pdf
 from extractor.parsers.detect_region_text import LineRegion, detect_regions
+from extractor.parsers.title_block import consolidate_title_blocks
 from extractor.section.section_builder import build_sections
 from extractor.section.section_json import sections_to_json
 from utils.text_size import get_text_size
@@ -118,15 +119,36 @@ def test_full_pipeline():
             "text":       a.text.strip(),
             "page":       a.page,
             "relative_y": a.y0 / a.page_height,
+            "size":       a.size,
+            "bold":       a.bold,
             "score":      score,
         }
         for a in survivors
         if (score := calculate_title_score(a, body_size, a.page_height))
     ]
-    cleaned_titles = remove_repeated(titles_list)
-    title_texts = {t["text"] for t in cleaned_titles}
-    print(f"        {len(titles_list)} títulos → {len(cleaned_titles)} após deduplicação")
 
+    # Passagem 1: remove repetições estruturais
+    cleaned_titles = remove_repeated(titles_list)
+
+    # Passagem 2: consolida fragmentos em blocos
+    title_blocks = consolidate_title_blocks(cleaned_titles, lines)
+
+    # O section_builder agora usa TitleBlock em vez de string simples
+    title_texts = {block.text for block in title_blocks}
+
+    print(f"Títulos individuais : {len(titles_list)}")
+    print(f"Após deduplicação   : {len(cleaned_titles)}")
+    print(f"Após consolidação   : {len(title_blocks)}")
+    print()
+    print("=== Blocos de título consolidados ===")
+    for block in title_blocks:
+        if len(block.lines) > 1:
+            print(f"  [Pág {block.page}] BLOCO: {block.text[:70]}")
+            for ln in block.lines:
+                print(f"    └─ {ln}")
+        else:
+            print(f"  [Pág {block.page}] {block.text[:70]}")
+            
     # ── Regiões ───────────────────────────────
     print("[ 4/6 ] Detectando regiões...")
     regions = detect_regions(lines, title_texts)

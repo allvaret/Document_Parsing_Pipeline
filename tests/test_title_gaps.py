@@ -1,12 +1,12 @@
+from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers.decomp_pdf import extract_text_atoms
 from utils.text_size import get_text_size
 from utils.title.calculate_title_gap import classify_gap
 from utils.title.candidate_filter import candidate_filter
-from utils.title.group_text_line import group_atoms_into_lines
 from utils.title.is_title import calculate_title_score
 from utils.title.title_gap import calculate_title_gaps
 
-path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/comunicado_petr3_33064.pdf"
+path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/BR_PT Demonstrações Financeiras 3T25.pdf"
 
 def test_title_gaps():
     print("=== Title Gap Test ===")
