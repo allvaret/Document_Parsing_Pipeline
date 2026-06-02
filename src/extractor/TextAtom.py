@@ -12,5 +12,3 @@ class TextAtom:
     size: float
     bold: bool
     page_height: float
-    vertical_whitespace_up: float  # distância para o átomo anterior ou topo
-    vertical_whitespace_down: float  # distância para o próximo átomo

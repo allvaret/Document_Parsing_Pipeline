@@ -10,7 +10,7 @@ BODY_CONNECTORS = {
     "apresentamos", "informamos",
 }
 
-DISQUALIFY_ENDINGS = {",", ";", ":", "...", "…"}
+DISQUALIFY_ENDINGS = {",", ";", ":", "...", "...", "-", "—", "."}
 
 def is_pure_noise(text: str) -> bool:
     """
@@ -18,6 +18,7 @@ def is_pure_noise(text: str) -> bool:
     punctuation, currency symbols, or whitespace.
     """
     return not any(c.isalpha() for c in text)
+
 
 def is_disqualified(atom, body_size: float) -> Optional[str]:
     """
