@@ -1,5 +1,6 @@
 import re
 from utils.text_size import get_text_size
+from utils.title.is_title import is_title
 
 
 def detect_summary(atoms) -> list:
@@ -41,7 +42,7 @@ def detect_summary(atoms) -> list:
         is_summary_keyword = any(keyword in text_lower for keyword in summary_keywords)
         
         # Check if it's a title using the is_title utility
-        if is_summary_keyword and src.utils.title.is_title.is_title(atom, body_size, atom.page_height):
+        if is_summary_keyword and is_title(atom, body_size, atom.page_height):
             summary_sections.append(atom)
         
             # Also check for structured content: text + page number pattern
@@ -49,7 +50,38 @@ def detect_summary(atoms) -> list:
             if re.search(r'[a-zA-Z\s]+\s+\d+\s*$', atom.text.strip()):
                 # This might be a summary entry
                 # Check if it's in the right format and position
-                if src.utils.title.is_title.is_title(atom, body_size, atom.page_height):
+                if is_title(atom, body_size, atom.page_height):
                     summary_sections.append(atom)
     
     return summary_sections
+
+
+_ENTRY_PATTERN = re.compile(
+    r'^(?P<text>.+?)\s*\.{0,}\s*(?P<page>\d{1,4})\s*$'
+)
+
+def take_content(atoms, summary_atom):
+    entries = []
+
+    for atom in atoms:
+        if atom.page == summary_atom.page:
+        
+    
+            line = atom.text.strip()
+            if not line:
+                continue
+
+            match = _ENTRY_PATTERN.match(line)
+            if match:
+                entries.append({
+                    "text": match.group("text").strip(),
+                    "page": int(match.group("page")),
+                })
+            else:
+                # Linha sem número de página — mantém para inspeção
+                entries.append({
+                    "text": line,
+                    "page": None,
+                })
+
+    return entries
