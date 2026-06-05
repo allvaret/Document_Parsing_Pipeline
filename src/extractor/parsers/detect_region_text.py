@@ -5,6 +5,8 @@ from typing import Literal
 from collections import Counter
 import statistics
 
+from utils.title.candidate_filter import TitleCandidate
+
 @dataclass
 class LineRegion:
     region_type: str          # "prose" | "table"
@@ -96,66 +98,62 @@ def classify_line_region(lines: List[TextLine]) -> RegionType:
     
 
 def detect_regions(
-    lines: List[TextLine],
-    title_texts: set[str],
-    gap_ratio_threshold: float = 0.04,   # gap > 4% of page = region break
-    min_table_lines: int = 3,
-) -> List[LineRegion]:
+    lines:             list[TextLine],
+    title_candidates:  list[TitleCandidate],
+    gap_ratio_threshold: float = 0.04,
+    min_table_lines:   int   = 3,
+) -> list[LineRegion]:
     """
-    Single sequential pass over all lines.
-    Tracks current region state and emits a new region when:
-      - a confirmed title is encountered
-      - a gap larger than gap_ratio_threshold is detected
-      - the page changes
+    Quebra de região ocorre quando:
+      - o título identificado MUDA  (não quando se repete)
+      - há um gap maior que gap_ratio_threshold
+    Título repetido (STRUCT ou legítimo em curso) → absorvido como linha comum.
     """
     if not lines:
         return []
 
-    regions: List[LineRegion] = []
-    current_lines: List[TextLine] = [lines[0]]
-    current_type = "prose"
+    title_set: set[str] = {c.text.strip() for c in title_candidates}
 
-    def flush(region_lines: List[TextLine], rtype: str):
+    regions:       list[LineRegion] = []
+    current_lines: list[TextLine]   = [lines[0]]
+    current_type:  str              = "prose"
+    current_title: str | None      = None
+
+    def flush(region_lines: list[TextLine], rtype: str) -> None:
         if not region_lines:
             return
-        # Upgrade to table only if enough lines support it
         if rtype == "table" and len(region_lines) < min_table_lines:
             rtype = "prose"
         regions.append(LineRegion(
-            region_type=rtype,
-            lines=region_lines,
-            page=region_lines[0].page,
-            y_start=region_lines[0].y,
-            y_end=region_lines[-1].y,
+            region_type = rtype,
+            lines       = region_lines,
+            page        = region_lines[0].page,
+            y_start     = region_lines[0].y,
+            y_end       = region_lines[-1].y,
         ))
 
     for i in range(1, len(lines)):
         prev = lines[i - 1]
         curr = lines[i]
 
-        # Compute gap ratio using page_height from the atom
         page_height = curr.atoms[0].page_height
-        gap = curr.y - prev.y
-        gap_ratio = gap / page_height
+        gap_ratio   = (curr.y - prev.y) / page_height
+        large_gap   = gap_ratio > gap_ratio_threshold
 
-        # ── Break condition 1: page changed ──
-        page_changed = curr.page != prev.page
+        stripped    = curr.text.strip()
+        is_title    = stripped in title_set
+        title_changed = is_title and stripped != current_title
 
-        # ── Break condition 2: gap is large (blank line / section space) ──
-        large_gap = gap_ratio > gap_ratio_threshold
-
-        # ── Break condition 3: this line is a confirmed title ──
-        is_title = curr.text.strip() in title_texts
-
-        if page_changed or large_gap or is_title:
+        if large_gap or title_changed:
             flush(current_lines, current_type)
             current_lines = [curr]
-            # A title always starts a prose region
-            current_type = "prose" if is_title else _vote_type_lines([curr])
+            current_type  = "prose" if is_title else _vote_type_lines([curr])
+            if is_title:
+                current_title = stripped   # registra o novo título em curso
         else:
             current_lines.append(curr)
-            # Re-vote every time we add a line — type can upgrade to table
             current_type = _vote_type_lines(current_lines)
+            # se era título repetido: absorvido acima sem alterar current_title
 
     flush(current_lines, current_type)
     return regions
