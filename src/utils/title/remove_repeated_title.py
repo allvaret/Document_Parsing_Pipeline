@@ -1,6 +1,8 @@
 ﻿import statistics
 import math
 
+from utils.title.candidate_filter import TitleCandidate
+
 
 def _page_distribution_score(pages: list[int]) -> dict:
     """
@@ -70,13 +72,15 @@ def _page_distribution_score(pages: list[int]) -> dict:
     }
 
 
-def remove_repeated(titles: list, debug: bool = False) -> list:
+def remove_repeated(titles: list[TitleCandidate], debug: bool = False) -> list[TitleCandidate]:
     """
     Remove títulos estruturais (cabeçalhos/rodapés) sem usar threshold fixo.
 
     Classificação baseada em comportamento de distribuição de páginas:
     - Periódico + denso + uniforme → estrutural → mantém só primeira ocorrência
     - Esparso + irregular           → legítimo   → mantém todas ocorrências
+
+    Retorna lista filtrada e o tipo do titulo, ordenada por página e posição vertical.
     """
     if not titles:
         return []
@@ -84,7 +88,7 @@ def remove_repeated(titles: list, debug: bool = False) -> list:
     # Agrupar por texto
     grupos: dict[str, list] = {}
     for t in titles:
-        grupos.setdefault(t["text"], []).append(t)
+        grupos.setdefault(t.text, []).append(t)
 
     resultado = []
 
@@ -93,7 +97,7 @@ def remove_repeated(titles: list, debug: bool = False) -> list:
             resultado.append(ocorrencias[0])
             continue
 
-        pages = sorted([o["page"] for o in ocorrencias])
+        pages = sorted([o.page for o in ocorrencias])
         stats = _page_distribution_score(pages)
 
         # ── Decisão por comportamento, não por threshold ───────────────────
@@ -123,10 +127,16 @@ def remove_repeated(titles: list, debug: bool = False) -> list:
             )
 
         if is_structural:
-            first = min(ocorrencias, key=lambda o: o["page"])
-            resultado.append(first)
+            first = min(ocorrencias, key=lambda o: o.page)
+            # Cria uma cópia com o novo campo
+            # first_copy = first.copy()
+            # first_copy["type"] = "STRUCT"
+            resultado.append(first) # or first_copy
         else:
-            resultado.extend(ocorrencias)
+            # for ocorrencia in ocorrencias:
+            #     ocorrencia_copy = ocorrencia.copy()
+            #     ocorrencia_copy["type"] = "LEGIT"
+                resultado.extend(ocorrencias) # or ocorrencia_copy
 
-    resultado.sort(key=lambda o: (o["page"], o["relative_y"]))
+    resultado.sort(key=lambda o: (o.page, o.relative_y))
     return resultado
