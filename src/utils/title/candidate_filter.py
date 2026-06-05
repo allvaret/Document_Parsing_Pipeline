@@ -1,6 +1,15 @@
 from typing import Optional
 from typing import List
 from extractor import TextAtom
+from dataclasses import dataclass
+
+
+@dataclass
+class TitleCandidate:
+    text:       str
+    page:       int
+    relative_y: float    # y0 / page_height  (0.0 – 1.0)
+    score:      float
 
 
 BODY_CONNECTORS = {
@@ -81,3 +90,27 @@ def candidate_filter(atoms: List[TextAtom], body_size: float) -> List[TextAtom]:
 
     return survivors
 
+
+def best_title_candidates(
+    candidates: list[TitleCandidate],
+    min_score:  float = 30.0,
+) -> list[TitleCandidate]:
+    """
+    1. Cut candidates with score below min_score.
+    2. For each page, keep only the one with the lowest relative_y,
+       breaking ties by the highest score.
+    Returns a list ordered by (page, relative_y).
+    """
+    filtered = [c for c in candidates if c.score >= min_score]
+
+    best: dict[int, TitleCandidate] = {}
+    for c in filtered:
+        prev = best.get(c.page)
+        if prev is None:
+            best[c.page] = c
+            continue
+        # menor y vence; empate → maior score vence
+        if (c.relative_y, -c.score) < (prev.relative_y, -prev.score):
+            best[c.page] = c
+
+    return sorted(best.values(), key=lambda c: (c.page, c.relative_y))
