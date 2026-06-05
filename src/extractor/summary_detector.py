@@ -1,9 +1,11 @@
 import re
+from extractor.TextAtom import TextAtom
 from utils.text_size import get_text_size
+from utils.title.candidate_filter import TitleCandidate
 from utils.title.is_title import is_title
 
 
-def detect_summary(atoms) -> list:
+def detect_summary(atoms) -> list[TextAtom]:
     """
     Find the summary of the document, if exists
 
@@ -60,7 +62,7 @@ _ENTRY_PATTERN = re.compile(
     r'^(?P<text>.+?)\s*\.{0,}\s*(?P<page>\d{1,4})\s*$'
 )
 
-def take_content(atoms, summary_atom):
+def take_content_summary(atoms, summary_atom) -> list[TitleCandidate]:
     entries = []
 
     for atom in atoms:
@@ -73,15 +75,23 @@ def take_content(atoms, summary_atom):
 
             match = _ENTRY_PATTERN.match(line)
             if match:
-                entries.append({
-                    "text": match.group("text").strip(),
-                    "page": int(match.group("page")),
-                })
+                entries.append(
+                    TitleCandidate(
+                        text=match.group("text").strip(),
+                        page=int(match.group("page")),
+                        relative_y=atom.y0 / atom.page_height,
+                        score=0.0,  # Score can be calculated later if needed
+                    )
+                )
             else:
                 # Linha sem número de página — mantém para inspeção
-                entries.append({
-                    "text": line,
-                    "page": None,
-                })
+                entries.append(
+                    TitleCandidate(
+                        text=line,
+                        page=summary_atom.page,  # Página desconhecida
+                        relative_y=atom.y0 / atom.page_height,
+                        score=0.0,
+                    )
+                )
 
     return entries
