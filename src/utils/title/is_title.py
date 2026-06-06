@@ -22,7 +22,6 @@ def is_title(atom, body_size, page_height):
 
 
 def calculate_title_score(atom, body_size, page_height):
-    score = 0
     max_score = 100
 
     # Fatores com pesos diferentes
@@ -42,3 +41,6 @@ def calculate_title_score(atom, body_size, page_height):
         length_factor = 10
 
     return min(size_factor + bold_factor + position_factor + length_factor , max_score)
+
+def normalize_title_score(score: float) -> float:
+    return round(score / 100, 3)  # Normaliza para o intervalo [0, 1]
