@@ -8,13 +8,44 @@ import statistics
 from utils.title.candidate_filter import TitleCandidate
 
 @dataclass
-class LineRegion:
-    region_type: str          # "prose" | "table"
-    lines: List[TextLine]
-    page: int
+class PageBBox:
+    page:    int
+    x_start: float
+    x_end:   float
     y_start: float
-    y_end: float
-    
+    y_end:   float
+
+@dataclass
+class LineRegion:
+    region_type: str               # "prose" | "table" | "uncertain"
+    lines:       list[TextLine]
+    page:        int               # first line's page
+    y_start:     float             # y of the first line (global)
+    y_end:       float             # y of the last line (global)
+    page_spans:  list[PageBBox] | None = None  # None for prose
+
+
+def _build_page_spans(lines: list[TextLine]) -> list[PageBBox]:
+    """
+    Agrupa linhas por página e calcula bbox de cada grupo.
+    Chamado apenas quando region_type == "table".
+    """
+    groups: dict[int, list[TextLine]] = {}
+    for line in lines:
+        groups.setdefault(line.page, []).append(line)
+
+    spans = []
+    for page, page_lines in sorted(groups.items()):
+        atoms = [atom for line in page_lines for atom in line.atoms]
+        spans.append(PageBBox(
+            page    = page,
+            x_start = min(a.x0 for a in atoms),
+            x_end   = max(a.x1 for a in atoms),
+            y_start = page_lines[0].y,
+            y_end   = page_lines[-1].y,
+        ))
+    return spans
+
 
 def has_column_alignment(
     lines: List[TextLine],
@@ -97,6 +128,17 @@ def classify_line_region(lines: List[TextLine]) -> RegionType:
         return "uncertain"
     
 
+def filter_regions(regions: list[LineRegion], page_height: float) -> list[LineRegion]:
+    before = len(regions)
+    filtered = [r for r in regions if not is_footer_region(r, page_height)]
+    print(f"Regiões após filtro de rodapé: {len(filtered)} / {before}")
+    return filtered
+
+
+def is_footer_region(region: LineRegion, page_height: float) -> bool:
+    return (region.y_start / page_height) > 0.85 and len(region.lines) <= 5
+
+
 def detect_regions(
     lines:             list[TextLine],
     title_candidates:  list[TitleCandidate],
@@ -124,12 +166,16 @@ def detect_regions(
             return
         if rtype == "table" and len(region_lines) < min_table_lines:
             rtype = "prose"
+
+        page_spans = _build_page_spans(region_lines) if rtype == "table" else None
+
         regions.append(LineRegion(
             region_type = rtype,
             lines       = region_lines,
             page        = region_lines[0].page,
             y_start     = region_lines[0].y,
             y_end       = region_lines[-1].y,
+            page_spans  = page_spans,
         ))
 
     for i in range(1, len(lines)):
@@ -156,7 +202,7 @@ def detect_regions(
             # se era título repetido: absorvido acima sem alterar current_title
 
     flush(current_lines, current_type)
-    return regions
+    return filter_regions(regions,page_height)
 
 
 def _vote_type_lines(lines: List[TextLine]) -> str:
@@ -172,3 +218,4 @@ def _vote_type_lines(lines: List[TextLine]) -> str:
     elif score == 0:
         return "prose"
     return "uncertain"
+
