@@ -1,4 +1,4 @@
-from extractor.summary_detector import  detect_summary, take_content, take_content_summary
+from extractor.summary_detector import  detect_summary, take_content_summary
 from utils.calc_vertical_space import calcular_vertical_space
 from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from extractor.parsers import decomp_pdf
@@ -6,10 +6,10 @@ from utils.text_size import get_text_size
 from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers.detect_region_text import detect_regions
 from extractor.preprocess import clean_atoms
-from utils.title.is_title import calculate_title_score
+from utils.title.is_title import calculate_title_score, normalize_title_score
 from utils.title.remove_repeated_title import remove_repeated
 
-path = "assets\\BR_PT Demonstrações Financeiras 3T25.pdf"
+path = "assets\\Desempenho Financeiro Petrobras 3T25.pdf"
 
 def test_detect_regions():
     print("=== Region Detection Test ===")
@@ -26,7 +26,10 @@ def test_detect_regions():
             text=a.text.strip(),
             page=a.page,
             relative_y=a.y0 / a.page_height,
-            score=calculate_title_score(a, body_size, a.page_height),
+            h_score=normalize_title_score(calculate_title_score(a, body_size, a.page_height)),
+            nlp_score=0.0,
+            combined_score=0.0
+
         )
         for a in survivors
     ]
@@ -78,5 +81,5 @@ def test_detect_regions():
         first = r.lines[0].text.strip()
         if first in [t.text for t in result]:
             print(f"  [Page {r.page}] \"{first}\"  → {len(r.lines)} body lines follow")
-            print(f"    Score {next((t.score for t in result if t.text == first), None)}")
+            print(f"    Score {next((t.h_score for t in result if t.text == first), None)}")
 test_detect_regions()
