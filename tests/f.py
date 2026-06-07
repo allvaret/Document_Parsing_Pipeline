@@ -7,42 +7,25 @@ from LLM.NLP.semantic_scorer import calc_semantic_score_nlp
 from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers import decomp_pdf
 from extractor.parsers.detect_region_text import LineRegion, detect_regions
-from extractor.parsers.title_block import consolidate_title_blocks
-from extractor.section.section_builder import build_sections
+from extractor.section.section_builder import build_sections, combine_scores
 from extractor.section.section_json import sections_to_json
-from utils.calc_vertical_space import calcular_vertical_space
 from utils.text_size import get_text_size
-from utils.title.candidate_filter import candidate_filter, is_disqualified
-from utils.title.is_title import calculate_title_score
+from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
+from utils.title.is_title import calculate_title_score, normalize_title_score
 from utils.title.remove_repeated_title import remove_repeated
 
 
-path = "D:/Projetos/Projetoes/SmartLazys/finance-data-platform/assets/Desempenho Financeiro Petrobras 3T25.pdf"
-
-
-# ─────────────────────────────────────────────
-# 1. FILTROS DE REGIÃO
-# ─────────────────────────────────────────────
-
-def is_footer_region(region: LineRegion, page_height: float) -> bool:
-    return (region.y_start / page_height) > 0.85 and len(region.lines) <= 5
-
-
-def filter_regions(regions: list, page_height: float) -> list:
-    before = len(regions)
-    filtered = [r for r in regions if not is_footer_region(r, page_height)]
-    print(f"Regiões após filtro de rodapé: {len(filtered)} / {before}")
-    return filtered
+path = "assets/Earnings Release 3T25.pdf"
 
 
 # ─────────────────────────────────────────────
 # 2. CHAMADA AO LLM (Ollama local)
 # ─────────────────────────────────────────────
 
-def call_llm(sections_json: str, model: str = "llama3.2") -> str:
+def call_llm(sections_json: str, model: str = "qwen3.5:9b") -> str:
     prompt = f"""Você é um analista financeiro especializado em empresas brasileiras listadas na B3.
 
-Abaixo está o conteúdo estruturado de um documento financeiro em JSON.
+Abaixo está o conteúdo estruturado de um relatório financeiro em JSON.
 Cada entrada contém: título da seção, página, corpo de texto e tabelas associadas.
 
 Sua tarefa é produzir um resumo executivo em português com exatamente estas seções:
@@ -64,8 +47,7 @@ Seja objetivo e use os números do documento. Se uma seção não tiver informa�
 
 Documento:
 {sections_json}
-
-Resumo executivo:"""
+"""
 
     try:
         response = requests.post(
@@ -117,92 +99,90 @@ def test_full_pipeline():
 
     # ── Títulos ───────────────────────────────
     print("[ 3/6 ] Detectando títulos...")
+    # Build title list
     survivors = candidate_filter(atoms, body_size)
-    titles_list = [
-        {
-            "text":       a.text.strip(),
-            "page":       a.page,
-            "relative_y": a.y0 / a.page_height,
-            "size":       a.size,
-            "bold":       a.bold,
-            "score":      score,
-        }
+    candidates = [
+        TitleCandidate(
+            text=a.text.strip(),
+            page=a.page +1,  # pages are 0-indexed internally, +1 for human-friendly
+            relative_y=a.y0 / a.page_height,
+            h_score=normalize_title_score(calculate_title_score(a, body_size, a.page_height)),
+            nlp_score=0.0,  # Será preenchido posteriormente
+            combined_score=0.0,  # Será preenchido posteriormente
+
+        )
         for a in survivors
-        if (score := calculate_title_score(a, body_size, a.page_height))
     ]
 
+    # Filtra candidatos por pontuação, para cada pagina pega o de menor relative_y
+    best_candidates = best_title_candidates(candidates, min_score=0.3)
+
     # Passagem 1: remove repetições estruturais
-    cleaned_titles = remove_repeated(titles_list)
+    cleaned_titles = remove_repeated(best_candidates, debug=True)
+    #print(f" {cleaned_titles} \n")
 
-    # Passagem 2: extrai features NLP em lote para os títulos limpos 
-    np_features = extract_features_batch([t["text"] for t in cleaned_titles])  # teste da função de extração em lote
+    for c in cleaned_titles:
+        
+        # Passagem 2: extrai features NLP em lote para os títulos limpos 
+        np_features = extract_features_batch([t.text for t in cleaned_titles])  # teste da função de extração em lote
 
-    # Passagem 3: classifica títulos como candidatos a títulos usando o modelo NLP
-    sematic_scores = [calc_semantic_score_nlp(f) for f in np_features]
-    for t, s in zip(cleaned_titles, sematic_scores):
-        print(f"'{t['text'][:30]:<30}' | score={s:.3f} | page={t['page']} | y={t['relative_y']:.2f} | size={t['size']:.1f} | bold={t['bold']}")
+        # Passagem 3: classifica títulos como candidatos a títulos usando o modelo NLP
+        sematic_scores = [calc_semantic_score_nlp(f) for f in np_features]
+        c.nlp_score = sematic_scores[cleaned_titles.index(c)]  # atribui a pontuação semântica ao título
+        print(f"'{c.text[:30]:<30}' | h_score={c.h_score:.3f} nlp_score={c.nlp_score:.3f}")
 
-    print(f"Títulos individuais : {len(titles_list)}")
+    for c in cleaned_titles:
+        c.combined_score = combine_scores(c.h_score, c.nlp_score)
+
+    print(f"Títulos individuais : {len(best_candidates)}")
     print(f"Após deduplicação   : {len(cleaned_titles)}")
     print()
-            
+
+
     # ── Regiões ───────────────────────────────
     print("[ 4/6 ] Detectando regiões...")
-    cleaned_set = set(t["text"] for t in cleaned_titles)
-    regions = detect_regions(lines, cleaned_set)
-    regions = filter_regions(regions, page_height)
-    prose  = sum(1 for r in regions if r.region_type == "prose")
-    tables = sum(1 for r in regions if r.region_type == "table")
-    unc    = sum(1 for r in regions if r.region_type == "uncertain")
-    print(f"        prose={prose}  table={tables}  uncertain={unc}")
 
     # ── Section builder ───────────────────────
     print("[ 5/6 ] Construindo seções...")
-    sections = build_sections(regions, cleaned_set)
+    sections = build_sections(lines, cleaned_titles)
     print(f"        {len(sections)} seções montadas")
     print()
 
-    # # Prévia das seções para inspecionar antes de mandar ao LLM
-    # print("── Prévia das seções ──────────────────────")
+    # Prévia das seções para inspecionar antes de mandar ao LLM
+    print("── Prévia das seções ──────────────────────")
     # for s in sections:
-    #     preview_body = s.body[:120].replace("\n", " ")
+    #     preview_body = s.regions[:120]
     #     print(
-    #         f"  [Pág {s.page:>3}] {s.title[:50]:<50} "
-    #         f"| corpo={len(s.body):>5} chars  "
-    #         f"tabelas={len(s.tables)}"
+    #         f"  [Pág {s.pages[0]}] {s.title[:50]:<50} "
+    #         f"| corpo={len(s.regions):>5} chars  "
     #     )
     #     if preview_body:
     #         print(f"           └─ {preview_body}...")
     # print()
 
-    # # ── LLM ───────────────────────────────────
-    # print("[ 6/6 ] Enviando ao LLM...")
+    # ── LLM ───────────────────────────────────
+    print("[ 6/6 ] Enviando ao LLM...")
 
     # Monta JSON apenas com seções que têm conteúdo relevante
     # (descarta seções de capa/assinatura com corpo muito curto)
-    # sections_for_llm = [
-    #     s for s in sections
-    #     if len(s.body) > 100 or len(s.tables) > 0
-    # ]
-    # print(f"        {len(sections_for_llm)} seções com conteúdo suficiente enviadas")
 
-    # sections_json = sections_to_json(sections_for_llm)
+    sections_json = sections_to_json(sections)
 
-    # # Salva JSON para inspeção
-    # json_path = path.replace(".pdf", "_sections.json")
-    # with open(json_path, "w", encoding="utf-8") as f:
-    #     f.write(sections_json)
-    # print(f"        JSON salvo em: {json_path}")
-    # print()
+    # Salva JSON para inspeção
+    json_path = path.replace(".pdf", "_sections.json")
+    with open(json_path, "w", encoding="utf-8") as f:
+        f.write(sections_json)
+    print(f"        JSON salvo em: {json_path}")
+    print()
 
-    # print("── Aguardando resposta do LLM... ──────────")
-    # resumo = call_llm(sections_json)
+    print("── Aguardando resposta do LLM... ──────────")
+    resumo = call_llm(sections_json)
 
-    # print()
-    # print("=" * 60)
-    # print("RESUMO EXECUTIVO")
-    # print("=" * 60)
-    # print(resumo)
+    print()
+    print("=" * 60)
+    print("RESUMO EXECUTIVO")
+    print("=" * 60)
+    print(resumo)
 
     return sections, #resumo
 
