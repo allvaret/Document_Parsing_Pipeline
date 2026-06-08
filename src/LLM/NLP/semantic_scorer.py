@@ -224,4 +224,4 @@ def is_title_candidate(
     text      : str         — repassado para calc_semantic_score
     threshold : float       — padrão 0.5
     """
-    return calc_semantic_score(features, text) >= threshold
+    return calc_semantic_score_nlp(features, text) >= threshold
