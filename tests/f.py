@@ -113,9 +113,11 @@ def test_full_pipeline():
         )
         for a in survivors
     ]
+    print(f"        {len(candidates)} candidatos a título após filtragem inicial")
 
     # Filtra candidatos por pontuação, para cada pagina pega o de menor relative_y
     best_candidates = best_title_candidates(candidates, min_score=0.3)
+    print(f"        {len(best_candidates)} candidatos a título após seleção final")
 
     # Passagem 1: remove repetições estruturais
     cleaned_titles = remove_repeated(best_candidates, debug=True)
