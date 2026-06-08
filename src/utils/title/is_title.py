@@ -1,4 +1,7 @@
-def is_title(atom, body_size, page_height):
+from extractor import TextAtom
+
+
+def is_title(atom: TextAtom, body_size: float, page_height: float) -> bool:
     score = 0
 
     # 1. Tamanho relativo ao corpo
@@ -21,7 +24,7 @@ def is_title(atom, body_size, page_height):
     return score >= 9
 
 
-def calculate_title_score(atom, body_size, page_height):
+def calculate_title_score(atom: TextAtom, body_size: float, page_height: float) -> float:
     max_score = 100
 
     # Fatores com pesos diferentes
