@@ -2,13 +2,13 @@ import json
 import requests
 import spacy
 
-from LLM.NLP.feature_extractor_nlp import extract_features_batch
+from LLM.NLP.feature_extractor_nlp import _get_nlp, extract_features_batch
 from LLM.NLP.semantic_scorer import calc_semantic_score_nlp
 from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers import decomp_pdf
-from extractor.parsers.detect_region_text import LineRegion, detect_regions
 from extractor.section.section_builder import build_sections, combine_scores
 from extractor.section.section_json import sections_to_json
+from extractor.section.structured_extraction import extract_structured_facts
 from utils.text_size import get_text_size
 from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from utils.title.is_title import calculate_title_score, normalize_title_score
@@ -86,19 +86,19 @@ def test_full_pipeline():
     print()
 
     # ── Extração ──────────────────────────────
-    print("[ 1/6 ] Extraindo átomos...")
+    print("[ 1/? ] Extraindo átomos...")
     atoms = decomp_pdf.extract_text_atoms(path)
     page_height = atoms[0].page_height
     print(f"        {len(atoms)} átomos extraídos")
 
     # ── Limpeza ───────────────────────────────
-    print("[ 2/6 ] Limpando e agrupando em linhas...")
+    print("[ 2/? ] Limpando e agrupando em linhas...")
     body_size = get_text_size(atoms)
     lines = group_atoms_into_lines(atoms)
     print(f"        body_size={body_size}  linhas={len(lines)}")
 
     # ── Títulos ───────────────────────────────
-    print("[ 3/6 ] Detectando títulos...")
+    print("[ 3/? ] Detectando títulos...")
     # Build title list
     survivors = candidate_filter(atoms, body_size)
     candidates = [
@@ -120,7 +120,8 @@ def test_full_pipeline():
     print(f"        {len(best_candidates)} candidatos a título após seleção final")
 
     # Passagem 1: remove repetições estruturais
-    cleaned_titles = remove_repeated(best_candidates, debug=True)
+    candidates = remove_repeated(candidates, debug=False) # Sem melhores candidatos por y_relativo e threshold
+    cleaned_titles = remove_repeated(best_candidates, debug=True) # Melhores candidatos
     #print(f" {cleaned_titles} \n")
 
     for c in cleaned_titles:
@@ -136,20 +137,31 @@ def test_full_pipeline():
     for c in cleaned_titles:
         c.combined_score = combine_scores(c.h_score, c.nlp_score)
 
+    #Titulos nao oficiais
+    for c in candidates:
+        np_features = extract_features_batch([t.text for t in candidates])  # teste da função de extração em lote
+
+        sematic_scores = [calc_semantic_score_nlp(f) for f in np_features]
+        c.nlp_score = sematic_scores[candidates.index(c)]  # atribui a pontuação semântica ao título
+    for c in candidates:
+        c.combined_score = combine_scores(c.h_score, c.nlp_score)
+
+
     print(f"Títulos individuais : {len(best_candidates)}")
     print(f"Após deduplicação   : {len(cleaned_titles)}")
     print()
 
 
-    # ── Regiões ───────────────────────────────
-    print("[ 4/6 ] Detectando regiões...")
-
     # ── Section builder ───────────────────────
-    print("[ 5/6 ] Construindo seções...")
+    print("[ 4/? ] Detectando regiões e construindo seções...")
     sections = build_sections(lines, cleaned_titles)
     print(f"        {len(sections)} seções montadas")
     print()
 
+
+
+    teste = extract_structured_facts(sections, nlp=_get_nlp(), clean_titles=cleaned_titles,uncertain_titles=candidates)    
+    print(teste)
     # Prévia das seções para inspecionar antes de mandar ao LLM
     print("── Prévia das seções ──────────────────────")
     # for s in sections:
