@@ -28,7 +28,7 @@ _nlp = None
 def _get_nlp() -> spacy.language.Language:
     global _nlp
     if _nlp is None:
-        _nlp = spacy.load("pt_core_news_sm")
+        _nlp = spacy.load("pt_core_news_md") # Test between sm and md: md has vectors, sm does not. Vectors are needed to determine if a token is OOV.
     return _nlp
 
 
