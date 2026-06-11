@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass
 from typing import List, Dict, Any, Optional, Tuple
 
 import spacy
@@ -25,8 +25,8 @@ from spacy.tokens import Doc
 
 from extractor import TextAtom
 from extractor.group_text_line import TextLine
-from extractor.parsers.detect_region_text import LineRegion
-from extractor.section.section_builder import Category, Section
+from extractor.section.detect_region_text import LineRegion
+from extractor.section.section_builder import Section
 from utils.title.candidate_filter import TitleCandidate
 
 # ──────────────────────────────────────────────────────────────────────────────
