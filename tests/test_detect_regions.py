@@ -4,7 +4,7 @@ from utils.title.candidate_filter import TitleCandidate, best_title_candidates, 
 from extractor.parsers import decomp_pdf
 from utils.text_size import get_text_size
 from extractor.group_text_line import group_atoms_into_lines
-from extractor.parsers.detect_region_text import detect_regions
+from extractor.section.detect_region_text import detect_regions
 from extractor.preprocess import clean_atoms
 from utils.title.is_title import calculate_title_score, normalize_title_score
 from utils.title.remove_repeated_title import remove_repeated
