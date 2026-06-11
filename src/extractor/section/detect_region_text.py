@@ -24,6 +24,16 @@ class LineRegion:
     y_end:       float             # y of the last line (global)
     page_spans:  list[PageBBox] | None = None  # None for prose
 
+@dataclass
+class TableRegion:
+        region_type = "table"
+        page: int 
+        y_start: float 
+        y_end: float
+        markdown: list[str]
+        page_spans: list[PageBBox] | None = None 
+
+
 
 def _build_page_spans(lines: list[TextLine]) -> list[PageBBox]:
     """
