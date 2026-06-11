@@ -6,7 +6,7 @@ import unicodedata
 from dataclasses import dataclass, field
 from typing import Literal
 from extractor.group_text_line import TextLine
-from extractor.parsers.detect_region_text import LineRegion
+from extractor.section.detect_region_text import LineRegion
 from utils.title.candidate_filter import TitleCandidate
 
 # ---------------------------------------------------------------------------
@@ -420,7 +420,7 @@ def build_sections(
       - split_h1_h2_by_gap decide a hierarquia.
       - confidence = combined_score do candidato.
     """
-    from extractor.parsers.detect_region_text import detect_regions
+    from extractor.section.detect_region_text import detect_regions
 
 
     if toc_confirmed:
