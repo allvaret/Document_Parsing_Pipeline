@@ -17,7 +17,7 @@ class PageBBox:
 
 @dataclass
 class LineRegion:
-    region_type: str               # "prose" | "table" | "uncertain"
+    region_type: str               # "prose" | "uncertain"
     lines:       list[TextLine]
     page:        int               # first line's page
     y_start:     float             # y of the first line (global)
@@ -30,8 +30,8 @@ class TableRegion:
         page: int 
         y_start: float 
         y_end: float
-        markdown: list[str]
-        page_spans: list[PageBBox] | None = None 
+        markdown: str
+        page_spans: list[PageBBox]
 
 
 
