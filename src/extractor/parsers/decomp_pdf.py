@@ -6,7 +6,7 @@ def extract_text_atoms(path:str):
     doc = fitz.open(path)
 
     atoms = []
-    for page_number, page in enumerate(doc):
+    for page_number, page in enumerate(doc): # type: ignore
         pgdict = page.get_text("dict", sort = True)
         for block in pgdict["blocks"]:
             if block["type"] == 0: ## TEXTO
