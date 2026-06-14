@@ -6,7 +6,7 @@ import unicodedata
 from dataclasses import dataclass, field
 from typing import Literal
 from extractor.group_text_line import TextLine
-from extractor.section.detect_region_text import LineRegion
+from extractor.section.detect_region_text import LineRegion, TableRegion
 from utils.title.candidate_filter import TitleCandidate
 
 # ---------------------------------------------------------------------------
@@ -383,7 +383,7 @@ class Section:
     category:   Category
     group:      str | None
     pages:      list[int]
-    regions:    list[LineRegion]  # List[LineRegion]
+    regions:    list[LineRegion | TableRegion]  # List[LineRegion] | List[TableRegion]
 
     def to_dict(self) -> dict:
         return {
