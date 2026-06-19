@@ -26,7 +26,7 @@ from spacy.tokens import Doc
 from extractor import TextAtom
 from extractor.group_text_line import TextLine
 from extractor.section.detect_region_text import LineRegion
-from extractor.section.section_builder import Section
+from experimental.section.section_builder import Section
 from utils.title.candidate_filter import TitleCandidate
 
 # ──────────────────────────────────────────────────────────────────────────────
