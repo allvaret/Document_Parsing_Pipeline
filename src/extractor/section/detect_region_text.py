@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import Dict, List
 from extractor.group_text_line import TextLine
 from typing import Literal
 from collections import Counter
@@ -23,15 +23,54 @@ class LineRegion:
     y_start:     float             # y of the first line (global)
     y_end:       float             # y of the last line (global)
     page_spans:  list[PageBBox] | None = None  # None for prose
+    
+    # Init not included
+    _cached_page_heights: Dict[int, float] | None = field(
+        default=None, 
+        init=False,  # Does Not appears in constructor
+        repr=False   # Does Not appears when calls the object
+    )
+    
+    def get_page_heights(self) -> Dict[int, float]:
+        """
+        Retorna {page_number: page_height} para todas as páginas nesta região.
+        
+        O cache é computado apenas na primeira chamada.
+        """
+        # If calc, return the Calc
+        if self._cached_page_heights is not None:
+            return self._cached_page_heights
+        
+        # First call. Calculate and storage
+        heights = {}
+        for line in self.lines:
+            if line.atoms:  
+                
+                first_atom = line.atoms[0]
+                page_num = first_atom.page
+                
+                # Just add if not the same page
+                if page_num not in heights:
+                    heights[page_num] = first_atom.page_height
+        
+        # Stored
+        self._cached_page_heights = heights
+        return heights
+    
+    def invalidate_cache(self):
+        """Limpa o cache quando as linhas mudarem"""
+        self._cached_page_heights = None
 
 @dataclass
 class TableRegion:
-        region_type = "table"
+        region_type: str 
         page: int 
         y_start: float 
         y_end: float
         markdown: str
+        confidence:  str        # "high" | "low"
         page_spans: list[PageBBox]
+        note:        str | None = None
 
 
 
@@ -110,7 +149,7 @@ def has_high_atom_density(
 
 
 
-RegionType = Literal["table", "prose", "uncertain"]
+RegionType = Literal[ "prose", "uncertain"] #"table",
 
 def classify_line_region(lines: List[TextLine]) -> RegionType:
     """
@@ -130,22 +169,29 @@ def classify_line_region(lines: List[TextLine]) -> RegionType:
 
     score = sum(signals.values())
 
-    if score >= 2:
-        return "table"
-    elif score == 0:
+    if score <= 1:
         return "prose"
     else:
         return "uncertain"
     
 
-def filter_regions(regions: list[LineRegion], page_height: float) -> list[LineRegion]:
+def filter_regions(regions: list[LineRegion | TableRegion], page_height: float) -> list[LineRegion | TableRegion]:
     before = len(regions)
     filtered = [r for r in regions if not is_footer_region(r, page_height)]
     print(f"Regiões após filtro de rodapé: {len(filtered)} / {before}")
     return filtered
 
 
-def is_footer_region(region: LineRegion, page_height: float) -> bool:
+def is_footer_region(region: LineRegion | TableRegion, page_height: float) -> bool:
+    if isinstance(region, TableRegion):
+        line_count = sum(
+            1 for span in region.page_spans  # cada span já tem y_start/y_end
+            for _ in [span]                  # placeholder — veja abaixo
+        )
+        # TableRegion não tem .lines, então estimamos pela quantidade de spans
+        # ou simplesmente nunca descartamos tabelas no rodapé aqui
+        return False  # deixa a remoção de tabelas espúrias para depois
+
     return (region.y_start / page_height) > 0.85 and len(region.lines) <= 5
 
 
@@ -154,7 +200,7 @@ def detect_regions(
     title_candidates:  list[TitleCandidate],
     gap_ratio_threshold: float = 0.04,
     min_table_lines:   int   = 3,
-) -> list[LineRegion]:
+) -> list[LineRegion | TableRegion]:
     """
     Quebra de região ocorre quando:
       - o título identificado MUDA  (não quando se repete)
@@ -166,7 +212,7 @@ def detect_regions(
 
     title_set: set[str] = {c.text.strip() for c in title_candidates}
 
-    regions:       list[LineRegion] = []
+    regions:       list[LineRegion | TableRegion] = []
     current_lines: list[TextLine]   = [lines[0]]
     current_type:  str              = "prose"
     current_title: str | None      = None
@@ -174,19 +220,29 @@ def detect_regions(
     def flush(region_lines: list[TextLine], rtype: str) -> None:
         if not region_lines:
             return
-        if rtype == "table" and len(region_lines) < min_table_lines:
-            rtype = "prose"
+        # if rtype == "table" and len(region_lines) < min_table_lines:
+        #     rtype = "prose"
 
-        page_spans = _build_page_spans(region_lines) if rtype == "table" else None
-
-        regions.append(LineRegion(
-            region_type = rtype,
-            lines       = region_lines,
-            page        = region_lines[0].page,
-            y_start     = region_lines[0].y,
-            y_end       = region_lines[-1].y,
-            page_spans  = page_spans,
-        ))
+        if rtype == "uncertain":
+            page_spans = _build_page_spans(region_lines)
+            regions.append(TableRegion(
+                region_type= 'uncertain',
+                page       = region_lines[0].page,
+                y_start    = region_lines[0].y,
+                y_end      = region_lines[-1].y,
+                markdown   = "",          # preenchido pelo extrator depois
+                page_spans = page_spans,
+                confidence='low'
+            ))
+        else:
+            regions.append(LineRegion(
+                region_type = rtype,
+                lines       = region_lines,
+                page        = region_lines[0].page,
+                y_start     = region_lines[0].y,
+                y_end       = region_lines[-1].y,
+                page_spans  = None,
+            ))
 
     for i in range(1, len(lines)):
         prev = lines[i - 1]
@@ -223,9 +279,9 @@ def _vote_type_lines(lines: List[TextLine]) -> str:
         has_high_atom_density(lines),
     ]
     score = sum(signals)
-    if score >= 2:
-        return "table"
-    elif score == 0:
+    # if score >= 2:
+    #     return "table"
+    if score == 0:
         return "prose"
     return "uncertain"
 
