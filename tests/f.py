@@ -2,13 +2,15 @@ import json
 import requests
 import spacy
 
-from LLM.NLP.feature_extractor_nlp import _get_nlp, extract_features_batch
+from LLM.NLP.feature_extractor_nlp import extract_features_batch
 from LLM.NLP.semantic_scorer import calc_semantic_score_nlp
 from extractor.group_text_line import group_atoms_into_lines
 from extractor.parsers import decomp_pdf
-from extractor.section.section_builder import build_sections, combine_scores
-from extractor.section.section_json import sections_to_json
-from extractor.section.structured_extraction import extract_structured_facts
+from experimental.section.section_builder import combine_scores
+from extractor.section.build_section import build_sections, serialize_for_llm
+from extractor.section.detect_region_text import LineRegion, TableRegion, detect_regions
+from extractor.section.optimized_table import enrich_line_regions
+from extractor.section.section_json import sections_to_jsonD
 from utils.text_size import get_text_size
 from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from utils.title.is_title import calculate_title_score, normalize_title_score
@@ -88,7 +90,6 @@ def test_full_pipeline():
     # ── Extração ──────────────────────────────
     print("[ 1/? ] Extraindo átomos...")
     atoms = decomp_pdf.extract_text_atoms(path)
-    page_height = atoms[0].page_height
     print(f"        {len(atoms)} átomos extraídos")
 
     # ── Limpeza ───────────────────────────────
@@ -120,7 +121,7 @@ def test_full_pipeline():
     print(f"        {len(best_candidates)} candidatos a título após seleção final")
 
     # Passagem 1: remove repetições estruturais
-    candidates = remove_repeated(candidates, debug=False) # Sem melhores candidatos por y_relativo e threshold
+    #candidates = remove_repeated(candidates, debug=False) # Sem melhores candidatos por y_relativo e threshold
     cleaned_titles = remove_repeated(best_candidates, debug=True) # Melhores candidatos
     #print(f" {cleaned_titles} \n")
 
@@ -138,13 +139,13 @@ def test_full_pipeline():
         c.combined_score = combine_scores(c.h_score, c.nlp_score)
 
     #Titulos nao oficiais
-    for c in candidates:
-        np_features = extract_features_batch([t.text for t in candidates])  # teste da função de extração em lote
+    # for c in candidates:
+    #     np_features = extract_features_batch([t.text for t in candidates])  # teste da função de extração em lote
 
-        sematic_scores = [calc_semantic_score_nlp(f) for f in np_features]
-        c.nlp_score = sematic_scores[candidates.index(c)]  # atribui a pontuação semântica ao título
-    for c in candidates:
-        c.combined_score = combine_scores(c.h_score, c.nlp_score)
+    #     sematic_scores = [calc_semantic_score_nlp(f) for f in np_features]
+    #     c.nlp_score = sematic_scores[candidates.index(c)]  # atribui a pontuação semântica ao título
+    # for c in candidates:
+    #     c.combined_score = combine_scores(c.h_score, c.nlp_score)
 
 
     print(f"Títulos individuais : {len(best_candidates)}")
@@ -154,14 +155,27 @@ def test_full_pipeline():
 
     # ── Section builder ───────────────────────
     print("[ 4/? ] Detectando regiões e construindo seções...")
-    sections = build_sections(lines, cleaned_titles)
+    regions = detect_regions(lines, cleaned_titles)
+
+    page_heights = {}
+    if isinstance(regions, LineRegion):
+        page_heights = regions.get_page_heights
+    enriched_lines = enrich_line_regions(regions, path, page_heights) # type: ignore
+
+    for n in enriched_lines:
+        if isinstance(n,TableRegion):
+            print(f' Pagina: {n.page} | {n.region_type} | {n.markdown}')
+        else:
+            print(f'{n.region_type}')
+
+    
+
+    sections = build_sections(enriched_lines, cleaned_titles)
     print(f"        {len(sections)} seções montadas")
-    print()
+    # print()
 
 
 
-    teste = extract_structured_facts(sections, nlp=_get_nlp(), clean_titles=cleaned_titles,uncertain_titles=candidates)    
-    print(teste)
     # Prévia das seções para inspecionar antes de mandar ao LLM
     print("── Prévia das seções ──────────────────────")
     # for s in sections:
@@ -180,7 +194,7 @@ def test_full_pipeline():
     # Monta JSON apenas com seções que têm conteúdo relevante
     # (descarta seções de capa/assinatura com corpo muito curto)
 
-    sections_json = sections_to_json(sections)
+    sections_json = serialize_for_llm(sections)
 
     # Salva JSON para inspeção
     json_path = path.replace(".pdf", "_sections.json")
