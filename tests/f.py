@@ -1,6 +1,4 @@
-import json
 import requests
-import spacy
 
 from LLM.NLP.feature_extractor_nlp import extract_features_batch
 from LLM.NLP.semantic_scorer import calc_semantic_score_nlp
@@ -10,42 +8,58 @@ from experimental.section.section_builder import combine_scores
 from extractor.section.build_section import build_sections, serialize_for_llm
 from extractor.section.detect_region_text import LineRegion, TableRegion, detect_regions
 from extractor.section.optimized_table import enrich_line_regions
-from extractor.section.section_json import sections_to_jsonD
 from utils.text_size import get_text_size
 from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from utils.title.is_title import calculate_title_score, normalize_title_score
 from utils.title.remove_repeated_title import remove_repeated
+import time
 
-
-path = "assets/Earnings Release 3T25.pdf"
+path = "assets\Press-release-Cemig-2026-03-31.pdf"
 
 
 # ─────────────────────────────────────────────
 # 2. CHAMADA AO LLM (Ollama local)
 # ─────────────────────────────────────────────
 
-def call_llm(sections_json: str, model: str = "qwen3.5:9b") -> str:
+def call_llm(sections_json: str, model: str = "qwen2.5:3b") -> str:
     prompt = f"""Você é um analista financeiro especializado em empresas brasileiras listadas na B3.
 
 Abaixo está o conteúdo estruturado de um relatório financeiro em JSON.
-Cada entrada contém: título da seção, página, corpo de texto e tabelas associadas.
+Cada entrada contém: título da seção, confiança, página, e conteúdo: com corpo de texto ou tabelas associadas.
 
-Sua tarefa é produzir um resumo executivo em português com exatamente estas seções:
+Antes de escrever, identifique o período principal do relatório (ex: 3T25, 9M25) 
+e use-o como referência consistente em todo o resumo.
+Nunca misture dados de períodos diferentes na mesma afirmação.
+
+Produza um resumo executivo em português com exatamente estas seções:
 
 1. RESULTADO DO PERÍODO
    - Receita total, lucro líquido, margem, e variações relevantes vs período anterior
+   - Indique sempre o período (ex: 3T25 vs 3T24)
 
 2. PONTOS DE ATENÇÃO
    - Mudanças significativas, riscos mencionados, ou tendências preocupantes
 
 3. DESTAQUES POSITIVOS
    - Crescimentos, conquistas ou eventos favoráveis mencionados no documento
+   - Se não houver, escreva "Não mencionado"
 
 4. CONTEXTO DE MERCADO
    - Cenário econômico descrito que afeta a empresa
 
 
-Seja objetivo e use os números do documento. Se uma seção não tiver informação suficiente, escreva "Não mencionado".
+Seja objetivo e use os números e informações do documento. Se uma seção não tiver informação suficiente, escreva "Não mencionado".
+
+Passo 1 — Antes de escrever o resumo, extraia e liste:
+- Período principal do relatório
+- Receita total e variação
+- Lucro líquido e variação  
+- Margem e variação
+- Um destaque positivo (se houver)
+- Um risco ou ponto de atenção
+
+Passo 2 — Com base apenas nessa lista, escreva o resumo executivo.
+Retorne apenas o Passo 2.
 
 Documento:
 {sections_json}
@@ -60,10 +74,12 @@ Documento:
                 "stream":  False,
                 "options": {
                     "temperature": 0.2,   # baixo para respostas mais factuais
-                    "num_ctx":     8192,  # contexto máximo
+                    "num_ctx":     12288,  # contexto máximo
+                    "num_predict": 8192,
+                    "num_gpu": 18,
                 }
             },
-            timeout=120,
+            timeout=600,
         )
         response.raise_for_status()
         return response.json()["response"]
@@ -138,15 +154,6 @@ def test_full_pipeline():
     for c in cleaned_titles:
         c.combined_score = combine_scores(c.h_score, c.nlp_score)
 
-    #Titulos nao oficiais
-    # for c in candidates:
-    #     np_features = extract_features_batch([t.text for t in candidates])  # teste da função de extração em lote
-
-    #     sematic_scores = [calc_semantic_score_nlp(f) for f in np_features]
-    #     c.nlp_score = sematic_scores[candidates.index(c)]  # atribui a pontuação semântica ao título
-    # for c in candidates:
-    #     c.combined_score = combine_scores(c.h_score, c.nlp_score)
-
 
     print(f"Títulos individuais : {len(best_candidates)}")
     print(f"Após deduplicação   : {len(cleaned_titles)}")
@@ -194,7 +201,7 @@ def test_full_pipeline():
     # Monta JSON apenas com seções que têm conteúdo relevante
     # (descarta seções de capa/assinatura com corpo muito curto)
 
-    sections_json = serialize_for_llm(sections)
+    sections_json = serialize_for_llm(sections, 2, True)
 
     # Salva JSON para inspeção
     json_path = path.replace(".pdf", "_sections.json")
@@ -203,14 +210,27 @@ def test_full_pipeline():
     print(f"        JSON salvo em: {json_path}")
     print()
 
-    print("── Aguardando resposta do LLM... ──────────")
-    resumo = call_llm(sections_json)
+    tokens_estimados = len(sections_json) / 4
+    print(f"~{tokens_estimados:.0f} tokens de input")
 
+    print("── Aguardando resposta do LLM... ──────────")
+    inicio = time.perf_counter()
+    resumo = call_llm(sections_json)
+    fim = time.perf_counter()
+    tempo_decorrido = fim - inicio
+
+    print(f"Chamada do LLM executada em: {tempo_decorrido:.4f} segundos")
     print()
     print("=" * 60)
     print("RESUMO EXECUTIVO")
     print("=" * 60)
     print(resumo)
+
+    # Salva resumo para inspeção
+    resumo_path = path.replace(".pdf", "_resumo.json")
+    with open(resumo_path, "w", encoding="utf-8") as f:
+        f.write(resumo)
+    print(f"        JSON salvo em: {resumo_path}")
 
     return sections, #resumo
 
