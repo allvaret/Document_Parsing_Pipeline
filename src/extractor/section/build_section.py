@@ -51,30 +51,42 @@ def build_sections(regions, candidates):
     return sections
 
 
+_FINANCIAL_SIGLAS = {"EBITDA", "ROIC", "ROAE", "ROE", "ROA", "CAGR", "CDI", "IPCA", "VPL", "TIR"}
+
 def _is_numeric_fragment(text: str) -> bool:
     tokens = text.split()
     if not tokens:
         return False
     numeric = sum(
         1 for t in tokens
-        if re.search(r"\d", t) or (t.isupper() and len(t) <= 6)
+        if re.search(r"\d", t)  # apenas tokens com dígitos
+        and t not in _FINANCIAL_SIGLAS
     )
     return numeric / len(tokens) > _NUMERIC_FRAG_RATIO
 
+
+_FINANCIAL_VALUE_RE = re.compile(r'R\$\s*[\d.,]+|[\d.,]+%|\d{3,}[.,]\d')
 
 def qualify_blocks(section: DocumentSection) -> List[dict]:
     qualified = []
     for block in section.blocks:
         if isinstance(block, str):
-            if len(block.strip()) < _MIN_TEXT_LEN or _is_numeric_fragment(block):
+            text = block.strip()
+            if len(text) < _MIN_TEXT_LEN:
                 confidence: Confidence = "low"
+            elif _is_numeric_fragment(text) and not _FINANCIAL_VALUE_RE.search(text):
+                confidence = "low"
             else:
                 confidence = "high"
-            qualified.append({"type": "text", "confidence": confidence, "text": block.strip()})
+            qualified.append({"type": "text", "confidence": confidence, "text": text})
         else:
             if not block.markdown.strip():
                 continue
-            qualified.append({"type": "table", "confidence": block.confidence, "markdown": block.markdown})
+            # tabela herda confidence do TableRegion, mas garante "high" se tem conteúdo financeiro
+            conf = block.confidence
+            if conf == "low" and _FINANCIAL_VALUE_RE.search(block.markdown):
+                conf = "high"
+            qualified.append({"type": "table", "confidence": conf, "markdown": block.markdown})
     return qualified
 
 
@@ -97,18 +109,40 @@ def qualify_section(
     return "high", None
 
 
-def serialize_for_llm(sections: List[DocumentSection], indent: int = 2) -> str:
-    output = []
+def serialize_for_llm(sections: List[DocumentSection], indent: int = 2, debug: bool = False) -> str:
+    IGNORAR = {"agenda", "nota", "glossário", "aviso", "disclaimer", "índice"}
+    filtered = []
+
     for section in sections:
         blocks = qualify_blocks(section)
         conf, reason = qualify_section(section, blocks)
+
+        if debug:
+            high = sum(1 for b in blocks if b["confidence"] == "high")
+            total_chars = sum(len(b.get("text", "") or b.get("markdown", "")) for b in blocks)
+            tables = sum(1 for b in blocks if b["type"] == "table")
+            print(f"[p{section.page}] '{section.title[:40]}' | conf={conf} reason={reason} | blocks={len(blocks)} high={high} tables={tables} chars={total_chars}")
+
+            for b in blocks:
+                preview = (b.get("text", "") or b.get("markdown", ""))[:60]
+                print(f"  [{b['type']}] conf={b['confidence']} | '{preview}'")
+
+        if any(termo in section.title.lower() for termo in IGNORAR):
+            continue
+        if conf == "low":
+            continue
+        content = [b for b in blocks if b["confidence"] == "high"]
+        if not content:
+            continue
+
         entry = {
             "title":      section.title,
             "page":       section.page,
             "confidence": conf,
-            "content":    blocks,
+            "content":    content,
         }
         if reason:
             entry["reason"] = reason
-        output.append(entry)
-    return json.dumps(output, ensure_ascii=False, indent=indent)
+        filtered.append(entry)
+
+    return json.dumps(filtered, ensure_ascii=False, indent=indent)
