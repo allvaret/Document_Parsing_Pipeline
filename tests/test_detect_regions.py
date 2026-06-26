@@ -1,5 +1,4 @@
 from extractor.summary_detector import  detect_summary, take_content_summary
-from utils.calc_vertical_space import calcular_vertical_space
 from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from extractor.parsers import decomp_pdf
 from utils.text_size import get_text_size
