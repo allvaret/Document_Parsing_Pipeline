@@ -175,10 +175,10 @@ def classify_line_region(lines: List[TextLine]) -> RegionType:
         return "uncertain"
     
 
-def filter_regions(regions: list[LineRegion | TableRegion], page_height: float) -> list[LineRegion | TableRegion]:
+def filter_regions(regions: list[LineRegion | TableRegion], page_height: float, debug = False) -> list[LineRegion | TableRegion]:
     before = len(regions)
     filtered = [r for r in regions if not is_footer_region(r, page_height)]
-    print(f"Regiões após filtro de rodapé: {len(filtered)} / {before}")
+    if debug == True: print(f"Regiões após filtro de rodapé: {len(filtered)} / {before}")
     return filtered
 
 
@@ -199,7 +199,6 @@ def detect_regions(
     lines:             list[TextLine],
     title_candidates:  list[TitleCandidate],
     gap_ratio_threshold: float = 0.04,
-    min_table_lines:   int   = 3,
 ) -> list[LineRegion | TableRegion]:
     """
     Quebra de região ocorre quando:
