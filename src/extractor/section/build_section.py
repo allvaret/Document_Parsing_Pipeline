@@ -5,6 +5,9 @@ import re
 from dataclasses import dataclass, field
 from typing import Literal, List
 
+from extractor.section.detect_region_text import LineRegion, TableRegion
+from utils.title.candidate_filter import TitleCandidate
+
 
 
 Confidence = Literal["high", "low"]
@@ -22,7 +25,10 @@ class DocumentSection:
     blocks: List = field(default_factory=list)
 
 
-def build_sections(regions, candidates):
+def build_sections(
+        regions: List[LineRegion | TableRegion],
+        candidates: List[TitleCandidate]) -> List[DocumentSection]:
+    
     title_set = {c.text.strip() for c in candidates}
     sections, current = [], None
 
