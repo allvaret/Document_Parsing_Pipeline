@@ -80,7 +80,9 @@ def take_content_summary(atoms, summary_atom) -> list[TitleCandidate]:
                         text=match.group("text").strip(),
                         page=int(match.group("page")),
                         relative_y=atom.y0 / atom.page_height,
-                        score=0.0,  # Score can be calculated later if needed
+                        h_score=0.0,
+                        nlp_score=0.0,  
+                        combined_score=0.0
                     )
                 )
             else:
@@ -90,7 +92,9 @@ def take_content_summary(atoms, summary_atom) -> list[TitleCandidate]:
                         text=line,
                         page=summary_atom.page,  # Página desconhecida
                         relative_y=atom.y0 / atom.page_height,
-                        score=0.0,
+                        h_score=0.0,
+                        nlp_score=0.0,  
+                        combined_score=0.0
                     )
                 )
 
