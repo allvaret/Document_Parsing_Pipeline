@@ -74,7 +74,7 @@ def is_disqualified(atom, body_size: float) -> Optional[str]:
     return None  # survived — send to scorer
 
 
-def candidate_filter(atoms: List[TextAtom], body_size: float) -> List[TextAtom]:
+def candidate_filter(atoms: List[TextAtom], body_size: float, debug = False) -> List[TextAtom]:
     survivors = []
     rejected_reasons = {}
 
@@ -85,10 +85,10 @@ def candidate_filter(atoms: List[TextAtom], body_size: float) -> List[TextAtom]:
         else:
             survivors.append(atom)
 
-    # useful during development — remove in production
-    print(f"Candidates: {len(survivors)} / {len(atoms)} atoms survived")
-    for reason, count in sorted(rejected_reasons.items(), key=lambda x: -x[1]):
-        print(f"  {reason}: {count}")
+    if debug == True:
+        print(f"Candidates: {len(survivors)} / {len(atoms)} atoms survived")
+        for reason, count in sorted(rejected_reasons.items(), key=lambda x: -x[1]):
+            print(f"  {reason}: {count}")
 
     return survivors
 
