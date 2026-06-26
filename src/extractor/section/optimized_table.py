@@ -180,7 +180,6 @@ def _demote_to_prose(region: LineRegion | TableRegion) -> LineRegion:
 def enrich_line_regions(
     regions:      list[LineRegion | TableRegion],
     pdf_path:     str,
-    page_heights: dict[int, float],
 ) -> list[LineRegion | TableRegion]:
     """
     Enriquece regiões detectadas usando o pdfplumber como fonte de verdade
@@ -201,6 +200,10 @@ def enrich_line_regions(
         lista na mesma ordem com regiões promovidas ou rebaixadas
     """
     result: list[LineRegion | TableRegion] = []
+
+    page_heights = {}
+    if isinstance(regions, LineRegion):
+        page_heights = regions.get_page_heights
 
     with pdfplumber.open(pdf_path) as plumber_pdf:
         detected = _detect_tables_plumber(plumber_pdf, page_heights)
