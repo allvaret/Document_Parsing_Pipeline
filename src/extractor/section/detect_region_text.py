@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
-from typing import Dict, List
+from typing import Dict, List, Literal
 from extractor.group_text_line import TextLine
-from typing import Literal
 from collections import Counter
 import statistics
 
