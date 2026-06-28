@@ -2,7 +2,7 @@
 from typing import List
 from LLM.NLP.feature_extractor_nlp import extract_features_batch
 from LLM.NLP.semantic_scorer import calc_semantic_score_nlp
-from experimental.section.section_builder import combine_scores
+from utils.title.combine_title_score import combine_scores
 from extractor import TextAtom
 from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from utils.title.is_title import calculate_title_score, normalize_title_score
