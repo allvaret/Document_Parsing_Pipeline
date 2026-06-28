@@ -35,7 +35,7 @@ def _plumber_bbox_to_fitz(
 # ── detecção via pdfplumber ────────────────────────────────────────────────────
 
 def _detect_tables_plumber(
-    plumber_pdf:  pdfplumber.PDF,
+    plumber_pdf:  pdfplumber.PDF, # type: ignore
     page_heights: dict[int, float],
 ) -> list[PageBBox]:
     """
@@ -140,7 +140,7 @@ def _rows_to_markdown(rows: list[list[str | None]]) -> str:
 def _promote_to_table(
     region:      LineRegion | TableRegion,
     bbox:        PageBBox,
-    plumber_pdf: pdfplumber.PDF,
+    plumber_pdf: pdfplumber.PDF, # type: ignore
 ) -> TableRegion | None:
     """
     Tenta extrair o markdown da bbox e construir um TableRegion.
@@ -206,7 +206,7 @@ def enrich_line_regions(
         page_heights = regions.get_page_heights
 
     with pdfplumber.open(pdf_path) as plumber_pdf:
-        detected = _detect_tables_plumber(plumber_pdf, page_heights)
+        detected = _detect_tables_plumber(plumber_pdf, page_heights) # type: ignore
 
         for region in regions:
             # prosa nunca é tocada
@@ -335,7 +335,6 @@ def _infer_col_anchors(header_words: list[dict], label_zone_end: float) -> list[
 def _classify_and_merge_lines(
     lines:       dict[float, list[dict]],
     sorted_tops: list[float],
-    col_anchors: list[float],
 ) -> list[dict]:
     """
     Classifica linhas por CONTEÚDO e mescla linhas adjacentes que formam
@@ -492,7 +491,7 @@ def _extract_financial_table(
 
     # classifica e mescla apenas as linhas de conteúdo (sem o header)
     non_header_tops = [t for t in sorted_tops if t != header_top]
-    logical_lines   = _classify_and_merge_lines(lines, non_header_tops, col_anchors)
+    logical_lines   = _classify_and_merge_lines(lines, non_header_tops)
 
     n_cols    = len(col_anchors) + 1
     rows:     list[list[str]] = []
@@ -563,7 +562,7 @@ def _score_table_confidence(
 
 
 def _extract_table_from_bbox(
-    plumber_pdf: pdfplumber.PDF,
+    plumber_pdf: pdfplumber.PDF, # type: ignore
     bbox:        "PageBBox",
 ) -> dict | None:
     """
@@ -592,7 +591,7 @@ def _extract_table_from_bbox(
     )
 
     rows = _extract_financial_table(page, clipped)
-    if not rows or not _is_coherent_table(rows):
+    if not rows or not _is_coherent_table(rows): # type: ignore
         return None
 
     # reconstrói row_types para o scorer
@@ -601,7 +600,7 @@ def _extract_table_from_bbox(
     confidence, note = _score_table_confidence(rows, row_types)
 
     return {
-        "markdown":   _rows_to_markdown(rows),
+        "markdown":   _rows_to_markdown(rows), # type: ignore
         "confidence": confidence,
         "note":       note,
     }
