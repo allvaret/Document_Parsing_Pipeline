@@ -23,4 +23,4 @@ def main(pdf_path: str | None = None):
     print(summary)
 
 if __name__ == "__main__": 
-    main()
+    main(INPUT_FILE)
