@@ -172,7 +172,6 @@ dmypy.json
 cython_debug/
 
 # PyCharm
-<<<<<<< HEAD
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -256,12 +255,6 @@ http-client.private.env.json
 
 # Github Copilot persisted session migrations, see: https://github.com/microsoft/copilot-intellij-feedback/issues/712#issuecomment-3322062215
 .idea/**/copilot.data.migration.*.xml
-=======
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
->>>>>>> feature/v1-stabilization
 .idea/
 
 # Abstra
