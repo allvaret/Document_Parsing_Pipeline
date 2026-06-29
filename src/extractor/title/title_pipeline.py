@@ -2,11 +2,11 @@
 from typing import List
 from LLM.NLP.feature_extractor_nlp import extract_features_batch
 from LLM.NLP.semantic_scorer import calc_semantic_score_nlp
-from utils.title.combine_title_score import combine_scores
+from extractor.title.combine_title_score import combine_scores
 from extractor import TextAtom
-from utils.title.candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
-from utils.title.is_title import calculate_title_score, normalize_title_score
-from utils.title.remove_repeated_title import remove_repeated
+from extractor.title.title_candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
+from extractor.title.is_title import calculate_title_score, normalize_title_score
+from extractor.title.remove_repeated_title import remove_repeated
 
 
 def detect_titles(atoms: List[TextAtom], body_size:float ):

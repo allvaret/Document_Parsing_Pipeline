@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from typing import Literal, List
 
 from extractor.section.detect_region_text import LineRegion, TableRegion
-from utils.title.candidate_filter import TitleCandidate
+from extractor.title.title_candidate_filter import TitleCandidate
 
 
 Confidence = Literal["high", "low"]

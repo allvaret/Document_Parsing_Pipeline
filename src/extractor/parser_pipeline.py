@@ -6,7 +6,7 @@ from extractor.section.build_section import build_sections
 from extractor.section.detect_region_text import detect_regions
 from extractor.section.optimized_table import enrich_line_regions
 from utils.text_size import get_text_size
-from utils.title.title_pipeline import detect_titles
+from extractor.title.title_pipeline import detect_titles
 
 
 def parse_document(path):

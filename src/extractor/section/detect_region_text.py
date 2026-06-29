@@ -4,7 +4,7 @@ from extractor.group_text_line import TextLine
 from collections import Counter
 import statistics
 
-from utils.title.candidate_filter import TitleCandidate
+from extractor.title.title_candidate_filter import TitleCandidate
 
 @dataclass
 class PageBBox:
