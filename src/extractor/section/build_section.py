@@ -112,8 +112,70 @@ def qualify_section(
         return "low", "low_content"
     return "high", None
 
+import re
+from typing import List, Optional
 
-def serialize_for_llm(sections: List[DocumentSection], indent: int = 2, debug: bool = False) -> str:
+# --- Heurísticas de extração de metadata ---
+
+PERIOD_PATTERN = re.compile(r"\b([1-4])T(\d{2})\b")
+
+REPORT_TYPE_KEYWORDS = {
+    "release de resultados": "Earnings Release",
+    "earnings release": "Earnings Release",
+    "formulário de referência": "Formulário de Referência",
+    "itr": "ITR",
+    "dfp": "DFP",
+    "fato relevante": "Fato Relevante",
+}
+
+LINHAS_IGNORADAS_CAPA = {"release de resultados", "earnings release", "relatório", "resultados"}
+
+
+def _raw_block_text(block, include_tables: bool = True) -> str:
+    """Extrai texto de um bloco bruto (LineRegion ou TableRegion), pré-qualify."""
+    if isinstance(block, TableRegion):
+        return block.markdown if include_tables else ""
+    if isinstance(block, LineRegion):
+        return "\n".join(getattr(line, "atoms", "") for line in block.lines)
+    return ""
+
+
+def _section_raw_text(section: DocumentSection, include_tables: bool = True) -> str:
+    parts = [_raw_block_text(b, include_tables=include_tables) for b in section.blocks]
+    return "\n".join(p for p in parts if p)
+
+
+def extract_company_name(text: str) -> Optional[str]:
+    """Heurística: primeira linha 'plausível' de nome de empresa na capa.
+    Ignora linhas curtas, puramente numéricas/datas, ou termos genéricos."""
+    for linha in text.splitlines():
+        linha = linha.strip()
+        if len(linha) < 3 or linha.lower() in LINHAS_IGNORADAS_CAPA:
+            continue
+        if re.fullmatch(r"[\d\s/T\-]+", linha):
+            continue
+        if linha.isupper() or linha.istitle():
+            return linha
+    return None
+
+
+def extract_period(text: str) -> Optional[str]:
+    """Ex: '3T25' a partir de padrões tipo trimestre+ano."""
+    m = PERIOD_PATTERN.search(text)
+    return f"{m.group(1)}T{m.group(2)}" if m else None
+
+
+def extract_report_type(text: str) -> Optional[str]:
+    lowered = text.lower()
+    for termo, label in REPORT_TYPE_KEYWORDS.items():
+        if termo in lowered:
+            return label
+    return None
+
+
+# --- Lógica de corte, extraída de serialize_for_llm para reuso ---
+
+def build_sections_payload(sections: List[DocumentSection], debug: bool = False) -> List[dict]:
     IGNORAR = {"agenda", "nota", "glossário", "aviso", "disclaimer", "índice"}
     filtered = []
 
@@ -126,7 +188,6 @@ def serialize_for_llm(sections: List[DocumentSection], indent: int = 2, debug: b
             total_chars = sum(len(b.get("text", "") or b.get("markdown", "")) for b in blocks)
             tables = sum(1 for b in blocks if b["type"] == "table")
             print(f"[p{section.page}] '{section.title[:40]}' | conf={conf} reason={reason} | blocks={len(blocks)} high={high} tables={tables} chars={total_chars}")
-
             for b in blocks:
                 preview = (b.get("text", "") or b.get("markdown", ""))[:60]
                 print(f"  [{b['type']}] conf={b['confidence']} | '{preview}'")
@@ -140,13 +201,51 @@ def serialize_for_llm(sections: List[DocumentSection], indent: int = 2, debug: b
             continue
 
         entry = {
-            "title":      section.title,
-            "page":       section.page,
+            "title": section.title,
+            "page": section.page,
             "confidence": conf,
-            "content":    content,
+            "content": content,
         }
         if reason:
             entry["reason"] = reason
         filtered.append(entry)
 
+    return filtered
+
+
+def serialize_for_llm(sections: List[DocumentSection], indent: int = 2, debug: bool = False) -> str:
+    """Mantida por compatibilidade: mesma saída de sempre (string JSON)."""
+    filtered = build_sections_payload(sections, debug=debug)
     return json.dumps(filtered, ensure_ascii=False, indent=indent)
+
+
+# --- Módulo intermediário ---
+
+def build_document_payload(
+    sections: List[DocumentSection],
+    source_title: str = "",
+    debug: bool = False,
+) -> dict:
+    """
+    Monta o dict intermediário:
+      - metadata: extraída da capa (page 0), última página e título do PDF
+      - sections: mesmo conteúdo qualificado que hoje vai pra LLM
+    """
+    cover = next((s for s in sections if s.page == 0), None)
+    last_page_num = max((s.page for s in sections), default=None)
+    last = next((s for s in sections if s.page == last_page_num), None)
+
+    cover_text = _section_raw_text(cover, include_tables=False) if cover else ""
+    last_text = _section_raw_text(last, include_tables=False) if last else ""
+    combined = f"{cover_text}\n{last_text}\n{source_title}"
+
+    metadata = {
+        "company_name": extract_company_name(cover_text) or extract_company_name(source_title),
+        "period": extract_period(combined),
+        "report_type": extract_report_type(combined),
+    }
+
+    return {
+        "metadata": metadata,
+        "sections": build_sections_payload(sections, debug=debug),
+    }
