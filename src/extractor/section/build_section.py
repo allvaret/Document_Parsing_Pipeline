@@ -2,11 +2,18 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field
-from typing import Literal, List
+from typing import Literal, List, Optional, Tuple
+from collections import Counter
+from pathlib import Path
+
 
 from extractor.section.detect_region_text import LineRegion, TableRegion
 from extractor.title.title_candidate_filter import TitleCandidate
 
+
+_TICKER_MAP_PATH = "assets/ticker_map.json"
+with open(_TICKER_MAP_PATH, encoding="utf-8") as f:
+    TICKER_MAP: dict = json.load(f)
 
 Confidence = Literal["high", "low"]
 
@@ -145,18 +152,90 @@ def _section_raw_text(section: DocumentSection, include_tables: bool = True) -> 
     return "\n".join(p for p in parts if p)
 
 
-def extract_company_name(text: str) -> Optional[str]:
-    """Heurística: primeira linha 'plausível' de nome de empresa na capa.
-    Ignora linhas curtas, puramente numéricas/datas, ou termos genéricos."""
-    for linha in text.splitlines():
-        linha = linha.strip()
-        if len(linha) < 3 or linha.lower() in LINHAS_IGNORADAS_CAPA:
-            continue
-        if re.fullmatch(r"[\d\s/T\-]+", linha):
-            continue
-        if linha.isupper() or linha.istitle():
-            return linha
-    return None
+TICKER_PATTERN = re.compile(r"\b([A-Z]{4})(3|4|5|6|11)\b")
+
+RAZAO_SOCIAL_PATTERN = re.compile(
+    r"([A-ZÀ-Ú][A-Za-zà-úÀ-Ú0-9\.\-&, ]{2,60}?\bS[\./]A\.?)"
+)
+
+FILENAME_NOISE = {
+    "comunicado", "press", "release", "earnings", "desempenho",
+    "financeiro", "resultado", "resultados", "relatorio", "relatório",
+}
+
+_PERIOD_TOKEN = re.compile(r"^[1-4]T\d{2}$", re.IGNORECASE)
+_YEAR_TOKEN = re.compile(r"^(19|20)\d{2}$")
+
+
+def _is_noise_token(token: str) -> bool:
+    lowered = token.lower()
+    if lowered in FILENAME_NOISE:
+        return True
+    if _PERIOD_TOKEN.match(token) or _YEAR_TOKEN.match(token):
+        return True
+    if token.isdigit():
+        return True
+    return False
+
+
+def _ticker_from_text(text: str, ticker_map: dict) -> Optional[str]:
+    m = TICKER_PATTERN.search(text.upper())
+    return ticker_map.get(m.group(1)) if m else None
+
+
+def _razao_social_from_text(text: str) -> Optional[str]:
+    m = RAZAO_SOCIAL_PATTERN.search(text)
+    return m.group(1).strip(" .,-") if m else None
+
+
+def _company_from_filename(filename: str, ticker_map: dict) -> Optional[str]:
+    stem = re.sub(r"\.\w+$", "", filename)
+    tokens = [t for t in re.split(r"[\s_\-]+", stem) if t and not _is_noise_token(t)]
+
+    # tenta achar um ticker embutido em qualquer token restante
+    for t in tokens:
+        nome = ticker_map.get(t.upper())
+        if nome:
+            return nome
+
+    # só usa o que sobrou como nome literal se parecer texto de verdade
+    # (pelo menos uma palavra com 3+ letras alfabéticas — evita devolver
+    # sobras tipo códigos, siglas de 1-2 letras, etc.)
+    candidatos = [t for t in tokens if re.search(r"[A-Za-zÀ-ÿ]{3,}", t)]
+    return " ".join(candidatos).strip() if candidatos else None
+
+
+def _company_from_ner(text: str, nlp) -> Optional[str]:
+    doc = nlp(text[:5000])
+    orgs = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
+    return Counter(orgs).most_common(1)[0][0] if orgs else None
+
+
+def extract_company_name(
+    full_text: str,
+    filename: str,
+    ticker_map: dict,
+    nlp=None,
+) -> Tuple[Optional[str], str]:
+    """Retorna (nome, metodo) — o metodo ajuda a auditar qual tier resolveu."""
+    nome = _ticker_from_text(full_text, ticker_map) or _ticker_from_text(filename, ticker_map)
+    if nome:
+        return nome, "ticker"
+
+    nome = _razao_social_from_text(full_text)
+    if nome:
+        return nome, "razao_social"
+
+    nome = _company_from_filename(filename, ticker_map)
+    if nome:
+        return nome, "filename"
+
+    if nlp:
+        nome = _company_from_ner(full_text, nlp)
+        if nome:
+            return nome, "ner"
+
+    return None, "none"
 
 
 def extract_period(text: str) -> Optional[str]:
@@ -223,6 +302,7 @@ def serialize_for_llm(sections: List[DocumentSection], indent: int = 2, debug: b
 
 def build_document_payload(
     sections: List[DocumentSection],
+    pdf_path: str,
     source_title: str = "",
     debug: bool = False,
 ) -> dict:
@@ -239,8 +319,10 @@ def build_document_payload(
     last_text = _section_raw_text(last, include_tables=False) if last else ""
     combined = f"{cover_text}\n{last_text}\n{source_title}"
 
+    filename = Path(pdf_path).name  # ex: "Desempenho Financeiro Petrobras 3T25.pdf"
+
     metadata = {
-        "company_name": extract_company_name(cover_text) or extract_company_name(source_title),
+        "company_name": extract_company_name(cover_text, filename, TICKER_MAP) or extract_company_name(source_title, filename, TICKER_MAP),
         "period": extract_period(combined),
         "report_type": extract_report_type(combined),
     }

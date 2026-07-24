@@ -13,7 +13,7 @@ def main(pdf_path: str | None = None):
 
     sections = parse_document(pdf)
 
-    sections_json = serialize(sections)
+    sections_json = serialize(sections, pdf)
 
     summary = summarizer(sections_json)
 

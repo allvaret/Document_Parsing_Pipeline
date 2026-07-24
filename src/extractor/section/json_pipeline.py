@@ -32,10 +32,10 @@ def ping(model: str = "qwen2.5:3b") -> str:
         return f"[ERRO] {e}"
     
 
-def serialize(sections):
+def serialize(sections, pdf_path):
     response = ping()
     if "[ERRO]" in response:
-        sections_json = build_document_payload(sections)
+        sections_json = build_document_payload(sections, pdf_path)
         return "Offline", sections_json
     else:     
         sections_json = serialize_for_llm(sections)
