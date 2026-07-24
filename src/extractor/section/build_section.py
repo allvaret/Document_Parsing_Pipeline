@@ -124,7 +124,6 @@ from typing import List, Optional
 
 # --- Heurísticas de extração de metadata ---
 
-PERIOD_PATTERN = re.compile(r"\b([1-4])T(\d{2})\b")
 
 REPORT_TYPE_KEYWORDS = {
     "release de resultados": "Earnings Release",
@@ -139,16 +138,22 @@ LINHAS_IGNORADAS_CAPA = {"release de resultados", "earnings release", "relatóri
 
 
 def _raw_block_text(block, include_tables: bool = True) -> str:
-    """Extrai texto de um bloco bruto (LineRegion ou TableRegion), pré-qualify."""
+    """Extrai texto de um bloco bruto. Aceita LineRegion, TableRegion,
+    ou string pura (fallback defensivo para blocks já normalizados)."""
     if isinstance(block, TableRegion):
         return block.markdown if include_tables else ""
     if isinstance(block, LineRegion):
-        return "\n".join(getattr(line, "atoms", "") for line in block.lines)
+        return "\n".join(getattr(line, "text", "") for line in block.lines)
+    if isinstance(block, str):
+        return block
     return ""
 
 
 def _section_raw_text(section: DocumentSection, include_tables: bool = True) -> str:
-    parts = [_raw_block_text(b, include_tables=include_tables) for b in section.blocks]
+    """Texto bruto de uma seção, incluindo o título (que em capas costuma
+    carregar o nome da empresa/marca detectado como maior destaque visual)."""
+    parts = [section.title] if section.title else []
+    parts += [_raw_block_text(b, include_tables=include_tables) for b in section.blocks]
     return "\n".join(p for p in parts if p)
 
 
@@ -158,20 +163,41 @@ RAZAO_SOCIAL_PATTERN = re.compile(
     r"([A-ZÀ-Ú][A-Za-zà-úÀ-Ú0-9\.\-&, ]{2,60}?\bS[\./]A\.?)"
 )
 
+# Períodos: trimestre (3T25), semestre (1S25), N-meses acumulados (9M25)
+PERIOD_PATTERN = re.compile(r"\b([1-4]T\d{2}|[1-2]S\d{2}|\d{1,2}M\d{2})\b", re.IGNORECASE)
+
+NOISE_PHRASES = {
+    "divulgação de resultados", "divulgacao de resultados",
+    "release de resultados", "earnings release",
+    "resultados do trimestre", "resultados do período",
+    "demonstrações financeiras", "relatório", "resultados",
+}
+
 FILENAME_NOISE = {
     "comunicado", "press", "release", "earnings", "desempenho",
     "financeiro", "resultado", "resultados", "relatorio", "relatório",
 }
 
-_PERIOD_TOKEN = re.compile(r"^[1-4]T\d{2}$", re.IGNORECASE)
-_YEAR_TOKEN = re.compile(r"^(19|20)\d{2}$")
+
+
+def _is_noise_line(line: str) -> bool:
+    stripped = line.strip()
+    if len(stripped) < 3:
+        return True
+    if stripped.lower() in NOISE_PHRASES:
+        return True
+    if PERIOD_PATTERN.fullmatch(stripped):
+        return True
+    if re.fullmatch(r"[\d\s/T\-]+", stripped):
+        return True
+    return False
 
 
 def _is_noise_token(token: str) -> bool:
     lowered = token.lower()
     if lowered in FILENAME_NOISE:
         return True
-    if _PERIOD_TOKEN.match(token) or _YEAR_TOKEN.match(token):
+    if PERIOD_PATTERN.fullmatch(token):
         return True
     if token.isdigit():
         return True
@@ -186,6 +212,15 @@ def _ticker_from_text(text: str, ticker_map: dict) -> Optional[str]:
 def _razao_social_from_text(text: str) -> Optional[str]:
     m = RAZAO_SOCIAL_PATTERN.search(text)
     return m.group(1).strip(" .,-") if m else None
+
+def _company_from_capa_lines(text: str) -> Optional[str]:
+    for linha in text.splitlines():
+        linha = linha.strip()
+        if _is_noise_line(linha):
+            continue
+        if linha.isupper() or linha.istitle():
+            return linha
+    return None
 
 
 def _company_from_filename(filename: str, ticker_map: dict) -> Optional[str]:
@@ -226,6 +261,10 @@ def extract_company_name(
     if nome:
         return nome, "razao_social"
 
+    nome = _company_from_capa_lines(full_text)
+    if nome:
+        return nome, "capa_lines"
+
     nome = _company_from_filename(filename, ticker_map)
     if nome:
         return nome, "filename"
@@ -239,10 +278,8 @@ def extract_company_name(
 
 
 def extract_period(text: str) -> Optional[str]:
-    """Ex: '3T25' a partir de padrões tipo trimestre+ano."""
     m = PERIOD_PATTERN.search(text)
-    return f"{m.group(1)}T{m.group(2)}" if m else None
-
+    return m.group(1).upper() if m else None
 
 def extract_report_type(text: str) -> Optional[str]:
     lowered = text.lower()
