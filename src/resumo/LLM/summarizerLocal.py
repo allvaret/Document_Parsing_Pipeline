@@ -1,5 +1,5 @@
-from LLM.client import generate
-from LLM.prompts import build_summary_prompt
+from resumo.LLM.client import generate
+from resumo.LLM.prompts import build_summary_prompt
 
 
 def summarizeLLM(document):

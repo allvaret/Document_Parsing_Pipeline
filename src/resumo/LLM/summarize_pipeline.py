@@ -1,5 +1,5 @@
-from LLM.summarizerLocal import summarizeLLM
-from summarizer.assembler import SummaryAssembler
+from resumo.LLM.summarizerLocal import summarizeLLM
+from resumo.summarizer.assembler import SummaryAssembler
 
 def summarizer(sections_json):
 

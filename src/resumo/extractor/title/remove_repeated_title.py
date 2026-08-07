@@ -1,7 +1,7 @@
 ﻿import statistics
 import math
 
-from extractor.title.title_candidate_filter import TitleCandidate
+from resumo.extractor.title.title_candidate_filter import TitleCandidate
 
 
 def _page_distribution_score(pages: list[int]) -> dict:

@@ -7,11 +7,14 @@ from collections import Counter
 from pathlib import Path
 
 
-from extractor.section.detect_region_text import LineRegion, TableRegion
-from extractor.title.title_candidate_filter import TitleCandidate
+from resumo.extractor.section.detect_region_text import LineRegion, TableRegion
+from resumo.extractor.title.title_candidate_filter import TitleCandidate
 
 
-_TICKER_MAP_PATH = "assets/ticker_map.json"
+ROOT = Path(__file__).resolve().parents[4]   # ajuste o número se necessário
+
+
+_TICKER_MAP_PATH = ROOT / "assets/ticker_map.json"
 with open(_TICKER_MAP_PATH, encoding="utf-8") as f:
     TICKER_MAP: dict = json.load(f)
 

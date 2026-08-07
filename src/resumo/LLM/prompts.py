@@ -1,6 +1,6 @@
 
 
-def build_summary_prompt(document: str) -> str:
+def  build_summary_prompt(document: str) -> str:
 
     return f"""Você é um analista financeiro especializado em empresas brasileiras listadas na B3.
 

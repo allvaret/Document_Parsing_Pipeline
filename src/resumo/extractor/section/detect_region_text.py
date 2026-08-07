@@ -1,10 +1,10 @@
 from dataclasses import dataclass, field
 from typing import Dict, List, Literal
-from extractor.group_text_line import TextLine
+from resumo.extractor.group_text_line import TextLine
 from collections import Counter
 import statistics
 
-from extractor.title.title_candidate_filter import TitleCandidate
+from resumo.extractor.title.title_candidate_filter import TitleCandidate
 
 @dataclass
 class PageBBox:

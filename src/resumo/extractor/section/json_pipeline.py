@@ -1,7 +1,7 @@
 import requests
 
-from extractor.section.build_section import build_document_payload, serialize_for_llm
-from summarizer.assembler import SummaryAssembler
+from resumo.extractor.section.build_section import build_document_payload, serialize_for_llm
+from resumo.summarizer.assembler import SummaryAssembler
 
 
 def ping(model: str = "qwen2.5:3b") -> str:

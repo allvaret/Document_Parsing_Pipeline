@@ -3,7 +3,7 @@ import re
 
 import pdfplumber
 
-from extractor.section.detect_region_text import LineRegion, PageBBox, TableRegion
+from resumo.extractor.section.detect_region_text import LineRegion, PageBBox, TableRegion
 
 
 # ── conversão de coordenadas ───────────────────────────────────────────────────

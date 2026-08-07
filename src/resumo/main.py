@@ -1,15 +1,20 @@
-from LLM.summarize_pipeline import summarizer
-from extractor.parser_pipeline import parse_document
-from extractor.section.json_pipeline import serialize
+from pathlib import Path
+
+from resumo.LLM.summarize_pipeline import summarizer
+from resumo.extractor.parser_pipeline import parse_document
+from resumo.extractor.section.json_pipeline import serialize
 from utils.save_results import save_output
 
-INPUT_FILE = ""
+ROOT = Path(__file__).resolve().parents[2]
 
-DEFAULT_INPUT = 'assets/Earnings Release 3T25.pdf'
+INPUT_FILE = str(ROOT / "")
+
+DEFAULT_INPUT = str(ROOT / 'assets/Earnings Release 3T25.pdf')
 
 def main(pdf_path: str | None = None):
-
-    pdf = pdf_path or DEFAULT_INPUT
+    if pdf_path != ROOT:
+        pdf = DEFAULT_INPUT
+    else: pdf = pdf_path
 
     sections = parse_document(pdf)
 

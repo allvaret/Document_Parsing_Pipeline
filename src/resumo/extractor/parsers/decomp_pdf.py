@@ -1,6 +1,6 @@
 import fitz
 
-from extractor.TextAtom import TextAtom
+from resumo.extractor.TextAtom import TextAtom
 
 def extract_text_atoms(path:str) -> list[TextAtom]:
     doc = fitz.open(path)

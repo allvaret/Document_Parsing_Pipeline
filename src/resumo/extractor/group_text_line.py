@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from extractor import TextAtom
+from resumo.extractor import TextAtom
 
 @dataclass
 class TextLine:
