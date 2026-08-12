@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 
+from site_backend.calculadora.estrategias import CalculadoraFactory
+from site_backend.models import MetodoPreco, ResultadoCalculo
+
 
 # ============ Orquestrador ============
 class CalculadoraTetoDePreco:
