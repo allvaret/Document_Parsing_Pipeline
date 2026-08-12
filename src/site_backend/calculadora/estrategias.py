@@ -67,13 +67,14 @@ class CalculadoraGordon:
     """Estratégia modelo Gordon"""
 
     def calcular(self, premissas: PremissasGordon) -> ResultadoCalculo:
-        preco_teto = premissas.dividendo / (premissas.retorno - premissas.growth)
+        d1 = premissas.dpa * (1 + premissas.growth) 
+        preco_teto = d1 / (premissas.retorno - premissas.growth)
 
         return ResultadoCalculo(
                     preco_teto=round(preco_teto, 2),
                     metodo=MetodoPreco.GORDON_DDM,
                     detalhes={
-                        "dividendo_acao": premissas.dividendo,
+                        "dividendo_acao": premissas.dpa,
                         "retorno_exigido": premissas.retorno,
                         "crescimento_perpetuo": premissas.growth
                         }
@@ -83,13 +84,13 @@ class CalculadoraFiiNtnb:
     """Estratégia Yield relativo a NTNB"""
 
     def calcular(self, premissas: PremissasFiiNtnb) -> ResultadoCalculo:
-        preco_teto = premissas.dividendo - (premissas.ntnb + premissas.retorno)
+        preco_teto = premissas.dpa - (premissas.ntnb + premissas.retorno)
 
         return ResultadoCalculo(
             preco_teto=round(preco_teto,2),
             metodo=MetodoPreco.FII_NTNB,
             detalhes={
-            "dividendo_acao": premissas.dividendo,
+            "dividendo_acao": premissas.dpa,
             "retorno_exigido": premissas.retorno,
             "taxa_titulo": premissas.ntnb
             }
@@ -120,6 +121,23 @@ class CalculadoraFactory:
 
 if __name__ == "__main__":
     # Teste rápido
-    premissas = PremissasGrahamNumber(lpa=5.0, vpa=0.10)
+    premissas = PremissasGrahamNumber(lpa=1.69, vpa=10.09)
     resultado = CalculadoraFactory.get(MetodoPreco.GRAHAM_NUMBER).calcular(premissas)
+    print(resultado)
+
+    premissas = PremissasGrahamFormula(lpa=1.69, growth=0.05, yield_base=0.055, yield_atual=0.0783)
+    resultado = CalculadoraFactory.get(MetodoPreco.FORMULA_GRAHAM).calcular(premissas)
+    print(resultado)
+
+    premissas = PremissasBazin(dpa=1.36, dy_minimo=0.06)
+    resultado = CalculadoraFactory.get(MetodoPreco.BAZIN).calcular(premissas)
+    print(resultado)
+
+    premissas = PremissasGordon(dpa=1.36, retorno=0.1, growth=0.05)
+    resultado = CalculadoraFactory.get(MetodoPreco.GORDON_DDM).calcular(premissas)
+    print(resultado)
+
+    # Teste rápido para FII_NTNB (nao deve ser usado para acoes)
+    premissas = PremissasFiiNtnb(dpa=1.36, retorno=0.04, ntnb=0.065)
+    resultado = CalculadoraFactory.get(MetodoPreco.FII_NTNB).calcular(premissas)
     print(resultado)
