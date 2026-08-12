@@ -32,12 +32,12 @@ class PremissasBazin(BaseModel):
     dy_minimo: float = Field(default=0.06, description="ex: 0.08 (8%)")
 
 class PremissasGordon(BaseModel):
-    dividendo: float = Field(..., gt=0, description="ex: (R$)1.1")
+    dpa: float = Field(..., gt=0, description="ex: (R$)1.1")
     retorno: float = Field(..., description="ex: 0.08 (8%)")
     growth: float = Field(..., ge=0, le=1, description="ex: 0.05 (5%)")
 
 class PremissasFiiNtnb(BaseModel):
-    dividendo: float = Field(..., gt=0, description="ex: (R$)1.1")
+    dpa: float = Field(..., gt=0, description="ex: (R$)1.1")
     retorno: float = Field(..., description="ex: 0.02 (2%)")
     ntnb: float = Field(..., ge=0, le=1, description="ex: 0.065 (6,5%)")
 
