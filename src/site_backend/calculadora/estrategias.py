@@ -1,7 +1,7 @@
 import math
 from typing import Protocol
 from pydantic import BaseModel
-from site_backend.models import MetodoPreco, PremissasBazin, PremissasFiiNtnb, PremissasGordon, PremissasGrahamFormula, PremissasGrahamNumber, ResultadoCalculo
+from src.site_backend.models import MetodoPreco, PremissasBazin, PremissasFiiNtnb, PremissasGordon, PremissasGrahamFormula, PremissasGrahamNumber, ResultadoCalculo
 
 
 # ============ Interface/Protocol ============

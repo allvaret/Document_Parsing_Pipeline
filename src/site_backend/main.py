@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import json
-from datetime import datetime
 from pydantic import BaseModel
+from src.site_backend.calculadora.orquestrador import CalculadoraTetoDePreco
+from src.site_backend.models import MetodoPreco, PremissasFactory, ResultadoCalculo
 
 app = FastAPI()
 
@@ -15,63 +15,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ============ MODELS ============
-class PremissasCalculo(BaseModel):
-    taxa_crescimento: float      # ex: 0.05 (5%)
-    taxa_desconto: float         # ex: 0.10 (10%)
-    anos_projecao: int           # ex: 5
-    fluxo_caixa_base: float      # ex: 100.0
-
-class ResultadoCalculo(BaseModel):
-    preco_teto: float
-    detalhes: dict
-
 # ============ ENDPOINTS ============
 @app.get("/health")
 def health():
     """Verifica se API está rodando"""
     return {"status": "ok"}
 
-@app.post("/calcular", response_model=ResultadoCalculo)
-def calcular(premissas: PremissasCalculo):
+@app.post("/calcular/{metodo}", response_model=ResultadoCalculo, status_code=200)
+def calcular(metodo: str, premissas: dict):
     """
-    Calcula preço teto com base em premissas
-    
-    Exemplo de entrada:
-    {
-        "taxa_crescimento": 0.05,
-        "taxa_desconto": 0.10,
-        "anos_projecao": 5,
-        "fluxo_caixa_base": 100
-    }
+    Calcula preço teto com base em um modelo e suas premissas
     """
-    # Seu cálculo aqui
-    preco_teto = calcular_teto(premissas)
-    
-    return {
-        "preco_teto": preco_teto,
-        "detalhes": {
-            "premissas_usadas": premissas.dict(),
-            "timestamp": datetime.now().isoformat()
-        }
-    }
+    try:
+        metodo_enum = MetodoPreco(metodo)
+    except ValueError:
+        raise HTTPException(400, "Método inválido")
 
-# ============ LÓGICA ============
-def calcular_teto(premissas: PremissasCalculo) -> float:
-    """
-    Implementa o cálculo (por enquanto: dummy)
-    Depois expande com seu código real
-    """
-    # Exemplo simples: DCF
-    fluxo_futuro = premissas.fluxo_caixa_base
+    # Valida contra Pydantic
+    premissas_validadas = PremissasFactory(**premissas)
+
+    calculadora = CalculadoraTetoDePreco()
+    resultado = calculadora.calcular(metodo=metodo_enum, premissas=premissas_validadas)
     
-    for ano in range(1, premissas.anos_projecao + 1):
-        fluxo_futuro *= (1 + premissas.taxa_crescimento)
-    
-    # Desconta pro presente
-    preco_teto = fluxo_futuro / ((1 + premissas.taxa_desconto) ** premissas.anos_projecao)
-    
-    return round(preco_teto, 2)
+    return resultado    
 
 # ============ RUN ============
 if __name__ == "__main__":

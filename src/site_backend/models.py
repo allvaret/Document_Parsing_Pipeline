@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field
 class MetodoPreco(str, Enum):
     GRAHAM_NUMBER = "graham_number"
     FORMULA_GRAHAM = "formula_graham"
-    BAZIN = "dividend_yield"
-    GORDON_DDM = "desconto_dividendo"
+    BAZIN = "metodo_bazin"
+    GORDON_DDM = "gordon_dividendo"
     FII_NTNB = "fiis_yield_renda"
 
 
@@ -45,3 +45,26 @@ class ResultadoCalculo(BaseModel):
     preco_teto: float
     metodo: MetodoPreco
     detalhes: dict
+
+# ============ Factory ============
+class PremissasFactory:
+    """Factory para instanciar a premissa correta"""
+    
+    _premissas = {
+        MetodoPreco.GRAHAM_NUMBER: PremissasGrahamNumber,
+        MetodoPreco.FORMULA_GRAHAM: PremissasGrahamFormula,
+        MetodoPreco.BAZIN: PremissasBazin,
+        MetodoPreco.GORDON_DDM: PremissasGordon,
+        MetodoPreco.FII_NTNB: PremissasFiiNtnb,
+    }
+    
+    @classmethod
+    def get(cls, metodo: MetodoPreco) -> type[BaseModel]:
+        if metodo not in cls._premissas:
+            raise ValueError(f"Método desconhecido: {metodo}")
+        return cls._premissas[metodo]
+    
+    @classmethod
+    def registrar(cls, metodo: MetodoPreco, premissa: PremissasCalculo):
+        """Permite registrar novas estratégias em runtime"""
+        cls._premissas[metodo] = premissa
