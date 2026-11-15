@@ -1,6 +1,6 @@
 from typing import Optional
 from typing import List
-from extractor import TextAtom
+from resumo.extractor import TextAtom
 from dataclasses import dataclass
 
 

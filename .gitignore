@@ -53,7 +53,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-tests/
+
 
 # Translations
 *.mo
@@ -285,3 +285,7 @@ http-client.private.env.json
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Saídas do pipeline e bancos locais
+output/
+*.db
