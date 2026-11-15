@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException, status
+from pydantic import ValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from src.site_backend.calculadora.orquestrador import CalculadoraTetoDePreco
-from src.site_backend.models import MetodoPreco, PremissasFactory, ResultadoCalculo
+from site_backend.calculadora.orquestrador import CalculadoraTetoDePreco
+from site_backend.models import MetodoPreco, PremissasFactory, ResultadoCalculo
 
 app = FastAPI()
 
@@ -40,8 +41,15 @@ def calcular(metodo: str, premissas: dict):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e)
         )
-    # Valida contra Pydantic
-    premissas_validadas = PremissasClass(**premissas)
+    # Valida contra Pydantic. Sem o try, premissa inválida virava HTTP 500
+    # (erro do servidor) em vez de 422 (erro de quem chamou).
+    try:
+        premissas_validadas = PremissasClass(**premissas)
+    except ValidationError as e:
+        raise HTTPException(
+            status_code=422,
+            detail=e.errors(include_url=False, include_context=False),
+        )
 
     calculadora = CalculadoraTetoDePreco()
     resultado = calculadora.calcular(metodo=metodo_enum, premissas=premissas_validadas)

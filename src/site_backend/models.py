@@ -1,5 +1,5 @@
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 # ============ Enums ============
 class MetodoPreco(str, Enum):
@@ -36,9 +36,17 @@ class PremissasGordon(BaseModel):
     retorno: float = Field(..., examples=[0.08, 0.1], description="ex: 0.08 (8%)")
     growth: float = Field(..., ge=0, le=1, examples=[0.05], description="ex: 0.05 (5%)")
 
+    @model_validator(mode="after")
+    def retorno_maior_que_crescimento(self):
+        # Gordon só converge com retorno > crescimento: igual dá divisão por zero
+        # (HTTP 500), menor dá preço teto negativo sem aviso.
+        if self.retorno <= self.growth:
+            raise ValueError("retorno deve ser maior que growth no modelo de Gordon")
+        return self
+
 class PremissasFiiNtnb(BaseModel):
-    dpa: float = Field(..., gt=0, examples=[1.36, 2.2], description="ex: (R$)1.1")
-    retorno: float = Field(..., examples=[0.02], description="ex: 0.02 (2%)")
+    dpa: float = Field(..., gt=0, examples=[1.36, 2.2], description="dividendo anual por cota, ex: (R$)1.1")
+    retorno: float = Field(..., ge=0, examples=[0.02], description="prêmio sobre a NTN-B, ex: 0.02 (2%)")
     ntnb: float = Field(..., ge=0, le=1, examples=[0.065], description="ex: 0.065 (6,5%)")
 
 class ResultadoCalculo(BaseModel):

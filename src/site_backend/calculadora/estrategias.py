@@ -1,7 +1,7 @@
 import math
 from typing import Protocol
 from pydantic import BaseModel
-from src.site_backend.models import MetodoPreco, PremissasBazin, PremissasFiiNtnb, PremissasGordon, PremissasGrahamFormula, PremissasGrahamNumber, ResultadoCalculo
+from site_backend.models import MetodoPreco, PremissasBazin, PremissasFiiNtnb, PremissasGordon, PremissasGrahamFormula, PremissasGrahamNumber, ResultadoCalculo
 
 
 # ============ Interface/Protocol ============
@@ -84,7 +84,9 @@ class CalculadoraFiiNtnb:
     """Estratégia Yield relativo a NTNB"""
 
     def calcular(self, premissas: PremissasFiiNtnb) -> ResultadoCalculo:
-        preco_teto = premissas.dpa - (premissas.ntnb + premissas.retorno)
+        # Yield exigido = NTN-B + prêmio. Preço teto = dividendo anual / yield.
+        # (antes: dpa - (ntnb + retorno), que subtraía uma taxa de um valor em R$)
+        preco_teto = premissas.dpa / (premissas.ntnb + premissas.retorno)
 
         return ResultadoCalculo(
             preco_teto=round(preco_teto,2),
