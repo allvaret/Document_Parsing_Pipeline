@@ -1,43 +1,14 @@
-import requests
+from pathlib import Path
 
-from resumo.extractor.section.build_section import build_document_payload, serialize_for_llm
-from resumo.summarizer.assembler import SummaryAssembler
+from resumo.extractor.section.build_section import build_document_payload
 
 
-def ping(model: str = "qwen2.5:3b") -> str:
-    try:
-        response = requests.post(
-            "http://localhost:11434/api/generate",
-            json={
-                "model":   model,
-                "prompt":  "ping",
-                "stream":  False,
-                "options": {
-                    "temperature": 0.2,   # baixo para respostas mais factuais
-                    "num_ctx":     12288,  # contexto máximo
-                    "num_predict": 8192,
-                    "num_gpu": 18, # Varia de hardware para hardware
-                }
-            },
-            timeout=10,
-        )
-        response.raise_for_status()
-        return response.json()["response"]
+def serialize(sections, pdf_path: str | Path) -> dict:
+    """Monta o payload único do documento: {"metadata": ..., "sections": [...]}.
 
-    except requests.exceptions.ConnectionError:
-        return "[ERRO] Ollama não está rodando. Execute: ollama serve"
-    except requests.exceptions.Timeout:
-        return "[ERRO] Timeout — Modelo OK."
-    except Exception as e:
-        return f"[ERRO] {e}"
-    
-
-def serialize(sections, pdf_path):
-    response = ping()
-    if "[ERRO]" in response:
-        sections_json = build_document_payload(sections, pdf_path)
-        return "Offline", sections_json
-    else:     
-        sections_json = serialize_for_llm(sections)
-        return "Local", sections_json
-
+    O mesmo payload alimenta os dois modos de resumo (heurístico e LLM).
+    A escolha do modo é feita por quem chama (parâmetro explícito), e não
+    mais aqui, pingando o Ollama — antes o resultado mudava conforme o
+    servidor estivesse ligado ou não, sem ninguém pedir.
+    """
+    return build_document_payload(sections, str(pdf_path))
