@@ -17,6 +17,9 @@ concurrency:
 
 env:
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  # Deve ser compatível com spacy>=3.8,<3.9 (pyproject.toml).
+  SPACY_MODEL_VERSION: "3.8.0"
+  SPACY_MODEL_SHA256: "54382cda034e41f3ec605ceeb924cd6cfdbced00a65f7afa12218520ba7008c5"
 
 jobs:
   pytest:
@@ -40,8 +43,22 @@ jobs:
 
       # Sem o modelo, os testes de integração seriam PULADOS (skipif) e o CI
       # passaria sem exercitar o pipeline de verdade.
-      - name: Baixar modelo spaCy
-        run: python -m spacy download pt_core_news_md
+      # O wheel fica em cache (chave = versão do modelo); ao subir de versão,
+      # troque SPACY_MODEL_VERSION e SPACY_MODEL_SHA256 juntos.
+      - name: Cache do modelo spaCy
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/spacy-models
+          key: spacy-${{ runner.os }}-pt_core_news_md-${{ env.SPACY_MODEL_VERSION }}
+
+      - name: Instalar modelo spaCy
+        run: |
+          WHL="pt_core_news_md-${SPACY_MODEL_VERSION}-py3-none-any.whl"
+          URL="https://github.com/explosion/spacy-models/releases/download/pt_core_news_md-${SPACY_MODEL_VERSION}/${WHL}"
+          mkdir -p ~/.cache/spacy-models
+          [ -f ~/.cache/spacy-models/"$WHL" ] || curl -fsSL --retry 3 -o ~/.cache/spacy-models/"$WHL" "$URL"
+          echo "${SPACY_MODEL_SHA256}  $HOME/.cache/spacy-models/$WHL" | sha256sum --check
+          pip install ~/.cache/spacy-models/"$WHL"
 
       # -ra lista no log o motivo de qualquer teste pulado.
       - name: Rodar pytest
