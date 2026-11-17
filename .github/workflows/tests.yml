@@ -1,0 +1,48 @@
+name: Testes
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+# Privilégio mínimo: o job só precisa ler o código.
+permissions:
+  contents: read
+
+# Um push novo no mesmo PR cancela a execução anterior (que ficou obsoleta).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Actions fixadas por SHA (imutável); o comentário indica a versão.
+      # O Dependabot atualiza os dois (ver .github/dependabot.yml).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.11" # mínimo suportado (requires-python >= 3.11)
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Instalar dependências
+        run: pip install -e ".[dev]"
+
+      # Sem o modelo, os testes de integração seriam PULADOS (skipif) e o CI
+      # passaria sem exercitar o pipeline de verdade.
+      - name: Baixar modelo spaCy
+        run: python -m spacy download pt_core_news_md
+
+      # -ra lista no log o motivo de qualquer teste pulado.
+      - name: Rodar pytest
+        run: python -m pytest -ra
