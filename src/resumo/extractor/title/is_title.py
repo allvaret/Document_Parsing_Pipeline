@@ -1,4 +1,4 @@
-from extractor import TextAtom
+from resumo.extractor import TextAtom
 
 
 def is_title(atom: TextAtom, body_size: float, page_height: float) -> bool:

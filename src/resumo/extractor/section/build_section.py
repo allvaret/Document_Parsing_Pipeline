@@ -11,12 +11,26 @@ from resumo.extractor.section.detect_region_text import LineRegion, TableRegion
 from resumo.extractor.title.title_candidate_filter import TitleCandidate
 
 
-ROOT = Path(__file__).resolve().parents[4]   # ajuste o número se necessário
+import os
+from functools import lru_cache
+
+# O mapa vive dentro do pacote (versionado), não em assets/ (ignorado pelo git).
+# Pode ser sobrescrito pela variável de ambiente TICKER_MAP_PATH.
+_DEFAULT_TICKER_MAP = Path(__file__).resolve().parents[2] / "data" / "ticker_map.json"
 
 
-_TICKER_MAP_PATH = ROOT / "assets/ticker_map.json"
-with open(_TICKER_MAP_PATH, encoding="utf-8") as f:
-    TICKER_MAP: dict = json.load(f)
+@lru_cache(maxsize=1)
+def load_ticker_map() -> dict:
+    """Carrega o ticker_map uma vez. Falha com mensagem clara se não existir,
+    em vez de quebrar no import do módulo."""
+    path = Path(os.getenv("TICKER_MAP_PATH", _DEFAULT_TICKER_MAP))
+    if not path.exists():
+        raise FileNotFoundError(
+            f"ticker_map.json não encontrado em {path}. "
+            "Copie o arquivo para src/resumo/data/ ou defina TICKER_MAP_PATH."
+        )
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
 
 Confidence = Literal["high", "low"]
 
@@ -122,14 +136,12 @@ def qualify_section(
         return "low", "low_content"
     return "high", None
 
-import re
-from typing import List, Optional
-
 # --- Heurísticas de extração de metadata ---
 
 
 REPORT_TYPE_KEYWORDS = {
     "release de resultados": "Earnings Release",
+    "divulgação de resultados": "Earnings Release",
     "earnings release": "Earnings Release",
     "formulário de referência": "Formulário de Referência",
     "itr": "ITR",
@@ -361,8 +373,17 @@ def build_document_payload(
 
     filename = Path(pdf_path).name  # ex: "Desempenho Financeiro Petrobras 3T25.pdf"
 
+    ticker_map = load_ticker_map()
+    # extract_company_name devolve (nome, metodo). Antes o resultado era combinado
+    # com `or`: a tupla é sempre "verdadeira", então o fallback nunca rodava e a
+    # tupla inteira virava string no cabeçalho ("('Nome', 'ticker')").
+    company_name, company_method = extract_company_name(cover_text, filename, ticker_map)
+    if company_name is None and source_title:
+        company_name, company_method = extract_company_name(source_title, filename, ticker_map)
+
     metadata = {
-        "company_name": extract_company_name(cover_text, filename, TICKER_MAP) or extract_company_name(source_title, filename, TICKER_MAP),
+        "company_name": company_name,
+        "company_name_method": company_method,
         "period": extract_period(combined),
         "report_type": extract_report_type(combined),
     }

@@ -3,7 +3,7 @@ from typing import List
 from resumo.LLM.NLP.feature_extractor_nlp import extract_features_batch
 from resumo.LLM.NLP.semantic_scorer import calc_semantic_score_nlp
 from resumo.extractor.title.combine_title_score import combine_scores
-from extractor import TextAtom
+from resumo.extractor import TextAtom
 from resumo.extractor.title.title_candidate_filter import TitleCandidate, best_title_candidates, candidate_filter
 from resumo.extractor.title.is_title import calculate_title_score, normalize_title_score
 from resumo.extractor.title.remove_repeated_title import remove_repeated

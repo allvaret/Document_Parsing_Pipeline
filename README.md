@@ -134,42 +134,42 @@ The project uses **Qwen2.5:3B** by default.
 ollama pull qwen2.5:3b
 ```
 
-You may use another compatible model by changing the model name in:
+Ollama is optional: it is only needed for `--mode llm`.
 
-```text
-src/LLM/client.py
-```
+### 7. Ticker map
+
+Copy your `ticker_map.json` to `src/resumo/data/ticker_map.json`
+(or point the `TICKER_MAP_PATH` environment variable to it).
 
 ## Quick Start
 
-Place a financial PDF report inside the `assets/` directory.
-
-By default, the project expects an input file defined in `src/main.py`:
-
-```python
-INPUT_FILE = "assets/example_report.pdf"
-```
-
-Run the application:
+The summary mode is always explicit:
 
 ```bash
-python src/main.py
+# Heuristic only (no LLM, deterministic)
+python -m resumo.main "assets/Earnings Release 3T25.pdf" --mode heuristic
+
+# Heuristic keypoints + LLM narrative summary (requires `ollama serve`)
+python -m resumo.main report.pdf --mode llm --model qwen2.5:3b --ticker BBSE3
 ```
 
-The pipeline will:
-
-1. Extract the document text.
-2. Reconstruct its logical structure.
-3. Generate a structured JSON representation.
-4. Produce an executive summary using a local LLM.
-
-Generated files are saved alongside the original document:
+Outputs go to `output/` (change with `--out-dir`):
 
 ```text
-example_report.pdf
-example_report_sections.json
-example_report_summary.json
+output/report_sections.json   # intermediate payload (metadata + qualified sections)
+output/report_result.json     # ReportResult: company, report, keypoints, summaries
 ```
+
+`ReportResult` mirrors the database schema in `database/schema.sql`.
+Numbers (keypoints) always come from the heuristic pipeline; the LLM only writes narrative text.
+
+### Tests
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
 ## Project Structure
 
 ```text
