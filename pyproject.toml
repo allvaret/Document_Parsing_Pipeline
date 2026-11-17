@@ -39,6 +39,8 @@ resumo = ["data/*.json"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+# Reintroduzir `import fitz` (API legada do PyMuPDF) quebra os testes: use `import pymupdf`.
+filterwarnings = ["error:.*fitz.*:FutureWarning"]
 markers = [
     "integration: precisa do PDF de exemplo, do ticker_map e do modelo spaCy",
 ]

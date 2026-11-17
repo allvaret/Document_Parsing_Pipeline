@@ -1,4 +1,4 @@
-import fitz # PyMuPDF
+import pymupdf
 
 def read_pdf(text:str):
-    return fitz.open(text)
+    return pymupdf.open(text)
