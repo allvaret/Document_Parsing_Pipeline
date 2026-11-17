@@ -54,6 +54,57 @@ def test_modo_heuristico(ticker_map):
     assert result.missing_storage_keys() == []
 
 
+class FakeProvider:
+    """Provedor sem rede: devolve texto fixo e guarda os prompts recebidos."""
+
+    name = "fake:modelo-1"
+
+    def __init__(self, texto="## Resumo falso"):
+        self.texto = texto
+        self.prompts = []
+
+    def generate(self, prompt):
+        self.prompts.append(prompt)
+        return self.texto
+
+
+@requires_assets
+def test_modo_llm_com_provedor_falso(ticker_map):
+    from resumo.pipeline import process_document
+    from resumo.result import PROMPT_VERSION
+
+    fake = FakeProvider()
+    result, _ = process_document(PDF, SummaryMode.LLM, fake)
+    heuristico, _ = process_document(PDF, SummaryMode.HEURISTIC)
+
+    assert [s.method for s in result.summaries] == [SummaryMode.HEURISTIC, SummaryMode.LLM]
+    llm = result.summaries[1]
+    assert llm.model == fake.name              # vem do provider, não de string solta
+    assert llm.content == fake.texto
+    assert llm.content_format == "markdown"
+    assert llm.prompt_version == PROMPT_VERSION
+    assert len(fake.prompts) == 1
+    # Número nunca passa pelo LLM: keypoints idênticos aos do modo heurístico.
+    assert result.keypoints == heuristico.keypoints
+    assert result.missing_storage_keys() == []
+
+
+def test_modo_llm_sem_provedor_e_erro_explicito():
+    from resumo.pipeline import process_document
+
+    with pytest.raises(ValueError, match="provider"):
+        process_document("qualquer.pdf", SummaryMode.LLM)
+
+
+def test_pipeline_nao_conhece_provedores_concretos():
+    """Trocar de provedor não pode exigir mexer em pipeline.py."""
+    fonte = (Path(__file__).resolve().parents[1] / "src" / "resumo" / "pipeline.py").read_text(
+        encoding="utf-8"
+    )
+    assert "ollama" not in fonte.lower()
+    assert "LLM.client" not in fonte
+
+
 @requires_assets
 def test_modo_llm_sem_ollama_falha_alto(ticker_map, monkeypatch):
     from resumo.pipeline import process_document

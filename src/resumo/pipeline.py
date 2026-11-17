@@ -44,7 +44,7 @@ def process_document(
       LLM e não recebeu precisa saber, em vez de receber só o heurístico calado.
     """
     if mode is SummaryMode.LLM and provider is None:
-        raise ValueError("mode=LLM exige um provider (ex.: OllamaProvider).")
+        raise ValueError("mode=LLM exige um provider (LLMProvider).")
 
     pdf_path = Path(pdf_path)
     if not pdf_path.is_file():
