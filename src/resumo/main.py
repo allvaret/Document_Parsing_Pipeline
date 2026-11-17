@@ -13,6 +13,7 @@ import sys
 from pathlib import Path
 
 from resumo.LLM.client import DEFAULT_MODEL, LLMError, is_available
+from resumo.LLM.ollama_provider import OllamaProvider
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.pipeline import process_document
 from utils.save_results import save_output
@@ -34,13 +35,14 @@ def main(argv: list[str] | None = None) -> int:
 
     # Falha cedo: não vale parsear o PDF inteiro para descobrir no fim
     # que o Ollama estava desligado.
-    if args.mode is SummaryMode.LLM and not is_available():
+    provider = OllamaProvider(args.model) if args.mode is SummaryMode.LLM else None
+    if provider and not is_available(provider.base_url):
         print("[ERRO] Modo llm pedido, mas o Ollama não está acessível. Execute: ollama serve",
               file=sys.stderr)
         return 2
 
     try:
-        result, payload = process_document(args.pdf, args.mode, args.model, args.ticker)
+        result, payload = process_document(args.pdf, args.mode, provider, args.ticker)
     except (FileNotFoundError, LLMError) as e:
         print(f"[ERRO] {e}", file=sys.stderr)
         return 1
