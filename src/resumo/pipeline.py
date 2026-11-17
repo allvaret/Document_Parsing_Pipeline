@@ -13,7 +13,7 @@ from typing import Optional
 
 from resumo.extractor.parser_pipeline import parse_document
 from resumo.extractor.section.json_pipeline import serialize
-from resumo.LLM.client import DEFAULT_MODEL
+from resumo.LLM.provider import LLMProvider
 from resumo.LLM.summarize_pipeline import SummaryMode, summarize_heuristic, summarize_llm
 from resumo.result import (
     HEURISTIC_VERSION,
@@ -32,16 +32,20 @@ from resumo.summarizer.validator import InputValidator
 def process_document(
     pdf_path: str | Path,
     mode: SummaryMode,
-    model: str = DEFAULT_MODEL,
+    provider: Optional[LLMProvider] = None,
     ticker: Optional[str] = None,
 ) -> tuple[ReportResult, dict]:
     """Processa um PDF e devolve (ReportResult, payload intermediário).
 
-    - mode=HEURISTIC: só o resumo heurístico.
-    - mode=LLM: heurístico (keypoints) + narrativo do LLM.
-      Se o LLM falhar, a exceção LLMError sobe: quem pediu LLM e não
-      recebeu precisa saber, em vez de receber só o heurístico calado.
+    - mode=HEURISTIC: só o resumo heurístico (`provider` é ignorado).
+    - mode=LLM: heurístico (keypoints) + narrativo do `provider`, que é
+      obrigatório: não há provedor padrão (modo e provedor são sempre
+      explícitos). Se o LLM falhar, a exceção LLMError sobe: quem pediu
+      LLM e não recebeu precisa saber, em vez de receber só o heurístico calado.
     """
+    if mode is SummaryMode.LLM and provider is None:
+        raise ValueError("mode=LLM exige um provider (ex.: OllamaProvider).")
+
     pdf_path = Path(pdf_path)
     if not pdf_path.is_file():
         raise FileNotFoundError(f"PDF não encontrado: {pdf_path}")
@@ -81,9 +85,9 @@ def process_document(
         summaries.append(
             SummaryRecord(
                 method=SummaryMode.LLM,
-                model=model,
+                model=provider.name,
                 prompt_version=PROMPT_VERSION,
-                content=summarize_llm(payload, model=model),
+                content=summarize_llm(payload, provider),
                 content_format="markdown",
             )
         )

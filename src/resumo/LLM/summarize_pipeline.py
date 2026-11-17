@@ -1,5 +1,6 @@
 from enum import Enum
 
+from resumo.LLM.provider import LLMProvider
 from resumo.LLM.summarizerLocal import summarizeLLM
 from resumo.summarizer.assembler import SummaryAssembler
 from resumo.summarizer.models import ExecutiveSummary
@@ -17,6 +18,6 @@ def summarize_heuristic(payload: dict) -> ExecutiveSummary:
     return SummaryAssembler.assemble(payload)
 
 
-def summarize_llm(payload: dict, model: str) -> str:
+def summarize_llm(payload: dict, provider: LLMProvider) -> str:
     """Resumo narrativo via LLM. Lança LLMError em caso de falha."""
-    return summarizeLLM(payload, model=model)
+    return summarizeLLM(payload, provider)

@@ -58,12 +58,14 @@ def test_modo_heuristico(ticker_map):
 def test_modo_llm_sem_ollama_falha_alto(ticker_map, monkeypatch):
     from resumo.pipeline import process_document
 
-    def offline(*a, **k):
-        raise LLMUnavailableError("offline")
-    monkeypatch.setattr("resumo.pipeline.summarize_llm", offline)
+    class Offline:
+        name = "teste:offline"
+
+        def generate(self, prompt):
+            raise LLMUnavailableError("offline")
 
     with pytest.raises(LLMUnavailableError):
-        process_document(PDF, SummaryMode.LLM)
+        process_document(PDF, SummaryMode.LLM, Offline())
 
 
 def test_ticker_map_ausente_tem_erro_claro(tmp_path, monkeypatch):
