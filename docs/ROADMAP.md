@@ -23,7 +23,7 @@ projeto, falhas silenciosas corrigidas, modo explícito, `ReportResult`,
 
 ---
 
-## Fase 1 — Contrato e provedores de LLM (17–18/11)
+## Fase 1 — Contrato e provedores de LLM ✅ (concluída)
 
 **Já existe:** `ReportResult`, `SummaryMode`, client do Ollama com exceções.
 
@@ -43,7 +43,7 @@ e trocar de provedor não exige mexer em `pipeline.py`.
 
 ---
 
-## Fase 2 — Camada de banco (18–19/11)
+## Fase 2 — Camada de banco ✅ (concluída)
 
 **Fazer:**
 - SQLAlchemy 2.x: modelos `Company`, `Asset`, `Report`, `Summary`, `Keypoint`
@@ -51,8 +51,8 @@ e trocar de provedor não exige mexer em `pipeline.py`.
   `UNIQUE`, `CHECK`).
 - `DATABASE_URL` por variável de ambiente; padrão `sqlite:///data/app.db`.
   Ativar `PRAGMA foreign_keys=ON` no SQLite via evento de conexão.
-- `src/database/session.py` com fábrica de sessão; `create_all` no MVP (Alembic na v1.1).
-- Repositório (`src/database/repository.py`) com funções pequenas:
+- `src/db/session.py` (pacote `db`, para não colidir com a pasta `database/` do SQL) com fábrica de sessão; `create_all` no MVP (Alembic na v1.1).
+- Repositório (`src/db/repository.py`) com funções pequenas:
   `get_or_create_company`, `find_report(company, tipo, período)`,
   `find_report_by_hash`, `has_summary(report, método, modelo, versão)`,
   `save_result(session, ReportResult)`.
