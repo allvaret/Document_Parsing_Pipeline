@@ -11,3 +11,11 @@ class IncompleteResultError(DatabaseError):
     def __init__(self, missing: list[str]):
         self.missing = missing
         super().__init__("ReportResult incompleto, falta: " + ", ".join(missing))
+
+
+class InvalidCnpjError(DatabaseError):
+    """CNPJ que, sem máscara, não tem 14 dígitos."""
+
+    def __init__(self, raw: str):
+        self.raw = raw
+        super().__init__(f"CNPJ inválido (esperado 14 dígitos): {raw!r}")

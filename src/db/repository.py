@@ -7,12 +7,26 @@ Fase 3 faz uma transação por PDF, com rollback em caso de erro).
 
 from __future__ import annotations
 
+import re
+
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from db.errors import IncompleteResultError
+from db.errors import IncompleteResultError, InvalidCnpjError
 from db.models import Asset, Company, Keypoint, Report, Summary
 from resumo.result import CompanyRef, ReportResult
+
+
+def normalize_cnpj(raw: str | None) -> str | None:
+    """Remove a máscara ('33.333.333/0001-33' -> '33333333000133').
+    Vazio/None vira None; qualquer coisa que não dê 14 dígitos lança
+    InvalidCnpjError (o schema guarda CNPJ só com dígitos)."""
+    if raw is None or not raw.strip():
+        return None
+    digits = re.sub(r"\D", "", raw)
+    if len(digits) != 14:
+        raise InvalidCnpjError(raw)
+    return digits
 
 
 def get_or_create_company(
@@ -20,9 +34,10 @@ def get_or_create_company(
 ) -> Company:
     """Acha a empresa por CNPJ, depois por ticker, depois por nome; senão cria.
     Um ticker novo numa empresa já existente cria só o `asset`."""
+    cnpj = normalize_cnpj(ref.cnpj)
     company = None
-    if ref.cnpj:
-        company = session.scalar(select(Company).where(Company.cnpj == ref.cnpj))
+    if cnpj:
+        company = session.scalar(select(Company).where(Company.cnpj == cnpj))
     if company is None and ref.ticker:
         company = session.scalar(
             select(Company).join(Asset).where(Asset.ticker == ref.ticker)
@@ -31,11 +46,11 @@ def get_or_create_company(
         company = session.scalar(select(Company).where(Company.name == ref.name))
 
     if company is None:
-        company = Company(name=ref.name or ref.ticker, cnpj=ref.cnpj, kind=kind)
+        company = Company(name=ref.name or ref.ticker, cnpj=cnpj, kind=kind)
         session.add(company)
         session.flush()
-    elif ref.cnpj and not company.cnpj:
-        company.cnpj = ref.cnpj
+    elif cnpj and not company.cnpj:
+        company.cnpj = cnpj
 
     if ref.ticker and not any(a.ticker == ref.ticker for a in company.assets):
         session.add(Asset(company_id=company.id, ticker=ref.ticker))

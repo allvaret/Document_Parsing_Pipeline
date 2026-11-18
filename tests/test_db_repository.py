@@ -4,13 +4,14 @@ import pytest
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 
-from db.errors import IncompleteResultError
+from db.errors import IncompleteResultError, InvalidCnpjError
 from db.models import Asset, Company, Keypoint, Report, Summary
 from db.repository import (
     find_report,
     find_report_by_hash,
     get_or_create_company,
     has_summary,
+    normalize_cnpj,
     save_result,
 )
 from resumo.LLM.summarize_pipeline import SummaryMode
@@ -183,3 +184,31 @@ def test_rollback_deixa_o_banco_intacto(session):
     session.rollback()
     report = session.scalar(select(Report))
     assert report.file_hash == H1 and len(report.keypoints) == 2
+
+
+# --- CNPJ -------------------------------------------------------------------
+
+def test_cnpj_com_mascara_nao_duplica_a_empresa(session):
+    a = get_or_create_company(session, CompanyRef("X", "t", None, "33.333.333/0001-33"))
+    b = get_or_create_company(session, CompanyRef("X", "t", None, "33333333000133"))
+    assert a.id == b.id
+    assert a.cnpj == "33333333000133"
+    assert _count(session, Company) == 1
+
+
+@pytest.mark.parametrize("raw, esperado", [
+    ("33.333.333/0001-33", "33333333000133"),
+    (" 33333333000133 ", "33333333000133"),
+    (None, None),
+    ("", None),
+    ("   ", None),
+])
+def test_normalize_cnpj(raw, esperado):
+    assert normalize_cnpj(raw) == esperado
+
+
+@pytest.mark.parametrize("raw", ["123", "3333333300013", "333333330001333", "abc"])
+def test_cnpj_invalido_lanca_e_nao_grava(session, raw):
+    with pytest.raises(InvalidCnpjError):
+        get_or_create_company(session, CompanyRef("X", "t", "XPTO3", raw))
+    assert _count(session, Company) == 0
