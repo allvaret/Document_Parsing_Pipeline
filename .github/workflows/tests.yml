@@ -11,9 +11,10 @@ permissions:
   contents: read
 
 # Um push novo no mesmo PR cancela a execução anterior (que ficou obsoleta).
+# Em main/develop nunca cancela: cada merge precisa do seu resultado de teste.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   PIP_DISABLE_PIP_VERSION_CHECK: "1"

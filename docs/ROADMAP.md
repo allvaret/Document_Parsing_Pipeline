@@ -23,7 +23,7 @@ projeto, falhas silenciosas corrigidas, modo explícito, `ReportResult`,
 
 ---
 
-## Fase 1 — Contrato e provedores de LLM (17–18/11)
+## Fase 1 — Contrato e provedores de LLM ✅ (concluída)
 
 **Já existe:** `ReportResult`, `SummaryMode`, client do Ollama com exceções.
 
@@ -43,7 +43,7 @@ e trocar de provedor não exige mexer em `pipeline.py`.
 
 ---
 
-## Fase 2 — Camada de banco (18–19/11)
+## Fase 2 — Camada de banco ✅ (concluída)
 
 **Fazer:**
 - SQLAlchemy 2.x: modelos `Company`, `Asset`, `Report`, `Summary`, `Keypoint`
@@ -51,8 +51,8 @@ e trocar de provedor não exige mexer em `pipeline.py`.
   `UNIQUE`, `CHECK`).
 - `DATABASE_URL` por variável de ambiente; padrão `sqlite:///data/app.db`.
   Ativar `PRAGMA foreign_keys=ON` no SQLite via evento de conexão.
-- `src/database/session.py` com fábrica de sessão; `create_all` no MVP (Alembic na v1.1).
-- Repositório (`src/database/repository.py`) com funções pequenas:
+- `src/db/session.py` (pacote `db`, para não colidir com a pasta `database/` do SQL) com fábrica de sessão; `create_all` no MVP (Alembic na v1.1).
+- Repositório (`src/db/repository.py`) com funções pequenas:
   `get_or_create_company`, `find_report(company, tipo, período)`,
   `find_report_by_hash`, `has_summary(report, método, modelo, versão)`,
   `save_result(session, ReportResult)`.
@@ -91,6 +91,16 @@ antes de começar (falha cedo).
 - PDF corrompido no meio do lote não impede os outros.
 
 **Fora do escopo:** download automático dos PDFs da CVM/RI (v1.1).
+
+**Pendências herdadas da revisão da Fase 2 (decidir/tratar aqui):**
+- `--force`: `save_result` pula summary com a mesma chave (método, modelo,
+  `prompt_version`), então regerar com o mesmo prompt não atualiza o `content`.
+  Precisa de um modo de substituição (ex.: `replace_summaries=True`).
+- Caminho do SQLite: `sqlite:///data/app.db` é relativo ao diretório de
+  execução; rodar o batch de outra pasta cria um banco vazio sem aviso.
+  Resolver a partir da raiz do projeto ou exigir `DATABASE_URL` no batch.
+- O batch deve capturar `IntegrityError` (ex.: CNPJ de uma empresa com ticker
+  de outra) e `InvalidCnpjError`, logar com mensagem clara e seguir.
 
 ---
 
@@ -148,3 +158,15 @@ explica o projeto para um recrutador em 2 minutos.
 - Alembic para migrações.
 - Retry com backoff no provedor de LLM.
 - Retomar usuário/carteira do schema legado.
+- Índices de busca/ordenação (**necessário antes de escalar**: previsão de
+  1000+ empresas e vários relatórios cada): `company.name` (busca/ordenação),
+  `report (company_id, period)` para listar relatórios por período. Mudança
+  entra primeiro no `database/schema.sql` e depois nos modelos (o teste de
+  paridade cobra os dois). Avaliar também busca por prefixo/`LIKE` e, no
+  Postgres, `pg_trgm`.
+- Casar empresa por nome normalizado (hoje é nome exato; só vale sem CNPJ/ticker).
+- `created_at`/`parsed_at` como `DateTime` (SQLite e Postgres formatam
+  `CURRENT_TIMESTAMP` diferente; resolver antes de migrar para Postgres).
+- `Literal`/enums do domínio nos campos controlados do ORM e mypy no CI.
+- Concorrência no `get_or_create` (dois batches simultâneos); hoje há um só.
+- Trocar `session.refresh` por `append` em `get_or_create_company`.

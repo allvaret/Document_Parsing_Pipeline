@@ -13,7 +13,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "pdfplumber>=0.11",
-    "PyMuPDF>=1.26",
+    "PyMuPDF>=1.26,<=2.1",
     "spacy>=3.8,<3.9",
     "numpy>=1.26",
     "requests>=2.32",
@@ -22,10 +22,11 @@ dependencies = [
     "fastapi>=0.115",
     "pydantic>=2.7",
     "uvicorn>=0.30",
+    "sqlalchemy>=2.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "httpx>=0.27"]
+dev = ["pytest>=8", "httpx2>=2.16"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
@@ -39,6 +40,8 @@ resumo = ["data/*.json"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+# Reintroduzir `import fitz` (API legada do PyMuPDF) quebra os testes: use `import pymupdf`.
+filterwarnings = ["error:.*fitz.*:FutureWarning"]
 markers = [
     "integration: precisa do PDF de exemplo, do ticker_map e do modelo spaCy",
 ]

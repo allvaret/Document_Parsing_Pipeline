@@ -1,9 +1,9 @@
-import fitz
+import pymupdf
 
 from resumo.extractor.TextAtom import TextAtom
 
 def extract_text_atoms(path:str) -> list[TextAtom]:
-    doc = fitz.open(path)
+    doc = pymupdf.open(path)
 
     atoms = []
     for page_number, page in enumerate(doc): # type: ignore
