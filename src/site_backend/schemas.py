@@ -7,7 +7,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from db.models import Company
+from db.models import Company, Report
 
 
 class CompanyOut(BaseModel):
@@ -25,6 +25,24 @@ class CompanyOut(BaseModel):
             kind=company.kind,
             cnpj=company.cnpj,
             tickers=sorted(a.ticker for a in company.assets),
+        )
+
+
+class ReportItem(BaseModel):
+    """Relatório numa listagem (sem keypoints nem resumos)."""
+    id: int
+    report_type: str
+    period: str
+    page_count: int
+    parsed_at: str
+    source_url: Optional[str]
+
+    @classmethod
+    def from_orm_report(cls, report: Report) -> "ReportItem":
+        return cls(
+            id=report.id, report_type=report.report_type, period=report.period,
+            page_count=report.page_count, parsed_at=report.parsed_at,
+            source_url=report.source_url,
         )
 
 

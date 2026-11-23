@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from db import queries
 from db.models import Company
 from site_backend.deps import get_session
-from site_backend.schemas import CompanyOut, CompanyPage
+from site_backend.schemas import CompanyOut, CompanyPage, ReportItem
 
 router = APIRouter(prefix="/empresas", tags=["empresas"])
 
@@ -49,3 +49,13 @@ def obter_empresa(
     ticker: str, session: Annotated[Session, Depends(get_session)]
 ) -> CompanyOut:
     return CompanyOut.from_orm_company(company_or_404(session, ticker))
+
+
+@router.get("/{ticker}/relatorios", response_model=list[ReportItem])
+def listar_relatorios(
+    ticker: str, session: Annotated[Session, Depends(get_session)]
+) -> list[ReportItem]:
+    """Relatórios da empresa, do período mais recente ao mais antigo. Os relatórios
+    são da empresa (PETR3 e PETR4 devolvem a mesma lista). Sem relatório: lista vazia."""
+    company = company_or_404(session, ticker)
+    return [ReportItem.from_orm_report(r) for r in queries.list_reports(session, company.id)]

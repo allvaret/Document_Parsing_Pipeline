@@ -149,3 +149,47 @@ def test_banco_indisponivel_da_503(tmp_path, monkeypatch):
         assert r.status_code == 503 and str(tmp_path) not in r.text
     finally:
         get_session_factory.cache_clear()
+
+
+# --- /empresas/{ticker}/relatorios --------------------------------------------
+
+def test_relatorios_ordenados_por_periodo_entre_anos(api_client, temp_db):
+    with temp_db.factory() as s:
+        for p in ["3T25", "1T26", "4T25", "1T25"]:
+            seed_report(s, "Cemig", "CMIG4", p)
+        seed_report(s, "Gerdau", "GGBR4", "2T26")      # de outra empresa: não entra
+    r = api_client.get("/empresas/CMIG4/relatorios")
+    assert r.status_code == 200
+    assert [x["period"] for x in r.json()] == ["1T26", "4T25", "3T25", "1T25"]
+    item = r.json()[0]
+    assert set(item) == {"id", "report_type", "period", "page_count", "parsed_at", "source_url"}
+    assert item["report_type"] == "EARNINGS_RELEASE" and item["page_count"] == 10
+
+
+def test_relatorios_sao_da_empresa_nao_do_ticker(api_client, seeded):
+    a = api_client.get("/empresas/PETR3/relatorios").json()
+    b = api_client.get("/empresas/petr4/relatorios").json()
+    assert a == b and len(a) == 1
+
+
+def test_empresa_sem_relatorio_devolve_lista_vazia(api_client, seeded):
+    r = api_client.get("/empresas/SEMR3/relatorios")
+    assert r.status_code == 200 and r.json() == []
+
+
+def test_relatorios_de_ticker_inexistente_404(api_client, seeded):
+    r = api_client.get("/empresas/VALE3/relatorios")
+    assert r.status_code == 404 and "VALE3" in r.json()["detail"]
+
+
+@pytest.mark.parametrize("payload", PAYLOADS + TICKER_PAYLOADS)
+def test_relatorios_com_ticker_hostil_404(api_client, seeded, payload):
+    antes = banco_sha(seeded)
+    r = api_client.get("/empresas/" + quote(payload, safe="") + "/relatorios")
+    assert r.status_code == 404
+    assert banco_sha(seeded) == antes
+
+
+@pytest.mark.parametrize("metodo", ["post", "put", "patch", "delete"])
+def test_relatorios_so_aceita_get(api_client, seeded, metodo):
+    assert getattr(api_client, metodo)("/empresas/CMIG4/relatorios").status_code == 405
