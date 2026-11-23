@@ -195,6 +195,30 @@ FILENAME_NOISE = {
 
 
 
+# Palavras de TÍTULO de documento: uma linha feita só delas (mais conectivos e períodos) é o
+# nome do evento, não o da empresa. Caso real: a capa da Marcopolo é o logo (imagem) e o
+# único texto era "Teleconferência de Resultados 3T25|9M25", que virava o nome da empresa.
+GENERIC_TITLE_WORDS = {
+    "teleconferência", "teleconferencia", "webcast", "apresentação", "apresentacao",
+    "resultados", "resultado", "release", "earnings", "call", "conference", "institucional",
+    "trimestre", "trimestral", "anual", "divulgação", "divulgacao", "relatório", "relatorio",
+    "desempenho", "financeiro", "operacional", "vídeo", "video", "áudio", "audio",
+    "transmissão", "transmissao", "vivo", "demonstrações", "financeiras", "administração",
+}
+TITLE_CONNECTORS = {"de", "do", "da", "dos", "das", "e", "ao", "o", "a", "para"}
+
+
+def _is_generic_title(line: str) -> bool:
+    """Só palavras de título (e conectivos/períodos), com ao menos uma palavra de título;
+    um período sozinho ('3T25|9M25') também não é empresa."""
+    residue = PERIOD_PATTERN.sub(" ", line)
+    words = [w.lower() for w in re.findall(r"[^\W\d_]+", residue)]
+    if not words:
+        return True
+    return (all(w in GENERIC_TITLE_WORDS or w in TITLE_CONNECTORS for w in words)
+            and any(w in GENERIC_TITLE_WORDS for w in words))
+
+
 def _is_noise_line(line: str) -> bool:
     stripped = line.strip()
     if len(stripped) < 3:
@@ -204,6 +228,8 @@ def _is_noise_line(line: str) -> bool:
     if PERIOD_PATTERN.fullmatch(stripped):
         return True
     if re.fullmatch(r"[\d\s/T\-]+", stripped):
+        return True
+    if _is_generic_title(stripped):
         return True
     return False
 
