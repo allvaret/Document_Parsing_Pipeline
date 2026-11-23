@@ -163,6 +163,44 @@ antes de começar (falha cedo).
 - **Uma execução por vez.** Lock simples por arquivo no início do batch, em vez
   de resolver concorrência no `get_or_create`.
 
+**Decisões tomadas ao abrir a Fase 3 (com o porquê):**
+- **Documentos de evento fora do MVP — confirmado.** `OUTRO` e `FATO_RELEVANTE`
+  contam como **tipo não resolvido** (pular com motivo). Hoje `ReportType.from_label`
+  devolve `OUTRO` para rótulo desconhecido e `missing_storage_keys()` não olha o
+  tipo; o batch precisa tratar isso.
+- **SKIP barato.** Função de repositório (`needs_processing`) decide por hash +
+  `extractor_version` + (método, modelo, `prompt_version`) **antes** de abrir o
+  PDF; sem spaCy. Em `heuristic`: basta o summary heurístico e a versão atual. Em
+  `llm`: também o summary LLM com modelo e `PROMPT_VERSION` atuais. *Por quê:* o
+  objetivo do `prompt_version` é comparar a qualidade dos resumos ao longo do
+  tempo e regerar um resumo sem trocar de modelo; o SKIP existe para só ler o que
+  já está validado.
+- **`identify` roda depois do `process_document`.** O pipeline não recebe
+  overrides e continua sem tocar no banco; `identify` recebe o `ReportResult` +
+  nome do arquivo + CLI e devolve `CompanyRef`/`ReportInfo` resolvidos
+  (`dataclasses.replace`, as classes são `frozen`), com a `origin` de cada campo.
+- **Subir `HEURISTIC_VERSION` substitui o summary heurístico.** Ele é gravado como
+  `prompt_version` do summary heurístico e entra no `UNIQUE`; sem tratamento,
+  a versão antiga ficaria ao lado da nova. O `replace_summaries` cobre isso.
+- **`report.extractor_version` é `NOT NULL DEFAULT ''`.** `''` = versão
+  desconhecida, qualquer versão atual força regeração. Feito (commit `81409df`).
+- **`company.name_normalized` `UNIQUE`, na coluna e não em Python.** O `ticker_map`
+  tem centenas de entradas (ações e FIIs) e o `company` será a base de busca da
+  Fase 4; migrar depois custa mais. Feito (commit `bdaa83b`).
+- **Normalização de nome não resolve apelido.** "Cemig" e "Cia Energética de Minas
+  Gerais" só casam via ticker. Nome só de pontuação (`%`) mantém o texto, para não
+  virar `''` e colidir no `UNIQUE`.
+- **`ticker_map.json` só identifica, não semeia** (ver `CLAUDE.md`, decisão 8).
+- **Lock:** arquivo criado com `O_EXCL`, com mensagem dizendo qual lock apagar se o
+  processo morreu. *Por quê:* `msvcrt`/`fcntl` dependem de plataforma; PID file
+  deixa lock velho no Windows.
+- **Testes do batch usam `temp_db`** (SQLite em arquivo temporário por teste), com
+  `DATABASE_URL` isolado e guarda do `data/app.db` (feito; ver `CLAUDE.md`).
+  Pipeline injetado/falso nos testes de unidade; o PDF real fica em `-m integration`
+  (o spaCy pode ser bloqueado pelo Application Control do Windows em alguns
+  processos).
+- **Segurança:** testes de SQL injection na escrita feitos (`tests/test_sql_injection.py`).
+
 ---
 
 ## Fase 4 — API somente leitura (21–22/11)
@@ -177,6 +215,19 @@ antes de começar (falha cedo).
 **Regras:** schemas de resposta Pydantic (nunca devolver modelo ORM direto),
 404 com mensagem clara, CORS liberado só para a origem do frontend,
 **nenhum endpoint escreve no banco ou chama LLM**.
+
+**Segurança da busca (`?q=` e `{ticker}`).** O site **não** chama as funções de
+escrita do batch; usa funções de **leitura novas** em `src/db/`. Elas recebem
+texto hostil direto do usuário:
+- Só expressões do SQLAlchemy, nunca `text()`/f-string (o lint de
+  `tests/test_sql_injection.py` já cobre `src/site_backend`).
+- Busca parcial por `name_normalized` com `contains(q_normalizado, autoescape=True)`
+  (`normalize_name` na entrada): sem `autoescape`, `%` e `_` viram curinga, o que
+  não é injeção mas devolve resultado errado.
+- Limitar o tamanho de `q` e a paginação (`limit` máximo), por abuso e custo.
+- Testes: os mesmos payloads de `test_sql_injection.py` em cada endpoint de leitura,
+  via `TestClient` + `temp_db`, conferindo resposta, que nada muda e que
+  `%`/`_` não casam tudo.
 
 **Pronto quando:** testes com `TestClient` + banco SQLite semeado cobrem
 todos os endpoints, inclusive 404 e paginação.
@@ -209,6 +260,10 @@ gerado pelo batch.
     `CURRENT_TIMESTAMP` de forma diferente).
   - Rodada de testes em massa dos keypoints nos PDFs reais; publicar só o que
     passar na revisão.
+- Rodar a suíte também contra **Postgres** (testcontainers ou serviço no CI): o
+  SQLite não garante o mesmo comportamento transacional e de dialeto.
+- `name_normalized` no Postgres: manter a coluna preenchida pelo ORM (o `schema.sql`
+  também exige valor); coluna gerada não é portável com o SQLite.
 - Processar 5–10 empresas reais antes de divulgar.
 - README: diagrama do fluxo, as decisões de arquitetura (escritas no próprio
   README), como rodar localmente, link do site.
@@ -227,6 +282,14 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
 - Scraper de ITR/DFP pela CVM/RI (o `data_pipeline` já tem a base), entregando
   ao batch os metadados de origem (fonte 1 da identificação).
 - Documentos de evento (comunicados, fatos relevantes) com chave por protocolo.
+- **Atualizar o `ticker_map.json`** (gerado há meses) por scraping da CVM, e então
+  **semear `company`/`asset`** a partir dele, se a Fase 4 precisar listar empresas
+  sem relatório. Até lá o mapa só identifica (decisão 8 do `CLAUDE.md`).
+- Apelidos de empresa (tabela de aliases) para casar "Cia Energética de Minas
+  Gerais" e "Cemig" além do ticker.
+- `.gitattributes` com `* text=auto eol=lf` (repositório independente do
+  `core.autocrlf` de cada máquina; sem `.bat`/`.cmd` no projeto, LF não quebra no
+  Windows). Renormaliza os arquivos num commit `chore:` próprio.
 - `value_numeric` nos keypoints. Pode esperar: o `value_text` está gravado, então
   dá para preencher depois direto do banco, sem reprocessar PDFs.
 - Retry com backoff no provedor de LLM.
