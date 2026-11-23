@@ -13,6 +13,18 @@ class IncompleteResultError(DatabaseError):
         super().__init__("ReportResult incompleto, falta: " + ", ".join(missing))
 
 
+class SchemaOutdatedError(DatabaseError):
+    """O banco existe mas faltam colunas que os modelos exigem (schema mudou)."""
+
+    def __init__(self, missing: list[str]):
+        self.missing = missing
+        super().__init__(
+            "banco desatualizado, faltam colunas: " + ", ".join(missing)
+            + ". `create_all` não altera tabelas existentes: recrie o banco "
+            "(até haver dado em produção; depois, Alembic)."
+        )
+
+
 class ReportIdentityMismatchError(DatabaseError):
     """O PDF (mesmo hash) já está gravado com outra (empresa, tipo, período).
     É aviso, não insert: a identificação do mesmo arquivo mudou entre execuções."""
