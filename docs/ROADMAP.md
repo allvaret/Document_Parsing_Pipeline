@@ -200,6 +200,32 @@ antes de começar (falha cedo).
 - **SQLAlchemy travado em 2.0.58** (`requirements.txt`): a 2.1.9 traz extensões
   Cython (`_result_cy.pyd`) bloqueadas pelo Application Control do Windows. A suíte
   roda inteira na 2.0.58; o código usa só a API 2.0.
+- **Passo c (`src/batch/identify.py`) feito.** Reaproveita `_is_noise_token` e o
+  `ticker_map` do parser. Decisões, com o porquê:
+  - *Nome vindo só do arquivo só vale se existir no `ticker_map`.* O tier `filename`
+    do parser devolve qualquer sobra ("BR PT Demonstrações Financeiras") como nome e
+    criaria empresa-lixo; o `ticker_map` é a base curada. O tier `filename` do parser
+    é descartado no `identify`, que tem a própria fonte validada.
+  - *Com ticker conhecido (cli ou arquivo), o nome canônico é o do `ticker_map`*
+    (evita "Cemig" x "Companhia Energética de Minas Gerais - CEMIG" como empresas
+    distintas). Isso inverte a prioridade conteúdo > arquivo só para o **nome**.
+  - *Busca fuzzy (`data_pipeline.search.matcher`) fora do MVP.* Exige o DataFrame da
+    CVM; o MVP casa por ticker e `name_normalized`. Volta junto com o scraper (v1.1).
+  - *Lookarounds no lugar de `\b`* para período e ticker no nome do arquivo: `_` é
+    caractere de palavra e `Earnings_Release_3T25.pdf` não casaria com `\b`.
+  - *Data no nome:* fim de trimestre = aquele trimestre; outra data = publicação →
+    trimestre anterior, marcado como `inferred` e logado.
+  - Sem `origin` (scraper) ainda: o lugar na cadeia está reservado e documentado.
+- **Achados no parser (não alterados, ou corrigidos à parte):**
+  - *Corrigido:* `extract_report_type` casava `"itr"` como substring ("arbitragem",
+    "vitrine"); "Fato Relevante: arbitragem" virava ITR. Agora palavra inteira.
+  - *Aberto:* o tier `ticker` de `extract_company_name` nunca resolve: o mapa tem
+    tickers completos (`PETR3`) e `_ticker_from_text` consulta a raiz de 4 letras
+    (`PETR`). **Não consertar às cegas:** passaria a aceitar o primeiro ticker citado
+    na capa (ex.: um concorrente) como a empresa do relatório. Decidir junto com os
+    testes em massa de keypoints (Fase 6).
+  - *Aberto:* `PERIOD_PATTERN` do parser usa `\b` e pega a primeira ocorrência na
+    capa/última página; um comparativo ("3T25 vs 3T24") pode ganhar do período real.
 - **Normalização de nome não resolve apelido.** "Cemig" e "Cia Energética de Minas
   Gerais" só casam via ticker. Nome só de pontuação (`%`) mantém o texto, para não
   virar `''` e colidir no `UNIQUE`.
