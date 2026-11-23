@@ -9,7 +9,9 @@ from batch.identify import (
     apply_identification,
     identify,
     name_from_filename,
+    normalize_period,
     period_from_filename,
+    prefilter_skip_reason,
     ticker_from_filename,
     type_from_filename,
 )
@@ -42,8 +44,9 @@ def _result(name=None, method="none", rtype=ReportType.OUTRO, period=None, fname
     (PETRO, "3T25", False),
     (EARN, "3T25", False),
     ("Earnings_Release_3T25.pdf", "3T25", False),    # '_' não quebra o período
-    ("relatorio_1S26.pdf", "1S26", False),
-    ("DFP 12M25.pdf", "12M25", False),
+    ("relatorio_1S26.pdf", "2T26", False),           # semestre fecha em junho = 2T
+    ("DFP 12M25.pdf", "4T25", False),                # 12 meses fecham em dezembro = 4T
+    ("Release 9M25.pdf", "3T25", False),             # 9 meses fecham em setembro = 3T
     ("Release-2026-05-14.pdf", "1T26", True),        # publicação em 2T -> trimestre anterior
     ("Release-2026-02-10.pdf", "4T25", True),        # vira o ano
     ("release 31-12-2025.pdf", "4T25", False),       # data BR de fim de trimestre
@@ -161,11 +164,83 @@ def test_conteudo_vence_nome_do_arquivo_e_o_conflito_e_logado():
     assert any("conflito de período" in w and "2T25" in w for w in i.warnings)
 
 
-def test_conflito_de_tipo_e_logado():
+def test_tipo_explicito_no_nome_vence_o_conteudo_e_o_conflito_e_logado():
     r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.ITR, period="3T25")
     i = identify(r, "Earnings Release 3T25.pdf", TICKER_MAP)
-    assert i.report_type is ReportType.ITR
-    assert any("conflito de tipo" in w for w in i.warnings)
+    assert i.report_type is ReportType.EARNINGS_RELEASE and i.sources["report_type"] == "filename"
+    assert any("conflito de tipo" in w and "content=ITR" in w for w in i.warnings)
+
+
+def test_caso_real_cemig_nome_do_mapa_e_tipo_do_arquivo_vencem_a_capa():
+    """O conteúdo disse empresa 'Teleconferência | Webcast' e tipo Formulário de
+    Referência para esta press release (PDF real); o arquivo dizia Cemig e release."""
+    r = _result(name="Teleconferência | Webcast", method="capa_lines",
+                rtype=ReportType.FORMULARIO_REFERENCIA, period="1T26")
+    i = identify(r, CEMIG, TICKER_MAP)
+    assert i.ok
+    assert (i.company.name, i.report_type, i.period) == ("Cemig", ReportType.EARNINGS_RELEASE, "1T26")
+    assert i.sources["company"] == "filename" and i.sources["report_type"] == "filename"
+
+
+def test_nome_do_conteudo_so_vale_se_o_mapa_nao_casar_nada():
+    r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
+                period="3T25")
+    i = identify(r, "documento.pdf", TICKER_MAP)
+    assert i.company.name == "Ambev S.A." and i.sources["company"] == "content"
+
+
+# --- tabela tradutiva de períodos ----------------------------------------------------
+
+@pytest.mark.parametrize("bruto, esperado", [
+    ("3T25", "3T25"), ("1t26", "1T26"),
+    ("3M25", "1T25"), ("6M25", "2T25"), ("9M25", "3T25"), ("12M25", "4T25"),
+    ("9m25", "3T25"),
+    ("1S26", "2T26"), ("2S25", "4T25"),
+    ("7M25", "7M25"),            # não fecha trimestre: fica como veio
+])
+def test_normalize_period(bruto, esperado):
+    assert normalize_period(bruto) == esperado
+
+
+def test_9m25_do_conteudo_e_3t25_do_arquivo_sao_o_mesmo_periodo_sem_conflito():
+    # BR Partners real: capa diz 9M25, nome do arquivo diz 3T25.
+    r = _result(name="BR PARTNERS", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
+                period="9M25")
+    i = identify(r, EARN, TICKER_MAP)
+    assert i.period == "3T25" and i.warnings == ()
+
+
+def test_periodo_do_cli_tambem_e_normalizado():
+    i = identify(_result(), CEMIG, TICKER_MAP, Overrides(period="9m25"))
+    assert i.period == "3T25" and i.sources["period"] == "cli"
+
+
+@pytest.mark.parametrize("mes, trimestre", [
+    (1, "4T25"), (2, "4T25"), (3, "4T25"),   # 4T sai entre jan e mar
+    (4, "1T26"), (5, "1T26"), (6, "1T26"),   # 1T sai em abr/mai
+    (7, "2T26"), (8, "2T26"), (9, "2T26"),   # 2T sai em jul/ago
+    (10, "3T26"), (11, "3T26"), (12, "3T26"),  # 3T sai em out/nov
+])
+def test_mes_de_publicacao_define_o_trimestre_de_referencia(mes, trimestre):
+    # dia 15 nunca é fim de trimestre; publicado em 2026, o 4T (jan–mar) é de 2025
+    c = period_from_filename(f"Release-2026-{mes:02d}-15.pdf")
+    assert (c.value, c.inferred) == (trimestre, True)
+
+
+# --- pré-filtro pelo nome (antes de parsear) --------------------------------------------
+
+@pytest.mark.parametrize("arquivo", [COMUNICADO, "Fato Relevante - Acordo.pdf"])
+def test_prefiltro_pula_eventos_pelo_nome(arquivo):
+    assert prefilter_skip_reason(arquivo) == "tipo não periódico"
+
+
+@pytest.mark.parametrize("arquivo", [CEMIG, PETRO, EARN, DEMONSTR])
+def test_prefiltro_nao_pula_periodicos(arquivo):
+    assert prefilter_skip_reason(arquivo) is None
+
+
+def test_prefiltro_e_desligado_pelo_type_do_cli():
+    assert prefilter_skip_reason(COMUNICADO, Overrides(report_type=ReportType.ITR)) is None
 
 
 def test_override_do_cli_vence_todas_as_fontes():

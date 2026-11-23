@@ -32,6 +32,7 @@ from batch.identify import (
     Overrides,
     apply_identification,
     identify,
+    prefilter_skip_reason,
     validate_overrides,
 )
 from db.errors import ReportIdentityMismatchError, SchemaOutdatedError
@@ -174,6 +175,12 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
     rec["hash"] = file_hash = file_sha256(pdf)
     llm_model = ctx.provider.name if ctx.mode is SummaryMode.LLM else None
 
+    # 0. Pré-filtro pelo nome (comunicados etc.): pular antes de parsear.
+    motivo = prefilter_skip_reason(pdf.name, ctx.overrides)
+    if motivo:
+        rec["sources"] = {"report_type": "filename"}
+        return _skip(rec, motivo)
+
     # 1. SKIP barato: só o banco, sem abrir o PDF nem rodar spaCy.
     if not ctx.force:
         with ctx.session_factory() as s:
@@ -185,8 +192,13 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
     provider = None if ctx.dry_run else ctx.provider
     result, _payload = ctx.process(pdf, mode, provider, None)
 
-    # 3. Identificação (empresa, tipo, período).
+    # 3. Identificação (empresa, tipo, período). O que o conteúdo achou vai para o
+    # log mesmo quando a identificação o descarta: é a auditoria do descarte.
     ident = identify(result, pdf.name, ctx.ticker_map, ctx.overrides)
+    rec["content"] = {
+        "company": result.company.name, "company_method": result.company.name_method,
+        "report_type": result.report.report_type.value, "period": result.report.period,
+    }
     rec.update(
         company=ident.company.name if ident.company else None,
         ticker=ident.company.ticker if ident.company else None,
@@ -343,7 +355,17 @@ def _fail(msg: str) -> int:
     return EXIT_CANNOT_START
 
 
+def _protect_encoding() -> None:
+    """Console legado (cp437/ASCII) não codifica '—' nem acentos: sem isto o print
+    levantaria UnicodeEncodeError no meio do lote. Vira '?' em vez de derrubar."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(errors="replace")
+
+
 def main(argv: list[str] | None = None, *, process: Optional[Process] = None) -> int:
+    _protect_encoding()
     args = build_parser().parse_args(argv)
 
     url = get_database_url()

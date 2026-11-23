@@ -1,12 +1,13 @@
 """
 Identificação do relatório: (empresa, tipo, período) de um PDF.
 
-Cada campo é resolvido por uma cadeia de fontes, da mais para a menos forte:
+Cada campo é resolvido por uma cadeia de fontes (a ordem DIFERE por campo, porque
+nos PDFs reais a heurística de conteúdo errou empresa e tipo):
 
-    cli      override manual (--ticker/--type/--period) — vence tudo
-    origin   metadados de onde o PDF veio (scraper, v1.1) — ainda não existe
-    content  o que o parser achou na capa/títulos (já vem no ReportResult)
-    filename o nome do arquivo
+    empresa  cli > ticker/nome do arquivo no ticker_map > conteúdo
+    tipo     cli > palavra explícita no nome do arquivo > conteúdo
+    período  cli > conteúdo > nome do arquivo   (tudo normalizado: 9M25 == 3T25)
+    (origin: metadados do scraper, v1.1, ainda não existe)
 
 A fonte usada fica em `Identification.sources` (auditoria e log do batch).
 Funções puras: não tocam no banco nem no disco; o `ticker_map` é parâmetro.
@@ -14,11 +15,11 @@ Funções puras: não tocam no banco nem no disco; o `ticker_map` é parâmetro.
 Regras:
 - Sem empresa, tipo ou período: `skip_reason` preenchido, nada é inventado.
   Esses três campos formam a chave única do relatório.
-- Documento de evento (comunicado, fato relevante): `tipo não periódico`.
-- Conflito entre fontes vira aviso em `warnings`; vale a de maior prioridade.
-- Nome de empresa vindo SÓ do nome do arquivo só vale se existir no `ticker_map`
-  (a base curada): sobra de nome de arquivo ("BR PT Demonstrações Financeiras")
-  nunca vira empresa.
+- Documento de evento (comunicado, fato relevante): `tipo não periódico`; o
+  `prefilter_skip_reason` decide isso só pelo nome, antes de parsear o PDF.
+- Conflito de tipo ou período entre fontes vira aviso; vale a de maior prioridade.
+- Empresa só do nome do arquivo só vale se existir no `ticker_map` (a base curada):
+  sobra de nome de arquivo ("BR PT Demonstrações Financeiras") nunca vira empresa.
 - Com ticker conhecido (cli ou arquivo), o nome canônico é o do `ticker_map`.
 """
 
@@ -52,6 +53,35 @@ _ISO_DATE_RE = re.compile(r"(?<!\d)(20\d{2})-(\d{2})-(\d{2})(?!\d)")
 _BR_DATE_RE = re.compile(r"(?<!\d)(\d{2})[-_.](\d{2})[-_.](20\d{2})(?!\d)")
 _TICKER_RE = re.compile(r"[A-Za-z]{4}\d{1,2}")
 _QUARTER_END = {(3, 31): 1, (6, 30): 2, (9, 30): 3, (12, 31): 4}
+
+# Tabela tradutiva de períodos. A chave do relatório usa o TRIMESTRE em que o
+# período fecha: "9M25" (nove meses acumulados) e "3T25" fecham em setembro, então
+# são o mesmo relatório; um release do 3T traz os dois números. Vale também para
+# semestre. Meses que não fecham trimestre (7M, 11M...) ficam como vieram.
+# Armadilha conhecida: 1S26 e 2T26 viram a mesma chave; o `report_type` na chave
+# única separa o que seria colisão real (ITR do 2T x DFP do ano).
+PERIOD_EQUIVALENCE = {"3M": "1T", "6M": "2T", "9M": "3T", "12M": "4T", "1S": "2T", "2S": "4T"}
+
+# Mês de PUBLICAÇÃO -> trimestre de referência (usado quando o nome só traz uma
+# data de publicação). Releases do 1T saem em abr/mai; 2T em jul/ago; 3T em
+# out/nov; 4T entre jan e mar (do ano anterior).
+PUBLICATION_MONTH_TO_QUARTER = {
+    1: (4, -1), 2: (4, -1), 3: (4, -1),
+    4: (1, 0), 5: (1, 0), 6: (1, 0),
+    7: (2, 0), 8: (2, 0), 9: (2, 0),
+    10: (3, 0), 11: (3, 0), 12: (3, 0),
+}
+
+
+def normalize_period(raw: str) -> str:
+    """'9m25' -> '3T25', '12M25' -> '4T25', '1S26' -> '2T26'. O que não casa com
+    o formato (ex.: '7M25') volta em maiúsculas, sem tradução."""
+    p = raw.strip().upper()
+    m = re.fullmatch(r"(\d{1,2}[TMS])(\d{2})", p)
+    if not m:
+        return p
+    head, yy = m.groups()
+    return PERIOD_EQUIVALENCE.get(head, head) + yy
 
 
 class IdentificationError(ValueError):
@@ -122,7 +152,7 @@ def period_from_filename(filename: str) -> Optional[Candidate]:
     name = Path(filename).name
     m = _PERIOD_RE.search(name)
     if m:
-        return Candidate(m.group(1).upper())
+        return Candidate(normalize_period(m.group(1)))
 
     for rx, order in ((_ISO_DATE_RE, "ymd"), (_BR_DATE_RE, "dmy")):
         m = rx.search(name)
@@ -136,9 +166,8 @@ def period_from_filename(filename: str) -> Optional[Candidate]:
             continue
         if (mo, d) in _QUARTER_END:
             return Candidate(f"{_QUARTER_END[(mo, d)]}T{y % 100:02d}")
-        q = (mo - 1) // 3 + 1          # trimestre da publicação
-        q, y = (q - 1, y) if q > 1 else (4, y - 1)
-        return Candidate(f"{q}T{y % 100:02d}", inferred=True)
+        q, year_shift = PUBLICATION_MONTH_TO_QUARTER[mo]
+        return Candidate(f"{q}T{(y + year_shift) % 100:02d}", inferred=True)
     return None
 
 
@@ -183,7 +212,16 @@ def validate_overrides(o: Overrides) -> Overrides:
     period = o.period.upper().strip() if o.period else None
     if period and not _PERIOD_RE.fullmatch(period):
         raise IdentificationError(f"--period inválido: {o.period!r} (esperado ex.: 3T25, 1S26, 12M25)")
-    return replace(o, ticker=ticker, period=period)
+    return replace(o, ticker=ticker, period=normalize_period(period) if period else None)
+
+
+def prefilter_skip_reason(filename: str, overrides: Overrides = Overrides()) -> Optional[str]:
+    """Motivo para pular SÓ pelo nome do arquivo, antes de parsear o PDF (que custa
+    segundos, e até ~1 min com o spaCy frio). Hoje: documentos de evento
+    ('comunicado', 'fato relevante'). `--type` no CLI desliga o pré-filtro."""
+    if overrides.report_type is None and type_from_filename(filename) == NON_PERIODIC:
+        return SKIP_NON_PERIODIC
+    return None
 
 
 # --- cadeia de fontes -------------------------------------------------------------
@@ -207,7 +245,7 @@ def identify(
     if o.period:
         period, sources["period"] = o.period, "cli"
     elif content_period:
-        period, sources["period"] = content_period.upper(), "content"
+        period, sources["period"] = normalize_period(content_period), "content"
     elif from_file:
         period, sources["period"] = from_file.value, "filename"
         if from_file.inferred:
@@ -218,21 +256,26 @@ def identify(
             + (" (inferido)" if from_file.inferred else "")
         )
 
-    # ---- tipo
+    # ---- tipo: cli > filename > content. Uma palavra explícita no nome
+    # ('release', 'itr', 'dfp') é deliberada; a busca de palavra-chave no texto da
+    # capa já classificou uma press release da Cemig como Formulário de Referência.
+    candidates = {"cli": o.report_type, "filename": type_from_filename(filename),
+                  "content": type_from_content(result)}
     kind: Optional[KindValue] = None
-    if o.report_type:
-        kind, sources["report_type"] = o.report_type, "cli"
-    elif (c := type_from_content(result)) is not None:
-        kind, sources["report_type"] = c, "content"
-    elif (f := type_from_filename(filename)) is not None:
-        kind, sources["report_type"] = f, "filename"
-    file_kind = type_from_filename(filename)
-    if kind is not None and file_kind is not None and file_kind != kind:
-        warnings.append(
-            f"conflito de tipo: {sources['report_type']}={_label(kind)}, filename={_label(file_kind)}"
-        )
+    for origin, value in candidates.items():
+        if value is not None:
+            kind, sources["report_type"] = value, origin
+            break
+    for origin, value in candidates.items():
+        if kind is not None and value is not None and value != kind:
+            warnings.append(
+                f"conflito de tipo: {sources['report_type']}={_label(kind)}, "
+                f"{origin}={_label(value)}"
+            )
 
-    # ---- empresa
+    # ---- empresa: o ticker_map é a base. cli/arquivo com ticker ou nome do mapa
+    # vencem o conteúdo; o nome da capa (heurística) só entra se nada do mapa casar.
+    # O que o conteúdo achou fica no log (`content`), sem inflar os avisos.
     ticker = o.ticker
     ticker_origin = "cli" if ticker else None
     if ticker is None:
@@ -242,13 +285,10 @@ def identify(
     name = method = name_origin = None
     if ticker and ticker in ticker_map:
         name, method, name_origin = ticker_map[ticker], "ticker_map", ticker_origin
-    elif (n := name_from_content(result)):
-        name, method, name_origin = n, result.company.name_method, "content"
     elif (n := name_from_filename(filename, ticker_map)):
         name, method, name_origin = n, "ticker_map", "filename"
-    if (name_origin == "content" or ticker) and (nf := name_from_filename(filename, ticker_map)):
-        if name and normalize_name(nf) != normalize_name(name):
-            warnings.append(f"conflito de empresa: {name_origin}={name!r}, filename={nf!r}")
+    elif (n := name_from_content(result)):
+        name, method, name_origin = n, result.company.name_method, "content"
 
     company = None
     if ticker or name:

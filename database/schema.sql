@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS report (
     report_type   TEXT    NOT NULL
                   CHECK (report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE',
                                          'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'OUTRO')),
-    period        TEXT    NOT NULL,               -- normalizado: 3T25, 1S26, 9M25, 12M25
+    period        TEXT    NOT NULL,               -- trimestre em que fecha: 1T26..4T26 (9M25 = 3T25; 1S26 = 2T26)
     file_name     TEXT    NOT NULL,
     file_hash     TEXT    NOT NULL UNIQUE         -- SHA-256 do PDF: o mesmo arquivo nunca entra 2x
                   CHECK (length(file_hash) = 64),

@@ -87,7 +87,10 @@ def test_log_jsonl_tem_inicio_arquivos_e_fim(pdf_dir, log_dir, temp_db):
     por_arquivo = {x["file"]: x for x in linhas if x["event"] == "file"}
     cemig = por_arquivo[CEMIG]
     assert cemig["status"] == "novo" and cemig["hash"] == file_sha256(pdf_dir / CEMIG)
-    assert cemig["sources"] == {"period": "filename", "report_type": "content", "company": "filename"}
+    assert cemig["sources"] == {"period": "filename", "report_type": "filename", "company": "filename"}
+    # auditoria: o que o conteúdo achou fica no log mesmo quando é descartado
+    assert cemig["content"] == {"company": None, "company_method": "none",
+                                "report_type": "EARNINGS_RELEASE", "period": None}
     assert (cemig["company"], cemig["period"]) == ("Cemig", "1T26")
     assert cemig["duration_s"] >= 0
     assert por_arquivo[EARN]["status"] == "pulado"
@@ -156,6 +159,42 @@ def test_mesmo_pdf_identificado_diferente_vira_aviso_e_nao_insert(pdf_dir, log_d
     assert contagem(file_session, Report) == antes
     avisos = [x for x in ler_log(resumo.log_path) if x.get("reason", "") and x["reason"].startswith("aviso")]
     assert avisos and "já gravado como" in avisos[0]["reason"]
+
+
+def test_comunicado_e_pulado_pelo_nome_sem_chamar_o_pipeline(pdf_dir, log_dir, temp_db):
+    (pdf_dir / "comunicado_petr3_33064.pdf").write_bytes(b"evento")
+    chamadas = Chamadas()
+    resumo, saida = rodar(pdf_dir, log_dir, temp_db, chamadas)
+
+    assert "comunicado_petr3_33064.pdf" not in chamadas.arquivos()     # nem foi parseado
+    assert resumo.skip_reasons["tipo não periódico"] == 1
+    rec = next(x for x in ler_log(resumo.log_path) if x.get("file") == "comunicado_petr3_33064.pdf")
+    assert rec["status"] == "pulado" and rec["reason"] == "tipo não periódico"
+    assert rec["sources"] == {"report_type": "filename"} and rec["hash"]
+
+
+def test_type_do_cli_desliga_o_prefiltro(pdf_dir, log_dir, temp_db):
+    from resumo.result import ReportType
+    (pdf_dir / "comunicado_petr3_33064.pdf").write_bytes(b"evento")
+    chamadas = Chamadas()
+    rodar(pdf_dir, log_dir, temp_db, chamadas, overrides=Overrides(report_type=ReportType.ITR))
+    assert "comunicado_petr3_33064.pdf" in chamadas.arquivos()
+
+
+def test_main_nao_quebra_com_console_que_nao_codifica_acentos(pdf_dir, log_dir, monkeypatch):
+    """Console legado/ASCII: '—' e acentos viram '?', o lote não cai no meio."""
+    import io
+    import sys
+    buffer = io.BytesIO()
+    monkeypatch.setattr(sys, "stdout", io.TextIOWrapper(buffer, encoding="ascii"))
+    monkeypatch.setattr(sys, "stderr", io.TextIOWrapper(io.BytesIO(), encoding="ascii"))
+
+    codigo = main(args(pdf_dir, log_dir), process=fake_process(Chamadas()))
+    sys.stdout.flush()
+
+    assert codigo == 0
+    saida = buffer.getvalue().decode("ascii")
+    assert "Resumo: novos=2" in saida and "empresa n?o identificada" in saida
 
 
 def test_modo_llm_sem_provedor_e_erro_explicito(pdf_dir, log_dir, temp_db):
