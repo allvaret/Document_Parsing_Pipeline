@@ -21,70 +21,19 @@ from batch.run import (
     main,
     run_batch,
 )
-from db.models import Company, Report, Summary
+from db.models import Company, Report
 from db.session import get_database_url, make_engine
-from resumo.LLM.summarize_pipeline import SummaryMode
-from resumo.result import (
-    HEURISTIC_MODEL,
-    HEURISTIC_VERSION,
-    CompanyRef,
-    KeypointRecord,
-    ReportInfo,
-    ReportResult,
-    ReportType,
-    SummaryRecord,
-    file_sha256,
+from batch_helpers import (
+    CEMIG,
+    EARN,
+    PETRO,
+    TICKER_MAP,
+    Chamadas,
+    FakeProvider,
+    fake_process,
 )
-
-TICKER_MAP = {"PETR3": "Petrobras", "CMIG4": "Cemig"}
-CEMIG = "Press-release-Cemig-2026-03-31.pdf"
-PETRO = "Desempenho Financeiro Petrobras 3T25.pdf"
-EARN = "Earnings Release 3T25.pdf"     # sem empresa: deve ser pulado
-
-
-class FakeProvider:
-    name = "fake:modelo"
-
-    def generate(self, prompt):
-        return "texto"
-
-
-class Chamadas(list):
-    """Registra (arquivo, modo, provider) de cada chamada ao `process` falso."""
-
-
-def fake_process(chamadas, quebra=()):
-    def _process(pdf, mode, provider, ticker):
-        chamadas.append((pdf.name, mode, provider))
-        if pdf.name in quebra:
-            raise ValueError("PDF corrompido (simulado)")
-        summaries = [SummaryRecord(SummaryMode.HEURISTIC, HEURISTIC_MODEL,
-                                   HEURISTIC_VERSION, '{"a": 1}', "json")]
-        if mode is SummaryMode.LLM:
-            summaries.append(SummaryRecord(SummaryMode.LLM, provider.name,
-                                           "prompt-v1", "narrativo", "markdown"))
-        return ReportResult(
-            company=CompanyRef(name=None, name_method="none"),
-            report=ReportInfo(ReportType.EARNINGS_RELEASE, None, pdf.name,
-                              file_sha256(pdf), 3),
-            keypoints=(KeypointRecord("Lucro", "R$ 1", "+1%", None, 1),),
-            summaries=tuple(summaries),
-        ), {}
-    return _process
-
-
-@pytest.fixture
-def pdf_dir(tmp_path):
-    d = tmp_path / "pdfs"
-    d.mkdir()
-    for nome in (CEMIG, PETRO, EARN):
-        (d / nome).write_bytes(nome.encode())        # conteúdo distinto = hash distinto
-    return d
-
-
-@pytest.fixture
-def log_dir(tmp_path):
-    return tmp_path / "logs"
+from resumo.LLM.summarize_pipeline import SummaryMode
+from resumo.result import file_sha256
 
 
 def rodar(pdf_dir, log_dir, temp_db, chamadas=None, **kw):

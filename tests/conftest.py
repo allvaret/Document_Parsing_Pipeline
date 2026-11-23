@@ -79,6 +79,23 @@ def file_session(temp_db):
 
 
 @pytest.fixture
+def pdf_dir(tmp_path):
+    """Pasta com 3 'PDFs' (bytes distintos = hashes distintos) do batch."""
+    from batch_helpers import CEMIG, EARN, PETRO
+
+    d = tmp_path / "pdfs"
+    d.mkdir()
+    for nome in (CEMIG, PETRO, EARN):
+        (d / nome).write_bytes(nome.encode())
+    return d
+
+
+@pytest.fixture
+def log_dir(tmp_path):
+    return tmp_path / "logs"
+
+
+@pytest.fixture
 def session():
     """Sessão SQLite em memória, com FKs ativas e tabelas criadas pelo ORM."""
     engine = make_engine("sqlite:///:memory:")
