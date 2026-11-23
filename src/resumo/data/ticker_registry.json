@@ -1,0 +1,6474 @@
+[
+  {
+    "ticker": "AALR3",
+    "name": "Alliança Saúde E Participações",
+    "razao_social": "ALLIANÇA SAÚDE E PARTICIPAÇÕES S.A.",
+    "cnpj": "42771949000135",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ABCB4",
+    "name": "Bco Abc Brasil",
+    "razao_social": "BCO ABC BRASIL S.A.",
+    "cnpj": "28195667000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ABCP11",
+    "name": "Grand Plaza Shopping",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ABEV3",
+    "name": "Ambev",
+    "razao_social": "AMBEV S.A.",
+    "cnpj": "07526557000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AEFI11",
+    "name": "FII AESAPAR",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "AERI3",
+    "name": "Aeris Ind. E Com. De Equip. Para Ger. De Eng.",
+    "razao_social": "AERIS IND. E COM. DE EQUIP. PARA GER. DE ENG. S.A.",
+    "cnpj": "12528708000107",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AESO3",
+    "name": "Auren Operações",
+    "razao_social": "Auren Operações S.A.",
+    "cnpj": "00194724000113",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AFHI11",
+    "name": "AF INVEST CRI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "AFLT3",
+    "name": "Afluente Transmissão De Energia Elétrica",
+    "razao_social": "AFLUENTE TRANSMISSÃO DE ENERGIA ELÉTRICA S/A",
+    "cnpj": "10338320000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AGCX11",
+    "name": "FII AG CAIXA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "AGRO3",
+    "name": "BrasilAgro",
+    "razao_social": "BRASILAGRO - CIA BRAS DE PROP AGRICOLAS",
+    "cnpj": "07628528000159",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AGXY3",
+    "name": "Agrogalaxy Participações S.A. - Em Recuperação Judicial",
+    "razao_social": "Agrogalaxy Participações S.A. - Em Recuperação Judicial",
+    "cnpj": "21240146000184",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AHEB3",
+    "name": "Sao Paulo Turismo",
+    "razao_social": "SAO PAULO TURISMO S.A.",
+    "cnpj": "62002886000160",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AHEB5",
+    "name": "Sao Paulo Turismo",
+    "razao_social": "SAO PAULO TURISMO S.A.",
+    "cnpj": "62002886000160",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AHEB6",
+    "name": "Sao Paulo Turismo",
+    "razao_social": "SAO PAULO TURISMO S.A.",
+    "cnpj": "62002886000160",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AIEC11",
+    "name": "AUTONOMY EDIFÍCIOS CORPORATIVOS FUND. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "AJFI11",
+    "name": "AJ MALLS FUNDO DE INVESTIMENTO IMOBILIÁRIO RESPONSABILIDADE LIMITADA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ALLD3",
+    "name": "Allied Tecnologia",
+    "razao_social": "ALLIED TECNOLOGIA S.A.",
+    "cnpj": "20247322000147",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ALMI11",
+    "name": "Torre Almirante",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ALOS3",
+    "name": "Allos",
+    "razao_social": "ALLOS S.A.",
+    "cnpj": "05878397000132",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ALPA3",
+    "name": "Alpargatas",
+    "razao_social": "ALPARGATAS S.A.",
+    "cnpj": "61079117000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ALPA4",
+    "name": "Alpargatas",
+    "razao_social": "ALPARGATAS S.A.",
+    "cnpj": "61079117000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ALPK3",
+    "name": "Allpark Empreendimentos, Participações E Serviços",
+    "razao_social": "ALLPARK EMPREENDIMENTOS, PARTICIPAÇÕES E SERVIÇOS S.A.",
+    "cnpj": "60537263000166",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ALUP11",
+    "name": "Alupar Investimento",
+    "razao_social": "ALUPAR INVESTIMENTO S/A",
+    "cnpj": "08364948000138",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ALZC11",
+    "name": "FII ALI CRED",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ALZM11",
+    "name": "FII ALIANZME",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ALZR11",
+    "name": "Alianza Trust Renda Imobiliária",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "AMBP3",
+    "name": "Ambipar",
+    "razao_social": "AMBIPAR PARTICIP. E EMPREEND. S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "12648266000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AMER3",
+    "name": "Americanas",
+    "razao_social": "AMERICANAS S.A. - em Recuperação Judicial",
+    "cnpj": "00776574000156",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AMOB3",
+    "name": "Automob Participações",
+    "razao_social": "Automob Participações S.A.",
+    "cnpj": "35654688000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ANCR11B",
+    "name": "Ancar CI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ANIM3",
+    "name": "Ânima Educação",
+    "razao_social": "ANIMA HOLDING S.A.",
+    "cnpj": "09288252000132",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "APTI3",
+    "name": "Aliperti",
+    "razao_social": "ALIPERTI S.A.",
+    "cnpj": "61156931000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "APTI4",
+    "name": "Aliperti",
+    "razao_social": "ALIPERTI S.A.",
+    "cnpj": "61156931000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "APTO11",
+    "name": "NAVI RESIDENCIAL FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ARCT11",
+    "name": "RIZA ARCTIUM REAL ESTATE FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ARML3",
+    "name": "Armac Locação, Logística E Serviços",
+    "razao_social": "ARMAC LOCAÇÃO, LOGÍSTICA E SERVIÇOS S.A.",
+    "cnpj": "00242184000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ARND3",
+    "name": "Arandu Investimentos",
+    "razao_social": "Arandu Investimentos S.A.",
+    "cnpj": "14127813000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ARRI11",
+    "name": "FDO. INV. IMOB. ÁTRIO REIT RECEBÍVEIS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ASAI3",
+    "name": "Assaí",
+    "razao_social": "SENDAS DISTRIBUIDORA S.A.",
+    "cnpj": "06057223000171",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ASMT11",
+    "name": "ASA METROPOLIS FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ATED3",
+    "name": "Atom Educação E Editora",
+    "razao_social": "Atom Educação e Editora S.A.",
+    "cnpj": "23994857000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ATSA11",
+    "name": "Hedge Atrium Shopping Santo André",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ATWN11",
+    "name": "FDO. INV. IMOB. A–TOWN",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "AUAU3",
+    "name": "União Pet Participações",
+    "razao_social": "União Pet Participações S.A.",
+    "cnpj": "53153938000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AURE3",
+    "name": "Auren Energia",
+    "razao_social": "Auren Energia S.A.",
+    "cnpj": "28594234000123",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AVLL3",
+    "name": "Alphaville",
+    "razao_social": "ALPHAVILLE S.A.",
+    "cnpj": "16811931000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AXIA3",
+    "name": "Axia Energia",
+    "razao_social": "AXIA Energia S.A.",
+    "cnpj": "00001180000126",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AXIA7",
+    "name": "Axia Energia",
+    "razao_social": "AXIA Energia S.A.",
+    "cnpj": "00001180000126",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AZEV3",
+    "name": "Azevedo E Travassos",
+    "razao_social": "AZEVEDO E TRAVASSOS S.A.",
+    "cnpj": "61351532000168",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AZEV4",
+    "name": "Azevedo E Travassos",
+    "razao_social": "AZEVEDO E TRAVASSOS S.A.",
+    "cnpj": "61351532000168",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AZTE3",
+    "name": "Azevedo & Travassos Energia",
+    "razao_social": "Azevedo & Travassos Energia S.A.",
+    "cnpj": "52017473000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AZUL3",
+    "name": "Azul",
+    "razao_social": "AZUL S.A.",
+    "cnpj": "09305994000129",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "AZZA3",
+    "name": "Arezzo",
+    "razao_social": "AZZAS 2154 S.A.",
+    "cnpj": "16590234000176",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "B3SA3",
+    "name": "B3",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BALM3",
+    "name": "Baumer",
+    "razao_social": "BAUMER S.A.",
+    "cnpj": "61374161000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BALM4",
+    "name": "Baumer",
+    "razao_social": "BAUMER S.A.",
+    "cnpj": "61374161000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BARI11",
+    "name": "FDO INV IMOB BARIGUI RENDIMENTOS IMOB I FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BAUH3",
+    "name": "Excelsior Alimentos",
+    "razao_social": "EXCELSIOR ALIMENTOS S.A.",
+    "cnpj": "95426862000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BAUH4",
+    "name": "Excelsior Alimentos",
+    "razao_social": "EXCELSIOR ALIMENTOS S.A.",
+    "cnpj": "95426862000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BAZA3",
+    "name": "Bco Amazonia",
+    "razao_social": "BCO AMAZONIA S.A.",
+    "cnpj": "04902979000144",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BBAS3",
+    "name": "Banco do Brasil",
+    "razao_social": "BCO BRASIL S.A.",
+    "cnpj": "00000000000191",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BBDC3",
+    "name": "Banco Bradesco",
+    "razao_social": "BCO BRADESCO S.A.",
+    "cnpj": "60746948000112",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BBDC4",
+    "name": "Banco Bradesco",
+    "razao_social": "BCO BRADESCO S.A.",
+    "cnpj": "60746948000112",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BBFI11B",
+    "name": "BB Progressivo",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BBFO11",
+    "name": "BB FUNDO DE FUNDOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BBIM11",
+    "name": "BB Recebíveis Imobiliários",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BBML3",
+    "name": "Bbm Logística",
+    "razao_social": "BBM Logística S.A.",
+    "cnpj": "01107327000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BBPO11",
+    "name": "BB Progressivo II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BBRC11",
+    "name": "BB Renda Corporativa",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BBSE3",
+    "name": "BB Seguridade",
+    "razao_social": "BB SEGURIDADE PARTICIPAÇÕES S.A.",
+    "cnpj": "17344597000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BCFF11",
+    "name": "BTG Fundo de Fundos",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BCIA11",
+    "name": "Bradesco Carteira Imobiliária Ativa",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BCRI11",
+    "name": "Banestes Recebíveis Imobiliários",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BDLL3",
+    "name": "Bardella S.A. Industrias Mecanicas Em Recuperação Judicial",
+    "razao_social": "BARDELLA S.A. INDUSTRIAS MECANICAS EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "60851615000153",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BDLL4",
+    "name": "Bardella S.A. Industrias Mecanicas Em Recuperação Judicial",
+    "razao_social": "BARDELLA S.A. INDUSTRIAS MECANICAS EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "60851615000153",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BEEF3",
+    "name": "Minerva",
+    "razao_social": "MINERVA S.A.",
+    "cnpj": "67620377000114",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BEES3",
+    "name": "Banestes S.A. - Bco Est Espirito Santo",
+    "razao_social": "BANESTES S.A. - BCO EST ESPIRITO SANTO",
+    "cnpj": "28127603000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BEES4",
+    "name": "Banestes S.A. - Bco Est Espirito Santo",
+    "razao_social": "BANESTES S.A. - BCO EST ESPIRITO SANTO",
+    "cnpj": "28127603000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BETP3",
+    "name": "Betapart Participacoes",
+    "razao_social": "BETAPART PARTICIPACOES S.A.",
+    "cnpj": "02762124000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BGIP3",
+    "name": "Bco Estado De Sergipe S.A. - Banese",
+    "razao_social": "BCO ESTADO DE SERGIPE S.A. - BANESE",
+    "cnpj": "13009717000146",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BGIP4",
+    "name": "Bco Estado De Sergipe S.A. - Banese",
+    "razao_social": "BCO ESTADO DE SERGIPE S.A. - BANESE",
+    "cnpj": "13009717000146",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BHIA3",
+    "name": "Casas Bahia",
+    "razao_social": "Grupo Casas Bahia S.A. - Em Recuperação Judicial",
+    "cnpj": "33041260065290",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BICE11",
+    "name": "BRIO CRÉDITO ESTRUTURADO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BICR11",
+    "name": "INTER TÍTULOS IMOB. FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BIED3",
+    "name": "Bioma Educação",
+    "razao_social": "BIOMA EDUCAÇÃO S.A.",
+    "cnpj": "45987245000192",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BIME11",
+    "name": "BRIO MULTIESTRATÉGIA FUNDO DE INVESTIMENTO IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BIOM3",
+    "name": "Biomm",
+    "razao_social": "BIOMM S.A.",
+    "cnpj": "04752991000110",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BIPD11",
+    "name": "FII BRIO IV",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BLAU3",
+    "name": "Blau Farmacêutica",
+    "razao_social": "Blau Farmacêutica S.A.",
+    "cnpj": "58430828000160",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BLCA11",
+    "name": "BLUEMACAW CATUAÍ TRIPLE A FDO DE INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BLCP11",
+    "name": "BLUECAP RENDA LOG. FDO INV. IMOB. - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BLMC11",
+    "name": "BLUEMACAW CRÉDITO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BLMG11",
+    "name": "BLUEMACAW LOGÍSTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BLMO11",
+    "name": "BLUEMACAW OFFICE FUND II - FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BLMR11",
+    "name": "BLUEMACAW RENDA + FOF",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BMEB3",
+    "name": "Bco Mercantil Do Brasil",
+    "razao_social": "BCO MERCANTIL DO BRASIL S.A.",
+    "cnpj": "17184037000110",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMEB4",
+    "name": "Bco Mercantil Do Brasil",
+    "razao_social": "BCO MERCANTIL DO BRASIL S.A.",
+    "cnpj": "17184037000110",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMGB11",
+    "name": "Banco Bmg",
+    "razao_social": "BANCO BMG S/A",
+    "cnpj": "61186680000174",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMGB4",
+    "name": "Banco Bmg",
+    "razao_social": "BANCO BMG S/A",
+    "cnpj": "61186680000174",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMII11",
+    "name": "Brasilio Machado",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BMIN3",
+    "name": "Bco Mercantil De Investimentos",
+    "razao_social": "BCO MERCANTIL DE INVESTIMENTOS S.A.",
+    "cnpj": "34169557000172",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMIN4",
+    "name": "Bco Mercantil De Investimentos",
+    "razao_social": "BCO MERCANTIL DE INVESTIMENTOS S.A.",
+    "cnpj": "34169557000172",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMKS3",
+    "name": "Bicicletas Monark",
+    "razao_social": "BICICLETAS MONARK S.A.",
+    "cnpj": "56992423000190",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BMLC11",
+    "name": "BM Brascan Lajes Corporativas",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BMOB3",
+    "name": "Bemobi Mobile Tech",
+    "razao_social": "BEMOBI MOBILE TECH S.A.",
+    "cnpj": "09042817000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BNBR3",
+    "name": "Bco Nordeste Do Brasil",
+    "razao_social": "BCO NORDESTE DO BRASIL S.A.",
+    "cnpj": "07237373000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BNFS11",
+    "name": "Banrisul Novas Fronteiras",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BOBR3",
+    "name": "Bombril S.A. - Em Recuperação Judicial",
+    "razao_social": "BOMBRIL S.A. - Em recuperação Judicial",
+    "cnpj": "50564053000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BOBR4",
+    "name": "Bombril S.A. - Em Recuperação Judicial",
+    "razao_social": "BOMBRIL S.A. - Em recuperação Judicial",
+    "cnpj": "50564053000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BPAC11",
+    "name": "Banco BTG Pactual",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BPAR3",
+    "name": "Bco Estado Do Para",
+    "razao_social": "BCO ESTADO DO PARA S.A.",
+    "cnpj": "04913711000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BPFF11",
+    "name": "Brasil Plural Absoluto Fundo de Fundos",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BPML11",
+    "name": "FDO INV IMOB BTG PACTUAL SHOPPINGS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BPRP11",
+    "name": "FDO INV IMOB - FII BRLPROP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRAP3",
+    "name": "Bradespar",
+    "razao_social": "BRADESPAR S.A.",
+    "cnpj": "03847461000192",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRAP4",
+    "name": "Bradespar",
+    "razao_social": "BRADESPAR S.A.",
+    "cnpj": "03847461000192",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRAV3",
+    "name": "3R Petroleum",
+    "razao_social": "Brava Energia S.A.",
+    "cnpj": "12091809000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRBI11",
+    "name": "Brbi Br Partners",
+    "razao_social": "BRBI BR Partners S.A",
+    "cnpj": "10739356000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRCO11",
+    "name": "BRESCO LOGÍSTICA - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRCR11",
+    "name": "BTG Pactual Corporate Office",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BREV11",
+    "name": "BRAZIL REAL ESTATE VICTORY FUND I - FDO. INV. IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRFS3",
+    "name": "Brf",
+    "razao_social": "BRF S.A.",
+    "cnpj": "01838723000127",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRHT11B",
+    "name": "BR Hotéis",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRIM11",
+    "name": "BRIO REAL ESTATE II - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRIP11",
+    "name": "BRIO REAL ESTATE III",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRIX11",
+    "name": "FII BRIX",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRKM3",
+    "name": "Braskem",
+    "razao_social": "BRASKEM S.A.",
+    "cnpj": "42150391000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRKM5",
+    "name": "Braskem",
+    "razao_social": "BRASKEM S.A.",
+    "cnpj": "42150391000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRKM6",
+    "name": "Braskem",
+    "razao_social": "BRASKEM S.A.",
+    "cnpj": "42150391000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRLA11",
+    "name": "FUNDO DE INVESTIMENTO IMOBILIÁRIO BRL PROP II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRML3",
+    "name": "Br Malls Participacoes",
+    "razao_social": "BR MALLS PARTICIPACOES S.A.",
+    "cnpj": "06977745000191",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BROF11",
+    "name": "BRPR CORPORATE OFFICES FDO DE INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BRSR3",
+    "name": "Banco Do Estado Do Rio Grande Do Sul",
+    "razao_social": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
+    "cnpj": "92702067000196",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRSR5",
+    "name": "Banco Do Estado Do Rio Grande Do Sul",
+    "razao_social": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
+    "cnpj": "92702067000196",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BRSR6",
+    "name": "Banrisul",
+    "razao_social": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
+    "cnpj": "92702067000196",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BSLI3",
+    "name": "Brb Banco De Brasilia",
+    "razao_social": "BRB BANCO DE BRASILIA S.A.",
+    "cnpj": "00000208000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BSLI4",
+    "name": "Brb Banco De Brasilia",
+    "razao_social": "BRB BANCO DE BRASILIA S.A.",
+    "cnpj": "00000208000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "BTAL11",
+    "name": "BTG PACTUAL AGRO LOGÍSTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BTCI11",
+    "name": "FII BTG CRI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BTCR11",
+    "name": "BTG Pactual Crédito Imobiliário",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BTLG11",
+    "name": "BTG PACTUAL LOGISTICA FDO INV IMOB - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BTSG11",
+    "name": "BTSP I FDO. INVEST. IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BTSI11",
+    "name": "BTSP II FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BTWR11",
+    "name": "BTOWERS FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BVAR11",
+    "name": "Brasil Varejo",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BZEL11",
+    "name": "BARZEL FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "BZLI11",
+    "name": "Brazil Realty",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CACR11",
+    "name": "CARTESIA FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CALI3",
+    "name": "Construtora Adolpho Lindenberg",
+    "razao_social": "CONSTRUTORA ADOLPHO LINDENBERG S.A.",
+    "cnpj": "61022042000118",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CAMB3",
+    "name": "Cambuci",
+    "razao_social": "CAMBUCI S.A.",
+    "cnpj": "61088894000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CAML3",
+    "name": "Camil Alimentos",
+    "razao_social": "CAMIL ALIMENTOS S.A.",
+    "cnpj": "64904295000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CASH3",
+    "name": "Méliuz",
+    "razao_social": "MÉLIUZ S.A.",
+    "cnpj": "14110585000107",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CASN3",
+    "name": "Cia Catarinense De Aguas E Saneam.-Casan",
+    "razao_social": "CIA CATARINENSE DE AGUAS E SANEAM.-CASAN",
+    "cnpj": "82508433000117",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CASN4",
+    "name": "Cia Catarinense De Aguas E Saneam.-Casan",
+    "razao_social": "CIA CATARINENSE DE AGUAS E SANEAM.-CASAN",
+    "cnpj": "82508433000117",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CBAV3",
+    "name": "CBA",
+    "razao_social": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
+    "cnpj": "61409892000173",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CBEE3",
+    "name": "Ampla Energia E Servicos",
+    "razao_social": "AMPLA ENERGIA E SERVICOS S.A.",
+    "cnpj": "33050071000158",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CBOP11",
+    "name": "Castello Branco Office Park",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CCME11",
+    "name": "FII CANUMA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CCRF11",
+    "name": "CANVAS CRI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CCTY3",
+    "name": "Belora Rdvc City Desenvolvimento Imobiliário",
+    "razao_social": "Belora RDVC City Desenvolvimento Imobiliário S.A.",
+    "cnpj": "52805925000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEAB3",
+    "name": "C&A",
+    "razao_social": "C&A Modas S.A.",
+    "cnpj": "45242914000105",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEBR3",
+    "name": "Companhia Energética De Brasília - Ceb",
+    "razao_social": "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB",
+    "cnpj": "00070698000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEBR5",
+    "name": "Companhia Energética De Brasília - Ceb",
+    "razao_social": "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB",
+    "cnpj": "00070698000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEBR6",
+    "name": "Companhia Energética De Brasília - Ceb",
+    "razao_social": "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB",
+    "cnpj": "00070698000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEDO3",
+    "name": "Cia Fiacao Tecidos Cedro Cachoeira",
+    "razao_social": "CIA FIACAO TECIDOS CEDRO CACHOEIRA",
+    "cnpj": "17245234000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEDO4",
+    "name": "Cia Fiacao Tecidos Cedro Cachoeira",
+    "razao_social": "CIA FIACAO TECIDOS CEDRO CACHOEIRA",
+    "cnpj": "17245234000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEEB3",
+    "name": "Cia Eletricidade Est. Da Bahia - Coelba",
+    "razao_social": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
+    "cnpj": "15139629000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEEB5",
+    "name": "Cia Eletricidade Est. Da Bahia - Coelba",
+    "razao_social": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
+    "cnpj": "15139629000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEEB6",
+    "name": "Cia Eletricidade Est. Da Bahia - Coelba",
+    "razao_social": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
+    "cnpj": "15139629000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEED3",
+    "name": "Cia Estadual De Distrib Ener Elet-Ceee-D",
+    "razao_social": "CIA ESTADUAL DE DISTRIB ENER ELET-CEEE-D",
+    "cnpj": "08467115000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEED4",
+    "name": "Cia Estadual De Distrib Ener Elet-Ceee-D",
+    "razao_social": "CIA ESTADUAL DE DISTRIB ENER ELET-CEEE-D",
+    "cnpj": "08467115000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEGR3",
+    "name": "Cia Distrib De Gas Do Rio De Janeiro-Ceg",
+    "razao_social": "CIA DISTRIB DE GAS DO RIO DE JANEIRO-CEG",
+    "cnpj": "33938119000169",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CELP3",
+    "name": "Equatorial Pará Distribuidora De Energia",
+    "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
+    "cnpj": "04895728000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CELP5",
+    "name": "Equatorial Pará Distribuidora De Energia",
+    "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
+    "cnpj": "04895728000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CELP6",
+    "name": "Equatorial Pará Distribuidora De Energia",
+    "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
+    "cnpj": "04895728000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CELP7",
+    "name": "Equatorial Pará Distribuidora De Energia",
+    "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
+    "cnpj": "04895728000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CEOC11",
+    "name": "Cyrela Commercial Properties",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CFHI11",
+    "name": "CF2 FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CFII11",
+    "name": "FII CF3 IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CGAS3",
+    "name": "Cia Gas De Sao Paulo - Comgas",
+    "razao_social": "CIA GAS DE SAO PAULO - COMGAS",
+    "cnpj": "61856571000117",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CGAS5",
+    "name": "Cia Gas De Sao Paulo - Comgas",
+    "razao_social": "CIA GAS DE SAO PAULO - COMGAS",
+    "cnpj": "61856571000117",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CGRA3",
+    "name": "Grazziotin",
+    "razao_social": "GRAZZIOTIN S.A.",
+    "cnpj": "92012467000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CGRA4",
+    "name": "Grazziotin",
+    "razao_social": "GRAZZIOTIN S.A.",
+    "cnpj": "92012467000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CJCT11",
+    "name": "CIDADE JARDIM CONTINENAL TOWER",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CJFI11",
+    "name": "FDO INV IMOB CJ",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CLSC3",
+    "name": "Centrais Elet De Santa Catarina",
+    "razao_social": "CENTRAIS ELET DE SANTA CATARINA S.A.",
+    "cnpj": "83878892000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CLSC4",
+    "name": "Centrais Elet De Santa Catarina",
+    "razao_social": "CENTRAIS ELET DE SANTA CATARINA S.A.",
+    "cnpj": "83878892000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CMIG3",
+    "name": "Cemig",
+    "razao_social": "CIA ENERGETICA DE MINAS GERAIS - CEMIG",
+    "cnpj": "17155730000164",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CMIG4",
+    "name": "Cemig",
+    "razao_social": "CIA ENERGETICA DE MINAS GERAIS - CEMIG",
+    "cnpj": "17155730000164",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CMIN3",
+    "name": "CSN Mineração",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CNES11",
+    "name": "CENESP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "COCE3",
+    "name": "Cia Energetica Do Ceara - Coelce",
+    "razao_social": "CIA ENERGETICA DO CEARA - COELCE",
+    "cnpj": "07047251000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "COCE5",
+    "name": "Cia Energetica Do Ceara - Coelce",
+    "razao_social": "CIA ENERGETICA DO CEARA - COELCE",
+    "cnpj": "07047251000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "COCE6",
+    "name": "Cia Energetica Do Ceara - Coelce",
+    "razao_social": "CIA ENERGETICA DO CEARA - COELCE",
+    "cnpj": "07047251000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "COGN3",
+    "name": "Cogna",
+    "razao_social": "COGNA EDUCAÇÃO S.A.",
+    "cnpj": "02800026000140",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CORM11",
+    "name": "CORE METROPOLIS FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CPFE3",
+    "name": "CPFL Energia",
+    "razao_social": "CPFL ENERGIA S.A.",
+    "cnpj": "02429144000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CPFF11",
+    "name": "CAPITÂNIA REIT FOF - FDO. INVEST. IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CPLE3",
+    "name": "Copel",
+    "razao_social": "CIA PARANAENSE DE ENERGIA - COPEL",
+    "cnpj": "76483817000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CPLE5",
+    "name": "Cia Paranaense De Energia - Copel",
+    "razao_social": "CIA PARANAENSE DE ENERGIA - COPEL",
+    "cnpj": "76483817000120",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CPLE6",
+    "name": "Cia Paranaense De Energia - Copel",
+    "razao_social": "CIA PARANAENSE DE ENERGIA - COPEL",
+    "cnpj": "76483817000120",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CPTS11",
+    "name": "Capitania Securities II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CRDE3",
+    "name": "Fica Empreendimentos Imobiliários",
+    "razao_social": "FICA EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+    "cnpj": "07820907000146",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CRFF11",
+    "name": "CAIXA RIO BRAVO FDO DE FDOS INV IMOB II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CRPG3",
+    "name": "Tronox Pigmentos Do Brasil",
+    "razao_social": "TRONOX PIGMENTOS DO BRASIL S.A.",
+    "cnpj": "15115504000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CRPG5",
+    "name": "Tronox Pigmentos Do Brasil",
+    "razao_social": "TRONOX PIGMENTOS DO BRASIL S.A.",
+    "cnpj": "15115504000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CRPG6",
+    "name": "Tronox Pigmentos Do Brasil",
+    "razao_social": "TRONOX PIGMENTOS DO BRASIL S.A.",
+    "cnpj": "15115504000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CRTE3",
+    "name": "Conc Rio-Teresopolis",
+    "razao_social": "CONC RIO-TERESOPOLIS S.A.",
+    "cnpj": "00938574000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CSAN3",
+    "name": "Cosan",
+    "razao_social": "COSAN S.A.",
+    "cnpj": "50746577000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CSED3",
+    "name": "Cruzeiro Do Sul Educacional",
+    "razao_social": "CRUZEIRO DO SUL EDUCACIONAL S.A.",
+    "cnpj": "62984091000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CSMG3",
+    "name": "COPASA",
+    "razao_social": "CIA SANEAMENTO DE MINAS GERAIS-COPASA MG",
+    "cnpj": "17281106000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CSNA3",
+    "name": "Siderúrgica Nacional",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CSUD3",
+    "name": "Csu Digital",
+    "razao_social": "CSU DIGITAL S.A.",
+    "cnpj": "01896779000138",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CTAX3",
+    "name": "Contax Participações S.A. - Em Recuperação Judicial",
+    "razao_social": "CONTAX PARTICIPAÇÕES S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "04032433000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CTCA3",
+    "name": "Ctc - Centro De Tecnologia Canavieira",
+    "razao_social": "CTC - CENTRO DE TECNOLOGIA CANAVIEIRA S.A.",
+    "cnpj": "06981381000113",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CTKA3",
+    "name": "Karsten",
+    "razao_social": "KARSTEN S.A.",
+    "cnpj": "82640558000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CTKA4",
+    "name": "Karsten",
+    "razao_social": "KARSTEN S.A.",
+    "cnpj": "82640558000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CTXT11",
+    "name": "Centro Têxtil Internacional",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CURY3",
+    "name": "Cury",
+    "razao_social": "Cury Construtora e Incorporadora S.A.",
+    "cnpj": "08797760000183",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CVBI11",
+    "name": "FDO INV. IMOB. VBI CRI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CVCB3",
+    "name": "CVC",
+    "razao_social": "CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S.A.",
+    "cnpj": "10760260000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CXAG11",
+    "name": "FII CAIXA AG",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CXCE11B",
+    "name": "Caixa Cedae",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CXCI11",
+    "name": "FDO DE INVST IMOB CAIXA CARTEIRA IMOBILIÁRIA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CXCO11",
+    "name": "FDO. INV. IMOB. CAIXA IMÓVEIS CORPORATIVOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CXRI11",
+    "name": "Caixa Rio Bravo",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CXSE3",
+    "name": "Caixa Seguridade",
+    "razao_social": "CAIXA SEGURIDADE PARTICIPAÇÕES S.A.",
+    "cnpj": "22543331000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CXTL11",
+    "name": "Caixa TRX Logística Renda",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CYCR11",
+    "name": "CYRELA CRÉDITO - FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "CYRE3",
+    "name": "Cyrela",
+    "razao_social": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
+    "cnpj": "73178600000118",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "CYRE4",
+    "name": "Cyrela Brazil Realty S.A.Empreend E Part",
+    "razao_social": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
+    "cnpj": "73178600000118",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DAMT11B",
+    "name": "DIAMANTE FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DASA3",
+    "name": "Dasa",
+    "razao_social": "DIAGNOSTICOS DA AMERICA S.A.",
+    "cnpj": "61486650000183",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DESK3",
+    "name": "Desktop",
+    "razao_social": "DESKTOP S.A.",
+    "cnpj": "08170849000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DEVA11",
+    "name": "DEVANT RECEBÍVEIS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DEXP3",
+    "name": "Dexxos Participações",
+    "razao_social": "DEXXOS PARTICIPAÇÕES S.A.",
+    "cnpj": "02193750000152",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DEXP4",
+    "name": "Dexxos Participações",
+    "razao_social": "DEXXOS PARTICIPAÇÕES S.A.",
+    "cnpj": "02193750000152",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DIRR3",
+    "name": "Direcional",
+    "razao_social": "DIRECIONAL ENGENHARIA S.A.",
+    "cnpj": "16614075000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DLMT11",
+    "name": "DEL MONTE AJAX FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DMVF3",
+    "name": "D1000 Varejo Farma Participações",
+    "razao_social": "D1000 VAREJO FARMA PARTICIPAÇÕES S.A.",
+    "cnpj": "12108897000150",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DOHL3",
+    "name": "Dohler",
+    "razao_social": "DOHLER S.A.",
+    "cnpj": "84683408000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DOHL4",
+    "name": "Dohler",
+    "razao_social": "DOHLER S.A.",
+    "cnpj": "84683408000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DOMC11",
+    "name": "FII DOMO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DOTZ3",
+    "name": "Dotz",
+    "razao_social": "Dotz S.A.",
+    "cnpj": "18174270000184",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DOVL11B",
+    "name": "DOVEL FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DRIT11B",
+    "name": "Multigestão Renda Comercial",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DTCY3",
+    "name": "Dtcom - Direct To Company",
+    "razao_social": "DTCOM - DIRECT TO COMPANY S.A.",
+    "cnpj": "03303999000136",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "DVFF11",
+    "name": "FDO. INVEST. IMOB. DEVANT FOF IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "DXCO3",
+    "name": "Dexco",
+    "razao_social": "DEXCO S.A.",
+    "cnpj": "97837181000147",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EALT3",
+    "name": "Electro Aco Altona",
+    "razao_social": "ELECTRO ACO ALTONA S.A.",
+    "cnpj": "82643537000134",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EALT4",
+    "name": "Electro Aco Altona",
+    "razao_social": "ELECTRO ACO ALTONA S.A.",
+    "cnpj": "82643537000134",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ECOM3",
+    "name": "Economatica",
+    "razao_social": "ECONOMATICA S.A.",
+    "cnpj": "26345998000150",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ECOR3",
+    "name": "EcoRodovias",
+    "razao_social": "ECORODOVIAS INFRAESTRUTURA E LOGÍSTICA S.A.",
+    "cnpj": "04149454000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EDFO11",
+    "name": "Edifício Ouroinvest",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EDGA11",
+    "name": "Edifício Galeria",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EGIE3",
+    "name": "Engie",
+    "razao_social": "ENGIE BRASIL ENERGIA S.A.",
+    "cnpj": "02474103000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EGYR11",
+    "name": "ENERGY RESORT FDO. INVEST. IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EKTR3",
+    "name": "Elektro Redes",
+    "razao_social": "ELEKTRO REDES S.A.",
+    "cnpj": "02328280000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EKTR4",
+    "name": "Elektro Redes",
+    "razao_social": "ELEKTRO REDES S.A.",
+    "cnpj": "02328280000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ELDO11",
+    "name": "Eldorado",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EMAE3",
+    "name": "Emae - Empresa Metrop. De Aguas E Energia",
+    "razao_social": "EMAE - EMPRESA METROP. DE AGUAS E ENERGIA S.A.",
+    "cnpj": "02302101000142",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EMAE4",
+    "name": "Emae - Empresa Metrop. De Aguas E Energia",
+    "razao_social": "EMAE - EMPRESA METROP. DE AGUAS E ENERGIA S.A.",
+    "cnpj": "02302101000142",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EMBJ3",
+    "name": "Embraer",
+    "razao_social": "EMBRAER S.A.",
+    "cnpj": "07689002000189",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENEV3",
+    "name": "Eneva",
+    "razao_social": "ENEVA S.A",
+    "cnpj": "04423567000121",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENGI11",
+    "name": "Energisa",
+    "razao_social": "ENERGISA S.A.",
+    "cnpj": "00864214000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENGI3",
+    "name": "Energisa",
+    "razao_social": "ENERGISA S.A.",
+    "cnpj": "00864214000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENGI4",
+    "name": "Energisa",
+    "razao_social": "ENERGISA S.A.",
+    "cnpj": "00864214000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENJU3",
+    "name": "Enjoei",
+    "razao_social": "ENJOEI S.A.",
+    "cnpj": "16922038000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENMT3",
+    "name": "Energisa Mato Grosso-Distribuidora De Energia",
+    "razao_social": "ENERGISA MATO GROSSO-DISTRIBUIDORA DE ENERGIA S/A",
+    "cnpj": "03467321000199",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ENMT4",
+    "name": "Energisa Mato Grosso-Distribuidora De Energia",
+    "razao_social": "ENERGISA MATO GROSSO-DISTRIBUIDORA DE ENERGIA S/A",
+    "cnpj": "03467321000199",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EQIR11",
+    "name": "EQI RECEBÍVEIS IMOBILIÁRIOS FDO DE INV IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EQTL3",
+    "name": "Equatorial Energia",
+    "razao_social": "EQUATORIAL S.A.",
+    "cnpj": "03220438000173",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ERCR11",
+    "name": "ESTOQUE RESIDENCIAL E COMERCIAL RJ",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ERPA11",
+    "name": "EUROPA 105 - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ESPA3",
+    "name": "Mpm Corpóreos",
+    "razao_social": "MPM Corpóreos S.A.",
+    "cnpj": "26659061000159",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ESTQ11",
+    "name": "FDO INV IMOB POLO ESTOQUE II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ESTR4",
+    "name": "Manufatura De Brinquedos Estrela",
+    "razao_social": "MANUFATURA DE BRINQUEDOS ESTRELA S.A.",
+    "cnpj": "61082004000150",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ETER3",
+    "name": "Eternit",
+    "razao_social": "ETERNIT S.A.",
+    "cnpj": "61092037000181",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EUCA3",
+    "name": "Eucatex S.A. Industria E Comercio",
+    "razao_social": "EUCATEX S.A. INDUSTRIA E COMERCIO",
+    "cnpj": "56643018000166",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EUCA4",
+    "name": "Eucatex S.A. Industria E Comercio",
+    "razao_social": "EUCATEX S.A. INDUSTRIA E COMERCIO",
+    "cnpj": "56643018000166",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EURO11",
+    "name": "EUROPAR",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EVBI11",
+    "name": "VBI CONSUMO ESSEN",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "EVEN3",
+    "name": "Even",
+    "razao_social": "EVEN CONSTRUTORA E INCORPORADORA S.A.",
+    "cnpj": "43470988000165",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "EZTC3",
+    "name": "EZTEC",
+    "razao_social": "EZ TEC EMPREEND. E PARTICIPACOES S.A.",
+    "cnpj": "08312229000173",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FAED11",
+    "name": "Anhanguera Educacional",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FAMB11B",
+    "name": "Edifício Almirante Barroso",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FASA3",
+    "name": "Fasa S.A. - Em Recuperação Judicial",
+    "razao_social": "FASA S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "00359742000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FATN11",
+    "name": "FUNDO DE INVESTIMENTO IMOBILIÁRIO ATHENA I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FCFL11",
+    "name": "Campus Faria Lima",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FESA3",
+    "name": "Cia Ferro Ligas Da Bahia - Ferbasa",
+    "razao_social": "CIA FERRO LIGAS DA BAHIA - FERBASA",
+    "cnpj": "15141799000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FESA4",
+    "name": "Cia Ferro Ligas Da Bahia - Ferbasa",
+    "razao_social": "CIA FERRO LIGAS DA BAHIA - FERBASA",
+    "cnpj": "15141799000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FEXC11",
+    "name": "BTG Pactual Fundo de CRI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FGPM11",
+    "name": "FDO INVEST IMOB GRAND PLAZA MALL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FHER3",
+    "name": "Fertilizantes Heringer",
+    "razao_social": "FERTILIZANTES HERINGER S.A.",
+    "cnpj": "22266175000188",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FIEI3",
+    "name": "Fica Empreendimentos Imobiliários",
+    "razao_social": "FICA EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+    "cnpj": "07820907000146",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FIGE3",
+    "name": "Investimentos Bemge",
+    "razao_social": "INVESTIMENTOS BEMGE S.A.",
+    "cnpj": "01548981000179",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FIGE4",
+    "name": "Investimentos Bemge",
+    "razao_social": "INVESTIMENTOS BEMGE S.A.",
+    "cnpj": "01548981000179",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FIGS11",
+    "name": "General Shopping Ativo e Renda",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FIIB11",
+    "name": "Industrial do Brasil",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FIIP11B",
+    "name": "RB Capital Renda I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FIQE3",
+    "name": "Unifique Telecomunicações",
+    "razao_social": "Unifique Telecomunicações S.A.",
+    "cnpj": "02255187000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FISC11",
+    "name": "FDO INV IMOB SC 401",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FISD11",
+    "name": "São Domingos",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FIVN11",
+    "name": "Vida Nova",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FLCR11",
+    "name": "FARIA LIMA CAPITAL RECEB. IMOB. I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FLMA11",
+    "name": "Continental Square Faria Lima",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FLRP11",
+    "name": "Floripa Shopping",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FLRY3",
+    "name": "Fleury",
+    "razao_social": "FLEURY S.A.",
+    "cnpj": "60840055000131",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FMOF11",
+    "name": "Memorial Office",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FPAB11",
+    "name": "Projeto Água Branca",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FPNG11",
+    "name": "Pedra Negra Renda Imobiliária",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FRAS3",
+    "name": "Frasle Mobility",
+    "razao_social": "FRASLE MOBILITY S.A.",
+    "cnpj": "88610126000129",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FRIO3",
+    "name": "Metalfrio Solutions",
+    "razao_social": "METALFRIO SOLUTIONS S.A.",
+    "cnpj": "04821041000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "FTCE11B",
+    "name": "Oportunity",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "FVPQ11",
+    "name": "Via Parque Shopping",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GALG11",
+    "name": "GUARDIAN LOGISTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GAME11",
+    "name": "FDO DE INVEST IMOB GUARDIAN MULTIESTRATÉGIA I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GARE11",
+    "name": "GUARDIAN LOGISTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GCFF11",
+    "name": "GALAPAGOS FDO DE FDO - FII FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GCRI11",
+    "name": "GALAPAGOS RECEBÍVEIS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GEPA3",
+    "name": "Rio Paranapanema Energia",
+    "razao_social": "RIO PARANAPANEMA ENERGIA S.A.",
+    "cnpj": "02998301000181",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GEPA4",
+    "name": "Rio Paranapanema Energia",
+    "razao_social": "RIO PARANAPANEMA ENERGIA S.A.",
+    "cnpj": "02998301000181",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GESE11B",
+    "name": "FDO INV IMOB GENERAL SEVERIANO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GFSA3",
+    "name": "Gafisa",
+    "razao_social": "GAFISA S.A.",
+    "cnpj": "01545826000107",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GGBR3",
+    "name": "Gerdau",
+    "razao_social": "GERDAU S.A.",
+    "cnpj": "33611500000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GGBR4",
+    "name": "Gerdau",
+    "razao_social": "GERDAU S.A.",
+    "cnpj": "33611500000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GGPS3",
+    "name": "GPS",
+    "razao_social": "GPS PARTICIPAÇÕES E EMPREENDIMENTOS S.A.",
+    "cnpj": "09229201000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GGRC11",
+    "name": "Zagros Renda Imobiliária",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GMAT3",
+    "name": "Grupo Mateus",
+    "razao_social": "GRUPO MATEUS S.A.",
+    "cnpj": "24990777000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GOAU3",
+    "name": "Metalurgica Gerdau",
+    "razao_social": "METALURGICA GERDAU S.A.",
+    "cnpj": "92690783000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GOAU4",
+    "name": "Metalúrgica Gerdau",
+    "razao_social": "METALURGICA GERDAU S.A.",
+    "cnpj": "92690783000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GPAR3",
+    "name": "Cia Celg De Participacoes - Celgpar",
+    "razao_social": "CIA CELG DE PARTICIPACOES - CELGPAR",
+    "cnpj": "08560444000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GRND3",
+    "name": "Grendene",
+    "razao_social": "GRENDENE S.A.",
+    "cnpj": "89850341000160",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GSFI11",
+    "name": "GENERAL SHOP E OUTLETS DO BRASIL FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GSHP3",
+    "name": "General Shopping E Outlets Do Brasil Brasil",
+    "razao_social": "GENERAL SHOPPING E OUTLETS DO BRASIL BRASIL S.A.",
+    "cnpj": "08764621000153",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "GTLG11",
+    "name": "GTIS BRAZIL LOGISTICS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GTWR11",
+    "name": "FDO INV IMOB GREEN TOWERS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "GZIT11",
+    "name": "FII GAZIT",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HAAA11",
+    "name": "HEDGE AAA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HABT11",
+    "name": "HABITAT II - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HAPV3",
+    "name": "Hapvida",
+    "razao_social": "HAPVIDA PARTICIPAÇÕES E INVESTIMENTOS S.A.",
+    "cnpj": "05197443000138",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HBCR11",
+    "name": "HBC RENDA URBANA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HBOR3",
+    "name": "Helbor",
+    "razao_social": "HELBOR EMPREENDIMENTOS S.A.",
+    "cnpj": "49263189000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HBRE3",
+    "name": "Hbr Realty Empreendimentos Imobiliários",
+    "razao_social": "HBR Realty Empreendimentos Imobiliários S.A.",
+    "cnpj": "14785152000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HBRH11",
+    "name": "FDO.INVEST. IMOB. MULTI RENDA URBANA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HBSA3",
+    "name": "Hidrovias Do Brasil",
+    "razao_social": "HIDROVIAS DO BRASIL S.A.",
+    "cnpj": "12648327000153",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HBTS5",
+    "name": "Cia Habitasul De Participacoes",
+    "razao_social": "CIA HABITASUL DE PARTICIPACOES",
+    "cnpj": "87762563000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HBTT11",
+    "name": "Habitat I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HCHG11",
+    "name": "HECTARE RECEBÍVEIS HIGH GRADE",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HCRI11",
+    "name": "Hospital da Criança",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HCST11",
+    "name": "HECTARE DESENV. STUDENT HOUSING",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HCTR11",
+    "name": "HECTARE CE - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HDEL11",
+    "name": "FII HEDGE DV",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HDOF11",
+    "name": "FII HEDGE OF",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HETA3",
+    "name": "Hercules S.A. Fabrica De Talheres",
+    "razao_social": "HERCULES S.A. FABRICA DE TALHERES",
+    "cnpj": "92749225000163",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HETA4",
+    "name": "Hercules S.A. Fabrica De Talheres",
+    "razao_social": "HERCULES S.A. FABRICA DE TALHERES",
+    "cnpj": "92749225000163",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HFOF11",
+    "name": "Hedge Top FOFII 3",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGBS11",
+    "name": "CSHG Brasil Shopping",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGCR11",
+    "name": "PÁTRIA RECEBÍVEIS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGFF11",
+    "name": "CSHG IMOB. FOF - FDO INV. IMOB. - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGIC11",
+    "name": "HGI CRÉDITOS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGLG11",
+    "name": "Pátria Logística",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGPO11",
+    "name": "PATRIA PRIME OFFICES",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGRE11",
+    "name": "PATRIA ESCRITÓRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HGRU11",
+    "name": "PÁTRIA RENDA URBANA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HLOG11",
+    "name": "HEDGE LOGÍSTICA FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HMOB3",
+    "name": "Hmobi Participações",
+    "razao_social": "HMOBI Participações S.A.",
+    "cnpj": "40159947000164",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HOFC11",
+    "name": "FII HEDGE OFFICE INCOME",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HOOT4",
+    "name": "Hoteis Othon S.A. - Em Recuperação Judicial",
+    "razao_social": "HOTEIS OTHON S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "33200049000147",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "HOSI11",
+    "name": "FDO. INV. IMOB. HOUSI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HPDP11",
+    "name": "HEDGE SHOPPING PARQUE DOM PEDRO FDO. DE INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HRDF11",
+    "name": "HEDGE REALTY DEVELOPMENT FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HREC11",
+    "name": "HEDGE RECEBIVEIS IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HSAF11",
+    "name": "HSI ATIVOS FINANCEIROS FUNDO DE INVESTIMENTO IMOBI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HSLG11",
+    "name": "HSI LOGÍSTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HSML11",
+    "name": "HSI MALL FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HSRE11",
+    "name": "HSI RENDA IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HTMX11",
+    "name": "Hotel Maxinvest",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HUCG11",
+    "name": "FII UNIMED C",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HUSC11",
+    "name": "Hospital Unimed Sul Capixaba",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HUSI11",
+    "name": "HUSI FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "HYPE3",
+    "name": "Hypera",
+    "razao_social": "HYPERA S.A.",
+    "cnpj": "02932074000191",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IBCR11",
+    "name": "FDO DE INV IMOBILIÁRIO DE CRI INTEGRAL BREI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "IBFF11",
+    "name": "FDO INV. IMOB. FOF INTEGRAL BREI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "IFCM3",
+    "name": "Infracommerce Cxaas",
+    "razao_social": "INFRACOMMERCE CXAAS S.A.",
+    "cnpj": "38456921000136",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IGTA3",
+    "name": "Iguatemi Empresa De Shopping Centers",
+    "razao_social": "IGUATEMI EMPRESA DE SHOPPING CENTERS S.A",
+    "cnpj": "51218147000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IGTI11",
+    "name": "Iguatemi",
+    "razao_social": "IGUATEMI S.A.",
+    "cnpj": "60543816000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IGTI3",
+    "name": "Iguatemi",
+    "razao_social": "IGUATEMI S.A.",
+    "cnpj": "60543816000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IGTI4",
+    "name": "Iguatemi",
+    "razao_social": "IGUATEMI S.A.",
+    "cnpj": "60543816000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "INEP3",
+    "name": "Inepar S.A. Industria E Construcoes Em Recuperacao Judicial",
+    "razao_social": "INEPAR S.A. INDUSTRIA E CONSTRUCOES EM RECUPERACAO JUDICIAL",
+    "cnpj": "76627504000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "INNC3",
+    "name": "Inc Empreendimentos Imobiliários",
+    "razao_social": "INC EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+    "cnpj": "09611768000176",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "INTB3",
+    "name": "Intelbras",
+    "razao_social": "Intelbras S.A. Ind. de Telecomunicação Eletrônica Brasileira",
+    "cnpj": "82901000000127",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IRBR3",
+    "name": "IRB Brasil RE",
+    "razao_social": "IRB - BRASIL RESSEGUROS S.A.",
+    "cnpj": "33376989000191",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "IRDM11",
+    "name": "Iridium Recebíveis Imobiliários",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "IRIM11",
+    "name": "IRIDIUM FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ISAE3",
+    "name": "Isa Energia Brasil",
+    "razao_social": "ISA ENERGIA BRASIL",
+    "cnpj": "02998611000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ISAE4",
+    "name": "ISA Energia",
+    "razao_social": "ISA ENERGIA BRASIL",
+    "cnpj": "02998611000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ITSA3",
+    "name": "Itaúsa",
+    "razao_social": "ITAÚSA S.A.",
+    "cnpj": "61532644000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ITSA4",
+    "name": "Itaúsa",
+    "razao_social": "ITAÚSA S.A.",
+    "cnpj": "61532644000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ITUB3",
+    "name": "Itaú Unibanco",
+    "razao_social": "ITAU UNIBANCO HOLDING S.A.",
+    "cnpj": "60872504000123",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ITUB4",
+    "name": "Itaú Unibanco",
+    "razao_social": "ITAU UNIBANCO HOLDING S.A.",
+    "cnpj": "60872504000123",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JALL3",
+    "name": "Jalles Machado",
+    "razao_social": "Jalles Machado S.A.",
+    "cnpj": "02635522000195",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JASC11",
+    "name": "FII JASC REN",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JBFO11",
+    "name": "JBFO FOF FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JFEN3",
+    "name": "Joao Fortes Engenharia S.A. - Em Recuperação Judicial",
+    "razao_social": "JOAO FORTES ENGENHARIA S.A. - Em Recuperação Judicial",
+    "cnpj": "33035536000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JFLL11",
+    "name": "JFL LIVING FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JHSF3",
+    "name": "JHSF",
+    "razao_social": "JHSF PARTICIPACOES S.A.",
+    "cnpj": "08294224000165",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JOPA3",
+    "name": "Josapar-Joaquim Oliveira S.A. - Particip",
+    "razao_social": "JOSAPAR-JOAQUIM OLIVEIRA S.A. - PARTICIP",
+    "cnpj": "87456562000122",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JOPA4",
+    "name": "Josapar-Joaquim Oliveira S.A. - Particip",
+    "razao_social": "JOSAPAR-JOAQUIM OLIVEIRA S.A. - PARTICIP",
+    "cnpj": "87456562000122",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JPPA11",
+    "name": "JPP ALLOCATION MOGNO - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JPPC11",
+    "name": "JPP Capital",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JRDM11",
+    "name": "Shopping Jardim Sul",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JSAF11",
+    "name": "JS ATIVOS FINANCEIROS FUNDO DE INVESTIMENTO IMOBIL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JSLG3",
+    "name": "Jsl",
+    "razao_social": "JSL S.A.",
+    "cnpj": "52548435000179",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "JSRE11",
+    "name": "JS Real Estate Multigestão",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "JTPR11",
+    "name": "JT Prev FII Desenvolvimento Habitacional",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KCRE11",
+    "name": "FII KINEA CR",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KEPL3",
+    "name": "Kepler Weber",
+    "razao_social": "KEPLER WEBER S.A.",
+    "cnpj": "91983056000169",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "KEVE11",
+    "name": "EVEN II KINEA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KFOF11",
+    "name": "FUNDO DE FDO INV IMOB KINEA FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KINP11",
+    "name": "Even Permuta Kinea",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KISU11",
+    "name": "KILIMA FIC FDO. IMOB. SUNO 30",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KLAS3",
+    "name": "Kallas Incorporações E Construções",
+    "razao_social": "KALLAS INCORPORAÇÕES E CONSTRUÇÕES S.A.",
+    "cnpj": "09146451000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "KLBN11",
+    "name": "Klabin",
+    "razao_social": "KLABIN S.A.",
+    "cnpj": "89637490000145",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "KLBN4",
+    "name": "Klabin",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNCR11",
+    "name": "Kinea Rendimentos Imobiliários",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNHY11",
+    "name": "Kinea High Yield CRI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNIP11",
+    "name": "Kinea Índice de Preços",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNPR11",
+    "name": "FII KINEA PR",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNRE11",
+    "name": "Kinea II Real Estate Equity",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNRI11",
+    "name": "Kinea Renda Imobiliária",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "KNSC11",
+    "name": "KINEA SECURITIES FDO. DE INV. IMOB. - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LAND3",
+    "name": "Terra Santa Propriedades Agrícolas",
+    "razao_social": "Terra Santa Propriedades Agrícolas S.A.",
+    "cnpj": "40337136000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LASC11",
+    "name": "LEGATUS SHOPPINGS FDO. INV. IMOB. - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LATR11B",
+    "name": "Lateres",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LAVV3",
+    "name": "Lavvi Incorporadora",
+    "razao_social": "Lavvi Empreendimentos Imobiliários S.A.",
+    "cnpj": "26462693000128",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LEVE3",
+    "name": "Mahle Metal Leve",
+    "razao_social": "MAHLE METAL LEVE S.A.",
+    "cnpj": "60476884000187",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LGCP11",
+    "name": "LOGCP INTER FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LIFE11",
+    "name": "FII LIFE",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LIGT3",
+    "name": "Light",
+    "razao_social": "LIGHT S.A.",
+    "cnpj": "03378521000175",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LJQQ3",
+    "name": "Lojas Quero-Quero",
+    "razao_social": "Lojas Quero Quero S.A.",
+    "cnpj": "96418264021802",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LOGG3",
+    "name": "Log Commercial Properties E Participações",
+    "razao_social": "LOG COMMERCIAL PROPERTIES E PARTICIPAÇÕES",
+    "cnpj": "09041168000110",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LOGN3",
+    "name": "Log-In Logistica Intermodal",
+    "razao_social": "LOG-IN LOGISTICA INTERMODAL S.A.",
+    "cnpj": "42278291000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LPLP11",
+    "name": "FII LAGO PDR",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LPSB3",
+    "name": "Lps Brasil - Consultoria De Imoveis",
+    "razao_social": "LPS BRASIL - CONSULTORIA DE IMOVEIS S.A.",
+    "cnpj": "08078847000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LRDI11",
+    "name": "FII LEBLON",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LREN3",
+    "name": "Lojas Renner",
+    "razao_social": "LOJAS RENNER S.A.",
+    "cnpj": "92754738000162",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LUGG11",
+    "name": "LUGGO FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LUPA3",
+    "name": "Lupatech",
+    "razao_social": "LUPATECH S.A",
+    "cnpj": "89463822000112",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "LVBI11",
+    "name": "FDO INV IMOB - VBI LOGÍSTICO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "LWSA3",
+    "name": "Locaweb",
+    "razao_social": "LWSA S/A",
+    "cnpj": "02351877000152",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MALL11",
+    "name": "Malls Brasil Plural",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MANA11",
+    "name": "FII MANATI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MATD3",
+    "name": "Hospital Mater Dei",
+    "razao_social": "HOSPITAL MATER DEI S.A.",
+    "cnpj": "16676520000159",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MAXR11",
+    "name": "Max Retail",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MBRF3",
+    "name": "Marfrig",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MCCI11",
+    "name": "FDO INV. MAUA CAPITAL RECEBIVEIS IMOB. - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MCHF11",
+    "name": "MAUÁ CAPITAL HEDGE FUND",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MCHY11",
+    "name": "FDO DE INV IMOB MAUÁ CAPITAL HIGH YIELD - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MDIA3",
+    "name": "M. Dias Branco",
+    "razao_social": "M.DIAS BRANCO S.A. IND COM DE ALIMENTOS",
+    "cnpj": "07206816000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MDNE3",
+    "name": "Moura Dubeux Engenharia",
+    "razao_social": "MOURA DUBEUX ENGENHARIA S/A",
+    "cnpj": "12049631000184",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MEAL3",
+    "name": "International Meal Company Alimentacao",
+    "razao_social": "INTERNATIONAL MEAL COMPANY ALIMENTACAO S.A.",
+    "cnpj": "17314329000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MELK3",
+    "name": "Melnick Desenvolvimento Imobiliário",
+    "razao_social": "Melnick Desenvolvimento Imobiliário S.A.",
+    "cnpj": "12181987000177",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MEND3",
+    "name": "Mendes Junior Engenharia",
+    "razao_social": "MENDES JUNIOR ENGENHARIA S.A.",
+    "cnpj": "17162082000173",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MEND5",
+    "name": "Mendes Junior Engenharia",
+    "razao_social": "MENDES JUNIOR ENGENHARIA S.A.",
+    "cnpj": "17162082000173",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MEND6",
+    "name": "Mendes Junior Engenharia",
+    "razao_social": "MENDES JUNIOR ENGENHARIA S.A.",
+    "cnpj": "17162082000173",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MERC3",
+    "name": "Mercantil Financeira S.A. - Soc. Crédito, Financ E Investime",
+    "razao_social": "Mercantil Financeira S.A. - Soc. Crédito, Financ e Investime",
+    "cnpj": "33040601000187",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MERC4",
+    "name": "Mercantil Financeira S.A. - Soc. Crédito, Financ E Investime",
+    "razao_social": "Mercantil Financeira S.A. - Soc. Crédito, Financ e Investime",
+    "cnpj": "33040601000187",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MFAI11",
+    "name": "MERITO FDO. AÇÕES IMOB. FII - FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MFII11",
+    "name": "Mérito Desenvolvimento Imobiliário",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MGCR11",
+    "name": "MOGNO CRI HIGH GRADE",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MGEL3",
+    "name": "Mangels Industrial",
+    "razao_social": "MANGELS INDUSTRIAL S.A.",
+    "cnpj": "61065298000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MGEL4",
+    "name": "Mangels Industrial",
+    "razao_social": "MANGELS INDUSTRIAL S.A.",
+    "cnpj": "61065298000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MGFF11",
+    "name": "Mogno Fundo de Fundos",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MGHT11",
+    "name": "FDO. INV. IMOB. MOGNO HOTEIS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MGLG11",
+    "name": "MOGNO LOGÍSTICA FUNDO DE INVEST. IMOBILIARIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MGLU3",
+    "name": "Magazine Luiza",
+    "razao_social": "MAGAZINE LUIZA S.A.",
+    "cnpj": "47960950000121",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MILS3",
+    "name": "Mills",
+    "razao_social": "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.",
+    "cnpj": "27093558000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MINT11",
+    "name": "MINT EDUCACIONAL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MMAQ3",
+    "name": "Minasmaquinas",
+    "razao_social": "MINASMAQUINAS S.A.",
+    "cnpj": "17161241000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MMAQ4",
+    "name": "Minasmaquinas",
+    "razao_social": "MINASMAQUINAS S.A.",
+    "cnpj": "17161241000115",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MMXM3",
+    "name": "Massa Falida Da Mmx Mineracao E Metalicos",
+    "razao_social": "MASSA FALIDA DA MMX MINERACAO E METALICOS S.A.",
+    "cnpj": "02762115000149",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MNDL3",
+    "name": "Mundial S.A. - Produtos De Consumo",
+    "razao_social": "MUNDIAL S.A. - PRODUTOS DE CONSUMO",
+    "cnpj": "88610191000154",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MNPR3",
+    "name": "Minupar Participacoes",
+    "razao_social": "MINUPAR PARTICIPACOES S.A.",
+    "cnpj": "90076886000140",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MOFF11",
+    "name": "MULTIOFFICES 2 - FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MORE11",
+    "name": "MORE REAL ESTATE FOF FII FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MOTV3",
+    "name": "Motiva",
+    "razao_social": "MOTIVA INFRAESTRUTURA DE MOBILIDADE S.A.",
+    "cnpj": "02846056000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MOVI3",
+    "name": "Movida",
+    "razao_social": "MOVIDA PARTICIPACOES SA",
+    "cnpj": "21314559000166",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MRVE3",
+    "name": "MRV",
+    "razao_social": "MRV ENGENHARIA E PARTICIPACOES S.A.",
+    "cnpj": "08343492000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MSPA3",
+    "name": "Cia Melhoramentos De Sao Paulo",
+    "razao_social": "CIA MELHORAMENTOS DE SAO PAULO",
+    "cnpj": "60730348000166",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MSPA4",
+    "name": "Cia Melhoramentos De Sao Paulo",
+    "razao_social": "CIA MELHORAMENTOS DE SAO PAULO",
+    "cnpj": "60730348000166",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MSRO3",
+    "name": "Maestro Locadora De Veiculos",
+    "razao_social": "MAESTRO LOCADORA DE VEICULOS S.A.",
+    "cnpj": "08795211000170",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MTOF11",
+    "name": "MULTIOFFICES 1",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MTRE3",
+    "name": "Mitre Realty Empreendimentos E Participações",
+    "razao_social": "Mitre Realty Empreendimentos e Participações S.A.",
+    "cnpj": "07882930000165",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MTSA3",
+    "name": "Metisa Metalurgica Timboense",
+    "razao_social": "METISA METALURGICA TIMBOENSE S.A.",
+    "cnpj": "86375425000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MTSA4",
+    "name": "Metisa Metalurgica Timboense",
+    "razao_social": "METISA METALURGICA TIMBOENSE S.A.",
+    "cnpj": "86375425000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MULT3",
+    "name": "Multiplan",
+    "razao_social": "MULTIPLAN - EMPREEND IMOBILIARIOS S.A.",
+    "cnpj": "07816890000153",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MWET3",
+    "name": "Wetzel",
+    "razao_social": "WETZEL S.A.",
+    "cnpj": "84683671000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MWET4",
+    "name": "Wetzel",
+    "razao_social": "WETZEL S.A.",
+    "cnpj": "84683671000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "MXRF11",
+    "name": "Maxi Renda",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "MYPK3",
+    "name": "Iochpe-Maxion",
+    "razao_social": "IOCHPE MAXION S.A.",
+    "cnpj": "61156113000175",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NATU3",
+    "name": "NATURA",
+    "razao_social": "NATURA COSMÉTICOS S.A.",
+    "cnpj": "71673990000177",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NAVT11",
+    "name": "NAVI IMOBILIÁRIO TOTAL RETURN",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "NCHB11",
+    "name": "FII NCH EQI",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "NCRI11",
+    "name": "NAVI CRÉDITO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "NEMO3",
+    "name": "Suzano Holding",
+    "razao_social": "SUZANO HOLDING S.A.",
+    "cnpj": "60651809000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NEMO5",
+    "name": "Suzano Holding",
+    "razao_social": "SUZANO HOLDING S.A.",
+    "cnpj": "60651809000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NEMO6",
+    "name": "Suzano Holding",
+    "razao_social": "SUZANO HOLDING S.A.",
+    "cnpj": "60651809000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NEOE3",
+    "name": "Neoenergia",
+    "razao_social": "NEOENERGIA S.A.",
+    "cnpj": "01083200000118",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NEWL11",
+    "name": "Newport Logística",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "NEWU11",
+    "name": "NEWPORT RENDA URBANA FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "NEXP3",
+    "name": "Nexpe Participações",
+    "razao_social": "Nexpe Participações S.A",
+    "cnpj": "08613550000198",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NGRD3",
+    "name": "Neogrid Participações",
+    "razao_social": "NEOGRID PARTICIPAÇÕES S.A.",
+    "cnpj": "10139870000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NSLU11",
+    "name": "Hospital Nossa Sra Lourdes",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "NUTR3",
+    "name": "Nutriplant Industria E Comercio",
+    "razao_social": "NUTRIPLANT INDUSTRIA E COMERCIO S.A.",
+    "cnpj": "51128999000190",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "NVHO11",
+    "name": "Novo Horizonte",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ODER3",
+    "name": "Conservas Oderich",
+    "razao_social": "CONSERVAS ODERICH S.A.",
+    "cnpj": "97191902000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ODER4",
+    "name": "Conservas Oderich",
+    "razao_social": "CONSERVAS ODERICH S.A.",
+    "cnpj": "97191902000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OFSA3",
+    "name": "Ourofino",
+    "razao_social": "OUROFINO S.A.",
+    "cnpj": "20258278000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OIBR3",
+    "name": "Oi",
+    "razao_social": "OI S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "76535764000143",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OIBR4",
+    "name": "Oi S.A. - Em Recuperação Judicial",
+    "razao_social": "OI S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "76535764000143",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ONCO3",
+    "name": "Oncoclínicas",
+    "razao_social": "ONCOCLÍNICAS DO BRASIL SERVIÇOS MÉDICOS S.A.",
+    "cnpj": "12104241000402",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ONEF11",
+    "name": "The One",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "OPCT3",
+    "name": "Oceanpact Serviços Maritimos",
+    "razao_social": "Oceanpact Serviços Maritimos S.A.",
+    "cnpj": "09114805000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OPGM3",
+    "name": "Gama Participacoes",
+    "razao_social": "GAMA PARTICIPACOES S.A.",
+    "cnpj": "02796775000140",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OPSE3",
+    "name": "Sudeste",
+    "razao_social": "SUDESTE S.A.",
+    "cnpj": "02062747000108",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OPTS3",
+    "name": "Sul 116 Participações S.A. - Em Liquidação",
+    "razao_social": "SUL 116 PARTICIPAÇÕES S.A. - Em liquidação",
+    "cnpj": "01957772000189",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ORPD11",
+    "name": "FII OURO PRT",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ORVR3",
+    "name": "Orizon Valorização De Resíduos",
+    "razao_social": "Orizon Valorização de Resíduos S.A.",
+    "cnpj": "11421994000136",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OSXB3",
+    "name": "Osx Brasil S.A. - Em Recuperação Judicial",
+    "razao_social": "OSX BRASIL S.A. - Em Recuperação Judicial",
+    "cnpj": "09112685000132",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "OUFF11",
+    "name": "FDO INV IMOB - OURINVEST FUNDO DE FUNDOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "OUJP11",
+    "name": "OURINVEST JPP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "OULG11",
+    "name": "FDO INV IMOB OURINVEST LOGÍSTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "OURE11",
+    "name": "Ourinvest Cyrela",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PABY11",
+    "name": "Panamby",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PASS3",
+    "name": "Compass Gás E Energia",
+    "razao_social": "Compass Gás e Energia S.A.",
+    "cnpj": "21389501000181",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PASS5",
+    "name": "Compass Gás E Energia",
+    "razao_social": "Compass Gás e Energia S.A.",
+    "cnpj": "21389501000181",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PASS6",
+    "name": "Compass Gás E Energia",
+    "razao_social": "Compass Gás e Energia S.A.",
+    "cnpj": "21389501000181",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PATB11",
+    "name": "FDO INV IMOB - FII PATEO BANDEIRANTES",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PATC11",
+    "name": "PÁTRIA-EDIFÍCIOS-CORPORATIVOS-FDO-INV-IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PATI3",
+    "name": "Panatlantica",
+    "razao_social": "PANATLANTICA S.A.",
+    "cnpj": "92693019000189",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PATI4",
+    "name": "Panatlantica",
+    "razao_social": "PANATLANTICA S.A.",
+    "cnpj": "92693019000189",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PATL11",
+    "name": "PÁTRIA LOGÍSTICA FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PBLV11",
+    "name": "PROLOGIS BRAZIL LOGISTICS VENTURE FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PCAR3",
+    "name": "Grupo Pão de Açúcar",
+    "razao_social": "CIA BRASILEIRA DE DISTRIBUICAO",
+    "cnpj": "47508411000156",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PDGR3",
+    "name": "Pdg Realty S.A. Empreend E Participacoes",
+    "razao_social": "PDG REALTY S.A. EMPREEND E PARTICIPACOES",
+    "cnpj": "02950811000189",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PDTC3",
+    "name": "Padtec Holding",
+    "razao_social": "PADTEC HOLDING S.A.",
+    "cnpj": "02365069000144",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PEAB3",
+    "name": "Cia Participacoes Alianca Da Bahia",
+    "razao_social": "CIA PARTICIPACOES ALIANCA DA BAHIA",
+    "cnpj": "01938783000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PEAB4",
+    "name": "Cia Participacoes Alianca Da Bahia",
+    "razao_social": "CIA PARTICIPACOES ALIANCA DA BAHIA",
+    "cnpj": "01938783000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PEMA11",
+    "name": "PERFORMA REAL ESTATE",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PETR3",
+    "name": "Petrobras",
+    "razao_social": "PETROLEO BRASILEIRO S.A. PETROBRAS",
+    "cnpj": "33000167000101",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PETR4",
+    "name": "Petrobras",
+    "razao_social": "PETROLEO BRASILEIRO S.A. PETROBRAS",
+    "cnpj": "33000167000101",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PETZ3",
+    "name": "Pet Center Comércio E Participações",
+    "razao_social": "Pet Center Comércio e Participações S.A.",
+    "cnpj": "18328118000109",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PFRM3",
+    "name": "Profarma Distrib Prod Farmaceuticos",
+    "razao_social": "PROFARMA DISTRIB PROD FARMACEUTICOS S.A.",
+    "cnpj": "45453214000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PGMN3",
+    "name": "Pague Menos",
+    "razao_social": "EMPREENDIMENTOS PAGUE MENOS S.A.",
+    "cnpj": "06626253000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PINE3",
+    "name": "Bco Pine",
+    "razao_social": "BCO PINE S.A",
+    "cnpj": "62144175000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PINE4",
+    "name": "Banco Pine",
+    "razao_social": "BCO PINE S.A",
+    "cnpj": "62144175000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PLCR11",
+    "name": "FDO INV. IMOB. PLURAL RECEBIVEIS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PLOG11",
+    "name": "PLURAL LOGÍSTICA FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PLPL3",
+    "name": "Plano & Plano Desenvolvimento Imobiliário",
+    "razao_social": "Plano & Plano Desenvolvimento Imobiliário S.A.",
+    "cnpj": "24230275000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PLRI11",
+    "name": "Polo Recebíveis Imobiliários I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PMAM3",
+    "name": "Paranapanema",
+    "razao_social": "PARANAPANEMA S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "60398369000479",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PNDL11",
+    "name": "PANORAMA DESENVOLVIMENTO LOGÍSTICO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PNPR11",
+    "name": "PANORAMA PROPERTIES FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PNVL3",
+    "name": "Dimed S.A. Distribuidora De Medicamentos",
+    "razao_social": "DIMED S.A. DISTRIBUIDORA DE MEDICAMENTOS",
+    "cnpj": "92665611000177",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "POMO3",
+    "name": "Marcopolo",
+    "razao_social": "MARCOPOLO S.A.",
+    "cnpj": "88611835000129",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "POMO4",
+    "name": "Marcopolo",
+    "razao_social": "MARCOPOLO S.A.",
+    "cnpj": "88611835000129",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PORD11",
+    "name": "Polo Recebíveis Imobiliários II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "POSI3",
+    "name": "Positivo Tecnologia",
+    "razao_social": "POSITIVO TECNOLOGIA S.A.",
+    "cnpj": "81243735000148",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PPAR3",
+    "name": "Polpar",
+    "razao_social": "POLPAR S.A.",
+    "cnpj": "59789545000171",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PQAG11",
+    "name": "PARQUE ANHANGUERA FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PQDP11",
+    "name": "Parque Dom Pedro Shopping Center",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PRBC4",
+    "name": "Parana Bco",
+    "razao_social": "PARANA BCO S.A.",
+    "cnpj": "14388334000199",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PRIO3",
+    "name": "PetroRio",
+    "razao_social": "PRIO S.A.",
+    "cnpj": "10629105000168",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PRNR3",
+    "name": "Priner Serviços Industriais",
+    "razao_social": "PRINER SERVIÇOS INDUSTRIAIS S.A.",
+    "cnpj": "18593815000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PRPT3",
+    "name": "Prompt Participacoes",
+    "razao_social": "PROMPT PARTICIPACOES S.A.",
+    "cnpj": "02992449000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PRSN11B",
+    "name": "Lateres",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PRTS11",
+    "name": "Multi Properties FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "PSSA3",
+    "name": "Porto Seguro",
+    "razao_social": "PORTO SEGURO S.A.",
+    "cnpj": "02149205000169",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PTBL3",
+    "name": "Pbg",
+    "razao_social": "PBG S/A",
+    "cnpj": "83475913000191",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PTCA3",
+    "name": "Prática Produtos",
+    "razao_social": "PRÁTICA PRODUTOS S.A.",
+    "cnpj": "08574411000100",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "PVBI11",
+    "name": "FDO. INV. IMOB. VBI PRIME PROPERTIES",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "QAGR11",
+    "name": "QUASAR AGRO - FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "QAMI11",
+    "name": "QUASAR CRÉDITO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "QUAL3",
+    "name": "Qualicorp",
+    "razao_social": "QUALICORP CONSULTORIA E CORRETORA DE SEGUROS S.A.",
+    "cnpj": "11992680000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "QUSW3",
+    "name": "Quality Software",
+    "razao_social": "QUALITY SOFTWARE S.A.",
+    "cnpj": "35791391000194",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "QVQP3",
+    "name": "524 Participacoes",
+    "razao_social": "524 PARTICIPACOES S.A.",
+    "cnpj": "01851771000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RADL3",
+    "name": "RaiaDrogasil",
+    "razao_social": "Raia Drogasil S.A.",
+    "cnpj": "61585865000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RAIL3",
+    "name": "Rumo",
+    "razao_social": "RUMO S.A.",
+    "cnpj": "02387241000160",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RAIZ4",
+    "name": "Raízen",
+    "razao_social": "RAÍZEN S.A.",
+    "cnpj": "33453598000123",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RANI3",
+    "name": "Irani Papel E Embalagem",
+    "razao_social": "IRANI PAPEL E EMBALAGEM S.A.",
+    "cnpj": "92791243000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RAPT3",
+    "name": "Randon",
+    "razao_social": "RANDONCORP S.A.",
+    "cnpj": "89086144000116",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RAPT4",
+    "name": "Randon",
+    "razao_social": "RANDONCORP S.A.",
+    "cnpj": "89086144000116",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RBCO11",
+    "name": "RB CAPITAL OFFICE INCOME FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBED11",
+    "name": "Rio Bravo Renda Educacional",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBFF11",
+    "name": "RIO BRAVO IFIX FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBHG11",
+    "name": "RIO BRAVO CREDITO IMOB HIGH GRADE",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBHY11",
+    "name": "RIO BRAVO CRÉDITO IMOB. HIGH YIELD",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBIR11",
+    "name": "RB CAPITAL DESENV. RESIDENCIAL IV FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBLG11",
+    "name": "RB CAPITAL LOGÍSTICO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRD11",
+    "name": "RB Capital Renda II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRF11",
+    "name": "RBR ALPHA MULTIESTRATÉGIA REAL ESTATE FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRL11",
+    "name": "RBR LOG FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRP11",
+    "name": "RBR Properties",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRR11",
+    "name": "RBR Rendimento High Grade",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRS11",
+    "name": "RIO BRAVO RENDA RESIDENCIAL FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBRY11",
+    "name": "FDO INV IMOB RBR PRIVATE CRÉDITO IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBVA11",
+    "name": "Rio Bravo Renda Varejo",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RBVO11",
+    "name": "Rio Bravo Crédito Imobiliário II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RCRB11",
+    "name": "FDO INV IMOB RIO BRAVO RENDA CORPORATIVA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RCSL3",
+    "name": "Recrusul",
+    "razao_social": "RECRUSUL S.A.",
+    "cnpj": "91333666000117",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RCSL4",
+    "name": "Recrusul",
+    "razao_social": "RECRUSUL S.A.",
+    "cnpj": "91333666000117",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RDOR3",
+    "name": "Rede D'Or",
+    "razao_social": "Rede D'Or São Luiz S.A.",
+    "cnpj": "06047087000139",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RDPD11",
+    "name": "BB Renda de Papeis Imobiliários II",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RECR11",
+    "name": "FII REC Recebíveis Imobiliários",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RECT11",
+    "name": "FDO INV IMOB - FII UBS (BR) OFFICE",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RECV3",
+    "name": "PetroRecôncavo",
+    "razao_social": "PETRORECÔNCAVO S.A.",
+    "cnpj": "03342704000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RECX11",
+    "name": "FDO. INV. IMOB. REC FUNDO DE FUNDOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "REDE3",
+    "name": "Rede Energia Participações",
+    "razao_social": "REDE ENERGIA PARTICIPAÇÕES S.A.",
+    "cnpj": "61584140000149",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "REIT11",
+    "name": "Socopa Fundo de Investimento Imobiliário",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RELG11",
+    "name": "REC LOGISTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RENT3",
+    "name": "Localiza",
+    "razao_social": "Localiza Rent a Car S.A.",
+    "cnpj": "16670085000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RENT4",
+    "name": "Localiza Rent A Car",
+    "razao_social": "Localiza Rent a Car S.A.",
+    "cnpj": "16670085000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "REON11",
+    "name": "RESIDENCIAIS ONE FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RFOF11",
+    "name": "FDO. INVEST. IMOB. RB CAPITAL I FUNDO DE FUNDOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RIAA3",
+    "name": "Guararapes Confeccoes",
+    "razao_social": "GUARARAPES CONFECCOES S.A.",
+    "cnpj": "08402943000152",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RINV11",
+    "name": "REAL INVESTOR FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RMAI11",
+    "name": "REAG MULTI ATIVOS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RNEW3",
+    "name": "Renova Energia",
+    "razao_social": "RENOVA ENERGIA S.A.",
+    "cnpj": "08534605000174",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RNEW4",
+    "name": "Renova Energia",
+    "razao_social": "RENOVA ENERGIA S.A.",
+    "cnpj": "08534605000174",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RNGO11",
+    "name": "Rio Negro",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ROMI3",
+    "name": "Romi",
+    "razao_social": "ROMI S.A.",
+    "cnpj": "56720428000163",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "ROOF11",
+    "name": "FUNDO DE INVESTIMENTO IMOBILIÁRIO ROOFTOP I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RPAD3",
+    "name": "Alfa Holdings",
+    "razao_social": "ALFA HOLDINGS S.A.",
+    "cnpj": "17167396000169",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RPAD5",
+    "name": "Alfa Holdings",
+    "razao_social": "ALFA HOLDINGS S.A.",
+    "cnpj": "17167396000169",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RPAD6",
+    "name": "Alfa Holdings",
+    "razao_social": "ALFA HOLDINGS S.A.",
+    "cnpj": "17167396000169",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RPMG3",
+    "name": "Refinaria De Petroleos Manguinhos",
+    "razao_social": "REFINARIA DE PETROLEOS MANGUINHOS S.A.",
+    "cnpj": "33412081000196",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RRCI11",
+    "name": "RB Capital Recebíveis Imobiliários",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RSID3",
+    "name": "Rossi Residencial S.A. - Em Recuperação Judicial",
+    "razao_social": "ROSSI RESIDENCIAL S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "61065751000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RSPD11",
+    "name": "RB CAPITAL DESENV RESID III FDO INV IMOB - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RSUL3",
+    "name": "Metalurgica Riosulense",
+    "razao_social": "METALURGICA RIOSULENSE S.A.",
+    "cnpj": "85778074000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RSUL4",
+    "name": "Metalurgica Riosulense",
+    "razao_social": "METALURGICA RIOSULENSE S.A.",
+    "cnpj": "85778074000106",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RVBI11",
+    "name": "VBI REITS FOF - FDO. INV. IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RVEE3",
+    "name": "Revee",
+    "razao_social": "REVEE S.A.",
+    "cnpj": "52841191000118",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "RZAK11",
+    "name": "RIZA AKIN",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RZAT11",
+    "name": "RIZA ARCTIUM REAL ESTATE FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "RZTR11",
+    "name": "FUNDO DE INVESTIMENTO IMOBILIÁRIO RIZA TERRAX",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SADI11",
+    "name": "SANTANDER PAPEIS IMOB CDI FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SAIC11B",
+    "name": "Sia Corporate",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SALI11",
+    "name": "VENUS - FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SALT3",
+    "name": "Grupo Salta Educação",
+    "razao_social": "Grupo Salta Educação S.A.",
+    "cnpj": "17765891000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SALT4",
+    "name": "Grupo Salta Educação",
+    "razao_social": "Grupo Salta Educação S.A.",
+    "cnpj": "17765891000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SANB11",
+    "name": "Banco Santander",
+    "razao_social": "BCO SANTANDER (BRASIL) S.A.",
+    "cnpj": "90400888000142",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SANB3",
+    "name": "Bco Santander (Brasil)",
+    "razao_social": "BCO SANTANDER (BRASIL) S.A.",
+    "cnpj": "90400888000142",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SANB4",
+    "name": "Bco Santander (Brasil)",
+    "razao_social": "BCO SANTANDER (BRASIL) S.A.",
+    "cnpj": "90400888000142",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SAPR11",
+    "name": "Sanepar",
+    "razao_social": "CIA SANEAMENTO DO PARANA - SANEPAR",
+    "cnpj": "76484013000145",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SAPR3",
+    "name": "Cia Saneamento Do Parana - Sanepar",
+    "razao_social": "CIA SANEAMENTO DO PARANA - SANEPAR",
+    "cnpj": "76484013000145",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SAPR4",
+    "name": "Cia Saneamento Do Parana - Sanepar",
+    "razao_social": "CIA SANEAMENTO DO PARANA - SANEPAR",
+    "cnpj": "76484013000145",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SARE11",
+    "name": "SANTANDER RENDA DE ALUGUÉIS FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SAUD3",
+    "name": "Odontoprev",
+    "razao_social": "BRADSAÚDE S.A.",
+    "cnpj": "58119199000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SBFG3",
+    "name": "Grupo SBF",
+    "razao_social": "Grupo SBF S.A.",
+    "cnpj": "13217485000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SBSP3",
+    "name": "Sabesp",
+    "razao_social": "CIA SANEAMENTO BASICO EST SAO PAULO",
+    "cnpj": "43776517000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SCAR3",
+    "name": "Sao Carlos Empreend E Participacoes",
+    "razao_social": "SAO CARLOS EMPREEND E PARTICIPACOES S.A.",
+    "cnpj": "29780061000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SCPF11",
+    "name": "SCP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SDIL11",
+    "name": "SDI Logística Rio",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SEED11",
+    "name": "FII HEDGE SD",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SEER3",
+    "name": "Ser Educacional",
+    "razao_social": "SER EDUCACIONAL S.A.",
+    "cnpj": "04986320000113",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SEQL3",
+    "name": "Sequoia Logística E Transportes",
+    "razao_social": "SEQUOIA LOGÍSTICA E TRANSPORTES S.A.",
+    "cnpj": "01599101000193",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SEQR11",
+    "name": "SEQUOIA III RENDA IMOBILIÁRIA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SFND11",
+    "name": "São Fernando",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SHDP11B",
+    "name": "Shopping Parque Dom Pedro",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SHOP11",
+    "name": "Multi Shoppings",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SHOW3",
+    "name": "T4F Entretenimento",
+    "razao_social": "T4F ENTRETENIMENTO S.A.",
+    "cnpj": "02860694000162",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SHPH11",
+    "name": "Shopping Patio Higienopolis",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SHUL3",
+    "name": "Schulz",
+    "razao_social": "SCHULZ S.A.",
+    "cnpj": "84693183000168",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SHUL4",
+    "name": "Schulz",
+    "razao_social": "SCHULZ S.A.",
+    "cnpj": "84693183000168",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SIMH3",
+    "name": "Simpar",
+    "razao_social": "SIMPAR S.A.",
+    "cnpj": "07415333000120",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SJAU11",
+    "name": "SJ AU LOGÍSTICA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SLCE3",
+    "name": "SLC Agrícola",
+    "razao_social": "SLC AGRICOLA S.A.",
+    "cnpj": "89096457000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SMFT3",
+    "name": "Smart Fit",
+    "razao_social": "SMARTFIT ESCOLA DE GINÁSTICA E DANÇA S.A.",
+    "cnpj": "07594978000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SMTO3",
+    "name": "São Martinho",
+    "razao_social": "SAO MARTINHO S.A.",
+    "cnpj": "51466860000156",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SNCI11",
+    "name": "SUNO RECEBÍVEIS IMOBILIÁRIOS FDO DE INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SNEL11",
+    "name": "SUNO ENERGIAS LIMPAS FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SNFF11",
+    "name": "SUNO FUNDO DE FUNDOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SNSY3",
+    "name": "Sansuy S.A. Industria De Plasticos",
+    "razao_social": "SANSUY S.A. INDUSTRIA DE PLASTICOS",
+    "cnpj": "14807945000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SNSY5",
+    "name": "Sansuy S.A. Industria De Plasticos",
+    "razao_social": "SANSUY S.A. INDUSTRIA DE PLASTICOS",
+    "cnpj": "14807945000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SNSY6",
+    "name": "Sansuy S.A. Industria De Plasticos",
+    "razao_social": "SANSUY S.A. INDUSTRIA DE PLASTICOS",
+    "cnpj": "14807945000124",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SOJA3",
+    "name": "Boa Safra Sementes",
+    "razao_social": "BOA SAFRA SEMENTES S.A.",
+    "cnpj": "10807374000177",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SOLR11",
+    "name": "SOLARIUM FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SOND3",
+    "name": "Sondotecnica Engenharia Solos",
+    "razao_social": "SONDOTECNICA ENGENHARIA SOLOS S.A.",
+    "cnpj": "33386210000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SOND5",
+    "name": "Sondotecnica Engenharia Solos",
+    "razao_social": "SONDOTECNICA ENGENHARIA SOLOS S.A.",
+    "cnpj": "33386210000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SOND6",
+    "name": "Sondotecnica Engenharia Solos",
+    "razao_social": "SONDOTECNICA ENGENHARIA SOLOS S.A.",
+    "cnpj": "33386210000119",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SPTW11",
+    "name": "SP Downtown",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SRNA3",
+    "name": "Serena Energia",
+    "razao_social": "SERENA ENERGIA S.A.",
+    "cnpj": "42500384000151",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SRVD11",
+    "name": "SERRA VERDE FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "STRX11",
+    "name": "STARX FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "SUZB3",
+    "name": "Suzano",
+    "razao_social": "SUZANO S.A.",
+    "cnpj": "16404287000155",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "SYNE3",
+    "name": "Syn Prop & Tech",
+    "razao_social": "SYN PROP & TECH S.A.",
+    "cnpj": "08801621000186",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TAEE11",
+    "name": "Taesa",
+    "razao_social": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
+    "cnpj": "07859971000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TAEE3",
+    "name": "Transmissora Aliança De Energia Elétrica",
+    "razao_social": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
+    "cnpj": "07859971000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TAEE4",
+    "name": "Transmissora Aliança De Energia Elétrica",
+    "razao_social": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
+    "cnpj": "07859971000130",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TASA3",
+    "name": "Taurus Armas",
+    "razao_social": "TAURUS ARMAS S.A.",
+    "cnpj": "92781335000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TASA4",
+    "name": "Taurus Armas",
+    "razao_social": "TAURUS ARMAS S.A.",
+    "cnpj": "92781335000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TBOF11",
+    "name": "TB Office",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TCIN11",
+    "name": "FDO. INVEST. IMOB. TOURMALET V - ED. CIDADE NOVA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TCPF11",
+    "name": "TREECORP REAL ESTATE FDO INV IMOB - I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TCSA3",
+    "name": "Tecnisa",
+    "razao_social": "TECNISA S.A.",
+    "cnpj": "08065557000112",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TECN3",
+    "name": "Technos",
+    "razao_social": "TECHNOS S.A.",
+    "cnpj": "09295063000197",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TEKA3",
+    "name": "Teka-Tecelagem Kuehnrich S.A. - Em Recuperação Judicial",
+    "razao_social": "TEKA-TECELAGEM KUEHNRICH S.A. - Em Recuperação Judicial",
+    "cnpj": "82636986000155",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TEKA4",
+    "name": "Teka-Tecelagem Kuehnrich S.A. - Em Recuperação Judicial",
+    "razao_social": "TEKA-TECELAGEM KUEHNRICH S.A. - Em Recuperação Judicial",
+    "cnpj": "82636986000155",
+    "ativo": false,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TELB3",
+    "name": "Telec Brasileiras S.A. Telebras",
+    "razao_social": "TELEC BRASILEIRAS S.A. TELEBRAS",
+    "cnpj": "00336701000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TELB4",
+    "name": "Telec Brasileiras S.A. Telebras",
+    "razao_social": "TELEC BRASILEIRAS S.A. TELEBRAS",
+    "cnpj": "00336701000104",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TELD11",
+    "name": "TELLUS DESENVOLVIMENTO LOGÍSTICO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TEND3",
+    "name": "Construtora Tenda",
+    "razao_social": "CONSTRUTORA TENDA S.A.",
+    "cnpj": "71476527000135",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TEPP11",
+    "name": "TELLUS PROPERTIES - FDO INV. IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TFCO4",
+    "name": "Track & Field",
+    "razao_social": "TRACK & FIELD CO S.A.",
+    "cnpj": "59418806000147",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TGAR11",
+    "name": "TG Ativo Real",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TGMA3",
+    "name": "Tegma",
+    "razao_social": "TEGMA GESTAO LOGISTICA S.A.",
+    "cnpj": "02351144000118",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TIMS3",
+    "name": "TIM",
+    "razao_social": "TIM S.A.",
+    "cnpj": "02421421000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TKNO3",
+    "name": "Tekno S.A. - Industria E Comercio",
+    "razao_social": "TEKNO S.A. - INDUSTRIA E COMERCIO",
+    "cnpj": "33467572000134",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TKNO4",
+    "name": "Tekno S.A. - Industria E Comercio",
+    "razao_social": "TEKNO S.A. - INDUSTRIA E COMERCIO",
+    "cnpj": "33467572000134",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TMPS11",
+    "name": "ITAÚ TEMPUS FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TOKY3",
+    "name": "Grupo Toky S.A. - Em Recuperação Judicial",
+    "razao_social": "GRUPO TOKY S.A. - EM RECUPERAÇÃO JUDICIAL",
+    "cnpj": "31553627000101",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TORD11",
+    "name": "TORDESILHAS EI FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TOTS3",
+    "name": "Totvs",
+    "razao_social": "TOTVS S.A.",
+    "cnpj": "53113791000122",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TPIS3",
+    "name": "Tpi - Triunfo Particip. E Invest.",
+    "razao_social": "TPI - TRIUNFO PARTICIP. E INVEST. S.A.",
+    "cnpj": "03014553000191",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TRIS3",
+    "name": "Trisul",
+    "razao_social": "TRISUL S.A.",
+    "cnpj": "08811643000127",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TRNT11",
+    "name": "Torre Norte",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TRXB11",
+    "name": "TRX REAL ESTATE II FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TRXF11",
+    "name": "TRX Real Estate",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TRXR3",
+    "name": "Textil Renauxview",
+    "razao_social": "TEXTIL RENAUXVIEW S.A.",
+    "cnpj": "82982075000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TSER11",
+    "name": "TISHMAN SPEYER RENDA CORPORATIVA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TSNC11",
+    "name": "Transinc",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "TTEN3",
+    "name": "Três Tentos Agroindustrial",
+    "razao_social": "Três Tentos Agroindustrial S/A",
+    "cnpj": "94813102000170",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TUPY3",
+    "name": "Tupy",
+    "razao_social": "TUPY S.A.",
+    "cnpj": "84683374000149",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "TXRX4",
+    "name": "Textil Renauxview",
+    "razao_social": "TEXTIL RENAUXVIEW S.A.",
+    "cnpj": "82982075000180",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "UCAS3",
+    "name": "Unicasa Indústria De Móveis",
+    "razao_social": "UNICASA INDÚSTRIA DE MÓVEIS S.A.",
+    "cnpj": "90441460000148",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "UGPA3",
+    "name": "Ultrapar",
+    "razao_social": "ULTRAPAR PARTICIPACOES S.A.",
+    "cnpj": "33256439000139",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "UNIP3",
+    "name": "Unipar Carbocloro",
+    "razao_social": "UNIPAR CARBOCLORO S.A.",
+    "cnpj": "33958695000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "UNIP5",
+    "name": "Unipar Carbocloro",
+    "razao_social": "UNIPAR CARBOCLORO S.A.",
+    "cnpj": "33958695000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "UNIP6",
+    "name": "Unipar Carbocloro",
+    "razao_social": "UNIPAR CARBOCLORO S.A.",
+    "cnpj": "33958695000178",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "URPR11",
+    "name": "URCA PRIME RENDA FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "USIM3",
+    "name": "Usiminas",
+    "razao_social": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+    "cnpj": "60894730000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "USIM5",
+    "name": "Usiminas",
+    "razao_social": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+    "cnpj": "60894730000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "USIM6",
+    "name": "Usinas Sid De Minas Gerais S.A.-Usiminas",
+    "razao_social": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
+    "cnpj": "60894730000105",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VALE3",
+    "name": "Vale",
+    "razao_social": "VALE S.A.",
+    "cnpj": "33592510000154",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VAMO3",
+    "name": "Grupo Vamos",
+    "razao_social": "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",
+    "cnpj": "23373000000132",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VBBR3",
+    "name": "Vibra Energia",
+    "razao_social": "VIBRA ENERGIA S/A",
+    "cnpj": "34274233000102",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VCJR11",
+    "name": "VECTIS JUROS REAL FDO INV. IMOB. - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VCRR11",
+    "name": "VECTIS RENDA RESIDENCIAL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VERE11",
+    "name": "Vereda",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VGHF11",
+    "name": "VALORA HEDGE FUND",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VGIP11",
+    "name": "VALORA CRI ÍNDICE DE PREÇO FDO INVEST. IMOB. FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VGIR11",
+    "name": "Valora RE III",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VIDS11",
+    "name": "VIC DESENVOLVIMENTO VINTAGE 20/21",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VIFI11",
+    "name": "VINCI INSTRUMENTOS FINANCEIROS FDO INV IMOB - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VILG11",
+    "name": "VINCI LOGÍSTICA FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VINO11",
+    "name": "VINCI OFFICES FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VISC11",
+    "name": "Vinci Shopping Centers",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VITT3",
+    "name": "Vittia",
+    "razao_social": "VITTIA S.A.",
+    "cnpj": "45365558000109",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VIUR11",
+    "name": "VINCI IMÓVEIS URBANOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VIVA3",
+    "name": "Vivara",
+    "razao_social": "Vivara Participações S.A.",
+    "cnpj": "33839910000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VIVR3",
+    "name": "Viver Incorporadora E Construtora",
+    "razao_social": "VIVER INCORPORADORA E CONSTRUTORA S.A.",
+    "cnpj": "67571414000141",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VIVT3",
+    "name": "Vivo",
+    "razao_social": "TELEFÔNICA BRASIL S.A",
+    "cnpj": "02558157000162",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VJFD11",
+    "name": "JFDCAM FUNDO DE INVESTIMENTO IMOBILIÁRIO FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VLID3",
+    "name": "Valid Soluções",
+    "razao_social": "VALID SOLUÇÕES S.A.",
+    "cnpj": "33113309000147",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VLOL11",
+    "name": "Vila Olímpia Corporate",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VOTS11",
+    "name": "Votorantim Securities Master",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VPSI11",
+    "name": "Polo Shopping Indaiatuba",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VRTA11",
+    "name": "Fator Verita",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VSEC11",
+    "name": "FDO INV IMOB VOTORANTIM SECURITIES",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VSHO11",
+    "name": "FDO INV IMOB VOTORANTIM SHOPPING",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VSLH11",
+    "name": "VERSALHES RECEBÍVEIS IMOBILIÁRIOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VSPT3",
+    "name": "Ferrovia Centro-Atlantica",
+    "razao_social": "FERROVIA CENTRO-ATLANTICA S.A.",
+    "cnpj": "00924429000175",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VSPT4",
+    "name": "Ferrovia Centro-Atlantica",
+    "razao_social": "FERROVIA CENTRO-ATLANTICA S.A.",
+    "cnpj": "00924429000175",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VSTE3",
+    "name": "Veste S.A. Estilo",
+    "razao_social": "VESTE S.A. ESTILO",
+    "cnpj": "49669856000143",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VTLT11",
+    "name": "Votorantim Logística",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VTPA11",
+    "name": "FDO. INVEST. IMOB. VOTORANTIM PATRIMONIAL V",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VTPL11",
+    "name": "FDO INV. IMOB. PLUS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VTRU3",
+    "name": "Vitru Educação",
+    "razao_social": "VITRU EDUCAÇÃO S.A.",
+    "cnpj": "20512706000140",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VTVI11",
+    "name": "PARKING PARTNERS FDO. INVEST. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VULC3",
+    "name": "Vulcabras",
+    "razao_social": "VULCABRAS S.A.",
+    "cnpj": "50926955000142",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VVEO3",
+    "name": "Viveo",
+    "razao_social": "CM Hospitalar S.A",
+    "cnpj": "12420164000157",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "VVRI11",
+    "name": "V2 RENDA IMOBILIÁRIA FDO DE INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "VXXV11",
+    "name": "VX XVI - FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "WEGE3",
+    "name": "WEG",
+    "razao_social": "WEG S.A.",
+    "cnpj": "84429695000111",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WEST3",
+    "name": "Westwing Comércio Varejista",
+    "razao_social": "WESTWING COMÉRCIO VAREJISTA S.A.",
+    "cnpj": "14776142000150",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WHRL3",
+    "name": "Whirlpool",
+    "razao_social": "WHIRLPOOL S.A.",
+    "cnpj": "59105999000186",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WHRL4",
+    "name": "Whirlpool",
+    "razao_social": "WHIRLPOOL S.A.",
+    "cnpj": "59105999000186",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WIZC3",
+    "name": "Wiz Co Participações E Corretagem De Seguros",
+    "razao_social": "WIZ CO PARTICIPAÇÕES E CORRETAGEM DE SEGUROS S.A.",
+    "cnpj": "42278473000103",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WLMM3",
+    "name": "Wlm Part. E Comércio De Máquinas E Veículos",
+    "razao_social": "WLM PART. E COMÉRCIO DE MÁQUINAS E VEÍCULOS S.A.",
+    "cnpj": "33228024000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WLMM4",
+    "name": "Wlm Part. E Comércio De Máquinas E Veículos",
+    "razao_social": "WLM PART. E COMÉRCIO DE MÁQUINAS E VEÍCULOS S.A.",
+    "cnpj": "33228024000151",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "WPLZ11",
+    "name": "Shopping West Plaza",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "WTSP11",
+    "name": "Ourinvest RE I",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XBXO11",
+    "name": "R CAP 1810 FUNDO DE FUNDOS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPCI11",
+    "name": "XP CREDITO IMOBILIÁRIO - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPCM11",
+    "name": "XP Corporate Macaé",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPHT11",
+    "name": "XP HOTÉIS - FDO INV IMOB",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPIN11",
+    "name": "XP Industrial",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPLG11",
+    "name": "XP Log",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPML11",
+    "name": "XP Malls",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPPR11",
+    "name": "XP PROPERTIES FDO. INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XPSF11",
+    "name": "XP SELECTION FDO DE FUNDOS INV IMOB - FII",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "XTED11",
+    "name": "TRX Edifícios Corporativos",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "YDUQ3",
+    "name": "YDUQS",
+    "razao_social": "YDUQS PARTICIPACOES S.A.",
+    "cnpj": "08807432000110",
+    "ativo": true,
+    "fonte": "cvm"
+  },
+  {
+    "ticker": "YUFI11",
+    "name": "YUCA FDO INV. IMOB.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ZAVI11",
+    "name": "FII-ZAVIT-R",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  },
+  {
+    "ticker": "ZIFI11",
+    "name": "ZION CAPITAL FUNDO DE INVESTIMENTO IMOBILIÁRIO",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "legado"
+  }
+]
