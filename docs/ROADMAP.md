@@ -234,6 +234,22 @@ antes de começar (falha cedo).
     (com `/` inicial: `data/` sem ele ignoraria `src/resumo/data/ticker_map.json`).
   - *`except Exception` por PDF é a fronteira do lote* (loga tipo, mensagem e
     traceback e segue); `KeyboardInterrupt` continua interrompendo.
+- **Passo e (testes ponta a ponta) feito:** idempotência, `--force`, PDF corrompido
+  (simulado e real), troca de `HEURISTIC_VERSION` e de `PROMPT_VERSION`, mesmo PDF
+  identificado de outro jeito, reapresentação. Mutação (tirar a checagem de
+  `extractor_version`) é pega por 2 testes.
+- **Validação nos 5 PDFs reais de `assets/` (banco descartável, modo heurístico).**
+  Pipeline, SKIP e log funcionam (2ª rodada: `já processado` em 0,1–0,5 s, contra
+  6–10 s), mas a **identificação por conteúdo gravou dado ruim**:
+  - `Press-release-Cemig-2026-03-31.pdf` → empresa **"Teleconferência | Webcast"**
+    (tier `capa_lines`) e tipo **FORMULARIO_REFERENCIA** (a busca de palavra-chave
+    achou a expressão no texto); o nome do arquivo dizia `Cemig` e `release`.
+  - `Earnings Release 3T25.pdf` → período **9M25** (conteúdo) contra `3T25` (arquivo).
+  - `Desempenho Financeiro Petrobras 3T25.pdf` → pulado: `tipo não identificado`.
+  - Os 2 comunicados foram pulados como `tipo não periódico`, mas só **depois** de
+    parsear o PDF inteiro (até 68 s com o spaCy frio), e de novo a cada rodada.
+  Pendente de decisão: prioridade das fontes (conteúdo × arquivo) para empresa e tipo,
+  keyword de tipo no arquivo ("desempenho") e pré-filtro por nome de arquivo.
 - **Achados no parser (não alterados, ou corrigidos à parte):**
   - *Corrigido:* `extract_report_type` casava `"itr"` como substring ("arbitragem",
     "vitrine"); "Fato Relevante: arbitragem" virava ITR. Agora palavra inteira.
