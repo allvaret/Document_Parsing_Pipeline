@@ -67,10 +67,47 @@ e as restrições do schema são testadas também pela camada ORM.
 
 **CLI:** `python -m batch.run --dir pdfs/ --mode heuristic|llm [--force] [--dry-run]`
 
-**Identificação do relatório:** o nome do arquivo segue `TICKER_TIPO_PERIODO.pdf`
-(ex.: `BBSE3_ITR_2T26.pdf`). O nome do arquivo tem prioridade sobre a detecção
-heurística; se faltar ticker, tipo ou período e a heurística também não achar,
-o arquivo é **pulado com motivo no log** (nunca gravado pela metade).
+**Decisão de abertura — documentos de evento.** Comunicados e fatos relevantes
+(ex.: `comunicado_petr3_33064.pdf`) não têm período fiscal, e o período faz parte
+da chave única do relatório. No MVP eles são **pulados com motivo no log**
+(`tipo não periódico`); na v1.1 ganham chave própria (número de protocolo da CVM,
+que já aparece no nome do arquivo). Confirmar antes de implementar.
+
+**Identificação do relatório (empresa, tipo, período).** Os PDFs não seguem um
+padrão de nome. Exemplos reais (pasta `assets/`, fora do git):
+
+| Arquivo | Empresa | Tipo | Período |
+|---|---|---|---|
+| `Press-release-Cemig-2026-03-31.pdf` | nome | "press release" | data de fechamento → 1T26 |
+| `Desempenho Financeiro Petrobras 3T25.pdf` | nome | — | 3T25 |
+| `Earnings Release 3T25.pdf` | — | release | 3T25 |
+| `comunicado_petr3_33064.pdf` | ticker | comunicado | — |
+
+Cada campo é resolvido por uma cadeia de fontes, da mais confiável para a menos.
+A fonte usada fica registrada (`origin`, `content`, `filename`, `cli`), no mesmo
+espírito do `name_method` da empresa:
+
+1. **Origem** (`origin`) — metadados de onde o PDF veio. Hoje nenhum; com o
+   scraper (v1.1), categoria e data de referência da CVM viram a fonte principal.
+2. **Conteúdo** (`content`) — heurísticas do parser sobre capa e títulos
+   (`extract_report_type`, `extract_period`, nome da empresa).
+3. **Nome do arquivo** (`filename`):
+   - ticker (`[A-Z]{4}\d{1,2}`) → empresa via `asset`/`ticker_map`;
+   - nome da empresa → busca fuzzy (`data_pipeline.search.matcher`);
+   - período explícito (`3T25`, `1S26`, `12M25`) ou data ISO. Data de fim de
+     trimestre (31/03, 30/06, 30/09, 31/12) = aquele trimestre. Outra data é
+     tratada como publicação → trimestre anterior, marcado como **inferido** no log.
+4. **Override manual** (`cli`) — `--type`, `--period`, `--ticker` para o lote
+   inteiro (pastas homogêneas). Vence todas as outras fontes.
+
+Regras:
+- Conflito entre fontes (conteúdo diz 3T25, nome sugere 2T25) é logado como
+  aviso; vale a fonte de maior prioridade.
+- Empresa, tipo ou período sem resolução → arquivo **pulado com motivo**. Nunca
+  gravar como `OUTRO` nem pela metade: esses campos formam a chave única, e dois
+  documentos sem tipo do mesmo período colidiriam.
+- Código em `src/batch/identify.py`, uma função por fonte, testada isoladamente
+  com os nomes de arquivo reais acima.
 
 **Algoritmo por PDF:**
 1. Calcula `file_hash`. Se já existe report com esse hash **e** já há summary
@@ -89,18 +126,42 @@ antes de começar (falha cedo).
 - Rodar duas vezes → segunda execução só `SKIP`, mesmas contagens no banco.
 - `--force` regera; mudar `PROMPT_VERSION` regera só o resumo LLM.
 - PDF corrompido no meio do lote não impede os outros.
+- Identificação: cada fonte isolada com os nomes reais, prioridade entre
+  fontes, conflito logado, arquivo sem chave completa pulado.
+- Mesmo PDF identificado de forma diferente em duas execuções não quebra no
+  `UNIQUE(file_hash)`.
+- Subir `HEURISTIC_VERSION` regera keypoints; o resto continua `SKIP`.
 
 **Fora do escopo:** download automático dos PDFs da CVM/RI (v1.1).
 
-**Pendências herdadas da revisão da Fase 2 (decidir/tratar aqui):**
-- `--force`: `save_result` pula summary com a mesma chave (método, modelo,
-  `prompt_version`), então regerar com o mesmo prompt não atualiza o `content`.
-  Precisa de um modo de substituição (ex.: `replace_summaries=True`).
-- Caminho do SQLite: `sqlite:///data/app.db` é relativo ao diretório de
-  execução; rodar o batch de outra pasta cria um banco vazio sem aviso.
-  Resolver a partir da raiz do projeto ou exigir `DATABASE_URL` no batch.
-- O batch deve capturar `IntegrityError` (ex.: CNPJ de uma empresa com ticker
-  de outra) e `InvalidCnpjError`, logar com mensagem clara e seguir.
+**Pendências herdadas da revisão da Fase 2:**
+- `--force` não regera: `save_result` pula summary com a mesma chave (método,
+  modelo, `prompt_version`). Adicionar modo de substituição explícito
+  (`replace_summaries=True`), usado só pelo `--force`.
+- Caminho do SQLite relativo ao diretório de execução: rodar o batch de outra
+  pasta cria um banco vazio sem aviso. Resolver a partir da raiz do projeto e
+  imprimir no início da execução qual banco está sendo usado.
+- Capturar `IntegrityError` e `InvalidCnpjError` por arquivo, com mensagem
+  clara, e seguir para o próximo.
+- Buscar o report **pelo hash antes** de resolver a chave de negócio: se a
+  identificação de um mesmo PDF mudar entre execuções, o insert bate no
+  `UNIQUE(file_hash)`. Mesmo hash com chave diferente → aviso, não insert.
+
+**Puxados do backlog (adiar deixaria o debug mais difícil):**
+- **Casar empresa por nome normalizado** (hoje é nome exato). A identificação
+  pelo nome do arquivo depende disso; sem ela, "Cemig", "CEMIG" e "Cia Energética
+  de Minas Gerais" viram três empresas, cada uma com relatórios pendurados —
+  dado duplicado que é caro de desfazer depois.
+- **Versão da extração nos keypoints.** Keypoints não guardam qual heurística os
+  gerou. Adicionar `report.extractor_version` (= `HEURISTIC_VERSION`) no
+  `schema.sql` e nos modelos; subir a versão deve regerar keypoints, e o `SKIP`
+  passa a considerá-la. Sem isso, depois de melhorar a heurística não dá para
+  saber quais relatórios ainda têm keypoints antigos.
+- **Log de execução persistido.** Um JSONL por execução em `logs/batch/`
+  (arquivo, hash, fontes usadas por campo, resultado, motivo, duração). É o que
+  permite responder "por que este relatório foi pulado?" dias depois.
+- **Uma execução por vez.** Lock simples por arquivo no início do batch, em vez
+  de resolver concorrência no `get_or_create`.
 
 ---
 
@@ -141,9 +202,16 @@ gerado pelo batch.
   gratuitas. Confirmar limites atuais antes de escolher.
 - O batch continua rodando **na minha máquina**, apontando o `DATABASE_URL`
   para o banco de produção.
+- **Antes do primeiro dado em produção** (depois disso, mudar o schema sem
+  migração vira dor de cabeça):
+  - Alembic com uma migração base equivalente ao `schema.sql`.
+  - `created_at`/`parsed_at` como `DateTime` (SQLite e Postgres formatam
+    `CURRENT_TIMESTAMP` de forma diferente).
+  - Rodada de testes em massa dos keypoints nos PDFs reais; publicar só o que
+    passar na revisão.
 - Processar 5–10 empresas reais antes de divulgar.
-- README: diagrama do fluxo, as decisões de arquitetura do `CLAUDE.md`,
-  como rodar localmente, link do site.
+- README: diagrama do fluxo, as decisões de arquitetura (escritas no próprio
+  README), como rodar localmente, link do site.
 
 **Pronto quando:** o site público abre, busca e mostra relatórios, e o README
 explica o projeto para um recrutador em 2 minutos.
@@ -152,21 +220,21 @@ explica o projeto para um recrutador em 2 minutos.
 
 ## Backlog v1.1
 
-- Download automático de ITR/DFP pela CVM (o `data_pipeline` já tem a base).
-- `value_numeric` nos keypoints (parse de valores em formato brasileiro).
-- Testes em massa da heurística de keypoints (valor/variação trocados).
-- Alembic para migrações.
+Itens que **podem** esperar sem complicar o debug. O que não podia foi puxado
+para a Fase 3 (nome normalizado, versão da extração, log, lock) ou para antes
+do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
+
+- Scraper de ITR/DFP pela CVM/RI (o `data_pipeline` já tem a base), entregando
+  ao batch os metadados de origem (fonte 1 da identificação).
+- Documentos de evento (comunicados, fatos relevantes) com chave por protocolo.
+- `value_numeric` nos keypoints. Pode esperar: o `value_text` está gravado, então
+  dá para preencher depois direto do banco, sem reprocessar PDFs.
 - Retry com backoff no provedor de LLM.
 - Retomar usuário/carteira do schema legado.
-- Índices de busca/ordenação (**necessário antes de escalar**: previsão de
-  1000+ empresas e vários relatórios cada): `company.name` (busca/ordenação),
-  `report (company_id, period)` para listar relatórios por período. Mudança
-  entra primeiro no `database/schema.sql` e depois nos modelos (o teste de
-  paridade cobra os dois). Avaliar também busca por prefixo/`LIKE` e, no
-  Postgres, `pg_trgm`.
-- Casar empresa por nome normalizado (hoje é nome exato; só vale sem CNPJ/ticker).
-- `created_at`/`parsed_at` como `DateTime` (SQLite e Postgres formatam
-  `CURRENT_TIMESTAMP` diferente; resolver antes de migrar para Postgres).
-- `Literal`/enums do domínio nos campos controlados do ORM e mypy no CI.
-- Concorrência no `get_or_create` (dois batches simultâneos); hoje há um só.
+- Índices de busca/ordenação antes de escalar (1000+ empresas): `company.name`
+  e busca por prefixo/`LIKE` (no Postgres, `pg_trgm`). A listagem por empresa já
+  usa o índice do `UNIQUE (company_id, report_type, period)`. Mudança entra
+  primeiro no `schema.sql`; o teste de paridade cobra os modelos.
+- `Literal`/enums do domínio nos campos controlados do ORM e mypy no CI (os
+  `CHECK` do banco já barram valores inválidos).
 - Trocar `session.refresh` por `append` em `get_or_create_company`.
