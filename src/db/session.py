@@ -10,7 +10,7 @@ from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from db.errors import SchemaOutdatedError
+from db.errors import DatabaseNotFoundError, SchemaOutdatedError
 from db.models import Base
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -66,6 +66,35 @@ def make_engine(url: str | None = None) -> Engine:
             cur = dbapi_conn.cursor()
             cur.execute("PRAGMA foreign_keys=ON")
             cur.close()
+
+    return engine
+
+
+def make_readonly_engine(url: str | None = None) -> Engine:
+    """Engine para a API: só lê, nunca cria o banco.
+
+    SQLite: arquivo inexistente lança DatabaseNotFoundError (em vez de criar um
+    banco vazio) e `PRAGMA query_only=ON` faz qualquer escrita falhar, mesmo que um
+    bug a tente. Outros bancos: a defesa equivalente é um role só com SELECT
+    (Fase 6); aqui só se abre o engine."""
+    url = url or get_database_url()
+    parsed = make_url(url)
+    if parsed.get_backend_name() != "sqlite":
+        return create_engine(url)
+
+    db_path = parsed.database
+    if db_path in (None, "", ":memory:"):
+        raise ValueError("banco em memória não serve para a API somente leitura.")
+    if not Path(db_path).is_file():
+        raise DatabaseNotFoundError(db_path)
+
+    engine = create_engine(url)
+
+    @event.listens_for(engine, "connect")
+    def _query_only(dbapi_conn, _record):
+        cur = dbapi_conn.cursor()
+        cur.execute("PRAGMA query_only=ON")
+        cur.close()
 
     return engine
 

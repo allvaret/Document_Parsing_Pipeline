@@ -6,6 +6,7 @@ Regras (nenhum teste pode escrever no banco real `data/app.db`):
   `tmp_path` do pytest (que o apaga sozinho). É o "banco descartável por
   teste": isolamento total sem rollback manual, e comporta várias conexões e
   `commit()` reais (o que o batch faz). Use nos testes do batch e de segurança.
+- `api_client`: TestClient da API sobre o `temp_db`, com engine somente leitura.
 - `_database_url_isolado` (autouse): `DATABASE_URL` aponta para um arquivo
   temporário em todo teste. Quem chamar `get_database_url()`/`make_engine()`
   sem URL cai num banco descartável, nunca no real.
@@ -78,6 +79,32 @@ def temp_db(tmp_path):
     init_db(engine)
     yield TempDb(url, engine, make_session_factory(engine))
     engine.dispose()  # no Windows o arquivo aberto impediria a limpeza do tmp_path
+
+
+@pytest.fixture
+def api_client(temp_db):
+    """TestClient da API sobre o `temp_db`, usando o engine SOMENTE LEITURA (o mesmo
+    tipo de produção): qualquer escrita acidental num endpoint quebra o teste.
+    Semeie o banco com `temp_db.factory()`/`file_session` antes de consultar."""
+    from fastapi.testclient import TestClient
+
+    from db.session import make_readonly_engine
+    from site_backend.deps import get_session
+    from site_backend.main import app
+
+    engine = make_readonly_engine(temp_db.url)
+    factory = make_session_factory(engine)
+
+    def _override():
+        with factory() as s:
+            yield s
+
+    app.dependency_overrides[get_session] = _override
+    try:
+        yield TestClient(app)
+    finally:
+        app.dependency_overrides.clear()
+        engine.dispose()
 
 
 @pytest.fixture

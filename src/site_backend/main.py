@@ -1,10 +1,25 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException, status
 from pydantic import ValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from site_backend.calculadora.orquestrador import CalculadoraTetoDePreco
+from site_backend.deps import get_session, get_session_factory
+from site_backend.errors import install_error_handlers
 from site_backend.models import MetodoPreco, PremissasFactory, ResultadoCalculo
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Falha cedo no uvicorn (banco ausente ou desatualizado) em vez de na 1ª
+    # requisição. Testes que trocam a sessão não precisam de banco real.
+    if get_session not in app.dependency_overrides:
+        get_session_factory()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
+install_error_handlers(app)
 
 # CORS habilitado pro frontend
 app.add_middleware(
