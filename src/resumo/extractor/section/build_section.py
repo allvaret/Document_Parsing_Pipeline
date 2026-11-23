@@ -299,7 +299,8 @@ def extract_period(text: str) -> Optional[str]:
 def extract_report_type(text: str) -> Optional[str]:
     lowered = text.lower()
     for termo, label in REPORT_TYPE_KEYWORDS.items():
-        if termo in lowered:
+        # Palavra inteira: 'itr' não pode casar dentro de 'arbitragem' ou 'vitrine'.
+        if re.search(rf"(?<!\w){re.escape(termo)}(?!\w)", lowered):
             return label
     return None
 
