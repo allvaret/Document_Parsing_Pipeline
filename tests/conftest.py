@@ -90,8 +90,12 @@ def api_client(temp_db):
 
     from db.session import make_readonly_engine
     from site_backend.deps import get_session
-    from site_backend.main import app
+    from site_backend.config import Settings
+    from site_backend.main import create_app
 
+    # App próprio, sem limite de requisições: o contador do `app` global é
+    # compartilhado pela suíte inteira e estouraria nos testes parametrizados.
+    app = create_app(Settings(rate_limit_per_minute=0))
     engine = make_readonly_engine(temp_db.url)
     factory = make_session_factory(engine)
 

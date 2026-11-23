@@ -11,6 +11,7 @@ from site_backend.config import Settings
 from site_backend.deps import get_session, get_session_factory
 from site_backend.errors import install_error_handlers
 from site_backend.models import MetodoPreco, PremissasFactory, ResultadoCalculo
+from site_backend.routers import empresas
 from site_backend.security import RateLimitMiddleware, SecurityHeadersMiddleware
 
 router = APIRouter()
@@ -97,6 +98,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(settings.allowed_hosts))
     app.add_middleware(SecurityHeadersMiddleware)
     app.include_router(router)
+    app.include_router(empresas.router)
     return app
 
 
