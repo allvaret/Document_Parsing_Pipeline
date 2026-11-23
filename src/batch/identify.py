@@ -34,6 +34,7 @@ from datetime import date
 from pathlib import Path
 from typing import Optional, Union
 
+from batch.verify import CONFLICT, UNCONFIRMED, ContentText, verify_company
 from db.normalize import normalize_name
 from resumo.extractor.section.build_section import _is_noise_token
 from resumo.result import CompanyRef, ReportResult, ReportType
@@ -50,6 +51,7 @@ MAX_EVENT_PAGES = 10
 # Teto de páginas do lote (`--max-pages`; 0 desliga). Vale para qualquer tipo.
 MAX_PAGES = 150
 SKIP_NO_COMPANY = "empresa não identificada"
+SKIP_CONFLICT = "empresa em conflito com o conteúdo"
 SKIP_NO_TYPE = "tipo não identificado"
 SKIP_NO_PERIOD = "período não identificado"
 
@@ -121,6 +123,7 @@ class Identification:
     inferred: tuple = ()                             # campos inferidos (ex.: 'period')
     warnings: tuple = ()
     skip_reason: Optional[str] = None
+    identity: Optional[str] = None                   # verificação pelo conteúdo (batch/verify)
 
     @property
     def ok(self) -> bool:
@@ -268,10 +271,13 @@ def identify(
     overrides: Overrides = Overrides(),
     cnpj_map: Optional[dict] = None,
     alias_map: Optional[dict] = None,
+    texts: Optional[ContentText] = None,
 ) -> Identification:
     """Resolve (empresa, tipo, período) para um PDF já processado.
     `cnpj_map` (ticker -> CNPJ, do ticker_registry) preenche o CNPJ da empresa: é a
-    chave mais forte do repositório, e une PETR3 e PETR4 na mesma empresa."""
+    chave mais forte do repositório, e une PETR3 e PETR4 na mesma empresa.
+    `texts` (texto do PDF) liga a verificação de identidade: o conteúdo confirma a empresa
+    escolhida pelo registro, sem decidi-la (ver `batch/verify.py`). Sem `texts`, não verifica."""
     o = validate_overrides(overrides)
     sources: dict = {}
     warnings: list = []
@@ -348,9 +354,28 @@ def identify(
         )
         sources["company"] = name_origin or ticker_origin
 
+    # ---- identidade: o conteúdo confirma a empresa. Não se aplica ao nome que veio do
+    # próprio conteúdo (seria confirmar o texto com o texto).
+    identity = None
+    conflict = None
+    if texts is not None and company is not None and name_origin != "content":
+        v = verify_company(texts, ticker=ticker, cnpj=company.cnpj, name=company.name,
+                           ticker_map=ticker_map, cnpj_map=cnpj_map or {},
+                           alias_map=alias_map)
+        identity = v.label
+        if v.status == UNCONFIRMED:
+            warnings.append(f"identidade não confirmada: {v.detail}")
+        elif v.status == CONFLICT:
+            if ticker_origin == "cli":   # --ticker é ordem explícita: avisa, não bloqueia
+                warnings.append(f"conflito de identidade (mantido por --ticker): {v.detail}")
+            else:
+                conflict = f"{SKIP_CONFLICT}: {v.detail}"
+
     # ---- decisão
     skip = None
-    if kind == NON_PERIODIC:
+    if conflict:
+        skip = conflict
+    elif kind == NON_PERIODIC:
         skip = SKIP_NON_PERIODIC
     else:
         faltando = [r for r, v in ((SKIP_NO_COMPANY, company), (SKIP_NO_TYPE, kind),
@@ -365,6 +390,7 @@ def identify(
         inferred=tuple(inferred),
         warnings=tuple(warnings),
         skip_reason=skip,
+        identity=identity,
     )
 
 
