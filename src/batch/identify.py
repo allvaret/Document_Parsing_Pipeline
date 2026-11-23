@@ -176,7 +176,7 @@ def name_from_content(result: ReportResult) -> Optional[str]:
 
 # --- overrides ------------------------------------------------------------------
 
-def _validate_overrides(o: Overrides) -> Overrides:
+def validate_overrides(o: Overrides) -> Overrides:
     ticker = o.ticker.upper().strip() if o.ticker else None
     if ticker and not _TICKER_RE.fullmatch(ticker):
         raise IdentificationError(f"--ticker inválido: {o.ticker!r} (esperado ex.: PETR3)")
@@ -195,7 +195,7 @@ def identify(
     overrides: Overrides = Overrides(),
 ) -> Identification:
     """Resolve (empresa, tipo, período) para um PDF já processado."""
-    o = _validate_overrides(overrides)
+    o = validate_overrides(overrides)
     sources: dict = {}
     warnings: list = []
     inferred: list = []
