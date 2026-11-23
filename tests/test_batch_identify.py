@@ -154,6 +154,43 @@ def test_com_ticker_o_nome_canonico_e_o_do_ticker_map():
     assert i.company.name_method == "filename:ticker_map"
 
 
+# --- CNPJ pelo ticker (registro da CVM) -----------------------------------------------
+
+CNPJS = {"PETR3": "33000167000101", "PETR4": "33000167000101", "CMIG4": "17155730000164"}
+
+
+def test_cnpj_vem_do_registro_pelo_ticker():
+    i = identify(_result(), "Resultado petr3 3T25.pdf", TICKER_MAP, cnpj_map=CNPJS,
+                 overrides=Overrides(report_type=ReportType.ITR))
+    assert i.company.cnpj == "33000167000101"
+
+
+def test_tickers_da_mesma_empresa_tem_o_mesmo_cnpj():
+    a = identify(_result(), "Release petr3 3T25.pdf", TICKER_MAP, cnpj_map=CNPJS)
+    b = identify(_result(), "Release petr4 3T25.pdf", TICKER_MAP, cnpj_map=CNPJS)
+    assert a.company.cnpj == b.company.cnpj and a.company.ticker != b.company.ticker
+
+
+def test_so_o_nome_no_arquivo_usa_o_cnpj_unico_dos_tickers_daquele_nome():
+    # 'Cemig' no nome do arquivo, sem ticker: todos os tickers dela têm o mesmo CNPJ.
+    i = identify(_result(), CEMIG, TICKER_MAP, cnpj_map=CNPJS)
+    assert (i.company.name, i.company.ticker, i.company.cnpj) == ("Cemig", None, "17155730000164")
+
+
+def test_nome_cujos_tickers_tem_cnpjs_diferentes_nao_chuta():
+    mapa = {"AAAA3": "Mesmo Nome", "BBBB3": "Mesmo Nome"}
+    cnpjs = {"AAAA3": "11111111000111", "BBBB3": "22222222000122"}
+    r = _result(rtype=ReportType.EARNINGS_RELEASE)
+    i = identify(r, "Release Mesmo Nome 3T25.pdf", mapa, cnpj_map=cnpjs)
+    assert i.company.name == "Mesmo Nome" and i.company.cnpj is None
+
+
+def test_sem_cnpj_no_registro_mantem_o_que_veio_do_resultado():
+    r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
+                period="3T25")
+    assert identify(r, "documento.pdf", TICKER_MAP, cnpj_map=CNPJS).company.cnpj is None
+
+
 # --- prioridade e conflitos -----------------------------------------------------
 
 def test_conteudo_vence_nome_do_arquivo_e_o_conflito_e_logado():

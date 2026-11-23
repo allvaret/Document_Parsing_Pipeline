@@ -231,8 +231,11 @@ def identify(
     filename: str,
     ticker_map: dict,
     overrides: Overrides = Overrides(),
+    cnpj_map: Optional[dict] = None,
 ) -> Identification:
-    """Resolve (empresa, tipo, período) para um PDF já processado."""
+    """Resolve (empresa, tipo, período) para um PDF já processado.
+    `cnpj_map` (ticker -> CNPJ, do ticker_registry) preenche o CNPJ da empresa: é a
+    chave mais forte do repositório, e une PETR3 e PETR4 na mesma empresa."""
     o = validate_overrides(overrides)
     sources: dict = {}
     warnings: list = []
@@ -290,13 +293,21 @@ def identify(
     elif (n := name_from_content(result)):
         name, method, name_origin = n, result.company.name_method, "content"
 
+    cnpj = (cnpj_map or {}).get(ticker) if ticker else None
+    if cnpj is None and ticker is None and method == "ticker_map" and name:
+        # Só o nome do mapa no arquivo (sem ticker): usa o CNPJ se todos os tickers
+        # desse nome (PETR3, PETR4...) apontam para um único CNPJ.
+        achados = {cnpj_map[t] for t, n in ticker_map.items()
+                   if t in (cnpj_map or {}) and normalize_name(n) == normalize_name(name)}
+        cnpj = achados.pop() if len(achados) == 1 else None
+
     company = None
     if ticker or name:
         company = CompanyRef(
             name=name,
             name_method=f"{name_origin or ticker_origin}:{method or 'ticker'}",
             ticker=ticker,
-            cnpj=result.company.cnpj,
+            cnpj=cnpj or result.company.cnpj,
         )
         sources["company"] = name_origin or ticker_origin
 

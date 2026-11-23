@@ -161,6 +161,25 @@ def test_mesmo_pdf_identificado_diferente_vira_aviso_e_nao_insert(pdf_dir, log_d
     assert avisos and "já gravado como" in avisos[0]["reason"]
 
 
+def test_tickers_da_mesma_empresa_viram_uma_empresa_so_pelo_cnpj(tmp_path, log_dir, temp_db, file_session):
+    from db.models import Asset
+    d = tmp_path / "duas"
+    d.mkdir()
+    for nome in ("Release petr3 3T25.pdf", "Release petr4 2T25.pdf"):
+        (d / nome).write_bytes(nome.encode())
+    cnpjs = {"PETR3": "33000167000101", "PETR4": "33000167000101"}
+
+    resumo = run_batch(d, SummaryMode.HEURISTIC, session_factory=temp_db.factory,
+                       ticker_map={"PETR3": "Petrobras", "PETR4": "Petrobras SA PN"},   # nomes diferentes
+                       cnpj_map=cnpjs, log_dir=log_dir, process=fake_process(Chamadas()),
+                       out=lambda _: None)
+
+    assert resumo.counts["novos"] == 2
+    empresas = file_session.scalars(select(Company)).all()
+    assert len(empresas) == 1 and empresas[0].cnpj == "33000167000101"   # CNPJ uniu as duas
+    assert sorted(a.ticker for a in file_session.scalars(select(Asset))) == ["PETR3", "PETR4"]
+
+
 def test_comunicado_e_pulado_pelo_nome_sem_chamar_o_pipeline(pdf_dir, log_dir, temp_db):
     (pdf_dir / "comunicado_petr3_33064.pdf").write_bytes(b"evento")
     chamadas = Chamadas()
