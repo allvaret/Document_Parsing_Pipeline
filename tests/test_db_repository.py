@@ -10,6 +10,7 @@ from db.errors import (
     ReportIdentityMismatchError,
     StorageConstraintError,
 )
+from db import repository
 from db.models import Asset, Company, Keypoint, Report, Summary
 from db.repository import (
     find_company,
@@ -17,6 +18,7 @@ from db.repository import (
     find_report_by_hash,
     get_or_create_company,
     has_summary,
+    needs_processing,
     normalize_cnpj,
     save_result,
 )
@@ -137,6 +139,55 @@ def test_has_summary(session):
     assert has_summary(session, report.id, "heuristic", "heuristic", "heuristic-v1")
     assert not has_summary(session, report.id, "heuristic", "heuristic", "heuristic-v2")
     assert not has_summary(session, report.id, "llm", "qwen2.5:3b", "prompt-v1")
+
+
+# --- needs_processing (SKIP barato) -----------------------------------------
+
+LLM_REC = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v1", "texto", "markdown")
+
+
+def test_hash_desconhecido_precisa_processar(session):
+    assert needs_processing(session, H1, SummaryMode.HEURISTIC)
+
+
+def test_ja_processado_em_heuristico_pula(session):
+    save_result(session, _result())
+    assert not needs_processing(session, H1, SummaryMode.HEURISTIC)
+
+
+def test_modo_llm_exige_o_summary_do_modelo(session):
+    save_result(session, _result())
+    assert needs_processing(session, H1, SummaryMode.LLM, "qwen2.5:3b")      # falta o LLM
+    save_result(session, _result(summaries=(_result().summaries[0], LLM_REC)))
+    assert not needs_processing(session, H1, SummaryMode.LLM, "qwen2.5:3b")
+    assert needs_processing(session, H1, SummaryMode.LLM, "outro-modelo")    # outro modelo
+    assert not needs_processing(session, H1, SummaryMode.HEURISTIC)          # heurístico continua ok
+
+
+def test_modo_llm_sem_modelo_e_erro_explicito(session):
+    with pytest.raises(ValueError):
+        needs_processing(session, H1, SummaryMode.LLM)
+
+
+def test_subir_heuristic_version_manda_reprocessar(session, monkeypatch):
+    save_result(session, _result(summaries=(_result().summaries[0], LLM_REC)))
+    monkeypatch.setattr(repository, "HEURISTIC_VERSION", "heuristic-v2")
+    assert needs_processing(session, H1, SummaryMode.HEURISTIC)
+
+
+def test_subir_prompt_version_reprocessa_so_o_modo_llm(session, monkeypatch):
+    save_result(session, _result(summaries=(_result().summaries[0], LLM_REC)))
+    monkeypatch.setattr(repository, "PROMPT_VERSION", "prompt-v2")
+    assert needs_processing(session, H1, SummaryMode.LLM, "qwen2.5:3b")
+    assert not needs_processing(session, H1, SummaryMode.HEURISTIC)
+
+
+def test_report_sem_extractor_version_conhecida_reprocessa(session):
+    # Banco antigo: extractor_version '' (default) = versão desconhecida.
+    report = save_result(session, _result())
+    report.extractor_version = ""
+    session.flush()
+    assert needs_processing(session, H1, SummaryMode.HEURISTIC)
 
 
 # --- save_result ------------------------------------------------------------

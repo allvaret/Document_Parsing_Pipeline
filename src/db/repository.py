@@ -23,7 +23,13 @@ from db.errors import (
 from db.models import Asset, Company, Keypoint, Report, Summary
 from db.normalize import normalize_name
 from resumo.LLM.summarize_pipeline import SummaryMode
-from resumo.result import CompanyRef, ReportResult
+from resumo.result import (
+    HEURISTIC_MODEL,
+    HEURISTIC_VERSION,
+    PROMPT_VERSION,
+    CompanyRef,
+    ReportResult,
+)
 
 
 def normalize_cnpj(raw: str | None) -> str | None:
@@ -126,6 +132,36 @@ def has_summary(
         )
         is not None
     )
+
+
+def needs_processing(
+    session: Session,
+    file_hash: str,
+    mode: SummaryMode,
+    llm_model: str | None = None,
+) -> bool:
+    """SKIP barato: True se este PDF precisa passar pelo pipeline.
+
+    Decide só com o banco (hash + versões), antes de abrir o PDF e sem spaCy.
+    False = já existe report com o hash, keypoints da `HEURISTIC_VERSION` atual,
+    o summary heurístico atual e, em modo LLM, o summary do `llm_model` com o
+    `PROMPT_VERSION` atual. Subir qualquer versão faz voltar a True.
+    """
+    if mode is SummaryMode.LLM and not llm_model:
+        raise ValueError("mode=LLM exige llm_model (provider.name).")
+    report = find_report_by_hash(session, file_hash)
+    if report is None:
+        return True
+    if report.extractor_version != HEURISTIC_VERSION:
+        return True
+    if not has_summary(session, report.id, SummaryMode.HEURISTIC.value,
+                       HEURISTIC_MODEL, HEURISTIC_VERSION):
+        return True
+    if mode is SummaryMode.LLM and not has_summary(
+        session, report.id, SummaryMode.LLM.value, llm_model, PROMPT_VERSION
+    ):
+        return True
+    return False
 
 
 def save_result(
