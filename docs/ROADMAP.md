@@ -187,6 +187,19 @@ antes de começar (falha cedo).
 - **`company.name_normalized` `UNIQUE`, na coluna e não em Python.** O `ticker_map`
   tem centenas de entradas (ações e FIIs) e o `company` será a base de busca da
   Fase 4; migrar depois custa mais. Feito (commit `bdaa83b`).
+- **Passo b (repositório) feito.** `find_company` (só consulta), `CompanyConflictError`
+  (CNPJ divergente ou ticker de outra empresa), `save_result` buscando **hash
+  primeiro** (`ReportIdentityMismatchError`, sem criar nada), `replace_summaries`
+  (regera só as chaves recebidas), `StorageConstraintError`, `needs_processing`.
+  O `DuplicateCompanyError` planejado foi descartado: a busca por nome precede a
+  criação, então a colisão de `name_normalized` só ocorreria por concorrência
+  (coberta pelo lock; o `UNIQUE` fica como rede de segurança).
+- **Heurístico acompanha os keypoints; LLM guarda histórico.** Ao gravar, só a
+  versão atual do summary heurístico fica; versões antigas de `prompt_version` do LLM
+  são mantidas, para comparar a qualidade ao longo do tempo.
+- **SQLAlchemy travado em 2.0.58** (`requirements.txt`): a 2.1.9 traz extensões
+  Cython (`_result_cy.pyd`) bloqueadas pelo Application Control do Windows. A suíte
+  roda inteira na 2.0.58; o código usa só a API 2.0.
 - **Normalização de nome não resolve apelido.** "Cemig" e "Cia Energética de Minas
   Gerais" só casam via ticker. Nome só de pontuação (`%`) mantém o texto, para não
   virar `''` e colidir no `UNIQUE`.
