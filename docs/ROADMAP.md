@@ -380,9 +380,28 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
 - Scraper de ITR/DFP pela CVM/RI (o `data_pipeline` já tem a base), entregando
   ao batch os metadados de origem (fonte 1 da identificação).
 - Documentos de evento (comunicados, fatos relevantes) com chave por protocolo.
-- **Atualizar o `ticker_map.json`** (gerado há meses) por scraping da CVM, e então
-  **semear `company`/`asset`** a partir dele, se a Fase 4 precisar listar empresas
-  sem relatório. Até lá o mapa só identifica (decisão 8 do `CLAUDE.md`).
+- **`ticker_map` robusto e atualizável (fonte de verdade da identificação).** Hoje são
+  499 entradas, montadas por fora (não há gerador no repositório), com nomes
+  comuns ("Cemig", "Petrobras") que o `identify` usa para casar nome de arquivo. Como
+  a empresa agora vence pelo mapa, o que ficar fora dele depende da heurística da
+  capa (que errou nos PDFs reais) ou de `--ticker`. Achados da pesquisa de fontes:
+  - *Ações/units/BDR:* o `fca_cia_aberta_valor_mobiliario_{ano}.csv` do FCA da CVM (o
+    `fetcher` já baixa o ZIP) traz `Codigo_Negociacao`, `CNPJ_Companhia`,
+    `Nome_Empresarial` (razão social, **não** o nome comum), `Mercado`,
+    `Valor_Mobiliario`, `Data_Fim_Negociacao` (≈968 linhas em 2026). Fonte oficial e
+    ainda dá o **CNPJ**, que é a chave mais forte do `find_company`.
+  - *FIIs:* `inf_mensal_fii_geral_{ano}.csv` (CVM) traz CNPJ, nome, ISIN, segmento e
+    `Mercado_Negociacao_Bolsa`, **mas não o ticker**. O ISIN embute a raiz (ex.:
+    `BRFVPQCTF015` → `FVPQ`) e o sufixo costuma ser `11`, sem garantia: ticker de FII
+    precisa de uma segunda fonte (B3, ou API de terceiros como a brapi.dev, com termos
+    e limites ainda **não verificados**) ou de conferência manual. Não chutar.
+  - *Nome comum:* a CVM só dá razão social; "Cemig" precisa de alias curado (semear
+    com as 499 entradas atuais para não regredir).
+  - Formato proposto: registro ordenado por ticker (ticker, nome comum, razão social,
+    CNPJ, tipo ACAO/FII, status) como fonte, e o `ticker_map.json` plano (ticker →
+    nome) gerado dele, ordem alfabética, com relatório de diferenças a cada atualização.
+- **Semear `company`/`asset`** a partir do mapa, só se a Fase 4 precisar listar
+  empresas sem relatório. Até lá o mapa só identifica (decisão 8 do `CLAUDE.md`).
 - Apelidos de empresa (tabela de aliases) para casar "Cia Energética de Minas
   Gerais" e "Cemig" além do ticker.
 - `.gitattributes` com `* text=auto eol=lf` (repositório independente do
