@@ -1,3 +1,7 @@
+# Banco local e logs do batch (raiz do projeto; 'data/' sem barra inicial pegaria src/resumo/data)
+/data/
+/logs/
+
 # Code stuff
 assets/
 test_results/

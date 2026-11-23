@@ -12,7 +12,7 @@ def db():
     conn = sqlite3.connect(":memory:")
     conn.executescript(SCHEMA.read_text(encoding="utf-8"))
     conn.execute("PRAGMA foreign_keys = ON")
-    conn.execute("INSERT INTO company (id, name, cnpj) VALUES (1, 'BB Seguridade', '17344597000194')")
+    conn.execute("INSERT INTO company (id, name, name_normalized, cnpj) VALUES (1, 'BB Seguridade', 'bb seguridade', '17344597000194')")
     conn.execute("INSERT INTO asset (company_id, ticker) VALUES (1, 'BBSE3')")
     conn.execute(
         "INSERT INTO report (id, company_id, report_type, period, file_name, file_hash, page_count) "

@@ -22,7 +22,11 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS company (
     id            INTEGER PRIMARY KEY,
     name          TEXT    NOT NULL,
-    cnpj          TEXT    UNIQUE,                 -- 14 dígitos, sem máscara
+    -- Chave de busca: db.normalize.normalize_name(name). UNIQUE de propósito:
+    -- duas empresas que normalizam igual são um erro de cadastro a corrigir,
+    -- não uma ambiguidade a escolher.
+    name_normalized TEXT  NOT NULL UNIQUE,
+    cnpj         TEXT    UNIQUE,                 -- 14 dígitos, sem máscara
     cvm_code      TEXT    UNIQUE,                 -- código CVM (dados abertos)
     kind          TEXT    NOT NULL DEFAULT 'ACAO'
                   CHECK (kind IN ('ACAO', 'FII')),
@@ -45,13 +49,16 @@ CREATE TABLE IF NOT EXISTS report (
     report_type   TEXT    NOT NULL
                   CHECK (report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE',
                                          'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'OUTRO')),
-    period        TEXT    NOT NULL,               -- normalizado: 3T25, 1S26, 9M25, 12M25
+    period        TEXT    NOT NULL,               -- trimestre em que fecha: 1T26..4T26 (9M25 = 3T25; 1S26 = 2T26)
     file_name     TEXT    NOT NULL,
     file_hash     TEXT    NOT NULL UNIQUE         -- SHA-256 do PDF: o mesmo arquivo nunca entra 2x
                   CHECK (length(file_hash) = 64),
     source_url    TEXT,
     page_count    INTEGER NOT NULL CHECK (page_count >= 0),
-    parsed_at     TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- Versão da heurística que gerou os keypoints (HEURISTIC_VERSION).
+    -- '' = desconhecida: qualquer versão atual força a regeração.
+    extractor_version TEXT NOT NULL DEFAULT '',
+    parsed_at    TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- Chave de negócio: um relatório por empresa/tipo/período.
     -- Reapresentação (mesmo período, PDF novo) = hash novo na MESMA linha:
     -- o batch atualiza file_hash e regera summary/keypoint.

@@ -9,12 +9,27 @@ from __future__ import annotations
 
 import re
 
-from sqlalchemy import delete, select
+from sqlalchemy import delete, or_, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from db.errors import IncompleteResultError, InvalidCnpjError
+from db.errors import (
+    CompanyConflictError,
+    IncompleteResultError,
+    InvalidCnpjError,
+    ReportIdentityMismatchError,
+    StorageConstraintError,
+)
 from db.models import Asset, Company, Keypoint, Report, Summary
-from resumo.result import CompanyRef, ReportResult
+from db.normalize import normalize_name
+from resumo.LLM.summarize_pipeline import SummaryMode
+from resumo.result import (
+    HEURISTIC_MODEL,
+    HEURISTIC_VERSION,
+    PROMPT_VERSION,
+    CompanyRef,
+    ReportResult,
+)
 
 
 def normalize_cnpj(raw: str | None) -> str | None:
@@ -29,30 +44,58 @@ def normalize_cnpj(raw: str | None) -> str | None:
     return digits
 
 
-def get_or_create_company(
-    session: Session, ref: CompanyRef, kind: str = "ACAO"
-) -> Company:
-    """Acha a empresa por CNPJ, depois por ticker, depois por nome; senão cria.
-    Um ticker novo numa empresa já existente cria só o `asset`."""
+def find_company(session: Session, ref: CompanyRef) -> Company | None:
+    """Só consulta (não cria nada). Ordem: CNPJ, ticker, nome normalizado.
+    Lança InvalidCnpjError se o CNPJ do `ref` for inválido."""
     cnpj = normalize_cnpj(ref.cnpj)
-    company = None
     if cnpj:
         company = session.scalar(select(Company).where(Company.cnpj == cnpj))
-    if company is None and ref.ticker:
+        if company is not None:
+            return company
+    if ref.ticker:
         company = session.scalar(
             select(Company).join(Asset).where(Asset.ticker == ref.ticker)
         )
-    if company is None and ref.name:
-        company = session.scalar(select(Company).where(Company.name == ref.name))
+        if company is not None:
+            return company
+    if ref.name:
+        return session.scalar(
+            select(Company).where(Company.name_normalized == normalize_name(ref.name))
+        )
+    return None
+
+
+def get_or_create_company(
+    session: Session, ref: CompanyRef, kind: str = "ACAO"
+) -> Company:
+    """Acha a empresa (ver `find_company`); senão cria. Um ticker novo numa
+    empresa já existente cria só o `asset`.
+
+    Identificadores que se contradizem (CNPJ diferente do já gravado, ticker que
+    pertence a outra empresa) lançam CompanyConflictError: casar em silêncio com
+    uma das duas empresas esconderia o erro."""
+    cnpj = normalize_cnpj(ref.cnpj)
+    company = find_company(session, ref)
 
     if company is None:
         company = Company(name=ref.name or ref.ticker, cnpj=cnpj, kind=kind)
         session.add(company)
         session.flush()
+    elif cnpj and company.cnpj and company.cnpj != cnpj:
+        raise CompanyConflictError(
+            f"CNPJ {cnpj} diverge do CNPJ {company.cnpj} da empresa "
+            f"{company.name!r} (casada por ticker/nome)"
+        )
     elif cnpj and not company.cnpj:
         company.cnpj = cnpj
 
     if ref.ticker and not any(a.ticker == ref.ticker for a in company.assets):
+        dono = session.scalar(select(Asset).where(Asset.ticker == ref.ticker))
+        if dono is not None:  # existe, mas não é desta empresa
+            raise CompanyConflictError(
+                f"ticker {ref.ticker} já pertence a outra empresa "
+                f"(id {dono.company_id}); esta é {company.name!r}"
+            )
         session.add(Asset(company_id=company.id, ticker=ref.ticker))
         session.flush()
         session.refresh(company, ["assets"])
@@ -91,40 +134,106 @@ def has_summary(
     )
 
 
-def save_result(session: Session, result: ReportResult) -> Report:
+def needs_processing(
+    session: Session,
+    file_hash: str,
+    mode: SummaryMode,
+    llm_model: str | None = None,
+) -> bool:
+    """SKIP barato: True se este PDF precisa passar pelo pipeline.
+
+    Decide só com o banco (hash + versões), antes de abrir o PDF e sem spaCy.
+    False = já existe report com o hash, keypoints da `HEURISTIC_VERSION` atual,
+    o summary heurístico atual e, em modo LLM, o summary do `llm_model` com o
+    `PROMPT_VERSION` atual. Subir qualquer versão faz voltar a True.
+    """
+    if mode is SummaryMode.LLM and not llm_model:
+        raise ValueError("mode=LLM exige llm_model (provider.name).")
+    report = find_report_by_hash(session, file_hash)
+    if report is None:
+        return True
+    if report.extractor_version != HEURISTIC_VERSION:
+        return True
+    if not has_summary(session, report.id, SummaryMode.HEURISTIC.value,
+                       HEURISTIC_MODEL, HEURISTIC_VERSION):
+        return True
+    if mode is SummaryMode.LLM and not has_summary(
+        session, report.id, SummaryMode.LLM.value, llm_model, PROMPT_VERSION
+    ):
+        return True
+    return False
+
+
+def save_result(
+    session: Session, result: ReportResult, *, replace_summaries: bool = False
+) -> Report:
     """Grava um ReportResult de forma idempotente. Não faz commit.
 
-    - Report novo (empresa, tipo, período): cria.
-    - Mesmo hash: reaproveita; só insere summaries que ainda não existem.
-    - Hash diferente (reapresentação): atualiza o report e apaga os
-      summaries e keypoints antigos DESSE report.
-    Keypoints são sempre substituídos (DELETE + INSERT).
+    O report é buscado primeiro pelo HASH do PDF e só depois pela chave de
+    negócio (empresa, tipo, período):
+    - Hash já gravado com a mesma chave: reaproveita o report.
+    - Hash já gravado com OUTRA chave: ReportIdentityMismatchError (a
+      identificação do mesmo arquivo mudou; nada é gravado nem criado).
+    - Hash novo, chave nova: cria.
+    - Hash novo, chave existente (reapresentação): troca o hash e apaga todos
+      os summaries antigos DESSE report.
+    Keypoints e `extractor_version` são sempre substituídos (DELETE + INSERT).
+
+    Summaries:
+    - O heurístico acompanha os keypoints: ao gravar um heurístico, os de outra
+      versão são apagados (só a versão atual fica).
+    - Os LLM mantêm as versões antigas (histórico para comparar qualidade).
+    - Chave (método, modelo, versão) já existente é mantida; com
+      `replace_summaries=True` (o `--force`) é apagada e gravada de novo.
+    Violação de restrição do banco vira StorageConstraintError (faça rollback).
     """
     missing = result.missing_storage_keys()
     if missing:
         raise IncompleteResultError(missing)
+    try:
+        return _save_result(session, result, replace_summaries)
+    except IntegrityError as exc:
+        raise StorageConstraintError(
+            f"violação de restrição ao gravar {result.report.file_name!r}: {exc.orig}"
+        ) from exc
 
+
+def _save_result(session: Session, result: ReportResult, replace_summaries: bool) -> Report:
     info = result.report
-    company = get_or_create_company(session, result.company)
     report_type = info.report_type.value
 
-    report = find_report(session, company.id, report_type, info.period)
-    if report is None:
-        report = Report(
-            company_id=company.id,
-            report_type=report_type,
-            period=info.period,
-            file_name=info.file_name,
-            file_hash=info.file_hash,
-            page_count=info.page_count,
-        )
-        session.add(report)
-    elif report.file_hash != info.file_hash:
-        # Reapresentação: PDF novo para o mesmo período.
-        session.execute(delete(Summary).where(Summary.report_id == report.id))
-        report.file_name = info.file_name
-        report.file_hash = info.file_hash
-        report.page_count = info.page_count
+    report = find_report_by_hash(session, info.file_hash)
+    if report is not None:
+        company = find_company(session, result.company)
+        if company is None or (report.company_id, report.report_type, report.period) != (
+            company.id, report_type, info.period
+        ):
+            raise ReportIdentityMismatchError(
+                info.file_hash,
+                existing=(report.company.name, report.report_type, report.period),
+                new=(result.company.name or result.company.ticker, report_type, info.period),
+            )
+        get_or_create_company(session, result.company)  # completa CNPJ/ticker novos
+    else:
+        company = get_or_create_company(session, result.company)
+        report = find_report(session, company.id, report_type, info.period)
+        if report is None:
+            report = Report(
+                company_id=company.id,
+                report_type=report_type,
+                period=info.period,
+                file_name=info.file_name,
+                file_hash=info.file_hash,
+                page_count=info.page_count,
+            )
+            session.add(report)
+        else:
+            # Reapresentação: PDF novo para o mesmo período.
+            session.execute(delete(Summary).where(Summary.report_id == report.id))
+            report.file_name = info.file_name
+            report.file_hash = info.file_hash
+            report.page_count = info.page_count
+    report.extractor_version = info.extractor_version
     session.flush()
 
     session.execute(delete(Keypoint).where(Keypoint.report_id == report.id))
@@ -143,7 +252,26 @@ def save_result(session: Session, result: ReportResult) -> Report:
 
     for s in result.summaries:
         method = s.method.value
-        if not has_summary(session, report.id, method, s.model, s.prompt_version):
+        if s.method is SummaryMode.HEURISTIC:
+            session.execute(
+                delete(Summary).where(
+                    Summary.report_id == report.id,
+                    Summary.method == method,
+                    or_(Summary.model != s.model, Summary.prompt_version != s.prompt_version),
+                )
+            )
+        exists = has_summary(session, report.id, method, s.model, s.prompt_version)
+        if exists and replace_summaries:
+            session.execute(
+                delete(Summary).where(
+                    Summary.report_id == report.id,
+                    Summary.method == method,
+                    Summary.model == s.model,
+                    Summary.prompt_version == s.prompt_version,
+                )
+            )
+            exists = False
+        if not exists:
             session.add(
                 Summary(
                     report_id=report.id,
