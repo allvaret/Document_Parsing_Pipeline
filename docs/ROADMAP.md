@@ -425,10 +425,33 @@ todos os endpoints, inclusive 404 e paginação.
   memória; `/health` e preflight não contam; 429 com `Retry-After` e com headers de CORS).
   HSTS e TLS ficam na hospedagem (Fase 6).
 - **Mutação conferida:** tirar `autoescape` da busca derruba 12 testes.
-- **Achado no banco real (`data/app.db`):** das 4 empresas, BR Partners e Cemig têm
-  `tickers: []` (gravadas por nome/CNPJ, de execuções anteriores do batch). Elas aparecem na
-  busca, mas **nenhum endpoint do roadmap leva aos relatórios delas**, porque as rotas são
-  por ticker. Ver backlog.
+- **Achado no banco real (`data/app.db`) e correção:** das 4 empresas, BR Partners e Cemig
+  tinham `tickers: []` (gravadas por nome/CNPJ, de execuções anteriores do batch). Com rotas
+  só por ticker, os relatórios delas eram inalcançáveis. **Fluxo adotado:** busca no site →
+  usuário escolhe a empresa → o front usa o `id` que a busca devolveu → `GET
+  /empresas/id/{id}` e `/empresas/id/{id}/relatorios` → `GET /relatorios/{id}`. O `id` vale
+  para toda empresa; as rotas por ticker continuam como conveniência e devolvem o mesmo
+  resultado (testado). `id` limitado a `1..2**31-1` e `/id/` registrada antes de
+  `/{ticker}`. Empresa sem ticker só é achável pela busca por nome (o ticker não entra).
+- **Contrato com o summarizer (dependência documentada).** `summary.content` do método
+  heurístico é `ExecutiveSummary.to_dict()` (`resumo/summarizer/models.py`), servido por
+  `/relatorios/{id}` e tipado em `site_backend.schemas.HeuristicSummary`. Quem mudar chave,
+  tipo ou nulabilidade no `to_dict()` precisa atualizar o schema: o teste
+  `test_contrato_acompanha_o_summarizer` (ida e volta com o dict real) falha se esquecer, e
+  o `to_dict()` tem um aviso no docstring. Relatórios já gravados seguem o formato antigo e
+  só são regerados subindo `HEURISTIC_VERSION`; enquanto isso, um conteúdo fora do contrato
+  vira 500 explícito (`CorruptSummaryError`), não resumo vazio.
+- **Escala da busca e ordenação (medido, SQLite, sem índice útil para `contains`):** busca
+  com total + página: **~30 ms com 20 mil empresas e ~90–155 ms com 100 mil**; listar os
+  relatórios de uma empresa: ~1–2 ms (usa a árvore B do `UNIQUE (company_id, report_type,
+  period)`). A B3 tem ~900 tickers, então a margem é de ordens de grandeza. Sobre
+  estruturas: `sorted()` do Python já é **Timsort** (merge sort híbrido, O(n log n),
+  estável), então um merge sort manual não ganha nada; o gargalo, se vier, é a busca por
+  *substring*, que **uma árvore B não acelera** (só prefixo). Caminhos, em ordem de custo:
+  índice em `name_normalized` + `startswith` (árvore B, só prefixo); FTS5 (SQLite) ou
+  `pg_trgm` com índice GIN (Postgres) para `contains`; trie em memória só se houver
+  autocomplete por prefixo com latência de milissegundos (custa invalidação de cache).
+  Nada disso é necessário no MVP; está no backlog.
 
 ---
 
@@ -519,9 +542,9 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
   - Formato proposto: registro ordenado por ticker (ticker, nome comum, razão social,
     CNPJ, tipo ACAO/FII, status) como fonte, e o `ticker_map.json` plano (ticker →
     nome) gerado dele, ordem alfabética, com relatório de diferenças a cada atualização.
-- **Empresa sem ticker na API.** Rotas por ticker não alcançam empresa sem `asset` (no
-  `data/app.db` real: BR Partners e Cemig). Opções: `GET /empresas/{id}` e
-  `/empresas/{id}/relatorios`, ou o batch exigir/achar ticker. Decidir antes da Fase 5.
+- **Busca em escala (se `company` passar de ~100 mil linhas ou o p95 passar de ~100 ms):**
+  FTS5/`pg_trgm` para `contains`, índice em `name_normalized` para prefixo; trie só para
+  autocomplete em memória. Números e análise na seção da Fase 4.
 - **Busca fuzzy (rapidfuzz) em `?q=`.** Tolerar erro de digitação ("petrobas"). Hoje é
   `contains` + prefixo de ticker. Exige carregar `name_normalized` (e aliases) e decidir
   onde roda (memória do processo ou índice trigram no Postgres, `pg_trgm`).
