@@ -12,6 +12,7 @@ from db import queries
 from db.models import Summary
 from site_backend.deps import get_session
 from site_backend.errors import CorruptSummaryError
+from site_backend.routers.empresas import MAX_ID  # teto do id: ver lá
 from site_backend.schemas import (
     CompanyOut,
     HeuristicSummary,
@@ -22,10 +23,6 @@ from site_backend.schemas import (
 )
 
 router = APIRouter(prefix="/relatorios", tags=["relatórios"])
-
-# INTEGER do SQLite aguenta 64 bits, mas um id fora desta faixa nunca existe; sem o
-# teto, um número enorme estoura OverflowError no driver (500 em vez de 404).
-MAX_ID = 2**31 - 1
 
 
 def summary_out(s: Summary) -> SummaryOut:

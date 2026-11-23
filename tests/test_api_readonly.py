@@ -16,8 +16,10 @@ ROTAS_DE_DADOS = ("/empresas", "/relatorios")
 def test_rotas_de_dados_so_declaram_get():
     # Pelo OpenAPI: `app.routes` não expande os routers incluídos nesta versão do FastAPI.
     paths = {p: ops for p, ops in app.openapi()["paths"].items() if p.startswith(ROTAS_DE_DADOS)}
-    assert sorted(paths) == ["/empresas", "/empresas/{ticker}",
-                             "/empresas/{ticker}/relatorios", "/relatorios/{report_id}"]
+    assert sorted(paths) == [
+        "/empresas", "/empresas/id/{company_id}", "/empresas/id/{company_id}/relatorios",
+        "/empresas/{ticker}", "/empresas/{ticker}/relatorios", "/relatorios/{report_id}",
+    ]
     for path, ops in paths.items():
         assert set(ops) == {"get"}, f"{path} declara {set(ops)}"
 
@@ -35,12 +37,13 @@ def test_todo_sql_emitido_pelos_endpoints_e_select(api_client, temp_db):
     event.listen(Engine, "before_cursor_execute", captura)
     try:
         urls = ["/empresas", "/empresas?q=cem", "/empresas/CMIG4", "/empresas/CMIG3/relatorios",
-                f"/relatorios/{rid}", "/empresas/VALE3", "/relatorios/999"]
+                f"/relatorios/{rid}", "/empresas/VALE3", "/relatorios/999",
+                "/empresas/id/1", "/empresas/id/1/relatorios", "/empresas/id/999"]
         statuses = [api_client.get(u).status_code for u in urls]
     finally:
         event.remove(Engine, "before_cursor_execute", captura)
 
-    assert statuses == [200, 200, 200, 200, 200, 404, 404]
+    assert statuses == [200, 200, 200, 200, 200, 404, 404, 200, 200, 404]
     assert len(emitidos) >= len(urls) - 1
     nao_select = [q for q in emitidos if not q.lstrip().upper().startswith("SELECT")]
     assert nao_select == []

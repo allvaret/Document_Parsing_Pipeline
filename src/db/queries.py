@@ -99,6 +99,12 @@ def get_company_by_ticker(session: Session, ticker: str) -> Company | None:
     )
 
 
+def get_company_by_id(session: Session, company_id: int) -> Company | None:
+    """Empresa pelo id (o que a busca devolve). É a chave que alcança também as empresas
+    sem ticker (achadas só por nome/CNPJ)."""
+    return session.scalar(_company_query().where(Company.id == company_id))
+
+
 # --- relatórios -------------------------------------------------------------
 
 def list_reports(session: Session, company_id: int) -> list[Report]:

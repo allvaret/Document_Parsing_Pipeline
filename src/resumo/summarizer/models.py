@@ -153,7 +153,14 @@ class ExecutiveSummary:
     observacoes: Observations
 
     def to_dict(self) -> dict:
-        """Serializa para dicionário JSON-compatível."""
+        """Serializa para dicionário JSON-compatível.
+
+        ATENÇÃO, contrato com a API: este dict é gravado em `summary.content` e servido por
+        `GET /relatorios/{id}`, tipado em `site_backend.schemas.HeuristicSummary`. Mudou
+        chave, tipo ou nulabilidade aqui? Atualize o schema da API; o teste
+        `tests/test_api_relatorios.py::test_contrato_acompanha_o_summarizer` falha se
+        esquecer. Relatórios já gravados seguem o formato antigo: suba `HEURISTIC_VERSION`
+        (`resumo/result.py`) para regerá-los."""
         return {
             "header": {
                 "empresa": self.header.empresa,

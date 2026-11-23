@@ -7,6 +7,7 @@ from urllib.parse import quote
 import pytest
 
 from api_helpers import seed_company, seed_report, seed_ticker
+from resumo.result import ReportType
 from test_sql_injection import PAYLOADS, TICKER_PAYLOADS
 
 
@@ -193,3 +194,72 @@ def test_relatorios_com_ticker_hostil_404(api_client, seeded, payload):
 @pytest.mark.parametrize("metodo", ["post", "put", "patch", "delete"])
 def test_relatorios_so_aceita_get(api_client, seeded, metodo):
     assert getattr(api_client, metodo)("/empresas/CMIG4/relatorios").status_code == 405
+
+
+# --- por id (alcança também empresa sem ticker) --------------------------------
+
+@pytest.fixture
+def sem_ticker(temp_db):
+    """Empresa gravada só por nome/CNPJ, como no banco real do batch."""
+    with temp_db.factory() as s:
+        seed_report(s, "BR Partners", None, "3T25")
+        seed_report(s, "BR Partners", None, "1T26", ReportType.ITR)
+        seed_report(s, "Cemig", "CMIG4", "3T25")
+    return temp_db
+
+
+def _id_de(api_client, nome):
+    itens = api_client.get("/empresas", params={"q": nome}).json()["items"]
+    assert len(itens) == 1
+    return itens[0]
+
+
+def test_fluxo_busca_id_relatorios_detalhe_para_empresa_sem_ticker(api_client, sem_ticker):
+    empresa = _id_de(api_client, "br partners")
+    assert empresa["tickers"] == []
+    assert api_client.get(f"/empresas/id/{empresa['id']}").json() == empresa
+
+    rels = api_client.get(f"/empresas/id/{empresa['id']}/relatorios").json()
+    assert [r["period"] for r in rels] == ["1T26", "3T25"]
+    det = api_client.get(f"/relatorios/{rels[0]['id']}").json()
+    assert det["company"]["id"] == empresa["id"] and det["report"]["period"] == "1T26"
+
+
+def test_id_e_ticker_dao_o_mesmo_resultado(api_client, sem_ticker):
+    cemig = _id_de(api_client, "cemig")
+    assert api_client.get("/empresas/CMIG4").json() == api_client.get(f"/empresas/id/{cemig['id']}").json()
+    assert (api_client.get("/empresas/CMIG4/relatorios").json()
+            == api_client.get(f"/empresas/id/{cemig['id']}/relatorios").json())
+
+
+def test_id_de_empresa_sem_relatorio_da_lista_vazia(api_client, seeded):
+    sem = _id_de(api_client, "sem relatorio")
+    r = api_client.get(f"/empresas/id/{sem['id']}/relatorios")
+    assert r.status_code == 200 and r.json() == []
+
+
+@pytest.mark.parametrize("sufixo", ["", "/relatorios"])
+def test_id_inexistente_404(api_client, seeded, sufixo):
+    r = api_client.get(f"/empresas/id/999{sufixo}")
+    assert r.status_code == 404 and r.json() == {"detail": "Empresa 999 não encontrada."}
+
+
+@pytest.mark.parametrize("cid", ["0", "-1", "abc", "1.5", str(2**31), str(2**70)])
+@pytest.mark.parametrize("sufixo", ["", "/relatorios"])
+def test_id_de_empresa_invalido_da_422_nunca_500(api_client, seeded, cid, sufixo):
+    assert api_client.get(f"/empresas/id/{cid}{sufixo}").status_code == 422
+
+
+@pytest.mark.parametrize("payload", PAYLOADS, ids=[f"p{i}" for i in range(len(PAYLOADS))])
+@pytest.mark.parametrize("sufixo", ["", "/relatorios"])
+def test_id_hostil_na_url_nao_toca_no_banco(api_client, seeded, payload, sufixo):
+    antes = banco_sha(seeded)
+    r = api_client.get("/empresas/id/" + quote(payload, safe="") + sufixo)
+    assert r.status_code == 422
+    assert banco_sha(seeded) == antes
+
+
+@pytest.mark.parametrize("metodo", ["post", "put", "patch", "delete"])
+@pytest.mark.parametrize("rota", ["/empresas/id/1", "/empresas/id/1/relatorios"])
+def test_rotas_por_id_so_aceitam_get(api_client, seeded, metodo, rota):
+    assert getattr(api_client, metodo)(rota).status_code == 405
