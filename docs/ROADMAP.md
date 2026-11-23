@@ -275,6 +275,24 @@ antes de começar (falha cedo).
 - **`stdout`/`stderr` com `errors="replace"`:** console legado (ASCII/cp437) não
   codifica "—" nem acentos; sem isso o batch caía com `UnicodeEncodeError` no meio
   do lote (reproduzido em teste).
+- **Registro de tickers e CNPJ (feito).** `python -m data_pipeline.ticker_registry
+  [--ano] [--dry-run] [--zip]` lê o FCA da CVM e gera `ticker_registry.json` (ticker,
+  nome, razão social, CNPJ, ativo, fonte) e `ticker_map.json` (ticker → nome), ambos em
+  ordem alfabética. Preserva o nome comum curado e as entradas que a CVM não cobre
+  (os 364 FIIs); pega a `Versao` mais alta por ticker; ignora debêntures e balcão;
+  idempotente (2ª rodada idêntica, então o `git diff` mostra só o que mudou).
+  Resultado: **499 → 809 tickers**, 445 com CNPJ, 20 marcados como encerrados.
+  - *CNPJ na identificação:* `identify` preenche `CompanyRef.cnpj` pelo ticker do
+    registro; sem ticker, usa o CNPJ do nome do arquivo **se todos os tickers daquele
+    nome tiverem o mesmo CNPJ** (senão não chuta). O CNPJ é a primeira chave do
+    `find_company`, então PETR3 e PETR4 viram a mesma empresa mesmo com nomes
+    diferentes. CNPJ divergente do já gravado lança `CompanyConflictError`.
+  - *Limites:* a CVM só dá razão social, e ticker novo entra com ela simplificada
+    ("Brbi Br Partners"); o nome comum só existe nas 499 entradas curadas. Um PDF sem
+    ticker nem nome do mapa no arquivo (ex.: BR Partners = `BRBI11`) cai na capa do
+    PDF, sem CNPJ: usar `--ticker`. Ação sem ticker no FCA do ano não é achada.
+  - *Atualizar:* rodar o comando uma vez por ano (ou quando entrar empresa nova) e
+    revisar o `git diff`; em janeiro o FCA do ano novo ainda não existe (`--ano`).
 - **Achados no parser (não alterados, ou corrigidos à parte):**
   - *Corrigido:* `extract_report_type` casava `"itr"` como substring ("arbitragem",
     "vitrine"); "Fato Relevante: arbitragem" virava ITR. Agora palavra inteira.
@@ -362,6 +380,22 @@ gerado pelo batch.
   SQLite não garante o mesmo comportamento transacional e de dialeto.
 - `name_normalized` no Postgres: manter a coluna preenchida pelo ORM (o `schema.sql`
   também exige valor); coluna gerada não é portável com o SQLite.
+- **Material para o README (decisões de engenharia com números medidos):**
+  - *Pré-filtro por nome de arquivo:* documentos de evento (comunicados, fatos
+    relevantes) são pulados **antes** de parsear o PDF: **68 s → 0,04 s** por arquivo
+    (a maior parte era o spaCy frio), e o pulo se repetia a cada rodada.
+  - *SKIP barato por hash + versões:* reprocessar um PDF já gravado leva **0,1–0,5 s**,
+    contra 6–10 s para processá-lo; decide só com o banco, sem abrir o PDF.
+  - *Validação em dado real antes de confiar na heurística:* a identificação por
+    conteúdo classificou uma press release da Cemig como "Teleconferência | Webcast" /
+    Formulário de Referência; a prioridade das fontes foi redesenhada por campo, com o
+    `ticker_map` (CVM) como fonte de verdade e log de auditoria do que foi descartado.
+  - *Dado oficial no lugar de lista manual:* `ticker_map` de 499 para 809 tickers pelo
+    FCA da CVM, com CNPJ como chave de empresa e geração idempotente e revisável por
+    `git diff`.
+  - *Segurança e robustez:* testes de SQL injection com canário e lint de SQL cru;
+    banco temporário por teste com guarda do banco real; lock de execução; log JSONL
+    por execução; proteção de encoding (o batch caía num console ASCII).
 - Processar 5–10 empresas reais antes de divulgar.
 - README: diagrama do fluxo, as decisões de arquitetura (escritas no próprio
   README), como rodar localmente, link do site.
@@ -380,8 +414,11 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
 - Scraper de ITR/DFP pela CVM/RI (o `data_pipeline` já tem a base), entregando
   ao batch os metadados de origem (fonte 1 da identificação).
 - Documentos de evento (comunicados, fatos relevantes) com chave por protocolo.
-- **`ticker_map` robusto e atualizável (fonte de verdade da identificação).** Hoje são
-  499 entradas, montadas por fora (não há gerador no repositório), com nomes
+- **`ticker_map` — FIIs e atualização contínua.** *Ações feitas na Fase 3 (ver abaixo,
+  `data_pipeline.ticker_registry`); FIIs ficam para uma evolução.* A brapi.dev (API de
+  terceiros, ~15 mil requisições grátis/mês segundo a pesquisa do Alvaro, **não
+  verificado**) foi descartada por ora: não compensa a dependência externa no MVP.
+  Contexto da pesquisa original: o mapa tinha 499 entradas, montadas por fora, com nomes
   comuns ("Cemig", "Petrobras") que o `identify` usa para casar nome de arquivo. Como
   a empresa agora vence pelo mapa, o que ficar fora dele depende da heurística da
   capa (que errou nos PDFs reais) ou de `--ticker`. Achados da pesquisa de fontes:
