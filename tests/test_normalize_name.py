@@ -23,6 +23,9 @@ from db.normalize import normalize_name
         ("XP Malls FII", "xp malls fii"),
         # nome só de sufixo não pode virar vazio
         ("S.A.", "sa"),
+        # sem nenhum alfanumérico: mantém o texto, não vira ''
+        ("%", "%"),
+        ("***", "***"),
     ],
 )
 def test_normalize_name(bruto, esperado):

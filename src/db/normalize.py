@@ -21,6 +21,7 @@ def normalize_name(name: str) -> str:
     'Cia/Companhia' no começo. Nunca devolve vazio para um nome não vazio."""
     text = unicodedata.normalize("NFKD", name)
     text = "".join(c for c in text if not unicodedata.combining(c)).casefold()
+    folded = text.strip()                     # fallback: nome sem nenhum alfanumérico
     text = re.sub(r"[./]", "", text)          # 'S.A.' e 'S/A' -> 'sa'
     text = re.sub(r"[^a-z0-9]+", " ", text).strip()
     tokens = text.split()
@@ -33,4 +34,6 @@ def normalize_name(name: str) -> str:
     # 'S. A.' escrito com espaço vira os tokens 's', 'a' no fim.
     if stripped[-2:] == ["s", "a"]:
         stripped = stripped[:-2]
-    return " ".join(stripped or tokens)
+    # Nunca vazio para nome não vazio: '%' ou '***' ficam como estão, para dois
+    # nomes assim não colidirem no UNIQUE(name_normalized) como se fossem ''.
+    return " ".join(stripped or tokens) or folded
