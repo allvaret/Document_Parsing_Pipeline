@@ -101,7 +101,7 @@ def api_client(temp_db):
 
     app.dependency_overrides[get_session] = _override
     try:
-        yield TestClient(app)
+        yield TestClient(app, base_url="http://localhost")
     finally:
         app.dependency_overrides.clear()
         engine.dispose()
