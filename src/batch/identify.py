@@ -28,6 +28,7 @@ Regras:
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field, replace
 from datetime import date
@@ -37,7 +38,8 @@ from typing import Optional, Union
 from batch.verify import CONFLICT, UNCONFIRMED, ContentText, verify_company
 from db.normalize import normalize_name
 from resumo.extractor.section.build_section import _is_noise_token
-from resumo.result import CompanyRef, ReportResult, ReportType
+from resumo.LLM.summarize_pipeline import SummaryMode
+from resumo.result import CompanyRef, ReportResult, ReportType, SummaryRecord
 
 NON_PERIODIC = "NAO_PERIODICO"
 KindValue = Union[ReportType, str]   # ReportType ou NON_PERIODIC
@@ -398,12 +400,30 @@ def _label(kind: KindValue) -> str:
     return kind.value if isinstance(kind, ReportType) else str(kind)
 
 
+def _align_heuristic_header(summary: SummaryRecord, ident: Identification) -> SummaryRecord:
+    """Faz o `header` do resumo heurístico (JSON) dizer o mesmo que o `report`/`company`.
+    O resumo é montado ANTES da identificação e traz o que a capa achou ("Teleconferência"
+    na Marcopolo; período "9M25" contra o "3T25" gravado): dois valores para a mesma
+    coisa no banco. JSON sem `header` (outro formato) não é tocado."""
+    if summary.method is not SummaryMode.HEURISTIC or summary.content_format != "json":
+        return summary
+    data = json.loads(summary.content)        # JSON inválido sobe: não grava resumo torto
+    header = data.get("header") if isinstance(data, dict) else None
+    if not isinstance(header, dict):
+        return summary
+    header["empresa"] = ident.company.name or ident.company.ticker
+    header["periodo"] = ident.period
+    return replace(summary, content=json.dumps(data, ensure_ascii=False))
+
+
 def apply_identification(result: ReportResult, ident: Identification) -> ReportResult:
-    """ReportResult com (empresa, tipo, período) resolvidos. Só para `ident.ok`."""
+    """ReportResult com (empresa, tipo, período) resolvidos. Só para `ident.ok`.
+    Também alinha o `header` do resumo heurístico com o que foi identificado."""
     if not ident.ok:
         raise ValueError(f"identificação incompleta: {ident.skip_reason}")
     return replace(
         result,
         company=ident.company,
         report=replace(result.report, report_type=ident.report_type, period=ident.period),
+        summaries=tuple(_align_heuristic_header(s, ident) for s in result.summaries),
     )

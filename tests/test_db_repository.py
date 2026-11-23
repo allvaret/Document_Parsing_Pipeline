@@ -24,6 +24,7 @@ from db.repository import (
 )
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.result import (
+    HEURISTIC_VERSION,
     CompanyRef,
     KeypointRecord,
     ReportInfo,
@@ -37,7 +38,7 @@ H1, H2 = "1" * 64, "2" * 64
 
 def _result(h=H1, period="3T25", ticker="BBSE3", keypoints=None, summaries=None,
             name="BB Seguridade", cnpj=None, rtype=ReportType.EARNINGS_RELEASE,
-            file_name="bbse.pdf", extractor_version="heuristic-v1"):
+            file_name="bbse.pdf", extractor_version=HEURISTIC_VERSION):
     if keypoints is None:
         keypoints = (
             KeypointRecord("Lucro Líquido", "R$ 1,9 bi", "+5% a/a", "3T25", 3),
@@ -45,7 +46,7 @@ def _result(h=H1, period="3T25", ticker="BBSE3", keypoints=None, summaries=None,
         )
     if summaries is None:
         summaries = (SummaryRecord(SummaryMode.HEURISTIC, "heuristic",
-                                   "heuristic-v1", '{"a": 1}', "json"),)
+                                   HEURISTIC_VERSION, '{"a": 1}', "json"),)
     return ReportResult(
         company=CompanyRef(name=name, name_method="t", ticker=ticker, cnpj=cnpj),
         report=ReportInfo(rtype, period, file_name, h, 30, extractor_version),
@@ -136,8 +137,8 @@ def test_find_report_e_por_hash(session):
 
 def test_has_summary(session):
     report = save_result(session, _result())
-    assert has_summary(session, report.id, "heuristic", "heuristic", "heuristic-v1")
-    assert not has_summary(session, report.id, "heuristic", "heuristic", "heuristic-v2")
+    assert has_summary(session, report.id, "heuristic", "heuristic", HEURISTIC_VERSION)
+    assert not has_summary(session, report.id, "heuristic", "heuristic", "heuristic-vFUTURA")
     assert not has_summary(session, report.id, "llm", "qwen2.5:3b", "prompt-v1")
 
 
@@ -171,7 +172,7 @@ def test_modo_llm_sem_modelo_e_erro_explicito(session):
 
 def test_subir_heuristic_version_manda_reprocessar(session, monkeypatch):
     save_result(session, _result(summaries=(_result().summaries[0], LLM_REC)))
-    monkeypatch.setattr(repository, "HEURISTIC_VERSION", "heuristic-v2")
+    monkeypatch.setattr(repository, "HEURISTIC_VERSION", "heuristic-vFUTURA")
     assert needs_processing(session, H1, SummaryMode.HEURISTIC)
 
 
@@ -207,7 +208,7 @@ def test_grava_e_relê_igual(session):
         for k in result.keypoints]
     s = lido.summaries[0]
     assert (s.method, s.model, s.prompt_version, s.content, s.content_format) == (
-        "heuristic", "heuristic", "heuristic-v1", '{"a": 1}', "json")
+        "heuristic", "heuristic", HEURISTIC_VERSION, '{"a": 1}', "json")
 
 
 def test_gravar_duas_vezes_nao_duplica(session):
@@ -229,10 +230,10 @@ def test_summary_llm_novo_e_adicionado_sem_mexer_no_heuristico(session):
 def test_nova_versao_do_heuristico_substitui_a_antiga(session):
     # O heurístico acompanha os keypoints: só a versão atual fica.
     save_result(session, _result())
-    novo = SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v2", "{}", "json")
-    report = save_result(session, _result(summaries=(novo,), extractor_version="heuristic-v2"))
-    assert [(s.prompt_version) for s in report.summaries] == ["heuristic-v2"]
-    assert report.extractor_version == "heuristic-v2"
+    novo = SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-vFUTURA", "{}", "json")
+    report = save_result(session, _result(summaries=(novo,), extractor_version="heuristic-vFUTURA"))
+    assert [(s.prompt_version) for s in report.summaries] == ["heuristic-vFUTURA"]
+    assert report.extractor_version == "heuristic-vFUTURA"
 
 
 def test_nova_prompt_version_do_llm_mantem_a_antiga_para_comparar(session):
@@ -247,14 +248,14 @@ def test_nova_prompt_version_do_llm_mantem_a_antiga_para_comparar(session):
 
 def test_extractor_version_e_gravada(session):
     report = save_result(session, _result())
-    assert report.extractor_version == "heuristic-v1"
+    assert report.extractor_version == HEURISTIC_VERSION
 
 
 def test_mesma_chave_de_summary_e_mantida_sem_force(session):
     save_result(session, _result(summaries=(
-        SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v1", '{"a": 1}', "json"),)))
+        SummaryRecord(SummaryMode.HEURISTIC, "heuristic", HEURISTIC_VERSION, '{"a": 1}', "json"),)))
     report = save_result(session, _result(summaries=(
-        SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v1", '{"a": 2}', "json"),)))
+        SummaryRecord(SummaryMode.HEURISTIC, "heuristic", HEURISTIC_VERSION, '{"a": 2}', "json"),)))
     assert [s.content for s in report.summaries] == ['{"a": 1}']
 
 
@@ -270,7 +271,7 @@ def test_replace_summaries_regera_so_a_chave_recebida(session):
 
     conteudos = {(s.method, s.prompt_version): s.content for s in report.summaries}
     assert conteudos == {
-        ("heuristic", "heuristic-v1"): '{"a": 1}',   # regerado com o mesmo conteúdo
+        ("heuristic", HEURISTIC_VERSION): '{"a": 1}',   # regerado com o mesmo conteúdo
         ("llm", "prompt-v1"): "v1",                  # histórico intocado
         ("llm", "prompt-v2"): "v2 REGERADO",
     }
@@ -282,7 +283,7 @@ def test_reapresentacao_troca_hash_keypoints_e_summaries_so_do_periodo(session):
     session.commit()
 
     novos_kp = (KeypointRecord("Lucro Líquido", "R$ 2,0 bi"),)
-    novo_sum = SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v1", '{"b": 2}', "json")
+    novo_sum = SummaryRecord(SummaryMode.HEURISTIC, "heuristic", HEURISTIC_VERSION, '{"b": 2}', "json")
     report = save_result(session, _result(h=H2, keypoints=novos_kp, summaries=(novo_sum,)))
     session.commit()
     session.expire_all()

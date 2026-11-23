@@ -123,3 +123,86 @@ def test_lote_confirma_avisa_e_pula_conforme_a_evidencia(tmp_path, temp_db, file
     assert file_session.scalar(select(func.count()).select_from(Report)) == 2   # conflito não gravou
     assert resumo.counts["novos"] == 2 and resumo.counts["pulados"] == 1
     assert resumo.exit_code == 0                                  # conflito é pulo, não falha
+
+
+# --- header do resumo heurístico alinhado com o identificado --------------------------
+
+from dataclasses import replace  # noqa: E402
+
+from resumo.result import SummaryRecord  # noqa: E402
+
+# Formato de `ExecutiveSummary.to_dict()` (o contrato com a API está em site_backend/schemas).
+HEURISTIC_CONTENT = {
+    "header": {"empresa": "X", "periodo": "3T25", "num_paginas": 10},
+    "principais_assuntos": [{"topic": "Resultado", "matched_sections": [0], "keyword_count": 3}],
+    "secoes_relevantes": [{"rank": 1, "title": "Destaques", "page": 1, "description": "d",
+                           "relevance_score": 0.9}],
+    "indicadores": [{"nome": "Lucro", "valor": "R$ 1", "variacao": "+1%", "periodo": "3T25"}],
+    "observacoes": {"total_secoes": 1, "total_tabelas": 0, "total_notas_explicativas": 0,
+                    "secoes_alta_confianca": 1, "extras": []},
+}
+
+
+def heuristic(content):
+    return SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v99",
+                         json.dumps(content, ensure_ascii=False), "json")
+
+
+def llm():
+    return SummaryRecord(SummaryMode.LLM, "fake:modelo", "prompt-v1", "# resumo", "markdown")
+from batch.identify import apply_identification  # noqa: E402
+from db.models import Summary  # noqa: E402
+
+
+def _com_resumos(*summaries):
+    r = _result()
+    return replace(r, summaries=tuple(summaries))
+
+
+def _cabecalho_errado():
+    """O que o pipeline monta ANTES de identificar: o que a capa achou."""
+    c = json.loads(json.dumps(HEURISTIC_CONTENT))
+    c["header"].update(empresa="Teleconferência", periodo="9M25")
+    return c
+
+
+def test_header_do_resumo_heuristico_recebe_empresa_e_periodo_identificados():
+    r = _com_resumos(heuristic(_cabecalho_errado()), llm())
+    ident = _id(MARCOPOLO)
+    out = apply_identification(r, ident)
+
+    h = json.loads(out.summaries[0].content)
+    assert h["header"] == {"empresa": "Marcopolo", "periodo": "3T25",
+                           "num_paginas": HEURISTIC_CONTENT["header"]["num_paginas"]}
+    resto = {k: v for k, v in h.items() if k != "header"}
+    assert resto == {k: v for k, v in HEURISTIC_CONTENT.items() if k != "header"}   # só o header muda
+    assert out.summaries[1] == r.summaries[1]                                       # LLM intacto
+
+
+def test_resumo_json_sem_header_nao_e_tocado():
+    s = heuristic({"chamada": 1})
+    assert apply_identification(_com_resumos(s), _id(MARCOPOLO)).summaries == (s,)
+
+
+def test_resumo_heuristico_com_json_invalido_falha_alto():
+    ruim = SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "v", "não é json", "json")
+    with pytest.raises(ValueError):
+        apply_identification(_com_resumos(ruim), _id(MARCOPOLO))
+
+
+def test_lote_grava_o_header_igual_a_empresa_e_ao_periodo(tmp_path, temp_db, file_session):
+    base = _process_com_texto({ARQUIVO: "A Marcopolo registrou receita"})
+
+    def process(pdf, mode, provider, ticker):
+        result, payload = base(pdf, mode, provider, ticker)
+        return replace(result, summaries=(heuristic(_cabecalho_errado()),)), payload
+
+    pdfs = tmp_path / "p"
+    pdfs.mkdir()
+    (pdfs / ARQUIVO).write_bytes(b"x")
+    run_batch(pdfs, SummaryMode.HEURISTIC, session_factory=temp_db.factory,
+              ticker_map=TICKER_MAP, cnpj_map=CNPJ_MAP, log_dir=tmp_path / "l",
+              process=process, page_counter=lambda p: 3, out=lambda s: None)
+
+    gravado = json.loads(file_session.scalar(select(Summary.content)))
+    assert gravado["header"]["empresa"] == "Marcopolo" and gravado["header"]["periodo"] == "3T25"
