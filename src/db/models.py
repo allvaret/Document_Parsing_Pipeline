@@ -82,6 +82,7 @@ class Report(Base):
     file_hash: Mapped[str] = mapped_column(unique=True)
     source_url: Mapped[Optional[str]]
     page_count: Mapped[int]
+    extractor_version: Mapped[str] = mapped_column(server_default="")
     parsed_at: Mapped[str] = mapped_column(server_default=_NOW)
 
     company: Mapped[Company] = relationship(back_populates="reports")

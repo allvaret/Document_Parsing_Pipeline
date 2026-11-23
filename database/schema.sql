@@ -51,7 +51,10 @@ CREATE TABLE IF NOT EXISTS report (
                   CHECK (length(file_hash) = 64),
     source_url    TEXT,
     page_count    INTEGER NOT NULL CHECK (page_count >= 0),
-    parsed_at     TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- Versão da heurística que gerou os keypoints (HEURISTIC_VERSION).
+    -- '' = desconhecida: qualquer versão atual força a regeração.
+    extractor_version TEXT NOT NULL DEFAULT '',
+    parsed_at    TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- Chave de negócio: um relatório por empresa/tipo/período.
     -- Reapresentação (mesmo período, PDF novo) = hash novo na MESMA linha:
     -- o batch atualiza file_hash e regera summary/keypoint.
