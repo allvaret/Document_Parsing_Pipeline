@@ -29,7 +29,22 @@ def test_generate_repassa_configuracao_ao_client(monkeypatch):
     provider = OllamaProvider(model="m", base_url="http://x:1", timeout=7)
 
     assert provider.generate("oi") == "texto"
-    assert chamadas == [("oi", {"model": "m", "base_url": "http://x:1", "timeout": 7})]
+    assert chamadas == [("oi", {"model": "m", "base_url": "http://x:1", "timeout": 7,
+                                "stats": provider.last_stats})]
+
+
+def test_telemetria_da_ultima_chamada_nao_entra_na_identidade_do_provedor(monkeypatch):
+    def fake_generate(prompt, stats=None, **kwargs):
+        stats.update(prompt_chars=len(prompt), attempts=1)
+        return "texto"
+
+    monkeypatch.setattr(ollama_provider, "generate", fake_generate)
+    a, b = OllamaProvider("m"), OllamaProvider("m")
+
+    a.generate("oi")
+
+    assert a.last_stats == {"prompt_chars": 2, "attempts": 1} and b.last_stats == {}
+    assert a == b and hash(a) == hash(b)       # nome/igualdade não dependem da telemetria
 
 
 def test_generate_propaga_llmerror(monkeypatch):
