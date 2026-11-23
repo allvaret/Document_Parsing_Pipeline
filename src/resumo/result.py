@@ -24,6 +24,7 @@ from typing import Optional
 from resumo.LLM.summarize_pipeline import SummaryMode
 
 HEURISTIC_VERSION = "heuristic-v1"
+HEURISTIC_MODEL = "heuristic"    # `model` do summary heurístico (não há modelo)
 PROMPT_VERSION = "prompt-v1"   # suba a versão sempre que mudar prompts.py
 
 
@@ -63,6 +64,7 @@ class ReportInfo:
     file_name: str
     file_hash: str
     page_count: int
+    extractor_version: str = HEURISTIC_VERSION   # versão que gerou os keypoints
 
 
 @dataclass(frozen=True)

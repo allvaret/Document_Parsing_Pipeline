@@ -13,6 +13,25 @@ class IncompleteResultError(DatabaseError):
         super().__init__("ReportResult incompleto, falta: " + ", ".join(missing))
 
 
+class ReportIdentityMismatchError(DatabaseError):
+    """O PDF (mesmo hash) já está gravado com outra (empresa, tipo, período).
+    É aviso, não insert: a identificação do mesmo arquivo mudou entre execuções."""
+
+    def __init__(self, file_hash: str, existing: tuple, new: tuple):
+        self.file_hash = file_hash
+        self.existing = existing   # (empresa, tipo, período) gravados
+        self.new = new             # (empresa, tipo, período) desta execução
+        super().__init__(
+            f"PDF {file_hash[:12]}… já gravado como {existing}, "
+            f"mas identificado agora como {new}"
+        )
+
+
+class StorageConstraintError(DatabaseError):
+    """Violação de UNIQUE/CHECK/FK ao gravar (IntegrityError com mensagem clara).
+    Quem chamou deve fazer rollback da sessão."""
+
+
 class CompanyConflictError(DatabaseError):
     """CNPJ, ticker e nome apontam para empresas diferentes (ou o CNPJ diverge)."""
 

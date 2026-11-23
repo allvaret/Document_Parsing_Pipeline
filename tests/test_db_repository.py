@@ -2,9 +2,14 @@
 
 import pytest
 from sqlalchemy import func, select
-from sqlalchemy.exc import IntegrityError
 
-from db.errors import CompanyConflictError, IncompleteResultError, InvalidCnpjError
+from db.errors import (
+    CompanyConflictError,
+    IncompleteResultError,
+    InvalidCnpjError,
+    ReportIdentityMismatchError,
+    StorageConstraintError,
+)
 from db.models import Asset, Company, Keypoint, Report, Summary
 from db.repository import (
     find_company,
@@ -29,7 +34,8 @@ H1, H2 = "1" * 64, "2" * 64
 
 
 def _result(h=H1, period="3T25", ticker="BBSE3", keypoints=None, summaries=None,
-            name="BB Seguridade", cnpj=None, rtype=ReportType.EARNINGS_RELEASE):
+            name="BB Seguridade", cnpj=None, rtype=ReportType.EARNINGS_RELEASE,
+            file_name="bbse.pdf", extractor_version="heuristic-v1"):
     if keypoints is None:
         keypoints = (
             KeypointRecord("Lucro Líquido", "R$ 1,9 bi", "+5% a/a", "3T25", 3),
@@ -40,7 +46,7 @@ def _result(h=H1, period="3T25", ticker="BBSE3", keypoints=None, summaries=None,
                                    "heuristic-v1", '{"a": 1}', "json"),)
     return ReportResult(
         company=CompanyRef(name=name, name_method="t", ticker=ticker, cnpj=cnpj),
-        report=ReportInfo(rtype, period, "bbse.pdf", h, 30),
+        report=ReportInfo(rtype, period, file_name, h, 30, extractor_version),
         keypoints=tuple(keypoints),
         summaries=tuple(summaries),
     )
@@ -169,11 +175,54 @@ def test_summary_llm_novo_e_adicionado_sem_mexer_no_heuristico(session):
     assert sorted(s.method for s in report.summaries) == ["heuristic", "llm"]
 
 
-def test_nova_prompt_version_gera_novo_summary(session):
+def test_nova_versao_do_heuristico_substitui_a_antiga(session):
+    # O heurístico acompanha os keypoints: só a versão atual fica.
     save_result(session, _result())
     novo = SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v2", "{}", "json")
-    save_result(session, _result(summaries=(novo,)))
-    assert _count(session, Summary) == 2
+    report = save_result(session, _result(summaries=(novo,), extractor_version="heuristic-v2"))
+    assert [(s.prompt_version) for s in report.summaries] == ["heuristic-v2"]
+    assert report.extractor_version == "heuristic-v2"
+
+
+def test_nova_prompt_version_do_llm_mantem_a_antiga_para_comparar(session):
+    heur = _result().summaries[0]
+    v1 = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v1", "texto v1", "markdown")
+    v2 = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v2", "texto v2", "markdown")
+    save_result(session, _result(summaries=(heur, v1)))
+    report = save_result(session, _result(summaries=(heur, v2)))
+    assert sorted(s.prompt_version for s in report.summaries if s.method == "llm") == [
+        "prompt-v1", "prompt-v2"]
+
+
+def test_extractor_version_e_gravada(session):
+    report = save_result(session, _result())
+    assert report.extractor_version == "heuristic-v1"
+
+
+def test_mesma_chave_de_summary_e_mantida_sem_force(session):
+    save_result(session, _result(summaries=(
+        SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v1", '{"a": 1}', "json"),)))
+    report = save_result(session, _result(summaries=(
+        SummaryRecord(SummaryMode.HEURISTIC, "heuristic", "heuristic-v1", '{"a": 2}', "json"),)))
+    assert [s.content for s in report.summaries] == ['{"a": 1}']
+
+
+def test_replace_summaries_regera_so_a_chave_recebida(session):
+    heur = _result().summaries[0]
+    llm_v1 = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v1", "v1", "markdown")
+    llm_v2 = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v2", "v2", "markdown")
+    save_result(session, _result(summaries=(heur, llm_v1, llm_v2)))
+
+    novo = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v2", "v2 REGERADO", "markdown")
+    report = save_result(session, _result(summaries=(heur, novo)), replace_summaries=True)
+    session.commit()
+
+    conteudos = {(s.method, s.prompt_version): s.content for s in report.summaries}
+    assert conteudos == {
+        ("heuristic", "heuristic-v1"): '{"a": 1}',   # regerado com o mesmo conteúdo
+        ("llm", "prompt-v1"): "v1",                  # histórico intocado
+        ("llm", "prompt-v2"): "v2 REGERADO",
+    }
 
 
 def test_reapresentacao_troca_hash_keypoints_e_summaries_so_do_periodo(session):
@@ -206,12 +255,35 @@ def test_resultado_incompleto_lanca_e_nao_grava(session, campo):
     assert _count(session, Company) == 0 and _count(session, Report) == 0
 
 
-def test_mesmo_pdf_em_outro_periodo_falha_visivelmente(session):
-    save_result(session, _result(h=H1, period="3T25"))
+@pytest.mark.parametrize("mudanca", [
+    dict(period="2T25"),
+    dict(rtype=ReportType.ITR),
+    dict(name="Outra Empresa", ticker="OUTR3"),
+])
+def test_mesmo_hash_com_chave_diferente_avisa_e_nao_grava(session, mudanca):
+    save_result(session, _result(h=H1))
     session.commit()
-    with pytest.raises(IntegrityError):
-        save_result(session, _result(h=H1, period="2T25"))
+    antes = {m: _count(session, m) for m in (Company, Asset, Report, Summary, Keypoint)}
+    with pytest.raises(ReportIdentityMismatchError) as exc:
+        save_result(session, _result(h=H1, **mudanca))
+    assert exc.value.file_hash == H1
+    assert exc.value.existing == ("BB Seguridade", "EARNINGS_RELEASE", "3T25")
+    # nada criado, nem a empresa nova
+    assert {m: _count(session, m) for m in antes} == antes
+
+
+def test_mesmo_hash_com_nome_de_arquivo_e_empresa_equivalentes_reaproveita(session):
+    a = save_result(session, _result(h=H1))
+    b = save_result(session, _result(h=H1, name="BB Seguridade S.A.", file_name="renomeado.pdf"))
+    assert a.id == b.id and _count(session, Report) == 1 and _count(session, Company) == 1
+
+
+def test_violacao_de_restricao_vira_erro_tipado(session):
+    with pytest.raises(StorageConstraintError) as exc:
+        save_result(session, _result(h="curto"))   # CHECK length(file_hash) = 64
+    assert "bbse.pdf" in str(exc.value)
     session.rollback()
+    assert _count(session, Report) == 0
 
 
 def test_rollback_deixa_o_banco_intacto(session):

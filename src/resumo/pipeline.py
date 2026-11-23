@@ -16,6 +16,7 @@ from resumo.extractor.section.json_pipeline import serialize
 from resumo.LLM.provider import LLMProvider
 from resumo.LLM.summarize_pipeline import SummaryMode, summarize_heuristic, summarize_llm
 from resumo.result import (
+    HEURISTIC_MODEL,
     HEURISTIC_VERSION,
     PROMPT_VERSION,
     CompanyRef,
@@ -75,7 +76,7 @@ def process_document(
     summaries = [
         SummaryRecord(
             method=SummaryMode.HEURISTIC,
-            model="heuristic",
+            model=HEURISTIC_MODEL,
             prompt_version=HEURISTIC_VERSION,
             content=json.dumps(heuristic.to_dict(), ensure_ascii=False),
             content_format="json",
