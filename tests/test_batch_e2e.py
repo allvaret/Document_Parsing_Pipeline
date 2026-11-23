@@ -20,6 +20,7 @@ from batch_helpers import (
     TICKER_MAP,
     Chamadas,
     FakeProvider,
+    fake_narrate,
     fake_process,
     subir_versao,
 )
@@ -30,12 +31,16 @@ from resumo.result import ReportType
 MODELOS = (Company, Asset, Report, Summary, Keypoint)
 
 
+pytestmark = pytest.mark.usefixtures("paginas_falsas")   # PDFs de teste são bytes soltos
+
+
 def rodar(pdf_dir, log_dir, temp_db, chamadas, **kw):
     kw.setdefault("mode", SummaryMode.HEURISTIC)
     quebra = kw.pop("quebra", ())
     return run_batch(
         pdf_dir, session_factory=temp_db.factory, ticker_map=TICKER_MAP, log_dir=log_dir,
-        process=fake_process(chamadas, quebra), out=lambda _: None, **kw,
+        process=fake_process(chamadas, quebra), narrate=fake_narrate(chamadas),
+        out=lambda _: None, **kw,
     )
 
 

@@ -4,13 +4,16 @@ Batch "gerar uma única vez": PDFs de uma pasta -> banco.
     python -m batch.run --dir pdfs/ --mode heuristic|llm [--force] [--dry-run]
                         [--ticker PETR3] [--type EARNINGS_RELEASE] [--period 3T25]
 
-Por PDF: SKIP barato por hash+versões (sem abrir o PDF) -> process_document ->
-identify (empresa, tipo, período) -> grava numa transação -> commit. Erro em um
-PDF é logado, sofre rollback e o lote segue. Sai com código 1 se houve falha e
-2 se não conseguiu começar (pasta, Ollama, lock, banco desatualizado).
+Por PDF: SKIP barato por hash+versões (sem abrir o PDF) -> pré-filtro por nome e
+nº de páginas -> process_document (só heurística) -> identify (empresa, tipo,
+período) -> resumo do LLM (só se identificou) -> grava numa transação -> commit.
+O LLM é o passo caro (minutos), por isso vem depois de tudo que pode descartar o
+PDF. Erro em um PDF é logado, sofre rollback e o lote segue. Sai com código 1 se
+houve falha e 2 se não conseguiu começar (pasta, Ollama, lock, banco desatualizado).
 
-Cada execução grava um JSONL em logs/batch/ (arquivo, hash, fontes usadas,
-resultado, motivo, duração): responde "por que este relatório foi pulado?".
+Cada execução grava um JSONL em logs/batch/ (arquivo, hash, páginas, fontes usadas,
+resultado, motivo, duração total e por fase, métricas do LLM): responde "por que este
+relatório foi pulado?" e "onde o tempo foi?".
 """
 
 from __future__ import annotations
@@ -31,6 +34,8 @@ from batch.identify import (
     IdentificationError,
     Overrides,
     apply_identification,
+    MAX_PAGES,
+    SKIP_NON_PERIODIC,
     identify,
     prefilter_skip_reason,
     validate_overrides,
@@ -62,6 +67,16 @@ LOCK_NAME = "batch.lock"
 EXIT_OK, EXIT_FAILURES, EXIT_CANNOT_START = 0, 1, 2
 
 Process = Callable[..., tuple[ReportResult, dict]]
+# Acrescenta o resumo do LLM a um resultado já identificado (resumo.pipeline.attach_llm_summary).
+Narrate = Callable[[ReportResult, dict, LLMProvider], ReportResult]
+PageCounter = Callable[[Path], int]
+
+
+def count_pages(pdf: Path) -> int:
+    """Nº de páginas pelo cabeçalho do PDF (milissegundos): não extrai texto nem usa spaCy."""
+    import pymupdf
+    with pymupdf.open(pdf) as doc:
+        return doc.page_count
 
 
 # --- lock: uma execução por vez -------------------------------------------------
@@ -148,6 +163,9 @@ class _Ctx:
     dry_run: bool
     provider: Optional[LLMProvider]
     process: Process
+    narrate: Optional[Narrate]       # None fora do modo llm
+    page_counter: PageCounter
+    max_pages: int
     cnpj_map: dict = field(default_factory=dict)
     alias_map: dict = field(default_factory=dict)
 
@@ -177,24 +195,29 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
     rec["hash"] = file_hash = file_sha256(pdf)
     llm_model = ctx.provider.name if ctx.mode is SummaryMode.LLM else None
 
-    # 0. Pré-filtro pelo nome (comunicados etc.): pular antes de parsear.
-    motivo = prefilter_skip_reason(pdf.name, ctx.overrides)
-    if motivo:
-        rec["sources"] = {"report_type": "filename"}
-        return _skip(rec, motivo)
-
     # 1. SKIP barato: só o banco, sem abrir o PDF nem rodar spaCy.
     if not ctx.force:
         with ctx.session_factory() as s:
             if not needs_processing(s, file_hash, ctx.mode, llm_model):
                 return _skip(rec, "já processado (hash e versões atuais)")
 
-    # 2. Pipeline. No --dry-run roda só a heurística (identifica sem gastar LLM).
-    mode = SummaryMode.HEURISTIC if ctx.dry_run else ctx.mode
-    provider = None if ctx.dry_run else ctx.provider
-    result, _payload = ctx.process(pdf, mode, provider, None)
+    # 2. Pré-filtro por nome e nº de páginas: pular antes de parsear. Só conta as
+    # páginas (cabeçalho do PDF, sem texto nem spaCy).
+    rec["pages"] = pages = ctx.page_counter(pdf)
+    motivo = prefilter_skip_reason(pdf.name, ctx.overrides, pages, ctx.max_pages)
+    if motivo:
+        if motivo == SKIP_NON_PERIODIC:
+            rec["sources"] = {"report_type": "filename"}
+        return _skip(rec, motivo)
 
-    # 3. Identificação (empresa, tipo, período). O que o conteúdo achou vai para o
+    # 3. Parse + heurística (keypoints). Sempre sem LLM: o narrativo só roda depois
+    # de identificar o relatório (passo 5), porque é o passo caro e a identificação
+    # pode descartar o PDF.
+    t0 = time.perf_counter()
+    result, payload = ctx.process(pdf, SummaryMode.HEURISTIC, None, None)
+    rec["parse_s"] = round(time.perf_counter() - t0, 2)
+
+    # 4. Identificação (empresa, tipo, período). O que o conteúdo achou vai para o
     # log mesmo quando a identificação o descarta: é a auditoria do descarte.
     ident = identify(result, pdf.name, ctx.ticker_map, ctx.overrides, ctx.cnpj_map,
                      ctx.alias_map)
@@ -218,7 +241,11 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
     if missing:
         return _skip(rec, "resultado incompleto: " + ", ".join(missing))
 
-    # 4. Uma transação por PDF.
+    # 5. Resumo narrativo (LLM), só para o que foi identificado e vai ser gravado.
+    if ctx.mode is SummaryMode.LLM and not ctx.dry_run:
+        result = _narrate(result, payload, rec, ctx)
+
+    # 6. Uma transação por PDF.
     with ctx.session_factory() as s:
         kind = _classify(s, result)
         if ctx.dry_run:
@@ -232,6 +259,25 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
             raise
         rec["report_id"] = report.id
     rec["status"] = kind
+
+
+def _narrate(result: ReportResult, payload: dict, rec: dict, ctx: _Ctx) -> ReportResult:
+    """Chama o LLM e registra no log o tempo e a telemetria do provedor, **também quando
+    falha** (é aí que o log mais importa). Retry que deu certo vira aviso: não é silencioso."""
+    stats = getattr(ctx.provider, "last_stats", None)   # opcional: o provedor pode não ter
+    if stats is not None:
+        stats.clear()          # não herdar a telemetria do PDF anterior se falhar antes do client
+    t0 = time.perf_counter()
+    try:
+        return ctx.narrate(result, payload, ctx.provider)
+    finally:
+        rec["llm_s"] = round(time.perf_counter() - t0, 2)
+        if stats:
+            rec["llm"] = dict(stats)
+            if stats.get("attempts", 1) > 1:
+                rec.setdefault("warnings", []).append(
+                    f"LLM precisou de {stats['attempts']} tentativas "
+                    f"(1ª: {(stats.get('retry_errors') or ['?'])[0]})")
 
 
 def _process_file(pdf: Path, ctx: _Ctx) -> dict:
@@ -278,23 +324,31 @@ def run_batch(
     dry_run: bool = False,
     provider: Optional[LLMProvider] = None,
     process: Optional[Process] = None,
+    narrate: Optional[Narrate] = None,
+    page_counter: Optional[PageCounter] = None,
+    max_pages: int = MAX_PAGES,
     cnpj_map: Optional[dict] = None,
     alias_map: Optional[dict] = None,
     db_label: str = "",
     out: Callable[[str], None] = print,
 ) -> BatchSummary:
     """Processa todos os PDFs da pasta. Não decide o ambiente (banco, Ollama,
-    lock): quem chama passa pronto, o que mantém isto testável."""
+    lock): quem chama passa pronto, o que mantém isto testável. `process`, `narrate`
+    e `page_counter` são injetáveis (os testes não usam spaCy, Ollama nem PDF real);
+    `max_pages=0` desliga o teto de páginas."""
     if mode is SummaryMode.LLM and provider is None:
         raise ValueError("mode=LLM exige um provider.")
     if process is None:
         from resumo.pipeline import process_document  # import pesado (spaCy), só se preciso
         process = process_document
+    if narrate is None and mode is SummaryMode.LLM:
+        from resumo.pipeline import attach_llm_summary
+        narrate = attach_llm_summary
 
     overrides = validate_overrides(overrides)
     pdfs = list_pdfs(pdf_dir)
     ctx = _Ctx(mode, session_factory, ticker_map, overrides, force, dry_run, provider, process,
-               cnpj_map or {}, alias_map or {})
+               narrate, page_counter or count_pages, max_pages, cnpj_map or {}, alias_map or {})
     summary = BatchSummary()
 
     log = RunLog(log_dir, datetime.now())
@@ -302,6 +356,7 @@ def run_batch(
     log.write({
         "event": "start", "db": db_label, "dir": str(pdf_dir), "mode": mode.value,
         "model": provider.name if provider else None, "force": force, "dry_run": dry_run,
+        "max_pages": max_pages,
         "overrides": {"ticker": overrides.ticker,
                       "report_type": overrides.report_type.value if overrides.report_type else None,
                       "period": overrides.period},
@@ -352,6 +407,8 @@ def build_parser() -> argparse.ArgumentParser:
                             ReportType.FORMULARIO_REFERENCIA],
                    default=None, help="Tipo para o lote inteiro")
     p.add_argument("--period", default=None, help="Período para o lote inteiro, ex.: 3T25")
+    p.add_argument("--max-pages", type=int, default=MAX_PAGES,
+                   help=f"Pula PDF com mais páginas que isto (padrão {MAX_PAGES}; 0 = sem limite)")
     p.add_argument("--log-dir", type=Path, default=DEFAULT_LOG_DIR, help="Pasta dos logs JSONL")
     return p
 
@@ -382,6 +439,8 @@ def main(argv: list[str] | None = None, *, process: Optional[Process] = None) ->
             Overrides(ticker=args.ticker, report_type=args.report_type, period=args.period))
     except IdentificationError as e:
         return _fail(str(e))
+    if args.max_pages < 0:
+        return _fail("--max-pages não pode ser negativo (0 = sem limite)")
 
     if not args.dir.is_dir():
         return _fail(f"pasta não encontrada: {args.dir}")
@@ -427,7 +486,7 @@ def main(argv: list[str] | None = None, *, process: Optional[Process] = None) ->
                     session_factory=make_session_factory(engine), ticker_map=ticker_map,
                     log_dir=args.log_dir, overrides=overrides, force=args.force,
                     dry_run=args.dry_run, provider=provider, process=process,
-                    cnpj_map=cnpj_map, alias_map=alias_map, db_label=describe_url(url),
+                    max_pages=args.max_pages, cnpj_map=cnpj_map, alias_map=alias_map, db_label=describe_url(url),
                 )
         except BatchLockedError as e:
             return _fail(str(e))

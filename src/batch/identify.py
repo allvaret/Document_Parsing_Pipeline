@@ -16,7 +16,10 @@ Regras:
 - Sem empresa, tipo ou período: `skip_reason` preenchido, nada é inventado.
   Esses três campos formam a chave única do relatório.
 - Documento de evento (comunicado, fato relevante): `tipo não periódico`; o
-  `prefilter_skip_reason` decide isso só pelo nome, antes de parsear o PDF.
+  `prefilter_skip_reason` decide isso pelo nome, antes de parsear o PDF, mas só se o
+  PDF for curto (`MAX_EVENT_PAGES`): o nome é rótulo do portal, não prova da natureza
+  (um `comunicado_*.pdf` de 237 páginas era o Relatório da Administração).
+- PDF com mais de `MAX_PAGES` páginas é pulado antes de parsear (custo de parse e LLM).
 - Conflito de tipo ou período entre fontes vira aviso; vale a de maior prioridade.
 - Empresa só do nome do arquivo só vale se existir no `ticker_map` (a base curada):
   sobra de nome de arquivo ("BR PT Demonstrações Financeiras") nunca vira empresa.
@@ -39,6 +42,13 @@ NON_PERIODIC = "NAO_PERIODICO"
 KindValue = Union[ReportType, str]   # ReportType ou NON_PERIODIC
 
 SKIP_NON_PERIODIC = "tipo não periódico"
+SKIP_TOO_LONG = "documento muito longo"
+
+# Comunicado e fato relevante de verdade têm poucas páginas. Acima disso, o "comunicado"
+# no nome é rótulo do portal e o conteúdo decide o tipo.
+MAX_EVENT_PAGES = 10
+# Teto de páginas do lote (`--max-pages`; 0 desliga). Vale para qualquer tipo.
+MAX_PAGES = 150
 SKIP_NO_COMPANY = "empresa não identificada"
 SKIP_NO_TYPE = "tipo não identificado"
 SKIP_NO_PERIOD = "período não identificado"
@@ -189,6 +199,15 @@ def type_from_filename(filename: str) -> Optional[KindValue]:
     return None
 
 
+def type_from_name_and_size(filename: str, page_count: Optional[int]) -> Optional[KindValue]:
+    """`type_from_filename` com a ressalva de tamanho: "comunicado"/"fato relevante" no
+    nome só vale para PDF curto. `page_count=None` (desconhecido) mantém só o nome."""
+    kind = type_from_filename(filename)
+    if kind == NON_PERIODIC and page_count is not None and page_count > MAX_EVENT_PAGES:
+        return None
+    return kind
+
+
 # --- fonte: conteúdo (o que o parser já achou) --------------------------------
 
 def type_from_content(result: ReportResult) -> Optional[KindValue]:
@@ -218,11 +237,24 @@ def validate_overrides(o: Overrides) -> Overrides:
     return replace(o, ticker=ticker, period=normalize_period(period) if period else None)
 
 
-def prefilter_skip_reason(filename: str, overrides: Overrides = Overrides()) -> Optional[str]:
-    """Motivo para pular SÓ pelo nome do arquivo, antes de parsear o PDF (que custa
-    segundos, e até ~1 min com o spaCy frio). Hoje: documentos de evento
-    ('comunicado', 'fato relevante'). `--type` no CLI desliga o pré-filtro."""
-    if overrides.report_type is None and type_from_filename(filename) == NON_PERIODIC:
+def prefilter_skip_reason(
+    filename: str,
+    overrides: Overrides = Overrides(),
+    page_count: Optional[int] = None,
+    max_pages: int = MAX_PAGES,
+) -> Optional[str]:
+    """Motivo para pular antes de parsear o PDF (que custa segundos, e até ~1 min com
+    o spaCy frio), só com o nome e o nº de páginas:
+
+    - mais de `max_pages` páginas (0 desliga o teto; vale com `--type` também);
+    - documento de evento ('comunicado', 'fato relevante') no nome **e** curto
+      (`MAX_EVENT_PAGES`). `--type` no CLI desliga só esta regra.
+
+    `page_count=None` = desconhecido: nenhuma regra de tamanho se aplica."""
+    if max_pages and page_count is not None and page_count > max_pages:
+        return f"{SKIP_TOO_LONG}: {page_count} páginas (máx. {max_pages})"
+    if (overrides.report_type is None
+            and type_from_name_and_size(filename, page_count) == NON_PERIODIC):
         return SKIP_NON_PERIODIC
     return None
 
@@ -266,7 +298,8 @@ def identify(
     # ---- tipo: cli > filename > content. Uma palavra explícita no nome
     # ('release', 'itr', 'dfp') é deliberada; a busca de palavra-chave no texto da
     # capa já classificou uma press release da Cemig como Formulário de Referência.
-    candidates = {"cli": o.report_type, "filename": type_from_filename(filename),
+    candidates = {"cli": o.report_type,
+                  "filename": type_from_name_and_size(filename, result.report.page_count),
                   "content": type_from_content(result)}
     kind: Optional[KindValue] = None
     for origin, value in candidates.items():

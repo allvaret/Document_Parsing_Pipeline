@@ -3,7 +3,10 @@
 import pytest
 
 from batch.identify import (
+    MAX_EVENT_PAGES,
+    MAX_PAGES,
     NON_PERIODIC,
+    SKIP_TOO_LONG,
     IdentificationError,
     Overrides,
     apply_identification,
@@ -29,10 +32,11 @@ COMUNICADO = "comunicado_petr3_33064.pdf"
 DEMONSTR = "BR_PT Demonstrações Financeiras 3T25.pdf"
 
 
-def _result(name=None, method="none", rtype=ReportType.OUTRO, period=None, fname="x.pdf"):
+def _result(name=None, method="none", rtype=ReportType.OUTRO, period=None, fname="x.pdf",
+            pages=3):
     return ReportResult(
         company=CompanyRef(name=name, name_method=method),
-        report=ReportInfo(rtype, period, fname, "a" * 64, 3),
+        report=ReportInfo(rtype, period, fname, "a" * 64, pages),
         keypoints=(), summaries=(),
     )
 
@@ -126,6 +130,21 @@ def test_comunicado_e_pulado_como_nao_periodico_mesmo_com_empresa_resolvida():
     i = identify(_result(), COMUNICADO, TICKER_MAP)
     assert i.skip_reason == "tipo não periódico"
     assert i.company.ticker == "PETR3"
+
+
+def test_comunicado_longo_no_nome_nao_decide_o_tipo_o_conteudo_decide():
+    r = _result(rtype=ReportType.EARNINGS_RELEASE, period="3T25", pages=24)
+    i = identify(r, "comunicado_pomo4_24733.pdf", TICKER_MAP)
+    assert i.skip_reason is None
+    assert i.report_type is ReportType.EARNINGS_RELEASE and i.sources["report_type"] == "content"
+    assert i.company.ticker == "POMO4" and i.warnings == ()    # sem conflito de tipo
+
+
+def test_comunicado_longo_sem_tipo_no_conteudo_cai_em_tipo_nao_identificado():
+    # limitação conhecida (backlog): apresentação de resultados não tem palavra-chave
+    # no conteúdo e o `ReportType` não tem categoria própria. Use `--type` no lote.
+    r = _result(rtype=ReportType.OUTRO, period="3T25", pages=24)
+    assert identify(r, "comunicado_pomo4_24733.pdf", TICKER_MAP).skip_reason == "tipo não identificado"
 
 
 def test_fato_relevante_no_conteudo_e_nao_periodico():
@@ -302,6 +321,44 @@ def test_prefiltro_nao_pula_periodicos(arquivo):
 
 def test_prefiltro_e_desligado_pelo_type_do_cli():
     assert prefilter_skip_reason(COMUNICADO, Overrides(report_type=ReportType.ITR)) is None
+
+
+@pytest.mark.parametrize("paginas", [1, 3, MAX_EVENT_PAGES])        # o limite é inclusivo
+def test_prefiltro_pula_evento_curto_pelo_nome(paginas):
+    assert prefilter_skip_reason(COMUNICADO, page_count=paginas) == "tipo não periódico"
+
+
+@pytest.mark.parametrize("arquivo, paginas", [
+    ("comunicado_pomo4_24733.pdf", 24),         # Marcopolo: teleconferência de resultados 3T25
+    (COMUNICADO, MAX_EVENT_PAGES + 1),
+])
+def test_comunicado_longo_no_nome_nao_e_pulado_pelo_nome(arquivo, paginas):
+    # o prefixo "comunicado_" é rótulo do portal: PDF longo é documento de verdade
+    assert prefilter_skip_reason(arquivo, page_count=paginas) is None
+
+
+def test_prefiltro_pula_pdf_acima_do_teto_de_paginas():
+    assert prefilter_skip_reason(PETRO, page_count=MAX_PAGES) is None            # no teto: passa
+    motivo = prefilter_skip_reason(PETRO, page_count=MAX_PAGES + 1)
+    assert motivo == f"{SKIP_TOO_LONG}: 151 páginas (máx. 150)"
+    # o Relatório da Administração (237 págs) que veio como "comunicado_petr3_*.pdf"
+    assert prefilter_skip_reason(COMUNICADO, page_count=237).startswith(SKIP_TOO_LONG)
+
+
+def test_teto_de_paginas_e_parametro_e_zero_desliga():
+    assert prefilter_skip_reason(PETRO, page_count=44, max_pages=40).startswith(SKIP_TOO_LONG)
+    assert prefilter_skip_reason(PETRO, page_count=900, max_pages=0) is None
+
+
+def test_type_do_cli_desliga_a_regra_do_nome_mas_nao_o_teto():
+    o = Overrides(report_type=ReportType.DFP)
+    assert prefilter_skip_reason(COMUNICADO, o, page_count=3) is None
+    assert prefilter_skip_reason(PETRO, o, page_count=200).startswith(SKIP_TOO_LONG)
+
+
+def test_tamanho_desconhecido_nao_aplica_regra_de_tamanho():
+    assert prefilter_skip_reason(PETRO) is None
+    assert prefilter_skip_reason(COMUNICADO) == "tipo não periódico"            # só o nome
 
 
 def test_override_do_cli_vence_todas_as_fontes():

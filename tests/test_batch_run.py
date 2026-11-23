@@ -16,6 +16,7 @@ from batch.identify import Overrides
 from batch.run import (
     BatchLock,
     BatchLockedError,
+    count_pages,       # importado aqui, antes de a fixture `paginas_falsas` trocá-lo no módulo
     format_summary,
     list_pdfs,
     main,
@@ -30,19 +31,23 @@ from batch_helpers import (
     TICKER_MAP,
     Chamadas,
     FakeProvider,
+    fake_narrate,
     fake_process,
 )
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.result import file_sha256
 
+pytestmark = pytest.mark.usefixtures("paginas_falsas")   # PDFs de teste são bytes soltos
+
 
 def rodar(pdf_dir, log_dir, temp_db, chamadas=None, **kw):
     saida = []
+    chamadas = chamadas if chamadas is not None else Chamadas()
     kw.setdefault("mode", SummaryMode.HEURISTIC)
     resumo = run_batch(
         pdf_dir, session_factory=temp_db.factory, ticker_map=TICKER_MAP, log_dir=log_dir,
-        process=fake_process(chamadas if chamadas is not None else Chamadas(),
-                             kw.pop("quebra", ())),
+        process=fake_process(chamadas, kw.pop("quebra", ()), kw.pop("paginas", 3)),
+        narrate=fake_narrate(chamadas, kw.pop("quebra_llm", ()), kw.pop("telemetria", None)),
         out=saida.append, **kw,
     )
     return resumo, saida
@@ -143,6 +148,7 @@ def test_dry_run_nao_grava_e_nao_chama_o_llm(pdf_dir, log_dir, temp_db, file_ses
     assert resumo.counts["novos"] == 2 and resumo.counts["pulados"] == 1
     assert contagem(file_session, Company) == 0 and contagem(file_session, Report) == 0
     assert {modo for _, modo, _ in chamadas} == {SummaryMode.HEURISTIC}   # nunca LLM
+    assert chamadas.llm == []
     assert all(provider is None for _, _, provider in chamadas)
     assert any("(dry-run)" in linha for linha in saida)
     assert all(x["dry_run"] for x in ler_log(resumo.log_path) if x.get("status") == "novo")
@@ -190,6 +196,177 @@ def test_comunicado_e_pulado_pelo_nome_sem_chamar_o_pipeline(pdf_dir, log_dir, t
     rec = next(x for x in ler_log(resumo.log_path) if x.get("file") == "comunicado_petr3_33064.pdf")
     assert rec["status"] == "pulado" and rec["reason"] == "tipo não periódico"
     assert rec["sources"] == {"report_type": "filename"} and rec["hash"]
+
+
+class ProviderComTelemetria(FakeProvider):
+    """Como o OllamaProvider: expõe `last_stats` com o que o client registrou."""
+
+    def __init__(self, stats=None):
+        self.last_stats = dict(stats or {})
+
+
+# --- pré-filtro: nome + nº de páginas ---------------------------------------------------
+
+def test_comunicado_longo_nao_e_pulado_pelo_nome_e_o_conteudo_decide(
+        pdf_dir, log_dir, temp_db, file_session):
+    nome = "comunicado_petr3_3T25.pdf"            # PDF de 24 páginas, não um comunicado de verdade
+    (pdf_dir / nome).write_bytes(b"teleconferencia de resultados")
+    chamadas = Chamadas()
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, chamadas, page_counter=lambda p: 24, paginas=24)
+
+    assert nome in chamadas.arquivos()
+    rec = next(x for x in ler_log(resumo.log_path) if x.get("file") == nome)
+    assert rec["status"] == "novo" and rec["pages"] == 24
+    assert rec["sources"]["report_type"] == "content" and rec["warnings"] == []
+
+
+def test_pdf_acima_do_teto_e_pulado_antes_de_parsear(pdf_dir, log_dir, temp_db):
+    chamadas = Chamadas()
+    resumo, saida = rodar(pdf_dir, log_dir, temp_db, chamadas,
+                          page_counter=lambda p: 237 if p.name == PETRO else 3)
+
+    assert PETRO not in chamadas.arquivos()                       # nem foi parseado
+    assert resumo.skip_reasons["documento muito longo"] == 1
+    rec = next(x for x in ler_log(resumo.log_path) if x.get("file") == PETRO)
+    assert rec["status"] == "pulado" and rec["pages"] == 237 and rec["hash"]
+    assert rec["reason"] == "documento muito longo: 237 páginas (máx. 150)"
+    assert any("documento muito longo" in linha for linha in saida)
+
+
+def test_max_pages_e_parametro_e_zero_desliga_o_teto(pdf_dir, log_dir, temp_db):
+    chamadas = Chamadas()
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, chamadas, page_counter=lambda p: 900, max_pages=0)
+    assert resumo.counts["pulados"] == 1 and PETRO in chamadas.arquivos()    # só EARN (sem empresa)
+
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, Chamadas(), page_counter=lambda p: 3,
+                      max_pages=2, force=True)
+    assert resumo.counts["pulados"] == 3 and resumo.counts["novos"] == 0
+    assert ler_log(resumo.log_path)[0]["max_pages"] == 2
+
+
+def test_type_do_cli_nao_desliga_o_teto_de_paginas(pdf_dir, log_dir, temp_db):
+    from resumo.result import ReportType
+    chamadas = Chamadas()
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, chamadas, page_counter=lambda p: 200,
+                      overrides=Overrides(report_type=ReportType.ITR))
+    assert chamadas == [] and resumo.skip_reasons["documento muito longo"] == 3
+
+
+def test_skip_por_hash_vem_antes_e_nao_abre_o_pdf(pdf_dir, log_dir, temp_db):
+    rodar(pdf_dir, log_dir, temp_db)                              # grava CEMIG e PETRO
+
+    def contador(pdf):
+        assert pdf.name == EARN, f"abriu {pdf.name}, que já estava no banco"
+        return 3
+
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, page_counter=contador)
+    assert resumo.counts["falhas"] == 0
+    assert resumo.skip_reasons["já processado (hash e versões atuais)"] == 2
+
+
+def test_pdf_ilegivel_na_contagem_de_paginas_e_falha_so_dele(tmp_path, log_dir, temp_db):
+    import pymupdf
+    d = tmp_path / "reais"
+    d.mkdir()
+    doc = pymupdf.open()                                  # um PDF de verdade, de 1 página
+    doc.new_page()
+    doc.save(d / CEMIG)
+    doc.close()
+    (d / "Corrompido PETR3 3T25.pdf").write_bytes(b"isto nao e um pdf")
+
+    resumo = run_batch(d, SummaryMode.HEURISTIC, session_factory=temp_db.factory,
+                       ticker_map=TICKER_MAP, log_dir=log_dir, process=fake_process(Chamadas()),
+                       page_counter=count_pages, out=lambda _: None)      # contador real
+
+    assert (resumo.counts["novos"], resumo.counts["falhas"]) == (1, 1) and resumo.exit_code == 1
+    falha = next(x for x in ler_log(resumo.log_path) if x.get("status") == "falha")
+    assert falha["file"] == "Corrompido PETR3 3T25.pdf" and "Traceback" in falha["traceback"]
+
+
+def test_count_pages_le_o_cabecalho_do_pdf(tmp_path):
+    import pymupdf
+    doc = pymupdf.open()
+    for _ in range(4):
+        doc.new_page()
+    doc.save(tmp_path / "quatro.pdf")
+    doc.close()
+    assert count_pages(tmp_path / "quatro.pdf") == 4
+
+
+# --- ordem: o LLM só depois de identificar ------------------------------------------------
+
+def test_llm_so_roda_para_o_que_foi_identificado(pdf_dir, log_dir, temp_db, file_session):
+    chamadas = Chamadas()
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, chamadas, mode=SummaryMode.LLM,
+                      provider=FakeProvider())
+
+    assert sorted(chamadas.llm) == sorted([CEMIG, PETRO])        # EARN: empresa não identificada
+    assert set(chamadas.arquivos()) == {CEMIG, PETRO, EARN}      # mas foi parseado
+    assert {modo for _, modo, _ in chamadas} == {SummaryMode.HEURISTIC}   # process é só heurística
+    por_arquivo = {x["file"]: x for x in ler_log(resumo.log_path) if x["event"] == "file"}
+    assert "llm_s" in por_arquivo[CEMIG] and "llm_s" not in por_arquivo[EARN]
+    assert resumo.counts["novos"] == 2
+
+
+def test_pdf_pulado_nao_gasta_llm_nem_com_override_invalido_depois(pdf_dir, log_dir, temp_db):
+    # comunicado curto: pulado no pré-filtro, nunca chega ao parse nem ao LLM
+    (pdf_dir / "comunicado_petr3_33064.pdf").write_bytes(b"evento")
+    chamadas = Chamadas()
+    rodar(pdf_dir, log_dir, temp_db, chamadas, mode=SummaryMode.LLM, provider=FakeProvider())
+    assert "comunicado_petr3_33064.pdf" not in chamadas.arquivos() + chamadas.llm
+
+
+def test_falha_do_llm_e_falha_so_daquele_pdf_e_nao_grava(pdf_dir, log_dir, temp_db, file_session):
+    resumo, saida = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,
+                          provider=FakeProvider(), quebra_llm={PETRO})
+
+    assert (resumo.counts["novos"], resumo.counts["falhas"]) == (1, 1) and resumo.exit_code == 1
+    assert contagem(file_session, Report) == 1                  # nada gravado pela metade
+    falha = next(x for x in ler_log(resumo.log_path) if x.get("status") == "falha")
+    assert falha["file"] == PETRO and falha["error_type"] == "ValueError"
+    assert "parse_s" in falha and "llm_s" in falha               # onde o tempo foi, mesmo na falha
+
+
+def test_log_registra_paginas_e_tempo_de_parse(pdf_dir, log_dir, temp_db):
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db)
+    cemig = next(x for x in ler_log(resumo.log_path) if x.get("file") == CEMIG)
+    assert cemig["pages"] == 3 and cemig["parse_s"] >= 0
+    assert "llm_s" not in cemig and "llm" not in cemig           # modo heurístico: sem LLM
+
+
+def test_log_traz_telemetria_do_provedor_e_retry_vira_aviso(pdf_dir, log_dir, temp_db):
+    stats = {"prompt_chars": 17585, "attempts": 2, "eval_count": 610,
+             "retry_errors": ["Ollama retornou HTTP 500: llama-server process has terminated"]}
+    provider = ProviderComTelemetria()
+    resumo, saida = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,
+                          provider=provider, telemetria=stats)
+
+    cemig = next(x for x in ler_log(resumo.log_path) if x.get("file") == CEMIG)
+    assert cemig["llm"] == stats and cemig["llm"] is not provider.last_stats   # cópia no log
+    assert any("2 tentativas" in w and "HTTP 500" in w for w in cemig["warnings"])
+    assert resumo.counts["avisos"] >= 2 and resumo.counts["novos"] == 2
+    assert any("2 tentativas" in linha for linha in saida)       # retry não é silencioso
+
+
+def test_telemetria_do_llm_fica_no_log_mesmo_quando_o_llm_falha(pdf_dir, log_dir, temp_db):
+    stats = {"prompt_chars": 20000, "attempts": 2, "retry_errors": ["HTTP 500: crash"]}
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,
+                      provider=ProviderComTelemetria(), quebra_llm={CEMIG}, telemetria=stats)
+
+    falha = next(x for x in ler_log(resumo.log_path) if x.get("status") == "falha")
+    assert falha["llm"]["prompt_chars"] == 20000 and falha["llm"]["attempts"] == 2
+
+
+def test_telemetria_de_um_pdf_nao_vaza_para_o_log_do_seguinte(pdf_dir, log_dir, temp_db):
+    # o provedor guarda a telemetria da última chamada; uma falha antes de o client
+    # rodar não pode herdar a do PDF anterior
+    sobra = {"prompt_chars": 99999, "attempts": 3, "retry_errors": ["do PDF anterior"]}
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,
+                      provider=ProviderComTelemetria(sobra), quebra_llm={CEMIG, PETRO})
+
+    falhas = [x for x in ler_log(resumo.log_path) if x.get("status") == "falha"]
+    assert len(falhas) == 2 and all("llm" not in x for x in falhas)
+    assert all("tentativas" not in w for x in falhas for w in x.get("warnings", []))
 
 
 def test_type_do_cli_desliga_o_prefiltro(pdf_dir, log_dir, temp_db):
@@ -289,6 +466,19 @@ def test_main_pasta_sem_pdf_avisa_e_sai_com_0(tmp_path, log_dir, capsys):
     vazia.mkdir()
     assert main(args(vazia, log_dir)) == 0
     assert "nenhum PDF" in capsys.readouterr().err
+
+
+def test_main_max_pages_negativo_sai_com_2(pdf_dir, log_dir, capsys):
+    assert main(args(pdf_dir, log_dir, "--max-pages", "-1")) == 2
+    assert "--max-pages" in capsys.readouterr().err
+
+
+def test_main_repassa_max_pages_ao_lote(pdf_dir, log_dir, capsys):
+    chamadas = Chamadas()
+    # o contador falso dá 3 páginas a cada PDF: com teto 2, todos são pulados
+    assert main(args(pdf_dir, log_dir, "--max-pages", "2"), process=fake_process(chamadas)) == 0
+    assert chamadas == []
+    assert "documento muito longo: 3" in capsys.readouterr().out
 
 
 @pytest.mark.parametrize("extra", [["--ticker", "XX"], ["--period", "9T99"]])

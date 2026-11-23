@@ -8,6 +8,7 @@ Ela não toca no banco e não decide nada sozinha: o modo vem por parâmetro.
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from pathlib import Path
 from typing import Optional
 
@@ -28,6 +29,24 @@ from resumo.result import (
     file_sha256,
 )
 from resumo.summarizer.validator import InputValidator
+
+
+def attach_llm_summary(
+    result: ReportResult, payload: dict, provider: LLMProvider
+) -> ReportResult:
+    """Acrescenta o resumo narrativo (LLM) a um resultado já montado.
+
+    É o passo caro (minutos por PDF). O batch o chama só depois de identificar o
+    relatório, para não gastar LLM em PDF que a identificação vai descartar.
+    Lança `LLMError` se o provedor falhar; nada é devolvido pela metade."""
+    record = SummaryRecord(
+        method=SummaryMode.LLM,
+        model=provider.name,
+        prompt_version=PROMPT_VERSION,
+        content=summarize_llm(payload, provider),
+        content_format="markdown",
+    )
+    return replace(result, summaries=(*result.summaries, record))
 
 
 def process_document(
@@ -82,17 +101,6 @@ def process_document(
             content_format="json",
         )
     ]
-    if mode is SummaryMode.LLM:
-        summaries.append(
-            SummaryRecord(
-                method=SummaryMode.LLM,
-                model=provider.name,
-                prompt_version=PROMPT_VERSION,
-                content=summarize_llm(payload, provider),
-                content_format="markdown",
-            )
-        )
-
     result = ReportResult(
         company=CompanyRef(
             name=meta.get("company_name"),
@@ -109,4 +117,6 @@ def process_document(
         keypoints=keypoints,
         summaries=tuple(summaries),
     )
+    if mode is SummaryMode.LLM:
+        result = attach_llm_summary(result, payload, provider)
     return result, payload

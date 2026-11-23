@@ -55,6 +55,14 @@ def _database_url_isolado(tmp_path, monkeypatch):
     )
 
 
+@pytest.fixture
+def paginas_falsas(monkeypatch):
+    """Os testes do batch gravam bytes soltos como se fossem PDF; o contador real
+    (pymupdf) falharia neles. Troca por um que devolve 3 páginas. Testes que
+    precisam de um número específico passam `page_counter=` ao `run_batch`."""
+    monkeypatch.setattr("batch.run.count_pages", lambda pdf: 3)
+
+
 @dataclass(frozen=True)
 class TempDb:
     url: str
