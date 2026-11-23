@@ -13,6 +13,10 @@ class IncompleteResultError(DatabaseError):
         super().__init__("ReportResult incompleto, falta: " + ", ".join(missing))
 
 
+class CompanyConflictError(DatabaseError):
+    """CNPJ, ticker e nome apontam para empresas diferentes (ou o CNPJ diverge)."""
+
+
 class InvalidCnpjError(DatabaseError):
     """CNPJ que, sem máscara, não tem 14 dígitos."""
 

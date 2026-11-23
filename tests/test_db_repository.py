@@ -4,9 +4,10 @@ import pytest
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 
-from db.errors import IncompleteResultError, InvalidCnpjError
+from db.errors import CompanyConflictError, IncompleteResultError, InvalidCnpjError
 from db.models import Asset, Company, Keypoint, Report, Summary
 from db.repository import (
+    find_company,
     find_report,
     find_report_by_hash,
     get_or_create_company,
@@ -77,6 +78,42 @@ def test_acha_empresa_por_cnpj_e_preenche_cnpj_faltante(session):
 def test_sem_nome_usa_ticker_como_nome(session):
     c = get_or_create_company(session, CompanyRef(None, "t", "VALE3"))
     assert c.name == "VALE3"
+
+
+@pytest.mark.parametrize("variante", ["CEMIG", "cemig", "Cemig S.A.", " Cemig  S/A "])
+def test_acha_empresa_por_nome_normalizado(session, variante):
+    a = get_or_create_company(session, CompanyRef("Cemig", "t"))
+    b = get_or_create_company(session, CompanyRef(variante, "t"))
+    assert a.id == b.id and _count(session, Company) == 1
+
+
+def test_apelido_nao_casa_por_nome_mas_casa_por_ticker(session):
+    a = get_or_create_company(session, CompanyRef("Cemig", "t", "CMIG4"))
+    outra = get_or_create_company(session, CompanyRef("Cia Energética de Minas Gerais", "t"))
+    assert outra.id != a.id                      # limite documentado do nome
+    c = get_or_create_company(session, CompanyRef("Cia Energética de Minas Gerais", "t", "CMIG4"))
+    assert c.id == a.id                          # o ticker resolve
+
+
+def test_find_company_nao_cria_nada(session):
+    assert find_company(session, CompanyRef("Cemig", "t", "CMIG4")) is None
+    assert _count(session, Company) == 0 and _count(session, Asset) == 0
+
+
+def test_cnpj_divergente_lanca_conflito_e_nao_altera(session):
+    a = get_or_create_company(session, CompanyRef("Cemig", "t", "CMIG4", "11111111000111"))
+    with pytest.raises(CompanyConflictError):
+        get_or_create_company(session, CompanyRef("Cemig", "t", None, "22222222000122"))
+    assert a.cnpj == "11111111000111" and _count(session, Company) == 1
+
+
+def test_ticker_de_outra_empresa_lanca_conflito(session):
+    get_or_create_company(session, CompanyRef("Cemig", "t", "CMIG4", "11111111000111"))
+    get_or_create_company(session, CompanyRef("Gerdau", "t", "GGBR4", "22222222000122"))
+    # CNPJ da Gerdau, mas ticker da Cemig
+    with pytest.raises(CompanyConflictError):
+        get_or_create_company(session, CompanyRef("Gerdau", "t", "CMIG4", "22222222000122"))
+    assert _count(session, Asset) == 2
 
 
 # --- consultas --------------------------------------------------------------

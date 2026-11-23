@@ -12,8 +12,9 @@ import re
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from db.errors import IncompleteResultError, InvalidCnpjError
+from db.errors import CompanyConflictError, IncompleteResultError, InvalidCnpjError
 from db.models import Asset, Company, Keypoint, Report, Summary
+from db.normalize import normalize_name
 from resumo.result import CompanyRef, ReportResult
 
 
@@ -29,30 +30,58 @@ def normalize_cnpj(raw: str | None) -> str | None:
     return digits
 
 
-def get_or_create_company(
-    session: Session, ref: CompanyRef, kind: str = "ACAO"
-) -> Company:
-    """Acha a empresa por CNPJ, depois por ticker, depois por nome; senão cria.
-    Um ticker novo numa empresa já existente cria só o `asset`."""
+def find_company(session: Session, ref: CompanyRef) -> Company | None:
+    """Só consulta (não cria nada). Ordem: CNPJ, ticker, nome normalizado.
+    Lança InvalidCnpjError se o CNPJ do `ref` for inválido."""
     cnpj = normalize_cnpj(ref.cnpj)
-    company = None
     if cnpj:
         company = session.scalar(select(Company).where(Company.cnpj == cnpj))
-    if company is None and ref.ticker:
+        if company is not None:
+            return company
+    if ref.ticker:
         company = session.scalar(
             select(Company).join(Asset).where(Asset.ticker == ref.ticker)
         )
-    if company is None and ref.name:
-        company = session.scalar(select(Company).where(Company.name == ref.name))
+        if company is not None:
+            return company
+    if ref.name:
+        return session.scalar(
+            select(Company).where(Company.name_normalized == normalize_name(ref.name))
+        )
+    return None
+
+
+def get_or_create_company(
+    session: Session, ref: CompanyRef, kind: str = "ACAO"
+) -> Company:
+    """Acha a empresa (ver `find_company`); senão cria. Um ticker novo numa
+    empresa já existente cria só o `asset`.
+
+    Identificadores que se contradizem (CNPJ diferente do já gravado, ticker que
+    pertence a outra empresa) lançam CompanyConflictError: casar em silêncio com
+    uma das duas empresas esconderia o erro."""
+    cnpj = normalize_cnpj(ref.cnpj)
+    company = find_company(session, ref)
 
     if company is None:
         company = Company(name=ref.name or ref.ticker, cnpj=cnpj, kind=kind)
         session.add(company)
         session.flush()
+    elif cnpj and company.cnpj and company.cnpj != cnpj:
+        raise CompanyConflictError(
+            f"CNPJ {cnpj} diverge do CNPJ {company.cnpj} da empresa "
+            f"{company.name!r} (casada por ticker/nome)"
+        )
     elif cnpj and not company.cnpj:
         company.cnpj = cnpj
 
     if ref.ticker and not any(a.ticker == ref.ticker for a in company.assets):
+        dono = session.scalar(select(Asset).where(Asset.ticker == ref.ticker))
+        if dono is not None:  # existe, mas não é desta empresa
+            raise CompanyConflictError(
+                f"ticker {ref.ticker} já pertence a outra empresa "
+                f"(id {dono.company_id}); esta é {company.name!r}"
+            )
         session.add(Asset(company_id=company.id, ticker=ref.ticker))
         session.flush()
         session.refresh(company, ["assets"])
