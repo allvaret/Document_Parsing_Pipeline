@@ -268,8 +268,28 @@ antes de começar (falha cedo).
   - *Data de publicação no nome* → trimestre de referência pela tabela
     `PUBLICATION_MONTH_TO_QUARTER` (1T sai em abr/mai, 2T em jul/ago, 3T em out/nov, 4T
     entre jan e mar do ano seguinte), sempre marcado `inferred`.
-  - *Pré-filtro pelo nome:* `comunicado*` e `fato relevante*` são pulados **antes** de
-    parsear (`prefilter_skip_reason`); `--type` no CLI desliga o pré-filtro.
+  - *Pré-filtro pelo nome e pelo tamanho (revisado em 23/11, após o 1º lote real em
+    LLM):* `comunicado*` e `fato relevante*` só são pulados **antes** de parsear se o PDF
+    for curto (até 10 páginas, `MAX_EVENT_PAGES`); `--type` desliga só essa regra. Além
+    disso, PDF com mais de 150 páginas (`MAX_PAGES`, `--max-pages N`, `0` = sem limite) é
+    pulado como `documento muito longo`, com ou sem `--type`. *Por quê:* os dois
+    "comunicados" dos 5 PDFs eram, na verdade, o Relatório da Administração 2025 da
+    Petrobras (237 págs) e a Teleconferência de Resultados 3T25 da Marcopolo (24 págs):
+    `comunicado_` é rótulo da origem, não a natureza do documento. O nº de páginas vem do
+    cabeçalho do PDF (`count_pages`, sem texto e sem spaCy) e é lido **depois** do SKIP
+    por hash, que continua sem abrir o PDF. Limitação: o 24 págs da Marcopolo agora é
+    parseado, mas cai em `tipo não identificado` (ver backlog) e pede `--type`.
+  - *Ordem do batch (revisada em 23/11):* o `process_document` roda só a heurística; o
+    `identify` vem em seguida e o LLM (`attach_llm_summary`) só roda para o PDF que foi
+    identificado e vai ser gravado. Antes, o narrativo (2–3 min por PDF) era gerado antes
+    da identificação, que podia descartar o PDF. No `--dry-run` nada muda (nunca há LLM).
+  - *Log por PDF (23/11):* além de arquivo, hash, fontes e duração total, registra
+    `pages`, `parse_s`, `llm_s` e, no modo llm, `llm` com a telemetria do Ollama
+    (`prompt_chars`, `attempts`, `retry_errors`, `prompt_eval_count`, `eval_count`,
+    `load_s`, `total_s`), inclusive quando a chamada falha. Responde "onde o tempo foi?".
+  - *Retry no LLM (23/11):* HTTP 500/502/503/504 do Ollama é repetido 1 vez após 5 s (o
+    runner que morreu sobe de novo). Timeout, conexão recusada e 4xx **não** repetem. O
+    retry que deu certo vira aviso no log e no console; nunca é silencioso.
   - `Desempenho Financeiro …` continua `tipo não identificado`: usar `--type
     EARNINGS_RELEASE` na pasta; o nome sozinho não é prova.
 - **`stdout`/`stderr` com `errors="replace"`:** console legado (ASCII/cp437) não
@@ -457,7 +477,9 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
   Windows). Renormaliza os arquivos num commit `chore:` próprio.
 - `value_numeric` nos keypoints. Pode esperar: o `value_text` está gravado, então
   dá para preencher depois direto do banco, sem reprocessar PDFs.
-- Retry com backoff no provedor de LLM.
+- Retry com **backoff** no provedor de LLM. *Feito um mínimo (23/11):* 1 nova tentativa,
+  espera fixa de 5 s, só em HTTP 500/502/503/504. Falta backoff crescente, número de
+  tentativas configurável pela CLI e decidir se vale repetir após timeout.
 - Retomar usuário/carteira do schema legado.
 - Índices de busca/ordenação antes de escalar (1000+ empresas): `company.name`
   e busca por prefixo/`LIKE` (no Postgres, `pg_trgm`). A listagem por empresa já
@@ -466,3 +488,63 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
 - `Literal`/enums do domínio nos campos controlados do ORM e mypy no CI (os
   `CHECK` do banco já barram valores inválidos).
 - Trocar `session.refresh` por `append` em `get_or_create_company`.
+
+### Achados do 1º lote real em modo LLM (23/11) — registrados, **não** implementados
+
+Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e 128 s),
+2 pulados pelo pré-filtro (hoje corrigido, ver Fase 3) e 1 falha do Ollama.
+
+- **Tipo pelo conteúdo.** `extract_report_type` (`build_section.py`) procura a palavra-chave
+  em qualquer ponto do texto e devolve a primeira na ordem do dicionário. A press release
+  da Cemig saiu como `FORMULARIO_REFERENCIA` (aviso de conflito no log); o PDF cita "Formulário
+  de Referência arquivado na CVM" na nota de riscos, que é o suspeito mais provável (**hipótese**:
+  não confirmei qual trecho do texto a função recebe). Caminhos: limitar à capa/primeiras
+  páginas, ou pontuar por posição e frequência. Hoje o nome do arquivo mascara o erro.
+- **Empresa e período pela capa.** A heurística de capa (`capa_lines`) devolveu "Teleconferência |
+  Webcast" para a Cemig, e o período do conteúdo veio vazio apesar de "1T26 Destaques do
+  Trimestre" na página 1. São as funções do modo heurístico, reaproveitadas no `identify`; o
+  conteúdo só deve ganhar prioridade quando isso melhorar.
+- **Tipos de documento que faltam.** Teleconferência/apresentação de resultados (Marcopolo
+  3T25 e 9M25) e Relatório da Administração/relatório anual não têm palavra-chave nem valor em
+  `ReportType`: caem em `OUTRO` e viram `tipo não identificado`, exigindo `--type`. Decidir:
+  novos valores (`CHECK` no `schema.sql` + paridade do ORM) ou mapear para
+  `EARNINGS_RELEASE`/`DFP`.
+- **Nome do arquivo x natureza.** `comunicado_<ticker>_<id>.pdf` parece rótulo da origem
+  (portal/scraper). O scraper da v1.1 deve entregar a categoria real (fonte 1 da
+  identificação); até lá vale a regra de tamanho. O texto da "Decisão de abertura" da Fase 3
+  (comunicado com protocolo da CVM no nome) vale só para eventos de verdade, que são curtos.
+- **Documentos longos.** Acima de 150 páginas o PDF é pulado. Processá-los exigiria escolher
+  seções ou dividir o documento para caber no contexto; avaliar se compensa.
+- **Crash do `llama-server` (`0xc0000409`, `STATUS_STACK_BUFFER_OVERRUN`).**
+  `Desempenho Financeiro Petrobras 3T25.pdf` (44 págs) falhou aos 40 s com HTTP 500. Foi a
+  1ª chamada ao LLM do lote, e as duas seguintes passaram com as mesmas opções; o
+  `_sections.json` dele (17,6 KB) não é maior que os dos que passaram (17,4 e 22,5 KB, de
+  execuções antigas). Hipóteses: crash na carga/1ª inferência com `num_ctx=12288` e
+  `num_gpu=18` fixos (GTX 1650 4 GB), ou algo do conteúdo desse payload. Roteiro: rodar só
+  esse arquivo de novo; ler `%LOCALAPPDATA%\Ollama\server.log` (foi na carga ou no
+  decode?); testar `num_ctx=8192` e sem `num_gpu`; usar `llm.prompt_chars` e
+  `prompt_eval_count` do log novo. O retry de 1 tentativa cobre "o runner caiu e sobe de
+  novo", mas não explica a causa. **Evidência do lote seguinte (com `--type`):** o mesmo
+  Petrobras passou (125 s; `prompt_eval_count` 8726; `load_s` 0,04) e a 1ª chamada do lote
+  (Marcopolo) teve `load_s` de 49 s. Coerente com crash na carga a frio (o crash
+  aconteceu aos 40 s), mas **não confirmado**. Também medir a latência de 128–174 s por documento
+  (`ollama ps` mostra o split CPU/GPU).
+- **Números no narrativo.** A decisão 2 (número nunca passa pelo LLM) vale para os
+  keypoints, mas o narrativo cita números e o modelo de 3B erra: um resumo antigo da
+  Marcopolo trazia receita "+310,3%" e "recuperação após a pandemia" para 2025 (suspeito,
+  **não conferido** com o PDF). Conferir os números citados contra os keypoints e sinalizar
+  a divergência no log.
+- **Classificar o `Desempenho Financeiro …`.** Sem palavra no nome e sem palavra-chave no
+  conteúdo, ele só entra com `--type EARNINGS_RELEASE`. Com a nova ordem, isso é descoberto
+  **antes** do LLM (sem gastar 40 s a 3 min).
+- **Contexto do LLM.** O log novo mostra ~2 caracteres por token nesses payloads (muito
+  número e tabela): 17.947 caracteres viraram 8.726 tokens, 71% do `num_ctx` de 12.288. Um
+  payload maior (o do Cemig tinha 22,5 KB numa execução antiga) pode estourar o contexto, e
+  pelo que sei o Ollama trunca o prompt sem erro, o que degradaria o resumo sem aviso.
+  Proposta: avisar no log quando `prompt_eval_count` passar de ~90% do `num_ctx`, e/ou
+  limitar o payload por tokens, não por caracteres. **Não verificado** no Cemig.
+- **Tempo por documento.** Cada resumo leva 2 a 3 min (prompt de 5,5 a 8,7 mil tokens e
+  ~420 tokens gerados, `num_gpu=18`), mas o log ainda não separa avaliação do prompt de
+  geração: guarda as contagens, não `prompt_eval_duration` e `eval_duration`, que o Ollama
+  devolve. Acrescentá-las ao `stats` do client é barato e diz se compensa encurtar o
+  payload ou mexer na geração.
