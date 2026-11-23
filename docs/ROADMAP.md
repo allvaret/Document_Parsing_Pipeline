@@ -248,8 +248,33 @@ antes de começar (falha cedo).
   - `Desempenho Financeiro Petrobras 3T25.pdf` → pulado: `tipo não identificado`.
   - Os 2 comunicados foram pulados como `tipo não periódico`, mas só **depois** de
     parsear o PDF inteiro (até 68 s com o spaCy frio), e de novo a cada rodada.
-  Pendente de decisão: prioridade das fontes (conteúdo × arquivo) para empresa e tipo,
-  keyword de tipo no arquivo ("desempenho") e pré-filtro por nome de arquivo.
+  **Resolvido** (decisões abaixo); rodando de novo nos mesmos 5 PDFs: Cemig correta
+  (`Cemig · EARNINGS_RELEASE · 1T26`), BR Partners em `3T25` sem conflito, comunicados
+  pulados em 0,04 s (antes 68 s).
+- **Prioridade das fontes por campo (decidido após a validação real):**
+  - *Empresa:* cli > ticker/nome do arquivo que exista no `ticker_map` > conteúdo. O
+    `ticker_map` é a base curada; a capa (heurística) só entra se o mapa não casar
+    nada. O que o conteúdo achou vai para o log (`content`), sem inflar os avisos.
+  - *Tipo:* cli > palavra explícita no nome do arquivo (`release`, `itr`, `dfp`) >
+    conteúdo. Conflito vira aviso. *Por quê:* a palavra no nome é deliberada; a busca
+    de palavra-chave no texto classificou a press release da Cemig como Formulário de
+    Referência.
+  - *Período:* cli > conteúdo > arquivo, **depois de normalizar** pela tabela
+    tradutiva `PERIOD_EQUIVALENCE`: `3M→1T`, `6M→2T`, `9M→3T`, `12M→4T`, `1S→2T`,
+    `2S→4T`. "9M25" (nove meses acumulados) e "3T25" fecham em setembro e são o mesmo
+    relatório. Meses que não fecham trimestre (`7M`) ficam como vieram (resumos
+    mensais de FII, a tratar). Armadilha: `1S26` e `2T26` viram a mesma chave; o
+    `report_type` na chave única separa colisões reais.
+  - *Data de publicação no nome* → trimestre de referência pela tabela
+    `PUBLICATION_MONTH_TO_QUARTER` (1T sai em abr/mai, 2T em jul/ago, 3T em out/nov, 4T
+    entre jan e mar do ano seguinte), sempre marcado `inferred`.
+  - *Pré-filtro pelo nome:* `comunicado*` e `fato relevante*` são pulados **antes** de
+    parsear (`prefilter_skip_reason`); `--type` no CLI desliga o pré-filtro.
+  - `Desempenho Financeiro …` continua `tipo não identificado`: usar `--type
+    EARNINGS_RELEASE` na pasta; o nome sozinho não é prova.
+- **`stdout`/`stderr` com `errors="replace"`:** console legado (ASCII/cp437) não
+  codifica "—" nem acentos; sem isso o batch caía com `UnicodeEncodeError` no meio
+  do lote (reproduzido em teste).
 - **Achados no parser (não alterados, ou corrigidos à parte):**
   - *Corrigido:* `extract_report_type` casava `"itr"` como substring ("arbitragem",
     "vitrine"); "Fato Relevante: arbitragem" virava ITR. Agora palavra inteira.
