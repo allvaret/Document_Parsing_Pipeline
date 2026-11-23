@@ -216,6 +216,24 @@ antes de começar (falha cedo).
   - *Data no nome:* fim de trimestre = aquele trimestre; outra data = publicação →
     trimestre anterior, marcado como `inferred` e logado.
   - Sem `origin` (scraper) ainda: o lugar na cadeia está reservado e documentado.
+- **Passo d (`src/batch/run.py`) feito.** Decisões, com o porquê:
+  - *Código de saída:* 0 ok, 1 houve falha em algum PDF, 2 não conseguiu começar
+    (pasta inexistente, `--ticker`/`--period` inválido, Ollama off, lock ativo, banco
+    desatualizado). Pasta sem PDF avisa e sai com 0.
+  - *Aviso de identificação* (mesmo hash, outra empresa/tipo/período) conta como
+    **pulado** + `avisos`, não como falha: o dado no banco está íntegro e o log diz o
+    que mudou.
+  - *`--dry-run` roda o pipeline só no modo heurístico*, mesmo com `--mode llm`:
+    identifica e mostra o que faria, sem gravar e sem gastar o LLM.
+  - *Banco:* o caminho padrão é absoluto, a partir da raiz do projeto, e é impresso na
+    primeira linha. `ensure_schema_current` falha cedo (código 2) listando as colunas
+    que faltam, em vez de todo PDF falhar com `no such column`.
+  - *Log:* um JSONL por execução em `logs/batch/` (`start`, uma linha por arquivo com
+    hash, fontes, avisos, resultado/motivo, duração e traceback em falha, e `end` com
+    contagens), gravado linha a linha. `/data/` e `/logs/` entraram no `.gitignore`
+    (com `/` inicial: `data/` sem ele ignoraria `src/resumo/data/ticker_map.json`).
+  - *`except Exception` por PDF é a fronteira do lote* (loga tipo, mensagem e
+    traceback e segue); `KeyboardInterrupt` continua interrompendo.
 - **Achados no parser (não alterados, ou corrigidos à parte):**
   - *Corrigido:* `extract_report_type` casava `"itr"` como substring ("arbitragem",
     "vitrine"); "Fato Relevante: arbitragem" virava ITR. Agora palavra inteira.
