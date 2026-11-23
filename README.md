@@ -197,42 +197,66 @@ The project is organized into three main components:
 
 ### Input
 
-```text
-assets/Earnings Release 3T25.pdf
-```
+[assets/Earnings Release 3T25.pdf](assets/Earnings%20Release%203T25.pdf)
+
 
 ### Generated Section
 
+#### Table example: DRE Gerencial Trimestral 
+* **Confiança da Extração:** Alta (`high`)
+
+| R$ milhões | 3T25 | 2T25 | 3T24 | 3T25 x 2T25 | 3T25 x 3T24 |
+| --- | --- | --- | --- | --- | --- |
+| **Receita Total** | 133,3 | 139,3 | 157,7 | -4,3% | -15,5% |
+| Receita com Clientes | 100,0 | 101,6 | 125,8 | -1,6% | -20,5% |
+| Investment Banking (fees) + CM (fees) | 67,2 | 73,9 | 101,4 | -9,1% | -33,7% |
+| Treasury Sales & Structuring (capital) | 28,7 | 23,9 | 21,3 | 20,3% | 34,9% |
+| Gestão de Patrimônio (fees) | 4,0 | 3,8 | 3,1 | 5,3% | 29,9% |
+| Remuneração do Capital (capital) | 33,3 | 37,7 | 31,9 | -11,5% | 4,3% |
+| **Despesas** | (68,9) | (75,4) | (92,3) | -8,6% | -25,3% |
+| Pessoal | (26,2) | (34,7) | (32,1) | -24,5% | -18,1% |
+| Administrativas | (31,4) | (20,0) | (43,9) | 56,8% | -28,4% |
+| Impostos sobre a receita | (10,2) | (10,9) | (14,7) | -5,9% | -30,6% |
+| Outras | (1,1) | (9,8) | (1,7) | -89,1% | -35,5% |
+| **Resultado Operacional** | 64,4 | 63,9 | 65,4 | 0,8% | -1,6% |
+| IR & CSLL | (22,1) | (18,7) | (15,3) | 18,6% | 44,7% |
+| **Lucro Líquido** | 42,2 | 45,2 | 50,1 | -6,6% | -15,8% |
+
+<details>
+<summary> Visualizar JSON de Origem</summary>
+
 ```json
 {
-    "title": "DRE Gerencial Trimestral",
-    "page": 9,
-    "confidence": "high",
-    "content": [
-      {
-        "type": "table",
-        "confidence": "high",
-        "markdown": "| R$ milhões | 3T25 | 2T25 | 3T24 | 3T25 x 2T25 | 3T25 x 3T24 |\n"...
-    ]
-  }
+  "title": "DRE Gerencial Trimestral",
+  "page": 9,
+  "confidence": "high",
+  "content": [
+    {
+      "type": "table",
+      "confidence": "high",
+      "markdown": "| R$ milhões | 3T25 | 2T25 | 3T24 | 3T25 x 2T25 | 3T25 x 3T24 |\n| --- | --- | --- | --- | --- | --- |\n| Receita Total | 133,3 | 139,3 | 157,7 | -4,3% | -15,5% |\n| Receita com Clientes | 100,0 | 101,6 | 125,8 | -1,6% | -20,5% |\n| Investment Banking (fees) + CM (fees) | 67,2 | 73,9 | 101,4 | -9,1% | -33,7% |\n| Treasury Sales & Structuring (capital) | 28,7 | 23,9 | 21,3 | 20,3% | 34,9% |\n| Gestão de Patrimônio (fees) | 4,0 | 3,8 | 3,1 | 5,3% | 29,9% |\n| Remuneração do Capital (capital) | 33,3 | 37,7 | 31,9 | -11,5% | 4,3% |\n| Despesas | (68,9) | (75,4) | (92,3) | -8,6% | -25,3% |\n| Pessoal | (26,2) | (34,7) | (32,1) | -24,5% | -18,1% |\n| Administrativas | (31,4) | (20,0) | (43,9) | 56,8% | -28,4% |\n| Impostos sobre a receita | (10,2) | (10,9) | (14,7) | -5,9% | -30,6% |\n| Outras | (1,1) | (9,8) | (1,7) | -89,1% | -35,5% |\n| Resultado Operacional | 64,4 | 63,9 | 65,4 | 0,8% | -1,6% |\n| IR & CSLL | (22,1) | (18,7) | (15,3) | 18,6% | 44,7% |\n| Lucro Líquido | 42,2 | 45,2 | 50,1 | -6,6% | -15,8% |"
+    }
+  ]
 }
 ```
-
+</details>
+    
 ### Executive Summary
 
 ```text
-### Resumo Executivo
-
 #### Período Principal: 9M25 vs 9M24
 
-**RESULTADO DO PERÍODO**
-- **Receita Total**: R$ 400,1 milhões (-8,5% em relação a 9M24)
-- **Lucro Líquido**: R$ 130,5 milhões (-13,9% em relação a 9M24)
-- **Margem Líquida**: 32,6% (de -2,0 pontos percentuais em relação a 9M24)
+**Resultado do Período:** O resultado financeiro da empresa mostrou uma receita total de R$ 400,1 milhões (-8,5% em relação ao 9M24), lucro líquido de R$ 130,5 milhões (-13,9% em relação ao 9M24) e margem líquida de 32,6% (-2,0 pontos percentuais ou p.p. em relação ao 9M24). A receita com clientes teve uma queda significativa de -10,1%, enquanto a margem líquida apresentou um leve aumento de -2,0 p.p.
 
-**PONTOS DE ATENÇÃO**
-- A principal preocupação é a redução da atividade de M&A no período, que afetou negativamente as receitas e lucros...
-...
+**Pontos de Atenção:** A principal preocupação é a redução da atividade de M&A no período, que afetou negativamente as receitas e lucros. Além disso, o crescimento do volume de emissões de renda fixa no mercado de capitais foi de 11%, apesar da queda na receita com clientes.
+
+**Destaque Positivo:** A evolução positiva do índice de eficiência (45,8% vs. 47,7%) e o aumento do índice de remuneração (23,8% vs. 24,9%) indicam uma melhoria na gestão operacional.
+
+**Contexto de Mercado:** O cenário econômico mostrou um crescimento moderado no mercado de capitais, com volume de emissões aumentando em 11%, embora a taxa Selic tenha diminuído significativamente. No entanto, o mercado de capitais ainda enfrenta desafios relacionados à volatilidade e ao aumento da incerteza macroeconômica.
+
+---
+
+Este resumo sintetiza os principais pontos do relatório financeiro, destacando as variações relevantes em receita total, lucro líquido e margem, assim como os riscos e tendências preocupantes no mercado de capitais.
 
 ```
 
