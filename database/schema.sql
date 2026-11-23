@@ -22,7 +22,11 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS company (
     id            INTEGER PRIMARY KEY,
     name          TEXT    NOT NULL,
-    cnpj          TEXT    UNIQUE,                 -- 14 dígitos, sem máscara
+    -- Chave de busca: db.normalize.normalize_name(name). UNIQUE de propósito:
+    -- duas empresas que normalizam igual são um erro de cadastro a corrigir,
+    -- não uma ambiguidade a escolher.
+    name_normalized TEXT  NOT NULL UNIQUE,
+    cnpj         TEXT    UNIQUE,                 -- 14 dígitos, sem máscara
     cvm_code      TEXT    UNIQUE,                 -- código CVM (dados abertos)
     kind          TEXT    NOT NULL DEFAULT 'ACAO'
                   CHECK (kind IN ('ACAO', 'FII')),

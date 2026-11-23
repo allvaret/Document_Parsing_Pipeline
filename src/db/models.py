@@ -15,9 +15,12 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     UniqueConstraint,
+    event,
     func,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+
+from db.normalize import normalize_name
 
 _NOW = func.current_timestamp()
 
@@ -34,6 +37,8 @@ class Company(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
+    # Preenchido pelos eventos abaixo; ninguém precisa (nem deve) setar à mão.
+    name_normalized: Mapped[str] = mapped_column(unique=True)
     cnpj: Mapped[Optional[str]] = mapped_column(unique=True)
     cvm_code: Mapped[Optional[str]] = mapped_column(unique=True)
     kind: Mapped[str] = mapped_column(server_default="ACAO")
@@ -45,6 +50,13 @@ class Company(Base):
     reports: Mapped[list[Report]] = relationship(
         back_populates="company", cascade="all, delete-orphan", passive_deletes=True
     )
+
+
+@event.listens_for(Company, "before_insert")
+@event.listens_for(Company, "before_update")
+def _sync_name_normalized(mapper, connection, target: Company) -> None:
+    """Mantém name_normalized sempre derivado de name."""
+    target.name_normalized = normalize_name(target.name)
 
 
 class Asset(Base):
