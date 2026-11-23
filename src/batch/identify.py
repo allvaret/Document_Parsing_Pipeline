@@ -132,10 +132,13 @@ def ticker_from_filename(filename: str, ticker_map: dict) -> Optional[str]:
     return None
 
 
-def name_from_filename(filename: str, ticker_map: dict) -> Optional[str]:
-    """Nome da empresa no arquivo, SE existir no ticker_map (compara normalizado).
-    Devolve o nome canônico do mapa. Sobra de arquivo não conta."""
-    canonico = {normalize_name(v): v for v in ticker_map.values()}
+def name_from_filename(filename: str, ticker_map: dict,
+                       alias_map: Optional[dict] = None) -> Optional[str]:
+    """Nome da empresa no arquivo, SE existir no ticker_map ou nos aliases (compara
+    normalizado). Devolve o nome canônico do mapa. Sobra de arquivo não conta.
+    `alias_map`: alias -> nome canônico (razão social, nome de outras fontes)."""
+    canonico = {normalize_name(a): n for a, n in (alias_map or {}).items()}
+    canonico.update({normalize_name(v): v for v in ticker_map.values()})   # nome do mapa vence
     leftovers = [t for t in _tokens(filename) if not _is_noise_token(t)]
     # tenta a sequência inteira e depois cada token isolado
     candidatos = [" ".join(leftovers)] + leftovers
@@ -232,6 +235,7 @@ def identify(
     ticker_map: dict,
     overrides: Overrides = Overrides(),
     cnpj_map: Optional[dict] = None,
+    alias_map: Optional[dict] = None,
 ) -> Identification:
     """Resolve (empresa, tipo, período) para um PDF já processado.
     `cnpj_map` (ticker -> CNPJ, do ticker_registry) preenche o CNPJ da empresa: é a
@@ -288,7 +292,7 @@ def identify(
     name = method = name_origin = None
     if ticker and ticker in ticker_map:
         name, method, name_origin = ticker_map[ticker], "ticker_map", ticker_origin
-    elif (n := name_from_filename(filename, ticker_map)):
+    elif (n := name_from_filename(filename, ticker_map, alias_map)):
         name, method, name_origin = n, "ticker_map", "filename"
     elif (n := name_from_content(result)):
         name, method, name_origin = n, result.company.name_method, "content"

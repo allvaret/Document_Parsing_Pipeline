@@ -291,6 +291,17 @@ antes de começar (falha cedo).
     ("Brbi Br Partners"); o nome comum só existe nas 499 entradas curadas. Um PDF sem
     ticker nem nome do mapa no arquivo (ex.: BR Partners = `BRBI11`) cai na capa do
     PDF, sem CNPJ: usar `--ticker`. Ação sem ticker no FCA do ano não é achada.
+  - *InfoMoney + aliases (feito):* `--infomoney [arquivo.html]` cruza a lista de ações do
+    InfoMoney (só `/b3/acao/`; BDR, ETF e FII fora; leitura única de quem roda o gerador, o
+    batch nunca acessa a web). Nome do mapa: curado > InfoMoney > razão social. Ticker irmão
+    da mesma linha herda o CNPJ; CNPJs diferentes na linha geram aviso e não são unidos.
+    Cada entrada guarda `aliases` (razão social e nomes de outras fontes), usados na busca
+    de nome no arquivo ("BRBI BR Partners" acha BR Partners). Resultado: 809 → 896
+    tickers, 456 com CNPJ, 91 só do InfoMoney (sem CNPJ). Mais Retorno **não** usado:
+    lista paginada e termos de uso restringem raspagem (licenciamento por API).
+  - *Vários tickers por empresa:* todos ficam no registro e em `asset`; a empresa se
+    acha por CNPJ > ticker > nome, então PETR3/PETR4 não conflitam. Aliases no banco
+    (`company_alias`, para a busca do site) ficam para a Fase 4.
   - *Atualizar:* rodar o comando uma vez por ano (ou quando entrar empresa nova) e
     revisar o `git diff`; em janeiro o FCA do ano novo ainda não existe (`--ano`).
 - **Achados no parser (não alterados, ou corrigidos à parte):**

@@ -1,11 +1,14 @@
 [
   {
     "ticker": "AALR3",
-    "name": "Alliança Saúde E Participações",
+    "name": "Alliar",
     "razao_social": "ALLIANÇA SAÚDE E PARTICIPAÇÕES S.A.",
     "cnpj": "42771949000135",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ALLIANÇA SAÚDE E PARTICIPAÇÕES S.A."
+    ]
   },
   {
     "ticker": "ABCB4",
@@ -13,7 +16,8 @@
     "razao_social": "BCO ABC BRASIL S.A.",
     "cnpj": "28195667000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ABCP11",
@@ -21,7 +25,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ABEV3",
@@ -29,7 +34,8 @@
     "razao_social": "AMBEV S.A.",
     "cnpj": "07526557000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AEFI11",
@@ -37,15 +43,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "AERI3",
-    "name": "Aeris Ind. E Com. De Equip. Para Ger. De Eng.",
+    "name": "Aeris",
     "razao_social": "AERIS IND. E COM. DE EQUIP. PARA GER. DE ENG. S.A.",
     "cnpj": "12528708000107",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "AERIS IND. E COM. DE EQUIP. PARA GER. DE ENG. S.A."
+    ]
+  },
+  {
+    "ticker": "AESB3",
+    "name": "AES Brasil",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "AESO3",
@@ -53,7 +72,8 @@
     "razao_social": "Auren Operações S.A.",
     "cnpj": "00194724000113",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AFHI11",
@@ -61,15 +81,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "AFLT3",
-    "name": "Afluente Transmissão De Energia Elétrica",
+    "name": "Afluente T",
     "razao_social": "AFLUENTE TRANSMISSÃO DE ENERGIA ELÉTRICA S/A",
     "cnpj": "10338320000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "AFLUENTE TRANSMISSÃO DE ENERGIA ELÉTRICA S/A"
+    ]
   },
   {
     "ticker": "AGCX11",
@@ -77,7 +101,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "AGRO3",
@@ -85,15 +110,21 @@
     "razao_social": "BRASILAGRO - CIA BRAS DE PROP AGRICOLAS",
     "cnpj": "07628528000159",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BRASILAGRO - CIA BRAS DE PROP AGRICOLAS"
+    ]
   },
   {
     "ticker": "AGXY3",
-    "name": "Agrogalaxy Participações S.A. - Em Recuperação Judicial",
+    "name": "AgroGalaxy",
     "razao_social": "Agrogalaxy Participações S.A. - Em Recuperação Judicial",
     "cnpj": "21240146000184",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Agrogalaxy Participações S.A. - Em Recuperação Judicial"
+    ]
   },
   {
     "ticker": "AHEB3",
@@ -101,7 +132,8 @@
     "razao_social": "SAO PAULO TURISMO S.A.",
     "cnpj": "62002886000160",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AHEB5",
@@ -109,7 +141,8 @@
     "razao_social": "SAO PAULO TURISMO S.A.",
     "cnpj": "62002886000160",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AHEB6",
@@ -117,7 +150,8 @@
     "razao_social": "SAO PAULO TURISMO S.A.",
     "cnpj": "62002886000160",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AIEC11",
@@ -125,7 +159,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "AJFI11",
@@ -133,7 +168,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ALLD3",
@@ -141,7 +177,8 @@
     "razao_social": "ALLIED TECNOLOGIA S.A.",
     "cnpj": "20247322000147",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ALMI11",
@@ -149,7 +186,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ALOS3",
@@ -157,7 +195,8 @@
     "razao_social": "ALLOS S.A.",
     "cnpj": "05878397000132",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ALPA3",
@@ -165,7 +204,8 @@
     "razao_social": "ALPARGATAS S.A.",
     "cnpj": "61079117000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ALPA4",
@@ -173,7 +213,8 @@
     "razao_social": "ALPARGATAS S.A.",
     "cnpj": "61079117000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ALPK3",
@@ -181,7 +222,17 @@
     "razao_social": "ALLPARK EMPREENDIMENTOS, PARTICIPAÇÕES E SERVIÇOS S.A.",
     "cnpj": "60537263000166",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "ALSO3",
+    "name": "Aliansce Sonae",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ALUP11",
@@ -189,7 +240,26 @@
     "razao_social": "ALUPAR INVESTIMENTO S/A",
     "cnpj": "08364948000138",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "ALUP3",
+    "name": "Alupar Investimento",
+    "razao_social": null,
+    "cnpj": "08364948000138",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "ALUP4",
+    "name": "Alupar Investimento",
+    "razao_social": null,
+    "cnpj": "08364948000138",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ALZC11",
@@ -197,7 +267,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ALZM11",
@@ -205,7 +276,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ALZR11",
@@ -213,7 +285,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "AMAR3",
+    "name": "Marisa",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "AMBP3",
@@ -221,7 +303,10 @@
     "razao_social": "AMBIPAR PARTICIP. E EMPREEND. S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "12648266000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "AMBIPAR PARTICIP. E EMPREEND. S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "AMER3",
@@ -229,15 +314,21 @@
     "razao_social": "AMERICANAS S.A. - em Recuperação Judicial",
     "cnpj": "00776574000156",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "AMERICANAS S.A. - em Recuperação Judicial"
+    ]
   },
   {
     "ticker": "AMOB3",
-    "name": "Automob Participações",
+    "name": "Automob",
     "razao_social": "Automob Participações S.A.",
     "cnpj": "35654688000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Automob Participações S.A."
+    ]
   },
   {
     "ticker": "ANCR11B",
@@ -245,7 +336,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ANIM3",
@@ -253,7 +345,19 @@
     "razao_social": "ANIMA HOLDING S.A.",
     "cnpj": "09288252000132",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ANIMA HOLDING S.A."
+    ]
+  },
+  {
+    "ticker": "APER3",
+    "name": "Alper",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "APTI3",
@@ -261,7 +365,8 @@
     "razao_social": "ALIPERTI S.A.",
     "cnpj": "61156931000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "APTI4",
@@ -269,7 +374,8 @@
     "razao_social": "ALIPERTI S.A.",
     "cnpj": "61156931000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "APTO11",
@@ -277,7 +383,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ARCT11",
@@ -285,15 +392,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ARML3",
-    "name": "Armac Locação, Logística E Serviços",
+    "name": "Armac",
     "razao_social": "ARMAC LOCAÇÃO, LOGÍSTICA E SERVIÇOS S.A.",
     "cnpj": "00242184000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ARMAC LOCAÇÃO, LOGÍSTICA E SERVIÇOS S.A."
+    ]
   },
   {
     "ticker": "ARND3",
@@ -301,7 +412,8 @@
     "razao_social": "Arandu Investimentos S.A.",
     "cnpj": "14127813000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ARRI11",
@@ -309,7 +421,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ASAI3",
@@ -317,7 +430,10 @@
     "razao_social": "SENDAS DISTRIBUIDORA S.A.",
     "cnpj": "06057223000171",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "SENDAS DISTRIBUIDORA S.A."
+    ]
   },
   {
     "ticker": "ASMT11",
@@ -325,7 +441,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "ATEA3",
+    "name": "Athena Saúde",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ATED3",
@@ -333,7 +459,17 @@
     "razao_social": "Atom Educação e Editora S.A.",
     "cnpj": "23994857000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "ATMP3",
+    "name": "Atma Participações",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ATSA11",
@@ -341,7 +477,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ATWN11",
@@ -349,15 +486,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "AUAU3",
-    "name": "União Pet Participações",
+    "name": "Petzcobasi",
     "razao_social": "União Pet Participações S.A.",
     "cnpj": "53153938000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "União Pet Participações S.A."
+    ]
   },
   {
     "ticker": "AURE3",
@@ -365,15 +506,26 @@
     "razao_social": "Auren Energia S.A.",
     "cnpj": "28594234000123",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AVLL3",
-    "name": "Alphaville",
+    "name": "Alphaville S.A.",
     "razao_social": "ALPHAVILLE S.A.",
     "cnpj": "16811931000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "AVON34",
+    "name": "Avon",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "AXIA3",
@@ -381,15 +533,35 @@
     "razao_social": "AXIA Energia S.A.",
     "cnpj": "00001180000126",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "AXIA5",
+    "name": "Axia Energia",
+    "razao_social": null,
+    "cnpj": "00001180000126",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "AXIA6",
+    "name": "Axia Energia",
+    "razao_social": null,
+    "cnpj": "00001180000126",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "AXIA7",
-    "name": "Axia Energia",
+    "name": "AXIA ENERGIA",
     "razao_social": "AXIA Energia S.A.",
     "cnpj": "00001180000126",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AZEV3",
@@ -397,7 +569,8 @@
     "razao_social": "AZEVEDO E TRAVASSOS S.A.",
     "cnpj": "61351532000168",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AZEV4",
@@ -405,7 +578,8 @@
     "razao_social": "AZEVEDO E TRAVASSOS S.A.",
     "cnpj": "61351532000168",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AZTE3",
@@ -413,7 +587,8 @@
     "razao_social": "Azevedo & Travassos Energia S.A.",
     "cnpj": "52017473000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "AZUL3",
@@ -421,7 +596,26 @@
     "razao_social": "AZUL S.A.",
     "cnpj": "09305994000129",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "AZUL53",
+    "name": "AZUL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "AZUL54",
+    "name": "AZUL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "AZZA3",
@@ -429,7 +623,10 @@
     "razao_social": "AZZAS 2154 S.A.",
     "cnpj": "16590234000176",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "AZZAS 2154 S.A."
+    ]
   },
   {
     "ticker": "B3SA3",
@@ -437,7 +634,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BALM3",
@@ -445,7 +643,8 @@
     "razao_social": "BAUMER S.A.",
     "cnpj": "61374161000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BALM4",
@@ -453,7 +652,8 @@
     "razao_social": "BAUMER S.A.",
     "cnpj": "61374161000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BARI11",
@@ -461,7 +661,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BAUH3",
@@ -469,7 +670,8 @@
     "razao_social": "EXCELSIOR ALIMENTOS S.A.",
     "cnpj": "95426862000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BAUH4",
@@ -477,7 +679,8 @@
     "razao_social": "EXCELSIOR ALIMENTOS S.A.",
     "cnpj": "95426862000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BAZA3",
@@ -485,7 +688,17 @@
     "razao_social": "BCO AMAZONIA S.A.",
     "cnpj": "04902979000144",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "BBAS11",
+    "name": "Banco do Brasil",
+    "razao_social": null,
+    "cnpj": "00000000000191",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BBAS3",
@@ -493,7 +706,10 @@
     "razao_social": "BCO BRASIL S.A.",
     "cnpj": "00000000000191",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO BRASIL S.A."
+    ]
   },
   {
     "ticker": "BBDC3",
@@ -501,7 +717,11 @@
     "razao_social": "BCO BRADESCO S.A.",
     "cnpj": "60746948000112",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO BRADESCO S.A.",
+      "Bradesco"
+    ]
   },
   {
     "ticker": "BBDC4",
@@ -509,7 +729,11 @@
     "razao_social": "BCO BRADESCO S.A.",
     "cnpj": "60746948000112",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO BRADESCO S.A.",
+      "Bradesco"
+    ]
   },
   {
     "ticker": "BBFI11B",
@@ -517,7 +741,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BBFO11",
@@ -525,7 +750,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BBIM11",
@@ -533,7 +759,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BBML3",
@@ -541,7 +768,8 @@
     "razao_social": "BBM Logística S.A.",
     "cnpj": "01107327000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BBPO11",
@@ -549,7 +777,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BBRC11",
@@ -557,7 +786,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BBRK3",
+    "name": "Brasil Brokers",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BBSE3",
@@ -565,7 +804,10 @@
     "razao_social": "BB SEGURIDADE PARTICIPAÇÕES S.A.",
     "cnpj": "17344597000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BB SEGURIDADE PARTICIPAÇÕES S.A."
+    ]
   },
   {
     "ticker": "BCFF11",
@@ -573,7 +815,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BCIA11",
@@ -581,7 +824,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BCRI11",
@@ -589,7 +833,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BDLL3",
@@ -597,7 +842,8 @@
     "razao_social": "BARDELLA S.A. INDUSTRIAS MECANICAS EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "60851615000153",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BDLL4",
@@ -605,7 +851,17 @@
     "razao_social": "BARDELLA S.A. INDUSTRIAS MECANICAS EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "60851615000153",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "BEEF11",
+    "name": "Minerva",
+    "razao_social": null,
+    "cnpj": "67620377000114",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BEEF3",
@@ -613,7 +869,8 @@
     "razao_social": "MINERVA S.A.",
     "cnpj": "67620377000114",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BEES3",
@@ -621,7 +878,8 @@
     "razao_social": "BANESTES S.A. - BCO EST ESPIRITO SANTO",
     "cnpj": "28127603000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BEES4",
@@ -629,7 +887,8 @@
     "razao_social": "BANESTES S.A. - BCO EST ESPIRITO SANTO",
     "cnpj": "28127603000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BETP3",
@@ -637,7 +896,8 @@
     "razao_social": "BETAPART PARTICIPACOES S.A.",
     "cnpj": "02762124000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BGIP3",
@@ -645,7 +905,8 @@
     "razao_social": "BCO ESTADO DE SERGIPE S.A. - BANESE",
     "cnpj": "13009717000146",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BGIP4",
@@ -653,7 +914,17 @@
     "razao_social": "BCO ESTADO DE SERGIPE S.A. - BANESE",
     "cnpj": "13009717000146",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "BGOV39",
+    "name": "BKR US TREAS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BHIA3",
@@ -661,7 +932,11 @@
     "razao_social": "Grupo Casas Bahia S.A. - Em Recuperação Judicial",
     "cnpj": "33041260065290",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Grupo Casas Bahia S.A. - Em Recuperação Judicial",
+      "Grupo Casas Bahia"
+    ]
   },
   {
     "ticker": "BICE11",
@@ -669,7 +944,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BICR11",
@@ -677,7 +953,35 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BIDI11",
+    "name": "Banco Inter",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "BIDI3",
+    "name": "Banco Inter",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "BIDI4",
+    "name": "Banco Inter",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BIED3",
@@ -685,7 +989,8 @@
     "razao_social": "BIOMA EDUCAÇÃO S.A.",
     "cnpj": "45987245000192",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BIME11",
@@ -693,7 +998,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BIOM3",
@@ -701,7 +1007,8 @@
     "razao_social": "BIOMM S.A.",
     "cnpj": "04752991000110",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BIPD11",
@@ -709,7 +1016,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BLAU3",
@@ -717,7 +1025,8 @@
     "razao_social": "Blau Farmacêutica S.A.",
     "cnpj": "58430828000160",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BLCA11",
@@ -725,7 +1034,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BLCP11",
@@ -733,7 +1043,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BLMC11",
@@ -741,7 +1052,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BLMG11",
@@ -749,7 +1061,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BLMO11",
@@ -757,7 +1070,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BLMR11",
@@ -765,7 +1079,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BMEB3",
@@ -773,7 +1088,8 @@
     "razao_social": "BCO MERCANTIL DO BRASIL S.A.",
     "cnpj": "17184037000110",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BMEB4",
@@ -781,23 +1097,30 @@
     "razao_social": "BCO MERCANTIL DO BRASIL S.A.",
     "cnpj": "17184037000110",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BMGB11",
-    "name": "Banco Bmg",
+    "name": "BMG",
     "razao_social": "BANCO BMG S/A",
     "cnpj": "61186680000174",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BANCO BMG S/A"
+    ]
   },
   {
     "ticker": "BMGB4",
-    "name": "Banco Bmg",
+    "name": "BMG",
     "razao_social": "BANCO BMG S/A",
     "cnpj": "61186680000174",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BANCO BMG S/A"
+    ]
   },
   {
     "ticker": "BMII11",
@@ -805,15 +1128,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BMIN3",
-    "name": "Bco Mercantil De Investimentos",
+    "name": "Banco Mercantil de Investimentos",
     "razao_social": "BCO MERCANTIL DE INVESTIMENTOS S.A.",
     "cnpj": "34169557000172",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO MERCANTIL DE INVESTIMENTOS S.A."
+    ]
   },
   {
     "ticker": "BMIN4",
@@ -821,7 +1148,8 @@
     "razao_social": "BCO MERCANTIL DE INVESTIMENTOS S.A.",
     "cnpj": "34169557000172",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BMKS3",
@@ -829,7 +1157,8 @@
     "razao_social": "BICICLETAS MONARK S.A.",
     "cnpj": "56992423000190",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BMLC11",
@@ -837,15 +1166,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BMOB3",
-    "name": "Bemobi Mobile Tech",
+    "name": "Bemobi",
     "razao_social": "BEMOBI MOBILE TECH S.A.",
     "cnpj": "09042817000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BEMOBI MOBILE TECH S.A."
+    ]
   },
   {
     "ticker": "BNBR3",
@@ -853,7 +1186,8 @@
     "razao_social": "BCO NORDESTE DO BRASIL S.A.",
     "cnpj": "07237373000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BNFS11",
@@ -861,7 +1195,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BOAS3",
+    "name": "Boa Vista SCPC",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BOBR3",
@@ -869,7 +1213,8 @@
     "razao_social": "BOMBRIL S.A. - Em recuperação Judicial",
     "cnpj": "50564053000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BOBR4",
@@ -877,7 +1222,8 @@
     "razao_social": "BOMBRIL S.A. - Em recuperação Judicial",
     "cnpj": "50564053000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BPAC11",
@@ -885,15 +1231,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BPAN4",
+    "name": "Banco Pan",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BPAR3",
-    "name": "Bco Estado Do Para",
+    "name": "Banpara",
     "razao_social": "BCO ESTADO DO PARA S.A.",
     "cnpj": "04913711000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO ESTADO DO PARA S.A."
+    ]
   },
   {
     "ticker": "BPFF11",
@@ -901,7 +1260,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BPML11",
@@ -909,7 +1269,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BPRP11",
@@ -917,7 +1278,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRAP3",
@@ -925,7 +1287,8 @@
     "razao_social": "BRADESPAR S.A.",
     "cnpj": "03847461000192",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BRAP4",
@@ -933,7 +1296,8 @@
     "razao_social": "BRADESPAR S.A.",
     "cnpj": "03847461000192",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BRAV3",
@@ -941,15 +1305,21 @@
     "razao_social": "Brava Energia S.A.",
     "cnpj": "12091809000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Brava Energia S.A."
+    ]
   },
   {
     "ticker": "BRBI11",
-    "name": "Brbi Br Partners",
+    "name": "BR Partners",
     "razao_social": "BRBI BR Partners S.A",
     "cnpj": "10739356000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BRBI BR Partners S.A"
+    ]
   },
   {
     "ticker": "BRCO11",
@@ -957,7 +1327,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRCR11",
@@ -965,7 +1336,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BREV11",
@@ -973,7 +1345,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRFS3",
@@ -981,7 +1354,8 @@
     "razao_social": "BRF S.A.",
     "cnpj": "01838723000127",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BRHT11B",
@@ -989,7 +1363,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRIM11",
@@ -997,7 +1372,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRIP11",
@@ -1005,7 +1381,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BRIT3",
+    "name": "Brisanet",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BRIX11",
@@ -1013,7 +1399,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRKM3",
@@ -1021,7 +1408,8 @@
     "razao_social": "BRASKEM S.A.",
     "cnpj": "42150391000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BRKM5",
@@ -1029,7 +1417,8 @@
     "razao_social": "BRASKEM S.A.",
     "cnpj": "42150391000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BRKM6",
@@ -1037,7 +1426,8 @@
     "razao_social": "BRASKEM S.A.",
     "cnpj": "42150391000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "BRLA11",
@@ -1045,15 +1435,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BRML3",
-    "name": "Br Malls Participacoes",
+    "name": "brMalls",
     "razao_social": "BR MALLS PARTICIPACOES S.A.",
     "cnpj": "06977745000191",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BR MALLS PARTICIPACOES S.A."
+    ]
   },
   {
     "ticker": "BROF11",
@@ -1061,23 +1455,39 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BRPR3",
+    "name": "BR Properties",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BRSR3",
-    "name": "Banco Do Estado Do Rio Grande Do Sul",
+    "name": "Banrisul",
     "razao_social": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
     "cnpj": "92702067000196",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BANCO DO ESTADO DO RIO GRANDE DO SUL SA"
+    ]
   },
   {
     "ticker": "BRSR5",
-    "name": "Banco Do Estado Do Rio Grande Do Sul",
+    "name": "Banrisul",
     "razao_social": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
     "cnpj": "92702067000196",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BANCO DO ESTADO DO RIO GRANDE DO SUL SA"
+    ]
   },
   {
     "ticker": "BRSR6",
@@ -1085,23 +1495,32 @@
     "razao_social": "BANCO DO ESTADO DO RIO GRANDE DO SUL SA",
     "cnpj": "92702067000196",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BANCO DO ESTADO DO RIO GRANDE DO SUL SA"
+    ]
   },
   {
     "ticker": "BSLI3",
-    "name": "Brb Banco De Brasilia",
+    "name": "BRB Banco",
     "razao_social": "BRB BANCO DE BRASILIA S.A.",
     "cnpj": "00000208000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BRB BANCO DE BRASILIA S.A."
+    ]
   },
   {
     "ticker": "BSLI4",
-    "name": "Brb Banco De Brasilia",
+    "name": "BRB Banco",
     "razao_social": "BRB BANCO DE BRASILIA S.A.",
     "cnpj": "00000208000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BRB BANCO DE BRASILIA S.A."
+    ]
   },
   {
     "ticker": "BTAL11",
@@ -1109,7 +1528,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BTCI11",
@@ -1117,7 +1537,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BTCR11",
@@ -1125,7 +1546,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BTLG11",
@@ -1133,7 +1555,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BTSG11",
@@ -1141,7 +1564,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BTSI11",
@@ -1149,7 +1573,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "BTTL3",
+    "name": "Battistella",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "BTWR11",
@@ -1157,7 +1591,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BVAR11",
@@ -1165,7 +1600,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BZEL11",
@@ -1173,7 +1609,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "BZLI11",
@@ -1181,7 +1618,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CACR11",
@@ -1189,7 +1627,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CALI3",
@@ -1197,7 +1636,8 @@
     "razao_social": "CONSTRUTORA ADOLPHO LINDENBERG S.A.",
     "cnpj": "61022042000118",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CAMB3",
@@ -1205,15 +1645,28 @@
     "razao_social": "CAMBUCI S.A.",
     "cnpj": "61088894000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CAML3",
-    "name": "Camil Alimentos",
+    "name": "CAMIL",
     "razao_social": "CAMIL ALIMENTOS S.A.",
     "cnpj": "64904295000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CAMIL ALIMENTOS S.A."
+    ]
+  },
+  {
+    "ticker": "CARD3",
+    "name": "CSU CardSyst",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CASH3",
@@ -1221,23 +1674,30 @@
     "razao_social": "MÉLIUZ S.A.",
     "cnpj": "14110585000107",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CASN3",
-    "name": "Cia Catarinense De Aguas E Saneam.-Casan",
+    "name": "Casan",
     "razao_social": "CIA CATARINENSE DE AGUAS E SANEAM.-CASAN",
     "cnpj": "82508433000117",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA CATARINENSE DE AGUAS E SANEAM.-CASAN"
+    ]
   },
   {
     "ticker": "CASN4",
-    "name": "Cia Catarinense De Aguas E Saneam.-Casan",
+    "name": "Casan",
     "razao_social": "CIA CATARINENSE DE AGUAS E SANEAM.-CASAN",
     "cnpj": "82508433000117",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA CATARINENSE DE AGUAS E SANEAM.-CASAN"
+    ]
   },
   {
     "ticker": "CBAV3",
@@ -1245,7 +1705,10 @@
     "razao_social": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
     "cnpj": "61409892000173",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "COMPANHIA BRASILEIRA DE ALUMÍNIO"
+    ]
   },
   {
     "ticker": "CBEE3",
@@ -1253,7 +1716,8 @@
     "razao_social": "AMPLA ENERGIA E SERVICOS S.A.",
     "cnpj": "33050071000158",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CBOP11",
@@ -1261,7 +1725,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CCME11",
@@ -1269,7 +1734,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CCRF11",
@@ -1277,7 +1743,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CCTY3",
@@ -1285,7 +1752,8 @@
     "razao_social": "Belora RDVC City Desenvolvimento Imobiliário S.A.",
     "cnpj": "52805925000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEAB3",
@@ -1293,31 +1761,43 @@
     "razao_social": "C&A Modas S.A.",
     "cnpj": "45242914000105",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "C&A Modas S.A."
+    ]
   },
   {
     "ticker": "CEBR3",
-    "name": "Companhia Energética De Brasília - Ceb",
+    "name": "CEB",
     "razao_social": "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB",
     "cnpj": "00070698000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB"
+    ]
   },
   {
     "ticker": "CEBR5",
-    "name": "Companhia Energética De Brasília - Ceb",
+    "name": "CEB",
     "razao_social": "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB",
     "cnpj": "00070698000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB"
+    ]
   },
   {
     "ticker": "CEBR6",
-    "name": "Companhia Energética De Brasília - Ceb",
+    "name": "CEB",
     "razao_social": "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB",
     "cnpj": "00070698000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "COMPANHIA ENERGÉTICA DE BRASÍLIA - CEB"
+    ]
   },
   {
     "ticker": "CEDO3",
@@ -1325,7 +1805,8 @@
     "razao_social": "CIA FIACAO TECIDOS CEDRO CACHOEIRA",
     "cnpj": "17245234000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEDO4",
@@ -1333,7 +1814,8 @@
     "razao_social": "CIA FIACAO TECIDOS CEDRO CACHOEIRA",
     "cnpj": "17245234000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEEB3",
@@ -1341,7 +1823,8 @@
     "razao_social": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
     "cnpj": "15139629000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEEB5",
@@ -1349,7 +1832,8 @@
     "razao_social": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
     "cnpj": "15139629000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEEB6",
@@ -1357,31 +1841,41 @@
     "razao_social": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
     "cnpj": "15139629000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEED3",
-    "name": "Cia Estadual De Distrib Ener Elet-Ceee-D",
+    "name": "CEEE-D",
     "razao_social": "CIA ESTADUAL DE DISTRIB ENER ELET-CEEE-D",
     "cnpj": "08467115000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ESTADUAL DE DISTRIB ENER ELET-CEEE-D"
+    ]
   },
   {
     "ticker": "CEED4",
-    "name": "Cia Estadual De Distrib Ener Elet-Ceee-D",
+    "name": "CEEE-D",
     "razao_social": "CIA ESTADUAL DE DISTRIB ENER ELET-CEEE-D",
     "cnpj": "08467115000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ESTADUAL DE DISTRIB ENER ELET-CEEE-D"
+    ]
   },
   {
     "ticker": "CEGR3",
-    "name": "Cia Distrib De Gas Do Rio De Janeiro-Ceg",
+    "name": "CEG",
     "razao_social": "CIA DISTRIB DE GAS DO RIO DE JANEIRO-CEG",
     "cnpj": "33938119000169",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA DISTRIB DE GAS DO RIO DE JANEIRO-CEG"
+    ]
   },
   {
     "ticker": "CELP3",
@@ -1389,7 +1883,8 @@
     "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
     "cnpj": "04895728000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CELP5",
@@ -1397,7 +1892,8 @@
     "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
     "cnpj": "04895728000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CELP6",
@@ -1405,7 +1901,8 @@
     "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
     "cnpj": "04895728000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CELP7",
@@ -1413,7 +1910,8 @@
     "razao_social": "EQUATORIAL PARÁ DISTRIBUIDORA DE ENERGIA S.A.",
     "cnpj": "04895728000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CEOC11",
@@ -1421,7 +1919,62 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "CEPE3",
+    "name": "Celpe",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "CEPE5",
+    "name": "Celpe",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "CEPE6",
+    "name": "Celpe",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "CESP3",
+    "name": "CESP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "CESP5",
+    "name": "CESP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "CESP6",
+    "name": "CESP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CFHI11",
@@ -1429,7 +1982,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CFII11",
@@ -1437,23 +1991,30 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CGAS3",
-    "name": "Cia Gas De Sao Paulo - Comgas",
+    "name": "Comgás",
     "razao_social": "CIA GAS DE SAO PAULO - COMGAS",
     "cnpj": "61856571000117",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA GAS DE SAO PAULO - COMGAS"
+    ]
   },
   {
     "ticker": "CGAS5",
-    "name": "Cia Gas De Sao Paulo - Comgas",
+    "name": "Comgás",
     "razao_social": "CIA GAS DE SAO PAULO - COMGAS",
     "cnpj": "61856571000117",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA GAS DE SAO PAULO - COMGAS"
+    ]
   },
   {
     "ticker": "CGRA3",
@@ -1461,7 +2022,8 @@
     "razao_social": "GRAZZIOTIN S.A.",
     "cnpj": "92012467000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CGRA4",
@@ -1469,7 +2031,8 @@
     "razao_social": "GRAZZIOTIN S.A.",
     "cnpj": "92012467000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CJCT11",
@@ -1477,7 +2040,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CJFI11",
@@ -1485,23 +2049,39 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "CLSA3",
+    "name": "ClearSale",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CLSC3",
-    "name": "Centrais Elet De Santa Catarina",
+    "name": "Celesc",
     "razao_social": "CENTRAIS ELET DE SANTA CATARINA S.A.",
     "cnpj": "83878892000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CENTRAIS ELET DE SANTA CATARINA S.A."
+    ]
   },
   {
     "ticker": "CLSC4",
-    "name": "Centrais Elet De Santa Catarina",
+    "name": "Celesc",
     "razao_social": "CENTRAIS ELET DE SANTA CATARINA S.A.",
     "cnpj": "83878892000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CENTRAIS ELET DE SANTA CATARINA S.A."
+    ]
   },
   {
     "ticker": "CMIG3",
@@ -1509,7 +2089,10 @@
     "razao_social": "CIA ENERGETICA DE MINAS GERAIS - CEMIG",
     "cnpj": "17155730000164",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ENERGETICA DE MINAS GERAIS - CEMIG"
+    ]
   },
   {
     "ticker": "CMIG4",
@@ -1517,7 +2100,10 @@
     "razao_social": "CIA ENERGETICA DE MINAS GERAIS - CEMIG",
     "cnpj": "17155730000164",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ENERGETICA DE MINAS GERAIS - CEMIG"
+    ]
   },
   {
     "ticker": "CMIN3",
@@ -1525,7 +2111,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CNES11",
@@ -1533,31 +2120,41 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "COCE3",
-    "name": "Cia Energetica Do Ceara - Coelce",
+    "name": "Coelce",
     "razao_social": "CIA ENERGETICA DO CEARA - COELCE",
     "cnpj": "07047251000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ENERGETICA DO CEARA - COELCE"
+    ]
   },
   {
     "ticker": "COCE5",
-    "name": "Cia Energetica Do Ceara - Coelce",
+    "name": "Coelce",
     "razao_social": "CIA ENERGETICA DO CEARA - COELCE",
     "cnpj": "07047251000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ENERGETICA DO CEARA - COELCE"
+    ]
   },
   {
     "ticker": "COCE6",
-    "name": "Cia Energetica Do Ceara - Coelce",
+    "name": "Coelce",
     "razao_social": "CIA ENERGETICA DO CEARA - COELCE",
     "cnpj": "07047251000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA ENERGETICA DO CEARA - COELCE"
+    ]
   },
   {
     "ticker": "COGN3",
@@ -1565,7 +2162,19 @@
     "razao_social": "COGNA EDUCAÇÃO S.A.",
     "cnpj": "02800026000140",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "COGNA EDUCAÇÃO S.A."
+    ]
+  },
+  {
+    "ticker": "CONX3",
+    "name": "Triple Play",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CORM11",
@@ -1573,7 +2182,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CPFE3",
@@ -1581,7 +2191,8 @@
     "razao_social": "CPFL ENERGIA S.A.",
     "cnpj": "02429144000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CPFF11",
@@ -1589,7 +2200,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "CPLE11",
+    "name": "COPEL UNT N2",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CPLE3",
@@ -1597,23 +2218,41 @@
     "razao_social": "CIA PARANAENSE DE ENERGIA - COPEL",
     "cnpj": "76483817000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA PARANAENSE DE ENERGIA - COPEL"
+    ]
   },
   {
     "ticker": "CPLE5",
-    "name": "Cia Paranaense De Energia - Copel",
+    "name": "Copel",
     "razao_social": "CIA PARANAENSE DE ENERGIA - COPEL",
     "cnpj": "76483817000120",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA PARANAENSE DE ENERGIA - COPEL"
+    ]
   },
   {
     "ticker": "CPLE6",
-    "name": "Cia Paranaense De Energia - Copel",
+    "name": "Copel",
     "razao_social": "CIA PARANAENSE DE ENERGIA - COPEL",
     "cnpj": "76483817000120",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA PARANAENSE DE ENERGIA - COPEL"
+    ]
+  },
+  {
+    "ticker": "CPRE3",
+    "name": "CPFL Renovav",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CPTS11",
@@ -1621,7 +2260,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CRDE3",
@@ -1629,7 +2269,17 @@
     "razao_social": "FICA EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
     "cnpj": "07820907000146",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "CRFB3",
+    "name": "Carrefour",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CRFF11",
@@ -1637,31 +2287,41 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CRPG3",
-    "name": "Tronox Pigmentos Do Brasil",
+    "name": "Tronox",
     "razao_social": "TRONOX PIGMENTOS DO BRASIL S.A.",
     "cnpj": "15115504000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRONOX PIGMENTOS DO BRASIL S.A."
+    ]
   },
   {
     "ticker": "CRPG5",
-    "name": "Tronox Pigmentos Do Brasil",
+    "name": "Tronox",
     "razao_social": "TRONOX PIGMENTOS DO BRASIL S.A.",
     "cnpj": "15115504000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRONOX PIGMENTOS DO BRASIL S.A."
+    ]
   },
   {
     "ticker": "CRPG6",
-    "name": "Tronox Pigmentos Do Brasil",
+    "name": "Tronox",
     "razao_social": "TRONOX PIGMENTOS DO BRASIL S.A.",
     "cnpj": "15115504000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRONOX PIGMENTOS DO BRASIL S.A."
+    ]
   },
   {
     "ticker": "CRTE3",
@@ -1669,7 +2329,8 @@
     "razao_social": "CONC RIO-TERESOPOLIS S.A.",
     "cnpj": "00938574000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CSAN3",
@@ -1677,7 +2338,8 @@
     "razao_social": "COSAN S.A.",
     "cnpj": "50746577000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CSED3",
@@ -1685,7 +2347,8 @@
     "razao_social": "CRUZEIRO DO SUL EDUCACIONAL S.A.",
     "cnpj": "62984091000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CSMG3",
@@ -1693,7 +2356,10 @@
     "razao_social": "CIA SANEAMENTO DE MINAS GERAIS-COPASA MG",
     "cnpj": "17281106000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA SANEAMENTO DE MINAS GERAIS-COPASA MG"
+    ]
   },
   {
     "ticker": "CSNA3",
@@ -1701,15 +2367,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "infomoney",
+    "aliases": [
+      "CSN"
+    ]
   },
   {
     "ticker": "CSUD3",
-    "name": "Csu Digital",
+    "name": "CSU Digital",
     "razao_social": "CSU DIGITAL S.A.",
     "cnpj": "01896779000138",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CTAX3",
@@ -1717,7 +2387,8 @@
     "razao_social": "CONTAX PARTICIPAÇÕES S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "04032433000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CTCA3",
@@ -1725,7 +2396,8 @@
     "razao_social": "CTC - CENTRO DE TECNOLOGIA CANAVIEIRA S.A.",
     "cnpj": "06981381000113",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CTKA3",
@@ -1733,7 +2405,8 @@
     "razao_social": "KARSTEN S.A.",
     "cnpj": "82640558000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "CTKA4",
@@ -1741,7 +2414,26 @@
     "razao_social": "KARSTEN S.A.",
     "cnpj": "82640558000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "CTNM3",
+    "name": "Coteminas",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "CTNM4",
+    "name": "Coteminas",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "CTXT11",
@@ -1749,7 +2441,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CURY3",
@@ -1757,7 +2450,10 @@
     "razao_social": "Cury Construtora e Incorporadora S.A.",
     "cnpj": "08797760000183",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Cury Construtora e Incorporadora S.A."
+    ]
   },
   {
     "ticker": "CVBI11",
@@ -1765,7 +2461,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CVCB3",
@@ -1773,7 +2470,10 @@
     "razao_social": "CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S.A.",
     "cnpj": "10760260000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S.A."
+    ]
   },
   {
     "ticker": "CXAG11",
@@ -1781,7 +2481,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CXCE11B",
@@ -1789,7 +2490,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CXCI11",
@@ -1797,7 +2499,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CXCO11",
@@ -1805,7 +2508,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CXRI11",
@@ -1813,7 +2517,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CXSE3",
@@ -1821,7 +2526,10 @@
     "razao_social": "CAIXA SEGURIDADE PARTICIPAÇÕES S.A.",
     "cnpj": "22543331000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CAIXA SEGURIDADE PARTICIPAÇÕES S.A."
+    ]
   },
   {
     "ticker": "CXTL11",
@@ -1829,7 +2537,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CYCR11",
@@ -1837,7 +2546,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "CYRE3",
@@ -1845,15 +2555,22 @@
     "razao_social": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
     "cnpj": "73178600000118",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
+      "Cyrela Realty"
+    ]
   },
   {
     "ticker": "CYRE4",
-    "name": "Cyrela Brazil Realty S.A.Empreend E Part",
+    "name": "CYRELA REALT",
     "razao_social": "CYRELA BRAZIL REALTY S.A.EMPREEND E PART",
     "cnpj": "73178600000118",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CYRELA BRAZIL REALTY S.A.EMPREEND E PART"
+    ]
   },
   {
     "ticker": "DAMT11B",
@@ -1861,7 +2578,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "DASA3",
@@ -1869,7 +2587,10 @@
     "razao_social": "DIAGNOSTICOS DA AMERICA S.A.",
     "cnpj": "61486650000183",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "DIAGNOSTICOS DA AMERICA S.A."
+    ]
   },
   {
     "ticker": "DESK3",
@@ -1877,7 +2598,8 @@
     "razao_social": "DESKTOP S.A.",
     "cnpj": "08170849000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "DEVA11",
@@ -1885,23 +2607,30 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "DEXP3",
-    "name": "Dexxos Participações",
+    "name": "Dexxos Part",
     "razao_social": "DEXXOS PARTICIPAÇÕES S.A.",
     "cnpj": "02193750000152",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "DEXXOS PARTICIPAÇÕES S.A."
+    ]
   },
   {
     "ticker": "DEXP4",
-    "name": "Dexxos Participações",
+    "name": "Dexxos Part",
     "razao_social": "DEXXOS PARTICIPAÇÕES S.A.",
     "cnpj": "02193750000152",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "DEXXOS PARTICIPAÇÕES S.A."
+    ]
   },
   {
     "ticker": "DIRR3",
@@ -1909,7 +2638,10 @@
     "razao_social": "DIRECIONAL ENGENHARIA S.A.",
     "cnpj": "16614075000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "DIRECIONAL ENGENHARIA S.A."
+    ]
   },
   {
     "ticker": "DLMT11",
@@ -1917,7 +2649,26 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "DMMO11",
+    "name": "Dommo",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "DMMO3",
+    "name": "Dommo",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "DMVF3",
@@ -1925,7 +2676,8 @@
     "razao_social": "D1000 VAREJO FARMA PARTICIPAÇÕES S.A.",
     "cnpj": "12108897000150",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "DOHL3",
@@ -1933,7 +2685,8 @@
     "razao_social": "DOHLER S.A.",
     "cnpj": "84683408000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "DOHL4",
@@ -1941,7 +2694,8 @@
     "razao_social": "DOHLER S.A.",
     "cnpj": "84683408000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "DOMC11",
@@ -1949,7 +2703,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "DOTZ3",
@@ -1957,7 +2712,8 @@
     "razao_social": "Dotz S.A.",
     "cnpj": "18174270000184",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "DOVL11B",
@@ -1965,7 +2721,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "DRIT11B",
@@ -1973,7 +2730,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "DTCY3",
@@ -1981,7 +2739,8 @@
     "razao_social": "DTCOM - DIRECT TO COMPANY S.A.",
     "cnpj": "03303999000136",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "DVFF11",
@@ -1989,7 +2748,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "DXCO3",
@@ -1997,7 +2757,8 @@
     "razao_social": "DEXCO S.A.",
     "cnpj": "97837181000147",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EALT3",
@@ -2005,7 +2766,8 @@
     "razao_social": "ELECTRO ACO ALTONA S.A.",
     "cnpj": "82643537000134",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EALT4",
@@ -2013,7 +2775,8 @@
     "razao_social": "ELECTRO ACO ALTONA S.A.",
     "cnpj": "82643537000134",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ECOM3",
@@ -2021,7 +2784,8 @@
     "razao_social": "ECONOMATICA S.A.",
     "cnpj": "26345998000150",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ECOR3",
@@ -2029,7 +2793,10 @@
     "razao_social": "ECORODOVIAS INFRAESTRUTURA E LOGÍSTICA S.A.",
     "cnpj": "04149454000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ECORODOVIAS INFRAESTRUTURA E LOGÍSTICA S.A."
+    ]
   },
   {
     "ticker": "EDFO11",
@@ -2037,7 +2804,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "EDGA11",
@@ -2045,7 +2813,26 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "EEEL3",
+    "name": "Ceee-gt",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "EEEL4",
+    "name": "Ceee-gt",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "EGIE3",
@@ -2053,7 +2840,11 @@
     "razao_social": "ENGIE BRASIL ENERGIA S.A.",
     "cnpj": "02474103000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ENGIE BRASIL ENERGIA S.A.",
+      "Engie Brasil"
+    ]
   },
   {
     "ticker": "EGYR11",
@@ -2061,7 +2852,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "EKTR3",
@@ -2069,7 +2861,8 @@
     "razao_social": "ELEKTRO REDES S.A.",
     "cnpj": "02328280000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EKTR4",
@@ -2077,7 +2870,8 @@
     "razao_social": "ELEKTRO REDES S.A.",
     "cnpj": "02328280000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ELDO11",
@@ -2085,7 +2879,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "ELMD3",
+    "name": "Eletromídia",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "EMAE3",
@@ -2093,7 +2897,8 @@
     "razao_social": "EMAE - EMPRESA METROP. DE AGUAS E ENERGIA S.A.",
     "cnpj": "02302101000142",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EMAE4",
@@ -2101,7 +2906,8 @@
     "razao_social": "EMAE - EMPRESA METROP. DE AGUAS E ENERGIA S.A.",
     "cnpj": "02302101000142",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EMBJ3",
@@ -2109,7 +2915,17 @@
     "razao_social": "EMBRAER S.A.",
     "cnpj": "07689002000189",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "ENAT3",
+    "name": "Enauta Part",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ENEV3",
@@ -2117,7 +2933,8 @@
     "razao_social": "ENEVA S.A",
     "cnpj": "04423567000121",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ENGI11",
@@ -2125,7 +2942,8 @@
     "razao_social": "ENERGISA S.A.",
     "cnpj": "00864214000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ENGI3",
@@ -2133,7 +2951,8 @@
     "razao_social": "ENERGISA S.A.",
     "cnpj": "00864214000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ENGI4",
@@ -2141,7 +2960,8 @@
     "razao_social": "ENERGISA S.A.",
     "cnpj": "00864214000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ENJU3",
@@ -2149,7 +2969,8 @@
     "razao_social": "ENJOEI S.A.",
     "cnpj": "16922038000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ENMT3",
@@ -2157,7 +2978,8 @@
     "razao_social": "ENERGISA MATO GROSSO-DISTRIBUIDORA DE ENERGIA S/A",
     "cnpj": "03467321000199",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ENMT4",
@@ -2165,7 +2987,8 @@
     "razao_social": "ENERGISA MATO GROSSO-DISTRIBUIDORA DE ENERGIA S/A",
     "cnpj": "03467321000199",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EQIR11",
@@ -2173,7 +2996,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "EQTL3",
@@ -2181,7 +3005,10 @@
     "razao_social": "EQUATORIAL S.A.",
     "cnpj": "03220438000173",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "EQUATORIAL S.A."
+    ]
   },
   {
     "ticker": "ERCR11",
@@ -2189,7 +3016,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ERPA11",
@@ -2197,15 +3025,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ESPA3",
-    "name": "Mpm Corpóreos",
+    "name": "Espaçolaser",
     "razao_social": "MPM Corpóreos S.A.",
     "cnpj": "26659061000159",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MPM Corpóreos S.A."
+    ]
   },
   {
     "ticker": "ESTQ11",
@@ -2213,15 +3045,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "ESTR3",
+    "name": "Estrela",
+    "razao_social": null,
+    "cnpj": "61082004000150",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ESTR4",
-    "name": "Manufatura De Brinquedos Estrela",
+    "name": "Estrela",
     "razao_social": "MANUFATURA DE BRINQUEDOS ESTRELA S.A.",
     "cnpj": "61082004000150",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MANUFATURA DE BRINQUEDOS ESTRELA S.A."
+    ]
   },
   {
     "ticker": "ETER3",
@@ -2229,23 +3074,30 @@
     "razao_social": "ETERNIT S.A.",
     "cnpj": "61092037000181",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "EUCA3",
-    "name": "Eucatex S.A. Industria E Comercio",
+    "name": "Eucatex",
     "razao_social": "EUCATEX S.A. INDUSTRIA E COMERCIO",
     "cnpj": "56643018000166",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "EUCATEX S.A. INDUSTRIA E COMERCIO"
+    ]
   },
   {
     "ticker": "EUCA4",
-    "name": "Eucatex S.A. Industria E Comercio",
+    "name": "Eucatex",
     "razao_social": "EUCATEX S.A. INDUSTRIA E COMERCIO",
     "cnpj": "56643018000166",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "EUCATEX S.A. INDUSTRIA E COMERCIO"
+    ]
   },
   {
     "ticker": "EURO11",
@@ -2253,7 +3105,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "EVBI11",
@@ -2261,7 +3114,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "EVEN3",
@@ -2269,7 +3123,10 @@
     "razao_social": "EVEN CONSTRUTORA E INCORPORADORA S.A.",
     "cnpj": "43470988000165",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "EVEN CONSTRUTORA E INCORPORADORA S.A."
+    ]
   },
   {
     "ticker": "EZTC3",
@@ -2277,7 +3134,11 @@
     "razao_social": "EZ TEC EMPREEND. E PARTICIPACOES S.A.",
     "cnpj": "08312229000173",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "EZ TEC EMPREEND. E PARTICIPACOES S.A.",
+      "Ez Tec"
+    ]
   },
   {
     "ticker": "FAED11",
@@ -2285,7 +3146,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FAMB11B",
@@ -2293,7 +3155,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FASA3",
@@ -2301,7 +3164,8 @@
     "razao_social": "FASA S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "00359742000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FATN11",
@@ -2309,7 +3173,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FCFL11",
@@ -2317,23 +3182,30 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FESA3",
-    "name": "Cia Ferro Ligas Da Bahia - Ferbasa",
+    "name": "Ferbasa",
     "razao_social": "CIA FERRO LIGAS DA BAHIA - FERBASA",
     "cnpj": "15141799000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA FERRO LIGAS DA BAHIA - FERBASA"
+    ]
   },
   {
     "ticker": "FESA4",
-    "name": "Cia Ferro Ligas Da Bahia - Ferbasa",
+    "name": "Ferbasa",
     "razao_social": "CIA FERRO LIGAS DA BAHIA - FERBASA",
     "cnpj": "15141799000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA FERRO LIGAS DA BAHIA - FERBASA"
+    ]
   },
   {
     "ticker": "FEXC11",
@@ -2341,7 +3213,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FGPM11",
@@ -2349,7 +3222,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FHER3",
@@ -2357,7 +3231,8 @@
     "razao_social": "FERTILIZANTES HERINGER S.A.",
     "cnpj": "22266175000188",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FIEI3",
@@ -2365,7 +3240,8 @@
     "razao_social": "FICA EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
     "cnpj": "07820907000146",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FIGE3",
@@ -2373,7 +3249,8 @@
     "razao_social": "INVESTIMENTOS BEMGE S.A.",
     "cnpj": "01548981000179",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FIGE4",
@@ -2381,7 +3258,8 @@
     "razao_social": "INVESTIMENTOS BEMGE S.A.",
     "cnpj": "01548981000179",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FIGS11",
@@ -2389,7 +3267,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FIIB11",
@@ -2397,7 +3276,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FIIP11B",
@@ -2405,15 +3285,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FIQE3",
-    "name": "Unifique Telecomunicações",
+    "name": "Unifique",
     "razao_social": "Unifique Telecomunicações S.A.",
     "cnpj": "02255187000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Unifique Telecomunicações S.A."
+    ]
   },
   {
     "ticker": "FISC11",
@@ -2421,7 +3305,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FISD11",
@@ -2429,7 +3314,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FIVN11",
@@ -2437,7 +3323,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FLCR11",
@@ -2445,7 +3332,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FLMA11",
@@ -2453,7 +3341,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FLRP11",
@@ -2461,7 +3350,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FLRY3",
@@ -2469,7 +3359,8 @@
     "razao_social": "FLEURY S.A.",
     "cnpj": "60840055000131",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FMOF11",
@@ -2477,7 +3368,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FPAB11",
@@ -2485,7 +3377,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FPNG11",
@@ -2493,7 +3386,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FRAS3",
@@ -2501,7 +3395,8 @@
     "razao_social": "FRASLE MOBILITY S.A.",
     "cnpj": "88610126000129",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FRIO3",
@@ -2509,7 +3404,8 @@
     "razao_social": "METALFRIO SOLUTIONS S.A.",
     "cnpj": "04821041000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "FTCE11B",
@@ -2517,7 +3413,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "FVPQ11",
@@ -2525,7 +3422,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GALG11",
@@ -2533,7 +3431,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GAME11",
@@ -2541,7 +3440,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GARE11",
@@ -2549,7 +3449,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "GBIO33",
+    "name": "Biotoscana",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "GCFF11",
@@ -2557,7 +3467,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GCRI11",
@@ -2565,23 +3476,30 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GEPA3",
-    "name": "Rio Paranapanema Energia",
+    "name": "Ger Paranapanema",
     "razao_social": "RIO PARANAPANEMA ENERGIA S.A.",
     "cnpj": "02998301000181",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "RIO PARANAPANEMA ENERGIA S.A."
+    ]
   },
   {
     "ticker": "GEPA4",
-    "name": "Rio Paranapanema Energia",
+    "name": "Ger Paranapanema",
     "razao_social": "RIO PARANAPANEMA ENERGIA S.A.",
     "cnpj": "02998301000181",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "RIO PARANAPANEMA ENERGIA S.A."
+    ]
   },
   {
     "ticker": "GESE11B",
@@ -2589,7 +3507,35 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "GETT11",
+    "name": "Getnet",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "GETT3",
+    "name": "Getnet",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "GETT4",
+    "name": "Getnet",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "GFSA3",
@@ -2597,7 +3543,8 @@
     "razao_social": "GAFISA S.A.",
     "cnpj": "01545826000107",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "GGBR3",
@@ -2605,7 +3552,8 @@
     "razao_social": "GERDAU S.A.",
     "cnpj": "33611500000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "GGBR4",
@@ -2613,7 +3561,8 @@
     "razao_social": "GERDAU S.A.",
     "cnpj": "33611500000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "GGPS3",
@@ -2621,7 +3570,11 @@
     "razao_social": "GPS PARTICIPAÇÕES E EMPREENDIMENTOS S.A.",
     "cnpj": "09229201000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "GPS PARTICIPAÇÕES E EMPREENDIMENTOS S.A.",
+      "Grupos GPS"
+    ]
   },
   {
     "ticker": "GGRC11",
@@ -2629,7 +3582,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GMAT3",
@@ -2637,7 +3591,8 @@
     "razao_social": "GRUPO MATEUS S.A.",
     "cnpj": "24990777000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "GOAU3",
@@ -2645,7 +3600,8 @@
     "razao_social": "METALURGICA GERDAU S.A.",
     "cnpj": "92690783000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "GOAU4",
@@ -2653,7 +3609,37 @@
     "razao_social": "METALURGICA GERDAU S.A.",
     "cnpj": "92690783000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Gerdau"
+    ]
+  },
+  {
+    "ticker": "GOLL3",
+    "name": "Gol",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "GOLL53",
+    "name": "GOL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "GOLL54",
+    "name": "GOL",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "GPAR3",
@@ -2661,7 +3647,17 @@
     "razao_social": "CIA CELG DE PARTICIPACOES - CELGPAR",
     "cnpj": "08560444000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "GRAO3",
+    "name": "Agribrasil",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "GRND3",
@@ -2669,7 +3665,8 @@
     "razao_social": "GRENDENE S.A.",
     "cnpj": "89850341000160",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "GSFI11",
@@ -2677,15 +3674,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GSHP3",
-    "name": "General Shopping E Outlets Do Brasil Brasil",
+    "name": "General Shopping",
     "razao_social": "GENERAL SHOPPING E OUTLETS DO BRASIL BRASIL S.A.",
     "cnpj": "08764621000153",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "GENERAL SHOPPING E OUTLETS DO BRASIL BRASIL S.A."
+    ]
   },
   {
     "ticker": "GTLG11",
@@ -2693,7 +3694,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GTWR11",
@@ -2701,7 +3703,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "GZIT11",
@@ -2709,7 +3712,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HAAA11",
@@ -2717,7 +3721,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HABT11",
@@ -2725,7 +3730,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HAPV3",
@@ -2733,7 +3739,10 @@
     "razao_social": "HAPVIDA PARTICIPAÇÕES E INVESTIMENTOS S.A.",
     "cnpj": "05197443000138",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "HAPVIDA PARTICIPAÇÕES E INVESTIMENTOS S.A."
+    ]
   },
   {
     "ticker": "HBCR11",
@@ -2741,7 +3750,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HBOR3",
@@ -2749,7 +3759,10 @@
     "razao_social": "HELBOR EMPREENDIMENTOS S.A.",
     "cnpj": "49263189000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "HELBOR EMPREENDIMENTOS S.A."
+    ]
   },
   {
     "ticker": "HBRE3",
@@ -2757,7 +3770,8 @@
     "razao_social": "HBR Realty Empreendimentos Imobiliários S.A.",
     "cnpj": "14785152000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "HBRH11",
@@ -2765,15 +3779,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HBSA3",
-    "name": "Hidrovias Do Brasil",
+    "name": "Hidrovias do Brasil",
     "razao_social": "HIDROVIAS DO BRASIL S.A.",
     "cnpj": "12648327000153",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "HBTS5",
@@ -2781,7 +3797,8 @@
     "razao_social": "CIA HABITASUL DE PARTICIPACOES",
     "cnpj": "87762563000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "HBTT11",
@@ -2789,7 +3806,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "HCAR3",
+    "name": "Hospital Care Caledonia",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "HCHG11",
@@ -2797,7 +3824,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HCRI11",
@@ -2805,7 +3833,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HCST11",
@@ -2813,7 +3842,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HCTR11",
@@ -2821,7 +3851,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HDEL11",
@@ -2829,7 +3860,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HDOF11",
@@ -2837,7 +3869,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HETA3",
@@ -2845,7 +3878,8 @@
     "razao_social": "HERCULES S.A. FABRICA DE TALHERES",
     "cnpj": "92749225000163",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "HETA4",
@@ -2853,7 +3887,8 @@
     "razao_social": "HERCULES S.A. FABRICA DE TALHERES",
     "cnpj": "92749225000163",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "HFOF11",
@@ -2861,7 +3896,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGBS11",
@@ -2869,7 +3905,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGCR11",
@@ -2877,7 +3914,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGFF11",
@@ -2885,7 +3923,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGIC11",
@@ -2893,7 +3932,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGLG11",
@@ -2901,7 +3941,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGPO11",
@@ -2909,7 +3950,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGRE11",
@@ -2917,7 +3959,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HGRU11",
@@ -2925,7 +3968,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HLOG11",
@@ -2933,7 +3977,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HMOB3",
@@ -2941,7 +3986,8 @@
     "razao_social": "HMOBI Participações S.A.",
     "cnpj": "40159947000164",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "HOFC11",
@@ -2949,15 +3995,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HOOT4",
-    "name": "Hoteis Othon S.A. - Em Recuperação Judicial",
+    "name": "Hoteis Othon",
     "razao_social": "HOTEIS OTHON S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "33200049000147",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "HOTEIS OTHON S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "HOSI11",
@@ -2965,7 +4015,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HPDP11",
@@ -2973,7 +4024,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HRDF11",
@@ -2981,7 +4033,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HREC11",
@@ -2989,7 +4042,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HSAF11",
@@ -2997,7 +4051,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HSLG11",
@@ -3005,7 +4060,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HSML11",
@@ -3013,7 +4069,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HSRE11",
@@ -3021,7 +4078,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HTMX11",
@@ -3029,7 +4087,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HUCG11",
@@ -3037,7 +4096,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HUSC11",
@@ -3045,7 +4105,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HUSI11",
@@ -3053,15 +4114,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "HYPE3",
-    "name": "Hypera",
+    "name": "Hypera Pharma",
     "razao_social": "HYPERA S.A.",
     "cnpj": "02932074000191",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "HYPERA S.A."
+    ]
   },
   {
     "ticker": "IBCR11",
@@ -3069,7 +4134,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "IBFF11",
@@ -3077,15 +4143,37 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "ICBR3",
+    "name": "Intercement",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "IFCM3",
-    "name": "Infracommerce Cxaas",
+    "name": "Infracommerce",
     "razao_social": "INFRACOMMERCE CXAAS S.A.",
     "cnpj": "38456921000136",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "INFRACOMMERCE CXAAS S.A."
+    ]
+  },
+  {
+    "ticker": "IGBR3",
+    "name": "Gradiente",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "IGTA3",
@@ -3093,23 +4181,26 @@
     "razao_social": "IGUATEMI EMPRESA DE SHOPPING CENTERS S.A",
     "cnpj": "51218147000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "IGTI11",
-    "name": "Iguatemi",
+    "name": "Iguatemi S.A.",
     "razao_social": "IGUATEMI S.A.",
     "cnpj": "60543816000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "IGTI3",
-    "name": "Iguatemi",
+    "name": "Iguatemi S.A.",
     "razao_social": "IGUATEMI S.A.",
     "cnpj": "60543816000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "IGTI4",
@@ -3117,7 +4208,8 @@
     "razao_social": "IGUATEMI S.A.",
     "cnpj": "60543816000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "INEP3",
@@ -3125,7 +4217,8 @@
     "razao_social": "INEPAR S.A. INDUSTRIA E CONSTRUCOES EM RECUPERACAO JUDICIAL",
     "cnpj": "76627504000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "INNC3",
@@ -3133,7 +4226,8 @@
     "razao_social": "INC EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
     "cnpj": "09611768000176",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "INTB3",
@@ -3141,7 +4235,10 @@
     "razao_social": "Intelbras S.A. Ind. de Telecomunicação Eletrônica Brasileira",
     "cnpj": "82901000000127",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Intelbras S.A. Ind. de Telecomunicação Eletrônica Brasileira"
+    ]
   },
   {
     "ticker": "IRBR3",
@@ -3149,7 +4246,10 @@
     "razao_social": "IRB - BRASIL RESSEGUROS S.A.",
     "cnpj": "33376989000191",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "IRB - BRASIL RESSEGUROS S.A."
+    ]
   },
   {
     "ticker": "IRDM11",
@@ -3157,7 +4257,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "IRIM11",
@@ -3165,7 +4266,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ISAE3",
@@ -3173,7 +4275,8 @@
     "razao_social": "ISA ENERGIA BRASIL",
     "cnpj": "02998611000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ISAE4",
@@ -3181,7 +4284,10 @@
     "razao_social": "ISA ENERGIA BRASIL",
     "cnpj": "02998611000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ISA ENERGIA BRASIL"
+    ]
   },
   {
     "ticker": "ITSA3",
@@ -3189,7 +4295,8 @@
     "razao_social": "ITAÚSA S.A.",
     "cnpj": "61532644000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ITSA4",
@@ -3197,7 +4304,8 @@
     "razao_social": "ITAÚSA S.A.",
     "cnpj": "61532644000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ITUB3",
@@ -3205,7 +4313,10 @@
     "razao_social": "ITAU UNIBANCO HOLDING S.A.",
     "cnpj": "60872504000123",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ITAU UNIBANCO HOLDING S.A."
+    ]
   },
   {
     "ticker": "ITUB4",
@@ -3213,7 +4324,10 @@
     "razao_social": "ITAU UNIBANCO HOLDING S.A.",
     "cnpj": "60872504000123",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ITAU UNIBANCO HOLDING S.A."
+    ]
   },
   {
     "ticker": "JALL3",
@@ -3221,7 +4335,8 @@
     "razao_social": "Jalles Machado S.A.",
     "cnpj": "02635522000195",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "JASC11",
@@ -3229,7 +4344,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JBFO11",
@@ -3237,7 +4353,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "JBSS3",
+    "name": "JBS",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "JFEN3",
@@ -3245,7 +4371,8 @@
     "razao_social": "JOAO FORTES ENGENHARIA S.A. - Em Recuperação Judicial",
     "cnpj": "33035536000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "JFLL11",
@@ -3253,7 +4380,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JHSF3",
@@ -3261,7 +4389,10 @@
     "razao_social": "JHSF PARTICIPACOES S.A.",
     "cnpj": "08294224000165",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "JHSF PARTICIPACOES S.A."
+    ]
   },
   {
     "ticker": "JOPA3",
@@ -3269,7 +4400,8 @@
     "razao_social": "JOSAPAR-JOAQUIM OLIVEIRA S.A. - PARTICIP",
     "cnpj": "87456562000122",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "JOPA4",
@@ -3277,7 +4409,8 @@
     "razao_social": "JOSAPAR-JOAQUIM OLIVEIRA S.A. - PARTICIP",
     "cnpj": "87456562000122",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "JPPA11",
@@ -3285,7 +4418,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JPPC11",
@@ -3293,7 +4427,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JRDM11",
@@ -3301,7 +4436,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JSAF11",
@@ -3309,15 +4445,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JSLG3",
-    "name": "Jsl",
+    "name": "Grupo JSL",
     "razao_social": "JSL S.A.",
     "cnpj": "52548435000179",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "JSL S.A."
+    ]
   },
   {
     "ticker": "JSRE11",
@@ -3325,7 +4465,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "JTPR11",
@@ -3333,7 +4474,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KCRE11",
@@ -3341,7 +4483,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KEPL3",
@@ -3349,7 +4492,8 @@
     "razao_social": "KEPLER WEBER S.A.",
     "cnpj": "91983056000169",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "KEVE11",
@@ -3357,7 +4501,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KFOF11",
@@ -3365,7 +4510,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KINP11",
@@ -3373,7 +4519,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KISU11",
@@ -3381,7 +4528,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KLAS3",
@@ -3389,23 +4537,35 @@
     "razao_social": "KALLAS INCORPORAÇÕES E CONSTRUÇÕES S.A.",
     "cnpj": "09146451000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "KLBN11",
-    "name": "Klabin",
+    "name": "Klabin S/A",
     "razao_social": "KLABIN S.A.",
     "cnpj": "89637490000145",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "KLBN3",
+    "name": "Klabin S/A",
+    "razao_social": null,
+    "cnpj": "89637490000145",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "KLBN4",
     "name": "Klabin",
     "razao_social": null,
-    "cnpj": null,
+    "cnpj": "89637490000145",
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "KNCR11",
@@ -3413,7 +4573,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KNHY11",
@@ -3421,7 +4582,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KNIP11",
@@ -3429,7 +4591,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KNPR11",
@@ -3437,7 +4600,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KNRE11",
@@ -3445,7 +4609,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KNRI11",
@@ -3453,7 +4618,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "KNSC11",
@@ -3461,15 +4627,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "KRSA3",
+    "name": "Kora Saúde",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "LAND3",
-    "name": "Terra Santa Propriedades Agrícolas",
+    "name": "Terra Santa Agro SA",
     "razao_social": "Terra Santa Propriedades Agrícolas S.A.",
     "cnpj": "40337136000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Terra Santa Propriedades Agrícolas S.A."
+    ]
   },
   {
     "ticker": "LASC11",
@@ -3477,7 +4656,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LATR11B",
@@ -3485,7 +4665,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LAVV3",
@@ -3493,15 +4674,30 @@
     "razao_social": "Lavvi Empreendimentos Imobiliários S.A.",
     "cnpj": "26462693000128",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Lavvi Empreendimentos Imobiliários S.A."
+    ]
+  },
+  {
+    "ticker": "LCAM3",
+    "name": "Locamerica",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "LEVE3",
-    "name": "Mahle Metal Leve",
+    "name": "Metal Leve",
     "razao_social": "MAHLE METAL LEVE S.A.",
     "cnpj": "60476884000187",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MAHLE METAL LEVE S.A."
+    ]
   },
   {
     "ticker": "LGCP11",
@@ -3509,7 +4705,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LIFE11",
@@ -3517,7 +4714,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LIGT3",
@@ -3525,7 +4723,17 @@
     "razao_social": "LIGHT S.A.",
     "cnpj": "03378521000175",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "LINX3",
+    "name": "Linx",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "LJQQ3",
@@ -3533,15 +4741,19 @@
     "razao_social": "Lojas Quero Quero S.A.",
     "cnpj": "96418264021802",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "LOGG3",
-    "name": "Log Commercial Properties E Participações",
+    "name": "Log",
     "razao_social": "LOG COMMERCIAL PROPERTIES E PARTICIPAÇÕES",
     "cnpj": "09041168000110",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "LOG COMMERCIAL PROPERTIES E PARTICIPAÇÕES"
+    ]
   },
   {
     "ticker": "LOGN3",
@@ -3549,7 +4761,8 @@
     "razao_social": "LOG-IN LOGISTICA INTERMODAL S.A.",
     "cnpj": "42278291000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "LPLP11",
@@ -3557,15 +4770,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LPSB3",
-    "name": "Lps Brasil - Consultoria De Imoveis",
+    "name": "LPS Brasil",
     "razao_social": "LPS BRASIL - CONSULTORIA DE IMOVEIS S.A.",
     "cnpj": "08078847000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "LPS BRASIL - CONSULTORIA DE IMOVEIS S.A."
+    ]
   },
   {
     "ticker": "LRDI11",
@@ -3573,7 +4790,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LREN3",
@@ -3581,7 +4799,8 @@
     "razao_social": "LOJAS RENNER S.A.",
     "cnpj": "92754738000162",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "LUGG11",
@@ -3589,7 +4808,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "LUPA3",
@@ -3597,7 +4817,8 @@
     "razao_social": "LUPATECH S.A",
     "cnpj": "89463822000112",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "LVBI11",
@@ -3605,7 +4826,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "LVTC3",
+    "name": "Livetech",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "LWSA3",
@@ -3613,7 +4844,10 @@
     "razao_social": "LWSA S/A",
     "cnpj": "02351877000152",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "LWSA S/A"
+    ]
   },
   {
     "ticker": "MALL11",
@@ -3621,7 +4855,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MANA11",
@@ -3629,15 +4864,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MATD3",
-    "name": "Hospital Mater Dei",
+    "name": "Mater Dei",
     "razao_social": "HOSPITAL MATER DEI S.A.",
     "cnpj": "16676520000159",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "HOSPITAL MATER DEI S.A."
+    ]
   },
   {
     "ticker": "MAXR11",
@@ -3645,7 +4884,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MBRF3",
@@ -3653,7 +4893,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "MCCI11",
@@ -3661,7 +4902,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MCHF11",
@@ -3669,7 +4911,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MCHY11",
@@ -3677,7 +4920,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MDIA3",
@@ -3685,7 +4929,11 @@
     "razao_social": "M.DIAS BRANCO S.A. IND COM DE ALIMENTOS",
     "cnpj": "07206816000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "M.DIAS BRANCO S.A. IND COM DE ALIMENTOS",
+      "MDiasBranco"
+    ]
   },
   {
     "ticker": "MDNE3",
@@ -3693,7 +4941,8 @@
     "razao_social": "MOURA DUBEUX ENGENHARIA S/A",
     "cnpj": "12049631000184",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MEAL3",
@@ -3701,15 +4950,19 @@
     "razao_social": "INTERNATIONAL MEAL COMPANY ALIMENTACAO S.A.",
     "cnpj": "17314329000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MELK3",
-    "name": "Melnick Desenvolvimento Imobiliário",
+    "name": "Melnick",
     "razao_social": "Melnick Desenvolvimento Imobiliário S.A.",
     "cnpj": "12181987000177",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Melnick Desenvolvimento Imobiliário S.A."
+    ]
   },
   {
     "ticker": "MEND3",
@@ -3717,7 +4970,8 @@
     "razao_social": "MENDES JUNIOR ENGENHARIA S.A.",
     "cnpj": "17162082000173",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MEND5",
@@ -3725,7 +4979,8 @@
     "razao_social": "MENDES JUNIOR ENGENHARIA S.A.",
     "cnpj": "17162082000173",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MEND6",
@@ -3733,7 +4988,8 @@
     "razao_social": "MENDES JUNIOR ENGENHARIA S.A.",
     "cnpj": "17162082000173",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MERC3",
@@ -3741,15 +4997,19 @@
     "razao_social": "Mercantil Financeira S.A. - Soc. Crédito, Financ e Investime",
     "cnpj": "33040601000187",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MERC4",
-    "name": "Mercantil Financeira S.A. - Soc. Crédito, Financ E Investime",
+    "name": "Mercantil do Brasil Financeira",
     "razao_social": "Mercantil Financeira S.A. - Soc. Crédito, Financ e Investime",
     "cnpj": "33040601000187",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Mercantil Financeira S.A. - Soc. Crédito, Financ e Investime"
+    ]
   },
   {
     "ticker": "MFAI11",
@@ -3757,7 +5017,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MFII11",
@@ -3765,7 +5026,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MGCR11",
@@ -3773,7 +5035,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MGEL3",
@@ -3781,7 +5044,8 @@
     "razao_social": "MANGELS INDUSTRIAL S.A.",
     "cnpj": "61065298000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MGEL4",
@@ -3789,7 +5053,8 @@
     "razao_social": "MANGELS INDUSTRIAL S.A.",
     "cnpj": "61065298000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MGFF11",
@@ -3797,7 +5062,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MGHT11",
@@ -3805,7 +5071,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MGLG11",
@@ -3813,7 +5080,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MGLU3",
@@ -3821,7 +5089,8 @@
     "razao_social": "MAGAZINE LUIZA S.A.",
     "cnpj": "47960950000121",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MILS3",
@@ -3829,7 +5098,10 @@
     "razao_social": "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A.",
     "cnpj": "27093558000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MILLS LOCAÇÃO, SERVIÇOS E LOGÍSTICA S.A."
+    ]
   },
   {
     "ticker": "MINT11",
@@ -3837,7 +5109,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "MLAS3",
+    "name": "Multi",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "MMAQ3",
@@ -3845,7 +5127,8 @@
     "razao_social": "MINASMAQUINAS S.A.",
     "cnpj": "17161241000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MMAQ4",
@@ -3853,23 +5136,39 @@
     "razao_social": "MINASMAQUINAS S.A.",
     "cnpj": "17161241000115",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "MMXM11",
+    "name": "MMX Mineração",
+    "razao_social": null,
+    "cnpj": "02762115000149",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "MMXM3",
-    "name": "Massa Falida Da Mmx Mineracao E Metalicos",
+    "name": "MMX Mineração",
     "razao_social": "MASSA FALIDA DA MMX MINERACAO E METALICOS S.A.",
     "cnpj": "02762115000149",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MASSA FALIDA DA MMX MINERACAO E METALICOS S.A."
+    ]
   },
   {
     "ticker": "MNDL3",
-    "name": "Mundial S.A. - Produtos De Consumo",
+    "name": "Mundial",
     "razao_social": "MUNDIAL S.A. - PRODUTOS DE CONSUMO",
     "cnpj": "88610191000154",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MUNDIAL S.A. - PRODUTOS DE CONSUMO"
+    ]
   },
   {
     "ticker": "MNPR3",
@@ -3877,7 +5176,35 @@
     "razao_social": "MINUPAR PARTICIPACOES S.A.",
     "cnpj": "90076886000140",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "MODL11",
+    "name": "Banco Modal",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "MODL3",
+    "name": "Banco Modal",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "MODL4",
+    "name": "Banco Modal",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "MOFF11",
@@ -3885,7 +5212,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MORE11",
@@ -3893,7 +5221,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MOTV3",
@@ -3901,7 +5230,10 @@
     "razao_social": "MOTIVA INFRAESTRUTURA DE MOBILIDADE S.A.",
     "cnpj": "02846056000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MOTIVA INFRAESTRUTURA DE MOBILIDADE S.A."
+    ]
   },
   {
     "ticker": "MOVI3",
@@ -3909,7 +5241,10 @@
     "razao_social": "MOVIDA PARTICIPACOES SA",
     "cnpj": "21314559000166",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MOVIDA PARTICIPACOES SA"
+    ]
   },
   {
     "ticker": "MRVE3",
@@ -3917,7 +5252,11 @@
     "razao_social": "MRV ENGENHARIA E PARTICIPACOES S.A.",
     "cnpj": "08343492000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MRV ENGENHARIA E PARTICIPACOES S.A.",
+      "MRV Engenharia"
+    ]
   },
   {
     "ticker": "MSPA3",
@@ -3925,7 +5264,8 @@
     "razao_social": "CIA MELHORAMENTOS DE SAO PAULO",
     "cnpj": "60730348000166",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MSPA4",
@@ -3933,7 +5273,8 @@
     "razao_social": "CIA MELHORAMENTOS DE SAO PAULO",
     "cnpj": "60730348000166",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MSRO3",
@@ -3941,7 +5282,8 @@
     "razao_social": "MAESTRO LOCADORA DE VEICULOS S.A.",
     "cnpj": "08795211000170",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MTOF11",
@@ -3949,7 +5291,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MTRE3",
@@ -3957,7 +5300,8 @@
     "razao_social": "Mitre Realty Empreendimentos e Participações S.A.",
     "cnpj": "07882930000165",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MTSA3",
@@ -3965,7 +5309,8 @@
     "razao_social": "METISA METALURGICA TIMBOENSE S.A.",
     "cnpj": "86375425000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MTSA4",
@@ -3973,7 +5318,8 @@
     "razao_social": "METISA METALURGICA TIMBOENSE S.A.",
     "cnpj": "86375425000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MULT3",
@@ -3981,7 +5327,10 @@
     "razao_social": "MULTIPLAN - EMPREEND IMOBILIARIOS S.A.",
     "cnpj": "07816890000153",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "MULTIPLAN - EMPREEND IMOBILIARIOS S.A."
+    ]
   },
   {
     "ticker": "MWET3",
@@ -3989,7 +5338,8 @@
     "razao_social": "WETZEL S.A.",
     "cnpj": "84683671000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MWET4",
@@ -3997,7 +5347,8 @@
     "razao_social": "WETZEL S.A.",
     "cnpj": "84683671000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "MXRF11",
@@ -4005,7 +5356,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "MYPK3",
@@ -4013,7 +5365,8 @@
     "razao_social": "IOCHPE MAXION S.A.",
     "cnpj": "61156113000175",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NATU3",
@@ -4021,7 +5374,10 @@
     "razao_social": "NATURA COSMÉTICOS S.A.",
     "cnpj": "71673990000177",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "NATURA COSMÉTICOS S.A."
+    ]
   },
   {
     "ticker": "NAVT11",
@@ -4029,7 +5385,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "NCHB11",
@@ -4037,7 +5394,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "NCRI11",
@@ -4045,7 +5403,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "NEMO3",
@@ -4053,7 +5412,8 @@
     "razao_social": "SUZANO HOLDING S.A.",
     "cnpj": "60651809000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NEMO5",
@@ -4061,7 +5421,8 @@
     "razao_social": "SUZANO HOLDING S.A.",
     "cnpj": "60651809000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NEMO6",
@@ -4069,7 +5430,8 @@
     "razao_social": "SUZANO HOLDING S.A.",
     "cnpj": "60651809000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NEOE3",
@@ -4077,7 +5439,8 @@
     "razao_social": "NEOENERGIA S.A.",
     "cnpj": "01083200000118",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NEWL11",
@@ -4085,7 +5448,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "NEWU11",
@@ -4093,7 +5457,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "NEXP3",
@@ -4101,15 +5466,19 @@
     "razao_social": "Nexpe Participações S.A",
     "cnpj": "08613550000198",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NGRD3",
-    "name": "Neogrid Participações",
+    "name": "Neogrid",
     "razao_social": "NEOGRID PARTICIPAÇÕES S.A.",
     "cnpj": "10139870000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "NEOGRID PARTICIPAÇÕES S.A."
+    ]
   },
   {
     "ticker": "NSLU11",
@@ -4117,7 +5486,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "NUTR3",
@@ -4125,7 +5495,8 @@
     "razao_social": "NUTRIPLANT INDUSTRIA E COMERCIO S.A.",
     "cnpj": "51128999000190",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "NVHO11",
@@ -4133,7 +5504,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ODER3",
@@ -4141,7 +5513,8 @@
     "razao_social": "CONSERVAS ODERICH S.A.",
     "cnpj": "97191902000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ODER4",
@@ -4149,15 +5522,26 @@
     "razao_social": "CONSERVAS ODERICH S.A.",
     "cnpj": "97191902000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "ODPV3",
+    "name": "OdontoPrev",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "OFSA3",
-    "name": "Ourofino",
+    "name": "Ourofino S/A",
     "razao_social": "OUROFINO S.A.",
     "cnpj": "20258278000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "OIBR3",
@@ -4165,15 +5549,21 @@
     "razao_social": "OI S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "76535764000143",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "OI S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "OIBR4",
-    "name": "Oi S.A. - Em Recuperação Judicial",
+    "name": "OI",
     "razao_social": "OI S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "76535764000143",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "OI S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "ONCO3",
@@ -4181,7 +5571,10 @@
     "razao_social": "ONCOCLÍNICAS DO BRASIL SERVIÇOS MÉDICOS S.A.",
     "cnpj": "12104241000402",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ONCOCLÍNICAS DO BRASIL SERVIÇOS MÉDICOS S.A."
+    ]
   },
   {
     "ticker": "ONEF11",
@@ -4189,15 +5582,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "OPCT3",
-    "name": "Oceanpact Serviços Maritimos",
+    "name": "OceanPact",
     "razao_social": "Oceanpact Serviços Maritimos S.A.",
     "cnpj": "09114805000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Oceanpact Serviços Maritimos S.A."
+    ]
   },
   {
     "ticker": "OPGM3",
@@ -4205,7 +5602,8 @@
     "razao_social": "GAMA PARTICIPACOES S.A.",
     "cnpj": "02796775000140",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "OPSE3",
@@ -4213,7 +5611,8 @@
     "razao_social": "SUDESTE S.A.",
     "cnpj": "02062747000108",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "OPTS3",
@@ -4221,7 +5620,8 @@
     "razao_social": "SUL 116 PARTICIPAÇÕES S.A. - Em liquidação",
     "cnpj": "01957772000189",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ORPD11",
@@ -4229,23 +5629,30 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ORVR3",
-    "name": "Orizon Valorização De Resíduos",
+    "name": "Orizon",
     "razao_social": "Orizon Valorização de Resíduos S.A.",
     "cnpj": "11421994000136",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Orizon Valorização de Resíduos S.A."
+    ]
   },
   {
     "ticker": "OSXB3",
-    "name": "Osx Brasil S.A. - Em Recuperação Judicial",
+    "name": "OSX Brasil",
     "razao_social": "OSX BRASIL S.A. - Em Recuperação Judicial",
     "cnpj": "09112685000132",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "OSX BRASIL S.A. - Em Recuperação Judicial"
+    ]
   },
   {
     "ticker": "OUFF11",
@@ -4253,7 +5660,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "OUJP11",
@@ -4261,7 +5669,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "OULG11",
@@ -4269,7 +5678,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "OURE11",
@@ -4277,7 +5687,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PABY11",
@@ -4285,15 +5696,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "PARD3",
+    "name": "Instituto Hermes Pardini SA",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "PASS3",
-    "name": "Compass Gás E Energia",
+    "name": "Compass",
     "razao_social": "Compass Gás e Energia S.A.",
     "cnpj": "21389501000181",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Compass Gás e Energia S.A."
+    ]
   },
   {
     "ticker": "PASS5",
@@ -4301,7 +5725,8 @@
     "razao_social": "Compass Gás e Energia S.A.",
     "cnpj": "21389501000181",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PASS6",
@@ -4309,7 +5734,8 @@
     "razao_social": "Compass Gás e Energia S.A.",
     "cnpj": "21389501000181",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PATB11",
@@ -4317,7 +5743,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PATC11",
@@ -4325,7 +5752,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PATI3",
@@ -4333,7 +5761,8 @@
     "razao_social": "PANATLANTICA S.A.",
     "cnpj": "92693019000189",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PATI4",
@@ -4341,7 +5770,8 @@
     "razao_social": "PANATLANTICA S.A.",
     "cnpj": "92693019000189",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PATL11",
@@ -4349,7 +5779,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PBLV11",
@@ -4357,7 +5788,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PCAR3",
@@ -4365,23 +5797,42 @@
     "razao_social": "CIA BRASILEIRA DE DISTRIBUICAO",
     "cnpj": "47508411000156",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA BRASILEIRA DE DISTRIBUICAO",
+      "Pão de Açúcar"
+    ]
+  },
+  {
+    "ticker": "PCAR4",
+    "name": "Pão de Açúcar",
+    "razao_social": null,
+    "cnpj": "47508411000156",
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "PDGR3",
-    "name": "Pdg Realty S.A. Empreend E Participacoes",
+    "name": "PDG Realty",
     "razao_social": "PDG REALTY S.A. EMPREEND E PARTICIPACOES",
     "cnpj": "02950811000189",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PDG REALTY S.A. EMPREEND E PARTICIPACOES"
+    ]
   },
   {
     "ticker": "PDTC3",
-    "name": "Padtec Holding",
+    "name": "Padtec",
     "razao_social": "PADTEC HOLDING S.A.",
     "cnpj": "02365069000144",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PADTEC HOLDING S.A."
+    ]
   },
   {
     "ticker": "PEAB3",
@@ -4389,7 +5840,8 @@
     "razao_social": "CIA PARTICIPACOES ALIANCA DA BAHIA",
     "cnpj": "01938783000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PEAB4",
@@ -4397,7 +5849,8 @@
     "razao_social": "CIA PARTICIPACOES ALIANCA DA BAHIA",
     "cnpj": "01938783000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PEMA11",
@@ -4405,7 +5858,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PETR3",
@@ -4413,7 +5867,10 @@
     "razao_social": "PETROLEO BRASILEIRO S.A. PETROBRAS",
     "cnpj": "33000167000101",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PETROLEO BRASILEIRO S.A. PETROBRAS"
+    ]
   },
   {
     "ticker": "PETR4",
@@ -4421,7 +5878,10 @@
     "razao_social": "PETROLEO BRASILEIRO S.A. PETROBRAS",
     "cnpj": "33000167000101",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PETROLEO BRASILEIRO S.A. PETROBRAS"
+    ]
   },
   {
     "ticker": "PETZ3",
@@ -4429,7 +5889,8 @@
     "razao_social": "Pet Center Comércio e Participações S.A.",
     "cnpj": "18328118000109",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PFRM3",
@@ -4437,7 +5898,8 @@
     "razao_social": "PROFARMA DISTRIB PROD FARMACEUTICOS S.A.",
     "cnpj": "45453214000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PGMN3",
@@ -4445,7 +5907,10 @@
     "razao_social": "EMPREENDIMENTOS PAGUE MENOS S.A.",
     "cnpj": "06626253000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "EMPREENDIMENTOS PAGUE MENOS S.A."
+    ]
   },
   {
     "ticker": "PINE3",
@@ -4453,7 +5918,8 @@
     "razao_social": "BCO PINE S.A",
     "cnpj": "62144175000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PINE4",
@@ -4461,7 +5927,10 @@
     "razao_social": "BCO PINE S.A",
     "cnpj": "62144175000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO PINE S.A"
+    ]
   },
   {
     "ticker": "PLCR11",
@@ -4469,7 +5938,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PLOG11",
@@ -4477,15 +5947,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PLPL3",
-    "name": "Plano & Plano Desenvolvimento Imobiliário",
+    "name": "Plano & Plano",
     "razao_social": "Plano & Plano Desenvolvimento Imobiliário S.A.",
     "cnpj": "24230275000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Plano & Plano Desenvolvimento Imobiliário S.A."
+    ]
   },
   {
     "ticker": "PLRI11",
@@ -4493,7 +5967,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PMAM3",
@@ -4501,7 +5976,10 @@
     "razao_social": "PARANAPANEMA S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "60398369000479",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PARANAPANEMA S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "PNDL11",
@@ -4509,7 +5987,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PNPR11",
@@ -4517,15 +5996,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PNVL3",
-    "name": "Dimed S.A. Distribuidora De Medicamentos",
+    "name": "Dimed",
     "razao_social": "DIMED S.A. DISTRIBUIDORA DE MEDICAMENTOS",
     "cnpj": "92665611000177",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "DIMED S.A. DISTRIBUIDORA DE MEDICAMENTOS"
+    ]
   },
   {
     "ticker": "POMO3",
@@ -4533,7 +6016,8 @@
     "razao_social": "MARCOPOLO S.A.",
     "cnpj": "88611835000129",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "POMO4",
@@ -4541,7 +6025,8 @@
     "razao_social": "MARCOPOLO S.A.",
     "cnpj": "88611835000129",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PORD11",
@@ -4549,15 +6034,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "PORT3",
+    "name": "Wilson Sons",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "POSI3",
-    "name": "Positivo Tecnologia",
+    "name": "Positivo Inf",
     "razao_social": "POSITIVO TECNOLOGIA S.A.",
     "cnpj": "81243735000148",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "POSITIVO TECNOLOGIA S.A."
+    ]
   },
   {
     "ticker": "PPAR3",
@@ -4565,7 +6063,8 @@
     "razao_social": "POLPAR S.A.",
     "cnpj": "59789545000171",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PQAG11",
@@ -4573,7 +6072,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PQDP11",
@@ -4581,7 +6081,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PRBC4",
@@ -4589,7 +6090,8 @@
     "razao_social": "PARANA BCO S.A.",
     "cnpj": "14388334000199",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PRIO3",
@@ -4597,7 +6099,10 @@
     "razao_social": "PRIO S.A.",
     "cnpj": "10629105000168",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PRIO S.A."
+    ]
   },
   {
     "ticker": "PRNR3",
@@ -4605,7 +6110,8 @@
     "razao_social": "PRINER SERVIÇOS INDUSTRIAIS S.A.",
     "cnpj": "18593815000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PRPT3",
@@ -4613,7 +6119,8 @@
     "razao_social": "PROMPT PARTICIPACOES S.A.",
     "cnpj": "02992449000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PRSN11B",
@@ -4621,7 +6128,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "PRTS11",
@@ -4629,7 +6137,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "PRVA3",
+    "name": "Privalia",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "PSSA3",
@@ -4637,7 +6155,8 @@
     "razao_social": "PORTO SEGURO S.A.",
     "cnpj": "02149205000169",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PTBL3",
@@ -4645,7 +6164,8 @@
     "razao_social": "PBG S/A",
     "cnpj": "83475913000191",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PTCA3",
@@ -4653,7 +6173,8 @@
     "razao_social": "PRÁTICA PRODUTOS S.A.",
     "cnpj": "08574411000100",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "PVBI11",
@@ -4661,7 +6182,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "QAGR11",
@@ -4669,7 +6191,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "QAMI11",
@@ -4677,7 +6200,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "QUAL3",
@@ -4685,7 +6209,10 @@
     "razao_social": "QUALICORP CONSULTORIA E CORRETORA DE SEGUROS S.A.",
     "cnpj": "11992680000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "QUALICORP CONSULTORIA E CORRETORA DE SEGUROS S.A."
+    ]
   },
   {
     "ticker": "QUSW3",
@@ -4693,7 +6220,8 @@
     "razao_social": "QUALITY SOFTWARE S.A.",
     "cnpj": "35791391000194",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "QVQP3",
@@ -4701,7 +6229,8 @@
     "razao_social": "524 PARTICIPACOES S.A.",
     "cnpj": "01851771000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RADL3",
@@ -4709,7 +6238,11 @@
     "razao_social": "Raia Drogasil S.A.",
     "cnpj": "61585865000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Raia Drogasil S.A.",
+      "RD"
+    ]
   },
   {
     "ticker": "RAIL3",
@@ -4717,7 +6250,8 @@
     "razao_social": "RUMO S.A.",
     "cnpj": "02387241000160",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RAIZ4",
@@ -4725,7 +6259,8 @@
     "razao_social": "RAÍZEN S.A.",
     "cnpj": "33453598000123",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RANI3",
@@ -4733,7 +6268,8 @@
     "razao_social": "IRANI PAPEL E EMBALAGEM S.A.",
     "cnpj": "92791243000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RAPT3",
@@ -4741,7 +6277,10 @@
     "razao_social": "RANDONCORP S.A.",
     "cnpj": "89086144000116",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "RANDONCORP S.A."
+    ]
   },
   {
     "ticker": "RAPT4",
@@ -4749,7 +6288,10 @@
     "razao_social": "RANDONCORP S.A.",
     "cnpj": "89086144000116",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "RANDONCORP S.A."
+    ]
   },
   {
     "ticker": "RBCO11",
@@ -4757,7 +6299,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBED11",
@@ -4765,7 +6308,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBFF11",
@@ -4773,7 +6317,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBHG11",
@@ -4781,7 +6326,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBHY11",
@@ -4789,7 +6335,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBIR11",
@@ -4797,7 +6344,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBLG11",
@@ -4805,7 +6353,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRD11",
@@ -4813,7 +6362,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRF11",
@@ -4821,7 +6371,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRL11",
@@ -4829,7 +6380,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRP11",
@@ -4837,7 +6389,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRR11",
@@ -4845,7 +6398,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRS11",
@@ -4853,7 +6407,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBRY11",
@@ -4861,7 +6416,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBVA11",
@@ -4869,7 +6425,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RBVO11",
@@ -4877,7 +6434,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RCRB11",
@@ -4885,7 +6443,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RCSL3",
@@ -4893,7 +6452,8 @@
     "razao_social": "RECRUSUL S.A.",
     "cnpj": "91333666000117",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RCSL4",
@@ -4901,7 +6461,17 @@
     "razao_social": "RECRUSUL S.A.",
     "cnpj": "91333666000117",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "RDNI3",
+    "name": "Rodobens",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "RDOR3",
@@ -4909,7 +6479,10 @@
     "razao_social": "Rede D'Or São Luiz S.A.",
     "cnpj": "06047087000139",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Rede D'Or São Luiz S.A."
+    ]
   },
   {
     "ticker": "RDPD11",
@@ -4917,7 +6490,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "REAG3",
+    "name": "REAG Investimentos",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "RECR11",
@@ -4925,7 +6508,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RECT11",
@@ -4933,7 +6517,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RECV3",
@@ -4941,7 +6526,10 @@
     "razao_social": "PETRORECÔNCAVO S.A.",
     "cnpj": "03342704000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "PetroRecôncavo Geral SA"
+    ]
   },
   {
     "ticker": "RECX11",
@@ -4949,7 +6537,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "REDE3",
@@ -4957,7 +6546,8 @@
     "razao_social": "REDE ENERGIA PARTICIPAÇÕES S.A.",
     "cnpj": "61584140000149",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "REIT11",
@@ -4965,7 +6555,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RELG11",
@@ -4973,7 +6564,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RENT3",
@@ -4981,15 +6573,21 @@
     "razao_social": "Localiza Rent a Car S.A.",
     "cnpj": "16670085000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Localiza Rent a Car S.A."
+    ]
   },
   {
     "ticker": "RENT4",
-    "name": "Localiza Rent A Car",
+    "name": "Localiza",
     "razao_social": "Localiza Rent a Car S.A.",
     "cnpj": "16670085000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Localiza Rent a Car S.A."
+    ]
   },
   {
     "ticker": "REON11",
@@ -4997,7 +6595,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RFOF11",
@@ -5005,15 +6604,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RIAA3",
-    "name": "Guararapes Confeccoes",
+    "name": "Riachuelo",
     "razao_social": "GUARARAPES CONFECCOES S.A.",
     "cnpj": "08402943000152",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "GUARARAPES CONFECCOES S.A."
+    ]
   },
   {
     "ticker": "RINV11",
@@ -5021,7 +6624,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "RIOS3",
+    "name": "Rio Alto Energias Renováveis",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "RMAI11",
@@ -5029,23 +6642,39 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "RNEW11",
+    "name": "Renaova",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "RNEW3",
-    "name": "Renova Energia",
+    "name": "Renova",
     "razao_social": "RENOVA ENERGIA S.A.",
     "cnpj": "08534605000174",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "RENOVA ENERGIA S.A."
+    ]
   },
   {
     "ticker": "RNEW4",
-    "name": "Renova Energia",
+    "name": "Renova",
     "razao_social": "RENOVA ENERGIA S.A.",
     "cnpj": "08534605000174",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "RENOVA ENERGIA S.A."
+    ]
   },
   {
     "ticker": "RNGO11",
@@ -5053,7 +6682,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ROMI3",
@@ -5061,7 +6691,8 @@
     "razao_social": "ROMI S.A.",
     "cnpj": "56720428000163",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "ROOF11",
@@ -5069,7 +6700,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RPAD3",
@@ -5077,7 +6709,8 @@
     "razao_social": "ALFA HOLDINGS S.A.",
     "cnpj": "17167396000169",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RPAD5",
@@ -5085,7 +6718,8 @@
     "razao_social": "ALFA HOLDINGS S.A.",
     "cnpj": "17167396000169",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RPAD6",
@@ -5093,15 +6727,19 @@
     "razao_social": "ALFA HOLDINGS S.A.",
     "cnpj": "17167396000169",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RPMG3",
-    "name": "Refinaria De Petroleos Manguinhos",
+    "name": "Pet Manguinhos",
     "razao_social": "REFINARIA DE PETROLEOS MANGUINHOS S.A.",
     "cnpj": "33412081000196",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "REFINARIA DE PETROLEOS MANGUINHOS S.A."
+    ]
   },
   {
     "ticker": "RRCI11",
@@ -5109,15 +6747,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "RRRP3",
+    "name": "3R Petroleum",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "RSID3",
-    "name": "Rossi Residencial S.A. - Em Recuperação Judicial",
+    "name": "Rossi Resid",
     "razao_social": "ROSSI RESIDENCIAL S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "61065751000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ROSSI RESIDENCIAL S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "RSPD11",
@@ -5125,7 +6776,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RSUL3",
@@ -5133,7 +6785,8 @@
     "razao_social": "METALURGICA RIOSULENSE S.A.",
     "cnpj": "85778074000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RSUL4",
@@ -5141,7 +6794,8 @@
     "razao_social": "METALURGICA RIOSULENSE S.A.",
     "cnpj": "85778074000106",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RVBI11",
@@ -5149,7 +6803,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RVEE3",
@@ -5157,7 +6812,8 @@
     "razao_social": "REVEE S.A.",
     "cnpj": "52841191000118",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "RZAK11",
@@ -5165,7 +6821,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RZAT11",
@@ -5173,7 +6830,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "RZTR11",
@@ -5181,7 +6839,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SADI11",
@@ -5189,7 +6848,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SAIC11B",
@@ -5197,7 +6857,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SALI11",
@@ -5205,7 +6866,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SALT3",
@@ -5213,7 +6875,8 @@
     "razao_social": "Grupo Salta Educação S.A.",
     "cnpj": "17765891000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SALT4",
@@ -5221,7 +6884,8 @@
     "razao_social": "Grupo Salta Educação S.A.",
     "cnpj": "17765891000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SANB11",
@@ -5229,23 +6893,33 @@
     "razao_social": "BCO SANTANDER (BRASIL) S.A.",
     "cnpj": "90400888000142",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO SANTANDER (BRASIL) S.A.",
+      "Santander BR"
+    ]
   },
   {
     "ticker": "SANB3",
-    "name": "Bco Santander (Brasil)",
+    "name": "Santander BR",
     "razao_social": "BCO SANTANDER (BRASIL) S.A.",
     "cnpj": "90400888000142",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO SANTANDER (BRASIL) S.A."
+    ]
   },
   {
     "ticker": "SANB4",
-    "name": "Bco Santander (Brasil)",
+    "name": "Santander BR",
     "razao_social": "BCO SANTANDER (BRASIL) S.A.",
     "cnpj": "90400888000142",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BCO SANTANDER (BRASIL) S.A."
+    ]
   },
   {
     "ticker": "SAPR11",
@@ -5253,23 +6927,32 @@
     "razao_social": "CIA SANEAMENTO DO PARANA - SANEPAR",
     "cnpj": "76484013000145",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA SANEAMENTO DO PARANA - SANEPAR"
+    ]
   },
   {
     "ticker": "SAPR3",
-    "name": "Cia Saneamento Do Parana - Sanepar",
+    "name": "Sanepar",
     "razao_social": "CIA SANEAMENTO DO PARANA - SANEPAR",
     "cnpj": "76484013000145",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA SANEAMENTO DO PARANA - SANEPAR"
+    ]
   },
   {
     "ticker": "SAPR4",
-    "name": "Cia Saneamento Do Parana - Sanepar",
+    "name": "Sanepar",
     "razao_social": "CIA SANEAMENTO DO PARANA - SANEPAR",
     "cnpj": "76484013000145",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA SANEAMENTO DO PARANA - SANEPAR"
+    ]
   },
   {
     "ticker": "SARE11",
@@ -5277,7 +6960,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SAUD3",
@@ -5285,7 +6969,10 @@
     "razao_social": "BRADSAÚDE S.A.",
     "cnpj": "58119199000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BRADSAÚDE S.A."
+    ]
   },
   {
     "ticker": "SBFG3",
@@ -5293,7 +6980,8 @@
     "razao_social": "Grupo SBF S.A.",
     "cnpj": "13217485000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SBSP3",
@@ -5301,15 +6989,21 @@
     "razao_social": "CIA SANEAMENTO BASICO EST SAO PAULO",
     "cnpj": "43776517000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CIA SANEAMENTO BASICO EST SAO PAULO"
+    ]
   },
   {
     "ticker": "SCAR3",
-    "name": "Sao Carlos Empreend E Participacoes",
+    "name": "Sao Carlos",
     "razao_social": "SAO CARLOS EMPREEND E PARTICIPACOES S.A.",
     "cnpj": "29780061000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "SAO CARLOS EMPREEND E PARTICIPACOES S.A."
+    ]
   },
   {
     "ticker": "SCPF11",
@@ -5317,7 +7011,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SDIL11",
@@ -5325,7 +7020,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SEED11",
@@ -5333,7 +7029,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SEER3",
@@ -5341,15 +7038,19 @@
     "razao_social": "SER EDUCACIONAL S.A.",
     "cnpj": "04986320000113",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SEQL3",
-    "name": "Sequoia Logística E Transportes",
+    "name": "Sequoia",
     "razao_social": "SEQUOIA LOGÍSTICA E TRANSPORTES S.A.",
     "cnpj": "01599101000193",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "SEQUOIA LOGÍSTICA E TRANSPORTES S.A."
+    ]
   },
   {
     "ticker": "SEQR11",
@@ -5357,7 +7058,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SFND11",
@@ -5365,7 +7067,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SHDP11B",
@@ -5373,7 +7076,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SHOP11",
@@ -5381,7 +7085,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SHOW3",
@@ -5389,7 +7094,8 @@
     "razao_social": "T4F ENTRETENIMENTO S.A.",
     "cnpj": "02860694000162",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SHPH11",
@@ -5397,7 +7103,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SHUL3",
@@ -5405,7 +7112,8 @@
     "razao_social": "SCHULZ S.A.",
     "cnpj": "84693183000168",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SHUL4",
@@ -5413,7 +7121,8 @@
     "razao_social": "SCHULZ S.A.",
     "cnpj": "84693183000168",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SIMH3",
@@ -5421,7 +7130,8 @@
     "razao_social": "SIMPAR S.A.",
     "cnpj": "07415333000120",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SJAU11",
@@ -5429,7 +7139,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SLCE3",
@@ -5437,7 +7148,26 @@
     "razao_social": "SLC AGRICOLA S.A.",
     "cnpj": "89096457000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "SLED3",
+    "name": "Saraiva Livr",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "SLED4",
+    "name": "Saraiva livr",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "SMFT3",
@@ -5445,7 +7175,19 @@
     "razao_social": "SMARTFIT ESCOLA DE GINÁSTICA E DANÇA S.A.",
     "cnpj": "07594978000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "SMARTFIT ESCOLA DE GINÁSTICA E DANÇA S.A."
+    ]
+  },
+  {
+    "ticker": "SMLS3",
+    "name": "Smiles",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "SMTO3",
@@ -5453,7 +7195,8 @@
     "razao_social": "SAO MARTINHO S.A.",
     "cnpj": "51466860000156",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SNCI11",
@@ -5461,7 +7204,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SNEL11",
@@ -5469,7 +7213,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SNFF11",
@@ -5477,7 +7222,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SNSY3",
@@ -5485,7 +7231,8 @@
     "razao_social": "SANSUY S.A. INDUSTRIA DE PLASTICOS",
     "cnpj": "14807945000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SNSY5",
@@ -5493,7 +7240,8 @@
     "razao_social": "SANSUY S.A. INDUSTRIA DE PLASTICOS",
     "cnpj": "14807945000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SNSY6",
@@ -5501,15 +7249,19 @@
     "razao_social": "SANSUY S.A. INDUSTRIA DE PLASTICOS",
     "cnpj": "14807945000124",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SOJA3",
-    "name": "Boa Safra Sementes",
+    "name": "Boa Safra",
     "razao_social": "BOA SAFRA SEMENTES S.A.",
     "cnpj": "10807374000177",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "BOA SAFRA SEMENTES S.A."
+    ]
   },
   {
     "ticker": "SOLR11",
@@ -5517,7 +7269,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SOND3",
@@ -5525,7 +7278,8 @@
     "razao_social": "SONDOTECNICA ENGENHARIA SOLOS S.A.",
     "cnpj": "33386210000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SOND5",
@@ -5533,7 +7287,8 @@
     "razao_social": "SONDOTECNICA ENGENHARIA SOLOS S.A.",
     "cnpj": "33386210000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SOND6",
@@ -5541,7 +7296,8 @@
     "razao_social": "SONDOTECNICA ENGENHARIA SOLOS S.A.",
     "cnpj": "33386210000119",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SPTW11",
@@ -5549,7 +7305,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SRNA3",
@@ -5557,7 +7314,8 @@
     "razao_social": "SERENA ENERGIA S.A.",
     "cnpj": "42500384000151",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "SRVD11",
@@ -5565,7 +7323,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "STRX11",
@@ -5573,23 +7332,28 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "SUZB3",
-    "name": "Suzano",
+    "name": "Suzano Papel",
     "razao_social": "SUZANO S.A.",
     "cnpj": "16404287000155",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "SUZANO S.A."
+    ]
   },
   {
     "ticker": "SYNE3",
-    "name": "Syn Prop & Tech",
+    "name": "SYN Prop Tech",
     "razao_social": "SYN PROP & TECH S.A.",
     "cnpj": "08801621000186",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TAEE11",
@@ -5597,23 +7361,32 @@
     "razao_social": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
     "cnpj": "07859971000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A."
+    ]
   },
   {
     "ticker": "TAEE3",
-    "name": "Transmissora Aliança De Energia Elétrica",
+    "name": "Taesa",
     "razao_social": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
     "cnpj": "07859971000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A."
+    ]
   },
   {
     "ticker": "TAEE4",
-    "name": "Transmissora Aliança De Energia Elétrica",
+    "name": "Taesa",
     "razao_social": "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A.",
     "cnpj": "07859971000130",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRANSMISSORA ALIANÇA DE ENERGIA ELÉTRICA S.A."
+    ]
   },
   {
     "ticker": "TASA3",
@@ -5621,7 +7394,8 @@
     "razao_social": "TAURUS ARMAS S.A.",
     "cnpj": "92781335000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TASA4",
@@ -5629,7 +7403,8 @@
     "razao_social": "TAURUS ARMAS S.A.",
     "cnpj": "92781335000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TBOF11",
@@ -5637,7 +7412,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TCIN11",
@@ -5645,7 +7421,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TCPF11",
@@ -5653,7 +7430,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TCSA3",
@@ -5661,7 +7439,8 @@
     "razao_social": "TECNISA S.A.",
     "cnpj": "08065557000112",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TECN3",
@@ -5669,7 +7448,8 @@
     "razao_social": "TECHNOS S.A.",
     "cnpj": "09295063000197",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TEKA3",
@@ -5677,7 +7457,8 @@
     "razao_social": "TEKA-TECELAGEM KUEHNRICH S.A. - Em Recuperação Judicial",
     "cnpj": "82636986000155",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TEKA4",
@@ -5685,23 +7466,30 @@
     "razao_social": "TEKA-TECELAGEM KUEHNRICH S.A. - Em Recuperação Judicial",
     "cnpj": "82636986000155",
     "ativo": false,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TELB3",
-    "name": "Telec Brasileiras S.A. Telebras",
+    "name": "Telebras",
     "razao_social": "TELEC BRASILEIRAS S.A. TELEBRAS",
     "cnpj": "00336701000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TELEC BRASILEIRAS S.A. TELEBRAS"
+    ]
   },
   {
     "ticker": "TELB4",
-    "name": "Telec Brasileiras S.A. Telebras",
+    "name": "Telebras",
     "razao_social": "TELEC BRASILEIRAS S.A. TELEBRAS",
     "cnpj": "00336701000104",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TELEC BRASILEIRAS S.A. TELEBRAS"
+    ]
   },
   {
     "ticker": "TELD11",
@@ -5709,7 +7497,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TEND3",
@@ -5717,7 +7506,8 @@
     "razao_social": "CONSTRUTORA TENDA S.A.",
     "cnpj": "71476527000135",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TEPP11",
@@ -5725,7 +7515,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TFCO4",
@@ -5733,7 +7524,10 @@
     "razao_social": "TRACK & FIELD CO S.A.",
     "cnpj": "59418806000147",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TRACK & FIELD CO S.A."
+    ]
   },
   {
     "ticker": "TGAR11",
@@ -5741,7 +7535,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TGMA3",
@@ -5749,7 +7544,10 @@
     "razao_social": "TEGMA GESTAO LOGISTICA S.A.",
     "cnpj": "02351144000118",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TEGMA GESTAO LOGISTICA S.A."
+    ]
   },
   {
     "ticker": "TIMS3",
@@ -5757,7 +7555,10 @@
     "razao_social": "TIM S.A.",
     "cnpj": "02421421000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Tim Participações"
+    ]
   },
   {
     "ticker": "TKNO3",
@@ -5765,7 +7566,8 @@
     "razao_social": "TEKNO S.A. - INDUSTRIA E COMERCIO",
     "cnpj": "33467572000134",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TKNO4",
@@ -5773,7 +7575,8 @@
     "razao_social": "TEKNO S.A. - INDUSTRIA E COMERCIO",
     "cnpj": "33467572000134",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TMPS11",
@@ -5781,15 +7584,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TOKY3",
-    "name": "Grupo Toky S.A. - Em Recuperação Judicial",
+    "name": "Grupo Toky",
     "razao_social": "GRUPO TOKY S.A. - EM RECUPERAÇÃO JUDICIAL",
     "cnpj": "31553627000101",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "GRUPO TOKY S.A. - EM RECUPERAÇÃO JUDICIAL"
+    ]
   },
   {
     "ticker": "TORD11",
@@ -5797,7 +7604,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TOTS3",
@@ -5805,7 +7613,8 @@
     "razao_social": "TOTVS S.A.",
     "cnpj": "53113791000122",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TPIS3",
@@ -5813,7 +7622,17 @@
     "razao_social": "TPI - TRIUNFO PARTICIP. E INVEST. S.A.",
     "cnpj": "03014553000191",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "TRAD3",
+    "name": "TradersClub",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "TRIS3",
@@ -5821,7 +7640,8 @@
     "razao_social": "TRISUL S.A.",
     "cnpj": "08811643000127",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TRNT11",
@@ -5829,7 +7649,26 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "TRPL3",
+    "name": "ISA CTEEP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
+  },
+  {
+    "ticker": "TRPL4",
+    "name": "ISA CTEEP",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "TRXB11",
@@ -5837,7 +7676,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TRXF11",
@@ -5845,7 +7685,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TRXR3",
@@ -5853,7 +7694,8 @@
     "razao_social": "TEXTIL RENAUXVIEW S.A.",
     "cnpj": "82982075000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TSER11",
@@ -5861,7 +7703,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TSNC11",
@@ -5869,15 +7712,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "TTEN3",
-    "name": "Três Tentos Agroindustrial",
+    "name": "3tentos",
     "razao_social": "Três Tentos Agroindustrial S/A",
     "cnpj": "94813102000170",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Três Tentos Agroindustrial S/A"
+    ]
   },
   {
     "ticker": "TUPY3",
@@ -5885,7 +7732,8 @@
     "razao_social": "TUPY S.A.",
     "cnpj": "84683374000149",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "TXRX4",
@@ -5893,7 +7741,8 @@
     "razao_social": "TEXTIL RENAUXVIEW S.A.",
     "cnpj": "82982075000180",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "UCAS3",
@@ -5901,7 +7750,8 @@
     "razao_social": "UNICASA INDÚSTRIA DE MÓVEIS S.A.",
     "cnpj": "90441460000148",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "UGPA3",
@@ -5909,31 +7759,43 @@
     "razao_social": "ULTRAPAR PARTICIPACOES S.A.",
     "cnpj": "33256439000139",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "ULTRAPAR PARTICIPACOES S.A."
+    ]
   },
   {
     "ticker": "UNIP3",
-    "name": "Unipar Carbocloro",
+    "name": "Unipar",
     "razao_social": "UNIPAR CARBOCLORO S.A.",
     "cnpj": "33958695000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "UNIPAR CARBOCLORO S.A."
+    ]
   },
   {
     "ticker": "UNIP5",
-    "name": "Unipar Carbocloro",
+    "name": "Unipar",
     "razao_social": "UNIPAR CARBOCLORO S.A.",
     "cnpj": "33958695000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "UNIPAR CARBOCLORO S.A."
+    ]
   },
   {
     "ticker": "UNIP6",
-    "name": "Unipar Carbocloro",
+    "name": "Unipar",
     "razao_social": "UNIPAR CARBOCLORO S.A.",
     "cnpj": "33958695000178",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "UNIPAR CARBOCLORO S.A."
+    ]
   },
   {
     "ticker": "URPR11",
@@ -5941,7 +7803,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "USIM3",
@@ -5949,7 +7812,10 @@
     "razao_social": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
     "cnpj": "60894730000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "USINAS SID DE MINAS GERAIS S.A.-USIMINAS"
+    ]
   },
   {
     "ticker": "USIM5",
@@ -5957,7 +7823,10 @@
     "razao_social": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
     "cnpj": "60894730000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "USINAS SID DE MINAS GERAIS S.A.-USIMINAS"
+    ]
   },
   {
     "ticker": "USIM6",
@@ -5965,7 +7834,8 @@
     "razao_social": "USINAS SID DE MINAS GERAIS S.A.-USIMINAS",
     "cnpj": "60894730000105",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VALE3",
@@ -5973,7 +7843,17 @@
     "razao_social": "VALE S.A.",
     "cnpj": "33592510000154",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
+  },
+  {
+    "ticker": "VALE5",
+    "name": "Vale",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "VAMO3",
@@ -5981,15 +7861,20 @@
     "razao_social": "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",
     "cnpj": "23373000000132",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "VAMOS LOCAÇÃO DE CAMINHÕES, MÁQUINAS E EQUIPAMENTOS S.A.",
+      "Vamos"
+    ]
   },
   {
     "ticker": "VBBR3",
-    "name": "Vibra Energia",
+    "name": "Vibra Energia S.A",
     "razao_social": "VIBRA ENERGIA S/A",
     "cnpj": "34274233000102",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VCJR11",
@@ -5997,7 +7882,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VCRR11",
@@ -6005,7 +7891,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VERE11",
@@ -6013,7 +7900,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VGHF11",
@@ -6021,7 +7909,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VGIP11",
@@ -6029,7 +7918,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VGIR11",
@@ -6037,7 +7927,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VIDS11",
@@ -6045,7 +7936,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VIFI11",
@@ -6053,7 +7945,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "VIIA3",
+    "name": "VIA S.A",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "VILG11",
@@ -6061,7 +7963,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VINO11",
@@ -6069,7 +7972,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VISC11",
@@ -6077,15 +7981,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VITT3",
-    "name": "Vittia",
+    "name": "Vittia Fertilizantes",
     "razao_social": "VITTIA S.A.",
     "cnpj": "45365558000109",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "VITTIA S.A."
+    ]
   },
   {
     "ticker": "VIUR11",
@@ -6093,7 +8001,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VIVA3",
@@ -6101,7 +8010,10 @@
     "razao_social": "Vivara Participações S.A.",
     "cnpj": "33839910000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "Vivara Participações S.A."
+    ]
   },
   {
     "ticker": "VIVR3",
@@ -6109,7 +8021,8 @@
     "razao_social": "VIVER INCORPORADORA E CONSTRUTORA S.A.",
     "cnpj": "67571414000141",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VIVT3",
@@ -6117,7 +8030,10 @@
     "razao_social": "TELEFÔNICA BRASIL S.A",
     "cnpj": "02558157000162",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "TELEFÔNICA BRASIL S.A"
+    ]
   },
   {
     "ticker": "VJFD11",
@@ -6125,7 +8041,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VLID3",
@@ -6133,7 +8050,8 @@
     "razao_social": "VALID SOLUÇÕES S.A.",
     "cnpj": "33113309000147",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VLOL11",
@@ -6141,7 +8059,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VOTS11",
@@ -6149,7 +8068,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VPSI11",
@@ -6157,7 +8077,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VRTA11",
@@ -6165,7 +8086,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VSEC11",
@@ -6173,7 +8095,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VSHO11",
@@ -6181,7 +8104,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VSLH11",
@@ -6189,7 +8113,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VSPT3",
@@ -6197,7 +8122,8 @@
     "razao_social": "FERROVIA CENTRO-ATLANTICA S.A.",
     "cnpj": "00924429000175",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VSPT4",
@@ -6205,15 +8131,19 @@
     "razao_social": "FERROVIA CENTRO-ATLANTICA S.A.",
     "cnpj": "00924429000175",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VSTE3",
-    "name": "Veste S.A. Estilo",
+    "name": "Veste",
     "razao_social": "VESTE S.A. ESTILO",
     "cnpj": "49669856000143",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "VESTE S.A. ESTILO"
+    ]
   },
   {
     "ticker": "VTLT11",
@@ -6221,7 +8151,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VTPA11",
@@ -6229,7 +8160,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VTPL11",
@@ -6237,15 +8169,19 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VTRU3",
-    "name": "Vitru Educação",
+    "name": "Vitru",
     "razao_social": "VITRU EDUCAÇÃO S.A.",
     "cnpj": "20512706000140",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "VITRU EDUCAÇÃO S.A."
+    ]
   },
   {
     "ticker": "VTVI11",
@@ -6253,7 +8189,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VULC3",
@@ -6261,7 +8198,8 @@
     "razao_social": "VULCABRAS S.A.",
     "cnpj": "50926955000142",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "VVEO3",
@@ -6269,7 +8207,10 @@
     "razao_social": "CM Hospitalar S.A",
     "cnpj": "12420164000157",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "CM Hospitalar S.A"
+    ]
   },
   {
     "ticker": "VVRI11",
@@ -6277,7 +8218,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "VXXV11",
@@ -6285,7 +8227,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "WEGE3",
@@ -6293,23 +8236,30 @@
     "razao_social": "WEG S.A.",
     "cnpj": "84429695000111",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "WEST3",
-    "name": "Westwing Comércio Varejista",
+    "name": "Westwing",
     "razao_social": "WESTWING COMÉRCIO VAREJISTA S.A.",
     "cnpj": "14776142000150",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "WESTWING COMÉRCIO VAREJISTA S.A."
+    ]
   },
   {
     "ticker": "WHRL3",
-    "name": "Whirlpool",
+    "name": "Whirpool",
     "razao_social": "WHIRLPOOL S.A.",
     "cnpj": "59105999000186",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "WHIRLPOOL S.A."
+    ]
   },
   {
     "ticker": "WHRL4",
@@ -6317,7 +8267,8 @@
     "razao_social": "WHIRLPOOL S.A.",
     "cnpj": "59105999000186",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "WIZC3",
@@ -6325,7 +8276,8 @@
     "razao_social": "WIZ CO PARTICIPAÇÕES E CORRETAGEM DE SEGUROS S.A.",
     "cnpj": "42278473000103",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "WLMM3",
@@ -6333,7 +8285,8 @@
     "razao_social": "WLM PART. E COMÉRCIO DE MÁQUINAS E VEÍCULOS S.A.",
     "cnpj": "33228024000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "WLMM4",
@@ -6341,7 +8294,8 @@
     "razao_social": "WLM PART. E COMÉRCIO DE MÁQUINAS E VEÍCULOS S.A.",
     "cnpj": "33228024000151",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": []
   },
   {
     "ticker": "WPLZ11",
@@ -6349,7 +8303,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "WTSP11",
@@ -6357,7 +8312,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XBXO11",
@@ -6365,7 +8321,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPCI11",
@@ -6373,7 +8330,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPCM11",
@@ -6381,7 +8339,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPHT11",
@@ -6389,7 +8348,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPIN11",
@@ -6397,7 +8357,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPLG11",
@@ -6405,7 +8366,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPML11",
@@ -6413,7 +8375,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPPR11",
@@ -6421,7 +8384,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XPSF11",
@@ -6429,7 +8393,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "XTED11",
@@ -6437,7 +8402,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "YDUQ3",
@@ -6445,7 +8411,10 @@
     "razao_social": "YDUQS PARTICIPACOES S.A.",
     "cnpj": "08807432000110",
     "ativo": true,
-    "fonte": "cvm"
+    "fonte": "cvm",
+    "aliases": [
+      "YDUQS PARTICIPACOES S.A."
+    ]
   },
   {
     "ticker": "YUFI11",
@@ -6453,7 +8422,17 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
+  },
+  {
+    "ticker": "ZAMP3",
+    "name": "ZAMP S.A.",
+    "razao_social": null,
+    "cnpj": null,
+    "ativo": null,
+    "fonte": "infomoney",
+    "aliases": []
   },
   {
     "ticker": "ZAVI11",
@@ -6461,7 +8440,8 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   },
   {
     "ticker": "ZIFI11",
@@ -6469,6 +8449,7 @@
     "razao_social": null,
     "cnpj": null,
     "ativo": null,
-    "fonte": "legado"
+    "fonte": "legado",
+    "aliases": []
   }
 ]

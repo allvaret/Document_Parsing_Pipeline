@@ -191,6 +191,30 @@ def test_sem_cnpj_no_registro_mantem_o_que_veio_do_resultado():
     assert identify(r, "documento.pdf", TICKER_MAP, cnpj_map=CNPJS).company.cnpj is None
 
 
+# --- aliases: nome do arquivo que não é o nome comum do mapa --------------------------
+
+MAPA_BR = {"BRBI11": "BR Partners", "PETR3": "Petrobras"}
+ALIASES = {"BRBI BR Partners S.A": "BR Partners", "Petroleo Brasileiro": "Petrobras"}
+
+
+def test_nome_no_arquivo_que_e_alias_acha_a_empresa_canonica_e_o_cnpj():
+    i = identify(_result(), "Earnings Release BRBI BR Partners 3T25.pdf", MAPA_BR,
+                 cnpj_map={"BRBI11": "10739356000103"}, alias_map=ALIASES)
+    assert (i.company.name, i.company.cnpj) == ("BR Partners", "10739356000103")
+
+
+def test_sem_alias_o_nome_fora_do_mapa_nao_acha():
+    from batch.identify import name_from_filename
+    assert name_from_filename("Release Petroleo Brasileiro 3T25.pdf", MAPA_BR) is None
+    assert name_from_filename("Release Petroleo Brasileiro 3T25.pdf", MAPA_BR, ALIASES) == "Petrobras"
+
+
+def test_alias_igual_a_um_nome_do_mapa_nao_o_sobrescreve():
+    from batch.identify import name_from_filename
+    ruim = {"Petrobras": "Outra Empresa"}                 # alias colidindo com nome do mapa
+    assert name_from_filename("Release Petrobras 3T25.pdf", MAPA_BR, ruim) == "Petrobras"
+
+
 # --- prioridade e conflitos -----------------------------------------------------
 
 def test_conteudo_vence_nome_do_arquivo_e_o_conflito_e_logado():

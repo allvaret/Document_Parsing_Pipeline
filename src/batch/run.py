@@ -149,6 +149,7 @@ class _Ctx:
     provider: Optional[LLMProvider]
     process: Process
     cnpj_map: dict = field(default_factory=dict)
+    alias_map: dict = field(default_factory=dict)
 
 
 def list_pdfs(pdf_dir: Path) -> list[Path]:
@@ -195,7 +196,8 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
 
     # 3. Identificação (empresa, tipo, período). O que o conteúdo achou vai para o
     # log mesmo quando a identificação o descarta: é a auditoria do descarte.
-    ident = identify(result, pdf.name, ctx.ticker_map, ctx.overrides, ctx.cnpj_map)
+    ident = identify(result, pdf.name, ctx.ticker_map, ctx.overrides, ctx.cnpj_map,
+                     ctx.alias_map)
     rec["content"] = {
         "company": result.company.name, "company_method": result.company.name_method,
         "report_type": result.report.report_type.value, "period": result.report.period,
@@ -277,6 +279,7 @@ def run_batch(
     provider: Optional[LLMProvider] = None,
     process: Optional[Process] = None,
     cnpj_map: Optional[dict] = None,
+    alias_map: Optional[dict] = None,
     db_label: str = "",
     out: Callable[[str], None] = print,
 ) -> BatchSummary:
@@ -291,7 +294,7 @@ def run_batch(
     overrides = validate_overrides(overrides)
     pdfs = list_pdfs(pdf_dir)
     ctx = _Ctx(mode, session_factory, ticker_map, overrides, force, dry_run, provider, process,
-               cnpj_map or {})
+               cnpj_map or {}, alias_map or {})
     summary = BatchSummary()
 
     log = RunLog(log_dir, datetime.now())
@@ -392,14 +395,14 @@ def main(argv: list[str] | None = None, *, process: Optional[Process] = None) ->
     except FileNotFoundError as e:
         return _fail(str(e))
 
-    from data_pipeline.ticker_registry import load_cnpj_map
+    from data_pipeline.ticker_registry import load_alias_map, load_cnpj_map
     try:
-        cnpj_map = load_cnpj_map()
+        cnpj_map, alias_map = load_cnpj_map(), load_alias_map()
     except FileNotFoundError:
-        # Sem o registro o lote roda, mas sem CNPJ: empresa casa só por ticker/nome.
+        # Sem o registro o lote roda, mas sem CNPJ/aliases: empresa casa só por ticker/nome.
         print("[AVISO] ticker_registry.json não encontrado: empresas sem CNPJ. "
               "Gere com: python -m data_pipeline.ticker_registry", file=sys.stderr)
-        cnpj_map = {}
+        cnpj_map, alias_map = {}, {}
 
     provider = None
     if args.mode is SummaryMode.LLM:
@@ -424,7 +427,7 @@ def main(argv: list[str] | None = None, *, process: Optional[Process] = None) ->
                     session_factory=make_session_factory(engine), ticker_map=ticker_map,
                     log_dir=args.log_dir, overrides=overrides, force=args.force,
                     dry_run=args.dry_run, provider=provider, process=process,
-                    cnpj_map=cnpj_map, db_label=describe_url(url),
+                    cnpj_map=cnpj_map, alias_map=alias_map, db_label=describe_url(url),
                 )
         except BatchLockedError as e:
             return _fail(str(e))

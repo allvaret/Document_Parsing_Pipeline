@@ -7,11 +7,13 @@ import zipfile
 import pytest
 
 from data_pipeline.ticker_registry import (
+    load_alias_map,
     load_cnpj_map,
     main,
     merge,
     nome_comum,
     parse_fca,
+    parse_infomoney,
     write,
 )
 
@@ -82,7 +84,7 @@ def test_merge_preserva_nome_comum_e_entradas_que_a_cvm_nao_cobre():
     assert por_ticker["PETR3"]["cnpj"] == "33000167000101" and por_ticker["PETR3"]["fonte"] == "cvm"
     assert por_ticker["ABCP11"] == {"ticker": "ABCP11", "name": "Grand Plaza Shopping",
                                     "razao_social": None, "cnpj": None, "ativo": None,
-                                    "fonte": "legado"}                # FII preservado
+                                    "fonte": "legado", "aliases": []}                # FII preservado
     assert por_ticker["BBAS3"]["name"] == "Bco Brasil"                 # novo: razão social simplificada
     assert rel["legado_sem_cvm"] == 1 and "BBAS3" in rel["novos"] and "PETR3" not in rel["novos"]
 
@@ -138,3 +140,71 @@ def test_main_dry_run_nao_grava(tmp_path, monkeypatch, capsys):
 def test_load_cnpj_map_sem_arquivo_falha_explicitamente(tmp_path):
     with pytest.raises(FileNotFoundError):
         load_cnpj_map(tmp_path / "nao-existe.json")
+
+
+# --- InfoMoney: nome comum, tickers irmãos e aliases ---------------------------------
+
+HTML = """
+<table>
+<tr><td class="higher">Petrobras</td>
+ <td class="strong"><a href="https://x/b3/acao/petr4f/">PETR4F</a></td>
+ <td class="strong"><a href="https://x/b3/acao/petr3/">PETR3</a></td>
+ <td class="strong"><a href="https://x/b3/acao/petr4/">PETR4</a></td></tr>
+<tr><td class="higher">Apple</td><td class="strong"><a href="https://x/b3/bdr/apple-aapl34/">AAPL34</a></td></tr>
+<tr><td class="higher">Fundo</td><td class="strong"><a href="https://x/b3/fii/f-agrx11/">AGRX11</a></td></tr>
+<tr><td class="higher">BR Partners</td><td class="strong"><a href="https://x/b3/acao/y/">BRBI11</a></td></tr>
+<tr><td class="higher">Empresa Nova</td><td class="strong"><a href="https://x/b3/acao/y/">NOVA3</a></td>
+ <td class="strong"><a href="https://x/b3/acao/y/">NOVA4</a></td></tr>
+<tr><td class="higher">Mesma Linha</td><td class="strong"><a href="https://x/b3/acao/y/">PETR3</a></td>
+ <td class="strong"><a href="https://x/b3/acao/y/">VELH3</a></td></tr>
+</table>"""
+
+
+def test_parse_infomoney_agrupa_tickers_da_empresa_e_descarta_fracionario():
+    f = parse_infomoney(HTML)
+    assert f[0] == {"name": "Petrobras", "tickers": ["PETR3", "PETR4"]}
+    assert f[1] == {"name": "BR Partners", "tickers": ["BRBI11"]}
+    assert all(x["name"] not in ("Apple", "Fundo") for x in f)           # BDR e FII fora
+
+
+def test_infomoney_da_nome_comum_so_a_quem_nao_tem_nome_curado():
+    # BRBI11 tem só o nome derivado da razão social (rodada anterior): InfoMoney melhora.
+    # PETR3 tem nome curado: InfoMoney não sobrescreve.
+    registro, _ = merge({"BRBI11": "Brbi Br Partners", "PETR3": "Petrobras Curada"},
+                        parse_fca(fca_zip(), 2026), parse_infomoney(HTML)[:2])
+    por = {r["ticker"]: r for r in registro}
+    assert por["BRBI11"]["name"] == "BR Partners"
+    assert por["PETR3"]["name"] == "Petrobras Curada"
+    assert "Petrobras" in por["PETR3"]["aliases"]                       # nome da outra fonte guardado
+    assert "PETROLEO BRASILEIRO S.A. PETROBRAS" in por["PETR3"]["aliases"]   # razão social também
+
+
+def test_ticker_so_no_infomoney_herda_cnpj_do_irmao_e_ticker_sem_irmao_fica_sem():
+    registro, rel = merge({}, parse_fca(fca_zip(), 2026), parse_infomoney(HTML)[:3])
+    por = {r["ticker"]: r for r in registro}
+    assert por["NOVA3"]["fonte"] == por["NOVA4"]["fonte"] == "infomoney"
+    assert por["NOVA3"]["cnpj"] is None                                 # ninguém na CVM: não inventa
+    assert rel["so_infomoney"] == ["NOVA3", "NOVA4"]
+
+
+def test_cnpjs_diferentes_na_mesma_linha_nao_sao_unidos_e_geram_aviso():
+    registro, rel = merge({}, parse_fca(fca_zip(), 2026), [parse_infomoney(HTML)[3]])
+    por = {r["ticker"]: r for r in registro}
+    assert por["PETR3"]["cnpj"] == "33000167000101" and por["VELH3"]["cnpj"] == "12345678000195"
+    assert rel["conflitos_cnpj"] == ["Mesma Linha"]
+
+
+def test_com_infomoney_a_segunda_rodada_nao_muda_nada(tmp_path):
+    linhas, fontes = parse_fca(fca_zip(), 2026), parse_infomoney(HTML)[:3]
+    primeiro, _ = merge({}, linhas, fontes)
+    write(primeiro, tmp_path / "m.json", tmp_path / "r.json")
+    legado = json.loads((tmp_path / "m.json").read_text(encoding="utf-8"))
+    assert merge(legado, linhas, fontes)[0] == primeiro
+
+
+def test_load_alias_map(tmp_path):
+    registro, _ = merge({}, parse_fca(fca_zip(), 2026), parse_infomoney(HTML)[:2])
+    write(registro, tmp_path / "m.json", tmp_path / "r.json")
+    aliases = load_alias_map(tmp_path / "r.json")
+    assert aliases["PETROLEO BRASILEIRO S.A. PETROBRAS"] == "Petrobras"   # alias -> nome canônico
+    assert "Petrobras" not in aliases                                   # o nome em si não é alias
