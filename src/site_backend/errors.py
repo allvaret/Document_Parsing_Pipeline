@@ -20,3 +20,19 @@ def install_error_handlers(app: FastAPI) -> None:
         return JSONResponse(
             status_code=503, content={"detail": "Banco de dados indisponível."}
         )
+
+    @app.exception_handler(CorruptSummaryError)
+    async def _corrupt_summary(request: Request, exc: CorruptSummaryError) -> JSONResponse:
+        log.error("%s", exc)
+        return JSONResponse(
+            status_code=500, content={"detail": "Resumo do relatório está corrompido."}
+        )
+
+
+class CorruptSummaryError(Exception):
+    """O conteúdo gravado de um resumo não segue o contrato da API. Dado ruim no
+    banco não é "resumo vazio": vira erro 500 explícito, com log (sem falha silenciosa)."""
+
+    def __init__(self, summary_id: int, reason: str):
+        self.summary_id = summary_id
+        super().__init__(f"summary {summary_id} corrompido: {reason}")
