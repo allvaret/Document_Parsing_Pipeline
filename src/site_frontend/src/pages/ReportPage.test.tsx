@@ -17,7 +17,7 @@ afterEach(() => vi.unstubAllGlobals())
 describe('página do relatório', () => {
   it('mostra carregando e depois as duas camadas, separadas', async () => {
     open('/relatorios/2', async () => jsonResponse(reportDetail()))
-    expect(screen.getByRole('status')).toBeInTheDocument()
+    expect(screen.getByText('Carregando…')).toBeInTheDocument()
 
     expect(await screen.findByRole('heading', { level: 1, name: /Cemig/ })).toBeInTheDocument()
     expect(screen.getByText(/Release de resultados · 1º trimestre de 2026/)).toBeInTheDocument()

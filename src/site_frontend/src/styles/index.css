@@ -34,6 +34,83 @@
   .skip-link:focus { top: 0.5rem; }
 }
 
+@layer components {
+  .btn-brass {
+    display: inline-block;
+    background: var(--color-brass);
+    color: var(--color-velvet);
+    padding: 0.7rem 1.5rem;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .btn-brass:hover { filter: brightness(1.08); }
+
+  /* Couro do hero: a textura cobre o fundo (sem ladrilhar) sob um escurecimento que
+     garante o contraste do texto, independentemente da imagem. */
+  .hero-leather {
+    background-color: var(--color-leather);
+    background-image:
+      linear-gradient(rgb(11 11 10 / 0.5), rgb(11 11 10 / 0.78)),
+      url('/textures/leather.webp');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Fecho de latão: plano, com um filete de luz. Sem gradiente decorativo. */
+  .clasp {
+    width: 4.5rem;
+    height: 1.9rem;
+    border-radius: 3px;
+    background: var(--color-brass);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 2px 8px rgb(0 0 0 / 0.5);
+    z-index: 2;
+  }
+  .clasp::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 0.45rem; height: 0.45rem;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--color-leather);
+  }
+
+  /* Veludo: cor sólida + grão de ruído (feTurbulence) bem baixo + vinheta leve nas bordas.
+     Tudo CSS/SVG, nenhuma imagem. */
+  .velvet {
+    position: relative;
+    background-color: var(--color-velvet);
+    color: var(--color-paper);
+    isolation: isolate;
+  }
+  .velvet::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse at 50% 20%, transparent 55%, rgb(0 0 0 / 0.28)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.09'/></svg>");
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-paper);
+  }
+
+  .tab {
+    padding: 0.6rem 0.25rem;
+    color: rgb(242 238 228 / 0.75);
+    border-bottom: 3px solid transparent;
+    font-weight: 500;
+  }
+  .tab-active { color: var(--color-paper); border-bottom-color: var(--color-brass); }
+  .tab:disabled { cursor: not-allowed; opacity: 0.6; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

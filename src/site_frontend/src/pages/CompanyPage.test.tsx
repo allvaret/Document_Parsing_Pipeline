@@ -40,7 +40,7 @@ describe('página da empresa', () => {
       ]),
     })
     open('/empresas/7')
-    expect(screen.getByRole('status')).toBeInTheDocument()
+    expect(screen.getByText('Carregando…')).toBeInTheDocument()
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Cemig' })).toBeInTheDocument()
     expect(screen.getByText(/CMIG3 · CMIG4/)).toBeInTheDocument()
