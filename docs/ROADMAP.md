@@ -483,16 +483,35 @@ todos os endpoints, inclusive 404 e paginação.
 
 ---
 
-## Fase 5 — Frontend mínimo (22–23/11)
+## Fase 5 — Frontend "RQ" (22–27/11) — feito, exceto a maleta
 
-- Busca por ticker/nome → lista de relatórios → página do relatório
-  (keypoints em tabela + resumo).
-- URL da API por variável de ambiente do Vite.
-- Estados de carregando, vazio e erro. Sem login, sem carteira.
-- Mostrar a origem do resumo (heurístico/LLM e modelo) — transparência.
+Branch `feat/fase-5-frontend`. React 19 + Vite + TypeScript + Tailwind 4, sem login e sem carteira.
+
+- **Rotas:** `/` (hero, busca, abas, últimos relatórios, todas as empresas, "Como funciona"),
+  `/empresas/:id`, `/relatorios/:id`, 404. Navegação por **id** (acha empresa sem ticker).
+- **Duas camadas separadas na página do relatório:** resumo narrativo (serifa, selo
+  `Gerado por IA · modelo · prompt_version`, aviso "números: confira na tabela") e tabela de
+  indicadores heurísticos (`tabular-nums`), mais o bloco de transparência (método, modelo,
+  versões, data). Sem keypoints (caso Marcopolo): mensagem explicando, sem tabela vazia.
+- **Segurança:** o markdown do LLM vira elementos React (sem `dangerouslySetInnerHTML`);
+  texto de busca vai por `URLSearchParams`; id inválido nem chama a API.
+- **Contrato:** `schema.d.ts` é gerado do OpenAPI (`python -m site_backend.dump_openapi` +
+  `npm run gen:api`); testes barram `openapi.json` e `schema.d.ts` desatualizados.
+- **API (só aditivo):** `GET /relatorios?limit=` (últimos, teto 20) e `extractor_version` no
+  relatório; com testes, incluindo `PAYLOADS` de SQL injection e banco intocado.
+- **Visual (paleta B):** couro preto no hero, interior em veludo por CSS/SVG, cartões de
+  papel, um único acento de latão (texto sobre papel usa `brass-ink`; AA verificado em teste).
+- **Logos:** estáticos em `public/logos/{TICKER}.svg|png`, sem busca na web; sem arquivo (ou
+  sem ticker) cai no monograma. Nenhum logo foi adicionado ainda.
+- **i18n:** todo texto da interface em `src/i18n/pt.ts`; traduzir os resumos é v1.1.
+- **Maleta animada: adiada para a v1.1** (ver backlog), para proteger o prazo de 27/11.
 
 **Pronto quando:** o fluxo completo funciona contra a API local com o banco
-gerado pelo batch.
+gerado pelo batch. *Verificado:* a API local com `data/app.db` responde 200 para os 4
+relatórios, 404 para id inexistente e libera CORS para `localhost:5173`; `npm run build`
+passa; 61 testes do front cobrem o fluxo busca → empresa → relatório com a API simulada.
+*Não verificado:* inspeção visual em navegador (hero, veludo, fecho de latão), a cargo do
+Alvaro.
 
 ---
 
@@ -708,3 +727,14 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   `IndicatorExtractor` não achou indicador nas 22 páginas (400 a 900 caracteres por página e
   muitas imagens: **hipótese**, números em gráficos). Investigar o extrator e, se for o caso,
   tratar apresentação/teleconferência como tipo próprio (ver "Tipos de documento que faltam").
+
+- **Maleta animada na home (adiada da Fase 5).** Seção fixa de 150vh em que a tampa abre com
+  `perspective` + `rotateX` conforme a rolagem; 2D/CSS, sem WebGL. *Por quê adiada:* é
+  opcional e o prazo era 27/11; a home estática já entrega o hero. Plano: preferir CSS
+  scroll-driven (`animation-timeline: view()` dentro de `@supports`) à biblioteca `motion`
+  (zero dependência; onde não houver suporte, a maleta fica aberta e estática). Com
+  `prefers-reduced-motion` e em telas < 768px também fica aberta e estática, e a busca tem de
+  ser alcançável sem atravessar a animação. Antes de usar a textura de couro, montar uma
+  página de teste 3×3 ladrilhada; se aparecer emenda, corrigir com script Pillow em
+  `scripts/` (deslocar metade + mesclar bordas) e converter para WebP (~200–400 KB). A
+  `leather.jpg` original (4 MB) fica fora do git; o hero usa `public/textures/leather.webp`.
