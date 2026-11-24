@@ -620,6 +620,27 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
   falha. Mantêm-se os guardas: banco real intocado, SQL só `SELECT`, paridade ORM x
   `schema.sql`, contrato do summarizer e `openapi.json` em dia. A Fase 5 **não** mexe nisso.
 
+- **Empresas gravadas sem ticker (investigar junto com a redução de testes; a cargo do
+  Alvaro).** Achado na Fase 5 (24/11), lendo o `data/app.db`: das 4 empresas, **3 não têm
+  `asset`** (BR Partners, Cemig e Petrobras); só a Marcopolo tem (`POMO4`, passada por
+  `--ticker`). Efeito no site: sem ticker não há logo por ticker e o monograma usa o nome;
+  a busca por ticker não acha a empresa (só por nome) e a página dela não mostra ticker.
+  A navegação por `id` contorna isso, mas o dado está incompleto. *Esperado:* o cruzamento
+  nome → ticker (o `ticker_map` tem o nome comum de cada ticker e o registro tem o CNPJ)
+  deveria preencher o ticker. **Hipótese pela leitura do código (não confirmada):** em
+  `batch/identify.py`, o ticker só vem de `--ticker` ou de um token no formato de ticker no
+  nome do arquivo; quando a empresa é achada **só pelo nome** do arquivo (ex.: "Cemig"), o
+  CNPJ é preenchido (se todos os tickers daquele nome tiverem o mesmo CNPJ), mas `ticker`
+  fica `None`, e `get_or_create_company` só cria `Asset` quando `ref.ticker` existe. Ou seja,
+  a função que cruza nome com ticker pode existir para o CNPJ e **não ser acionada** para o
+  ticker. Pontos a verificar: (1) reproduzir com `--dry-run` e um nome de arquivo sem
+  ticker; (2) decidir a regra quando um nome tem **vários** tickers (PETR3/PETR4: gravar
+  todos? o mais líquido? nenhum até haver evidência no PDF?); (3) como corrigir o que já
+  está gravado (reprocessar com `--force`, ou um comando de backfill por CNPJ/nome, sem
+  duplicar empresa); (4) teste que reproduz: arquivo só com o nome da empresa grava os
+  tickers esperados. Relacionado: `aliases` no banco (`company_alias`, Fase 4 do plano
+  original) e o item "Semear `company`/`asset` a partir do mapa".
+
 ### Achados do 1º lote real em modo LLM (23/11) — registrados, **não** implementados
 
 Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e 128 s),
