@@ -40,6 +40,7 @@ from batch.identify import (
     prefilter_skip_reason,
     validate_overrides,
 )
+from batch.verify import content_text
 from db.errors import ReportIdentityMismatchError, SchemaOutdatedError
 from db.repository import (
     find_company,
@@ -220,7 +221,7 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
     # 4. Identificação (empresa, tipo, período). O que o conteúdo achou vai para o
     # log mesmo quando a identificação o descarta: é a auditoria do descarte.
     ident = identify(result, pdf.name, ctx.ticker_map, ctx.overrides, ctx.cnpj_map,
-                     ctx.alias_map)
+                     ctx.alias_map, texts=content_text(payload))
     rec["content"] = {
         "company": result.company.name, "company_method": result.company.name_method,
         "report_type": result.report.report_type.value, "period": result.report.period,
@@ -233,6 +234,7 @@ def _run_one(pdf: Path, rec: dict, ctx: _Ctx) -> None:
         sources=ident.sources,
         inferred=list(ident.inferred),
         warnings=list(ident.warnings),
+        identity=ident.identity,
     )
     if not ident.ok:
         return _skip(rec, ident.skip_reason)

@@ -26,7 +26,7 @@ from batch_helpers import (
 )
 from db.models import Asset, Company, Keypoint, Report, Summary
 from resumo.LLM.summarize_pipeline import SummaryMode
-from resumo.result import ReportType
+from resumo.result import HEURISTIC_VERSION, ReportType
 
 MODELOS = (Company, Asset, Report, Summary, Keypoint)
 
@@ -188,16 +188,16 @@ def test_subir_heuristic_version_regera_keypoints_e_o_resto_continua_skip(
     llm_antes = {k: v for k, v in resumos(file_session).items() if k[1] == "llm"}
     keypoints_antes = keypoints(file_session)
 
-    subir_versao(monkeypatch, heuristic="heuristic-v2")
+    subir_versao(monkeypatch, heuristic="heuristic-v99")
     chamadas = Chamadas()
     r = rodar(pdf_dir, log_dir, temp_db, chamadas, mode=SummaryMode.LLM, provider=FakeProvider())
 
     assert r.counts["regerados"] == 2 and r.counts["falhas"] == 0
-    assert set(versoes_dos_reports(file_session).values()) == {"heuristic-v2"}
+    assert set(versoes_dos_reports(file_session).values()) == {"heuristic-v99"}
     novos_kp = keypoints(file_session)
     assert all(novos_kp[f] != keypoints_antes[f] for f in keypoints_antes)        # keypoints regerados
     heuristicos = [k for k in resumos(file_session) if k[1] == "heuristic"]
-    assert sorted(v for _, _, v in heuristicos) == ["heuristic-v2"] * 2           # a v1 foi substituída
+    assert sorted(v for _, _, v in heuristicos) == ["heuristic-v99"] * 2           # a v1 foi substituída
     assert contagens(file_session)["keypoint"] == 2                              # sem keypoint duplicado
     # o narrativo (prompt-v1) não precisava de nada e foi mantido no banco
     assert {k for k in resumos(file_session) if k[1] == "llm"} == set(llm_antes)
@@ -217,7 +217,7 @@ def test_report_com_extractor_version_antiga_ou_vazia_e_regerado(
 
     r = rodar(pdf_dir, log_dir, temp_db, Chamadas())
     assert r.counts["regerados"] == 2
-    assert set(versoes_dos_reports(file_session).values()) == {"heuristic-v1"}
+    assert set(versoes_dos_reports(file_session).values()) == {HEURISTIC_VERSION}
 
 
 def test_subir_prompt_version_regera_so_o_resumo_llm(

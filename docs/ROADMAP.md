@@ -292,6 +292,34 @@ antes de começar (falha cedo).
     retry que deu certo vira aviso no log e no console; nunca é silencioso.
   - `Desempenho Financeiro …` continua `tipo não identificado`: usar `--type
     EARNINGS_RELEASE` na pasta; o nome sozinho não é prova.
+- **Verificação de identidade pelo conteúdo (23/11, branch `fix/identificacao-conteudo`).**
+  Caso real: `comunicado_pomo4_24733.pdf` (Marcopolo) foi gravado com `company.name =
+  Marcopolo` (certo, por ticker + registro da CVM), mas o `header.empresa` do resumo dizia
+  "Teleconferência" e o período "9M25" (a capa é o logo, imagem; o único texto da p.1 é
+  "Teleconferência de Resultados 3T25|9M25"; "Marcopolo" só aparece no texto a partir da p.4,
+  e não há ticker nem CNPJ no texto). Três correções:
+  - *O registro decide, o conteúdo confirma* (`batch/verify.py`, função pura sobre o texto já
+    extraído, sem reabrir o PDF). Evidências, da mais forte à mais fraca: CNPJ da empresa
+    (`confirmed:cnpj`) > ticker ou ticker irmão (`confirmed:ticker`) > nome/razão social como
+    palavra inteira, sem acento e sem caixa (`confirmed:name`). Nada achado = `unconfirmed`:
+    **grava com aviso** (slides só com logo existem). CNPJ de **outra** empresa do registro
+    nas primeiras 3 páginas, sem nenhuma evidência da escolhida = `conflict`: **pula** com o
+    motivo `empresa em conflito com o conteúdo` (com `--ticker` explícito só avisa). PDF sem
+    texto = `no_text` (registrado no log, sem aviso). O resultado vai no log (`identity`).
+    *Por que o conflito só usa CNPJ:* é exato; nome é ruidoso (relatórios citam concorrentes e
+    controladas). *Por que só nas primeiras páginas:* CNPJ de controlada aparece nas notas. *Por
+    que a confirmação por nome vence o CNPJ estranho:* o PDF fala da empresa e cita outra.
+    Nome vindo da própria capa não é verificado (seria confirmar o texto com o texto).
+  - *`header` do resumo heurístico alinhado* (`apply_identification`): `empresa` e `periodo`
+    passam a ser os identificados, não os da capa. `HEURISTIC_VERSION` subiu para
+    `heuristic-v2`: o próximo batch regera o que já está no banco (keypoints e resumo
+    heurístico); o LLM é mantido.
+  - *Capa:* linha feita só de palavras de título (teleconferência, webcast, resultados,
+    apresentação...) ou só de período é ruído (`GENERIC_TITLE_WORDS`); devolver `None` é melhor
+    que devolver "Teleconferência". Não há OCR do logo (Tesseract, Windows, CPU; a evidência
+    por nome no texto já cobre o caso).
+  Validado no PDF real, banco temporário: `Marcopolo | EARNINGS_RELEASE | 3T25`,
+  `identity: confirmed:name`, header `{empresa: Marcopolo, periodo: 3T25}`.
 - **`stdout`/`stderr` com `errors="replace"`:** console legado (ASCII/cp437) não
   codifica "—" nem acentos; sem isso o batch caía com `UnicodeEncodeError` no meio
   do lote (reproduzido em teste).
@@ -638,3 +666,11 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   geração: guarda as contagens, não `prompt_eval_duration` e `eval_duration`, que o Ollama
   devolve. Acrescentá-las ao `stats` do client é barato e diz se compensa encurtar o
   payload ou mexer na geração.
+- **Fuzzy (rapidfuzz) para PDF sem ticker no nome.** A capa só *propõe* um candidato; o
+  `matcher` compara com nome, razão social e aliases do registro, e só aceita com score alto
+  **e** uma segunda evidência (CNPJ/ticker/nome no texto, como em `batch/verify.py`). Sem isso,
+  pula e pede `--ticker`. Caso: `Earnings Release 3T25.pdf` (BR Partners), que hoje cai na capa.
+- **Marcopolo sem keypoints (0 no banco, mesmo após a correção de identidade).** O
+  `IndicatorExtractor` não achou indicador nas 22 páginas (400 a 900 caracteres por página e
+  muitas imagens: **hipótese**, números em gráficos). Investigar o extrator e, se for o caso,
+  tratar apresentação/teleconferência como tipo próprio (ver "Tipos de documento que faltam").

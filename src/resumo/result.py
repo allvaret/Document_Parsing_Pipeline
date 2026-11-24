@@ -23,7 +23,9 @@ from typing import Optional
 
 from resumo.LLM.summarize_pipeline import SummaryMode
 
-HEURISTIC_VERSION = "heuristic-v1"
+# v2: o header do resumo heurístico passa a levar a empresa/período IDENTIFICADOS (antes
+# levava o que a capa achou, ex. "Teleconferência"); sobe para regerar o que já está gravado.
+HEURISTIC_VERSION = "heuristic-v2"
 HEURISTIC_MODEL = "heuristic"    # `model` do summary heurístico (não há modelo)
 PROMPT_VERSION = "prompt-v1"   # suba a versão sempre que mudar prompts.py
 
