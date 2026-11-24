@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@layer base {
+  html { background: var(--color-paper); }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  a { text-underline-offset: 3px; }
+}
+
+@layer components {
+  .btn {
+    border: 1px solid var(--color-ink);
+    background: transparent;
+    color: var(--color-ink);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--color-ink); color: var(--color-paper); }
+  .skip-link {
+    position: absolute; left: 0.5rem; top: -4rem; z-index: 50;
+    background: var(--color-ink); color: var(--color-paper); padding: 0.5rem 1rem;
+  }
+  .skip-link:focus { top: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

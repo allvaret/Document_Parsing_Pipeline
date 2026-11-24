@@ -1,0 +1,25 @@
+/* Tokens do RQ (opção B: verde-garrafa + papel + latão). Os contrastes AA são
+   conferidos em contrast.test.ts: mudou uma cor, o teste diz se quebrou. */
+@theme {
+  --font-sans: 'IBM Plex Sans Variable', system-ui, sans-serif;
+  --font-serif: 'Source Serif 4 Variable', Georgia, serif;
+
+  /* papel e tinta (páginas de leitura) */
+  --color-paper: #f2eee4;
+  --color-paper-deep: #e8e2d3;
+  --color-ink: #17201c;
+  --color-ink-soft: #4a554f;
+  --color-rule: #cfc7b3;
+
+  /* veludo e couro (hero e interior da maleta) */
+  --color-velvet: #0f1b17;
+  --color-velvet-soft: #16251f;
+  --color-leather: #0b0b0a;
+
+  /* latão: UM destaque. O claro só vale sobre o veludo; o escuro serve a texto no papel. */
+  --color-brass: #c9a24d;
+  --color-brass-ink: #6f5517;
+
+  --color-focus: #1f5fbf;
+  --color-danger: #8f2d1f;
+}
