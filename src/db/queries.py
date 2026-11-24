@@ -115,6 +115,24 @@ def list_reports(session: Session, company_id: int) -> list[Report]:
     )
 
 
+MAX_LATEST = 20
+
+
+def latest_reports(session: Session, limit: int) -> list[Report]:
+    """Os últimos relatórios GRAVADOS (`parsed_at`, desempate por id), de qualquer empresa.
+    É 'o que entrou por último', não o período mais recente: ordenar por período exigiria
+    ler todas as linhas (o período é texto; ver `period_sort_key`). `limit` é cortado em
+    1..MAX_LATEST aqui também, e não só na rota."""
+    limit = max(1, min(limit, MAX_LATEST))
+    stmt = (
+        select(Report)
+        .order_by(Report.parsed_at.desc(), Report.id.desc())
+        .limit(limit)
+        .options(selectinload(Report.company).selectinload(Company.assets))
+    )
+    return list(session.scalars(stmt).all())
+
+
 @dataclass(frozen=True)
 class ReportDetail:
     report: Report

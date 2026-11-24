@@ -18,7 +18,7 @@ def test_rotas_de_dados_so_declaram_get():
     paths = {p: ops for p, ops in app.openapi()["paths"].items() if p.startswith(ROTAS_DE_DADOS)}
     assert sorted(paths) == [
         "/empresas", "/empresas/id/{company_id}", "/empresas/id/{company_id}/relatorios",
-        "/empresas/{ticker}", "/empresas/{ticker}/relatorios", "/relatorios/{report_id}",
+        "/empresas/{ticker}", "/empresas/{ticker}/relatorios", "/relatorios", "/relatorios/{report_id}",
     ]
     for path, ops in paths.items():
         assert set(ops) == {"get"}, f"{path} declara {set(ops)}"
