@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 
 from site_backend.main import app
 
-client = TestClient(app)
+client = TestClient(app, base_url="http://localhost")  # Host confiável (ver config.py)
 
 
 def test_health():

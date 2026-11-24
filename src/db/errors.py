@@ -5,6 +5,17 @@ class DatabaseError(Exception):
     """Base dos erros da camada de banco."""
 
 
+class DatabaseNotFoundError(DatabaseError):
+    """O arquivo do banco (SQLite) não existe. A API só lê: ela nunca cria um
+    banco vazio, senão serviria "nada encontrado" em silêncio."""
+
+    def __init__(self, path: str):
+        self.path = path
+        super().__init__(
+            f"banco não encontrado: {path}. Rode o batch antes ou aponte DATABASE_URL."
+        )
+
+
 class IncompleteResultError(DatabaseError):
     """O ReportResult não tem as chaves mínimas para ser gravado."""
 
