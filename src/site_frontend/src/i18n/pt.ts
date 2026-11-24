@@ -59,6 +59,17 @@ export const pt = {
     tSource: 'Documento original',
     tSourceLink: 'Abrir',
   },
+  company: {
+    notFoundTitle: 'Empresa não encontrada',
+    notFoundBody: 'Essa empresa não existe ou foi removida.',
+    cnpj: 'CNPJ {cnpj}',
+    noTickers: 'Sem ticker cadastrado',
+    reportsTitle: 'Relatórios',
+    reportsEmptyTitle: 'Nenhum relatório ainda',
+    reportsEmpty: 'Esta empresa está cadastrada, mas ainda não tem relatório processado.',
+    reportMeta: '{pages} páginas · processado em {date}',
+    open: 'Abrir relatório',
+  },
   notFound: {
     title: 'Página não encontrada',
     body: 'O endereço não existe ou o conteúdo foi removido.',
