@@ -21,6 +21,44 @@ export const pt = {
     errorServer: 'O servidor encontrou um problema. Tente de novo em instantes.',
     retry: 'Tentar de novo',
   },
+  report: {
+    notFoundTitle: 'Relatório não encontrado',
+    notFoundBody: 'Esse relatório não existe ou foi removido.',
+    companyLink: 'Ver todos os relatórios de {name}',
+    pages: '{n} páginas',
+    narrativeTitle: 'Resumo',
+    aiSeal: 'Gerado por IA · {model} · {version}',
+    heuristicSeal: 'Heurístico · {version}',
+    heuristicNote: 'Gerado por regras automáticas, sem IA.',
+    numbersWarning: 'Números: confira na tabela de indicadores. Modelos de IA pequenos podem errar valores.',
+    structureTitle: 'Estrutura do documento',
+    topics: 'Principais assuntos',
+    sections: 'Seções mais relevantes',
+    sectionPage: 'p. {n}',
+    observations: '{sections} seções, {tables} tabelas e {notes} notas explicativas identificadas.',
+    structureEmpty: 'Nenhum assunto ou seção foi identificado neste documento.',
+    indicatorsTitle: 'Indicadores',
+    indicatorsNote: 'Extraídos automaticamente do PDF por regras. Confira no documento original antes de decidir.',
+    colMetric: 'Indicador',
+    colValue: 'Valor',
+    colVariation: 'Variação',
+    colPeriod: 'Período',
+    colPage: 'Pág.',
+    indicatorsEmptyTitle: 'Sem indicadores neste relatório',
+    indicatorsEmpty: 'A extração automática não encontrou indicadores em formato reconhecível neste documento (comum em apresentações e teleconferências). O resumo acima continua válido; para os números, consulte o PDF original.',
+    noNarrative: 'Este relatório ainda não tem resumo gerado por IA; abaixo está o resumo por regras.',
+    transparencyTitle: 'Como este resumo foi feito',
+    tMethodNarrative: 'Resumo narrativo',
+    tMethodHeuristic: 'Indicadores e estrutura',
+    tNarrativeValue: 'IA · {model} · {version} · {date}',
+    tHeuristicValue: 'Regras automáticas · {version} · {date}',
+    tExtractor: 'Versão da extração',
+    tExtractorUnknown: 'não informada',
+    tProcessed: 'Processado em',
+    tPages: 'Páginas do documento',
+    tSource: 'Documento original',
+    tSourceLink: 'Abrir',
+  },
   notFound: {
     title: 'Página não encontrada',
     body: 'O endereço não existe ou o conteúdo foi removido.',
@@ -41,4 +79,18 @@ export function t(key: MessageKey): string {
   let node: unknown = pt
   for (const part of key.split('.')) node = (node as Record<string, unknown>)[part]
   return node as string
+}
+
+/** Como `t`, trocando `{nome}` pelos valores (ex.: tf('report.pages', { n: 30 })). */
+export function tf(key: MessageKey, vars: Record<string, string | number>): string {
+  return t(key).replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k] ?? `{${k}}`))
+}
+
+export const reportTypeLabels: Record<string, string> = {
+  ITR: 'ITR (informações trimestrais)',
+  DFP: 'DFP (demonstrações financeiras)',
+  EARNINGS_RELEASE: 'Release de resultados',
+  FATO_RELEVANTE: 'Fato relevante',
+  FORMULARIO_REFERENCIA: 'Formulário de referência',
+  OUTRO: 'Outro',
 }
