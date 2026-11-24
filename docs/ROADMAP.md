@@ -607,6 +607,19 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
   `CHECK` do banco já barram valores inválidos).
 - Trocar `session.refresh` por `append` em `get_or_create_company`.
 
+- **Enxugar a suíte de testes (branch própria, a cargo do Alvaro).** A suíte tem **756
+  testes** (24/11, com a Fase 5 em andamento) e a decisão é reduzi-la ao essencial. *Por
+  quê:* manter muitos testes redundantes custa tempo de execução (~2,5 min) e de leitura, e
+  dilui o sinal quando um falha. **Não é para apagar cobertura:** o critério é manter o que
+  protege uma decisão de arquitetura ou um bug já visto. Pontos de partida (**hipóteses, não
+  medidos**): os `PAYLOADS` de `test_sql_injection.py` são parametrizados (13 payloads) e
+  repetidos em cada endpoint e função de leitura, o que multiplica a contagem; testes que
+  verificam o mesmo comportamento em camadas diferentes (consulta, rota, ORM). Antes de
+  cortar: medir a contagem por arquivo, e conferir por mutação (como já feito com
+  `autoescape` e `extractor_version`) que o teste removido não era o único a pegar aquela
+  falha. Mantêm-se os guardas: banco real intocado, SQL só `SELECT`, paridade ORM x
+  `schema.sql`, contrato do summarizer e `openapi.json` em dia. A Fase 5 **não** mexe nisso.
+
 ### Achados do 1º lote real em modo LLM (23/11) — registrados, **não** implementados
 
 Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e 128 s),
