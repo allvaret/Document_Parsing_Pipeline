@@ -1,0 +1,3 @@
+# Logos estáticos: {TICKER}.svg ou {TICKER}.png (ex.: POMO4.svg).
+# Sem arquivo, o site mostra o monograma. Nada é buscado na web em tempo de execução.
+# Só adicione logos que você tem direito de usar.
