@@ -350,10 +350,10 @@ antes de começar (falha cedo).
 
 ---
 
-## Fase 4 — API somente leitura (21–22/11)
+## Fase 4 — API somente leitura ✅ (concluída em 23/11)
 
 **Endpoints:**
-- `GET /empresas?q=` — busca (reaproveitar o matcher fuzzy), paginada.
+- `GET /empresas?q=` — busca paginada (nome normalizado e prefixo de ticker; o fuzzy ficou no backlog, ver decisões).
 - `GET /empresas/{ticker}` — dados da empresa e tickers.
 - `GET /empresas/{ticker}/relatorios` — lista ordenada por período.
 - `GET /relatorios/{id}` — keypoints + resumos (heurístico e, se houver, LLM).
@@ -378,6 +378,80 @@ texto hostil direto do usuário:
 
 **Pronto quando:** testes com `TestClient` + banco SQLite semeado cobrem
 todos os endpoints, inclusive 404 e paginação.
+
+**Decisões tomadas na Fase 4 (com o porquê):**
+- **Busca sem fuzzy.** `?q=` casa `contains(normalize_name(q), autoescape=True)` em
+  `company.name_normalized` **ou** prefixo do ticker (`startswith(..., autoescape=True)`,
+  com `EXISTS` para PETR3/PETR4 não duplicarem a empresa). Ranking: ticker exato, nome
+  começando com `q`, nome contendo `q`; desempate por nome e id. *Por quê não o matcher:*
+  `data_pipeline.search.matcher` recebe o DataFrame da CVM e varre a lista inteira a cada
+  chamada, e normaliza com outra função (`normalize_str`). Na escala atual (`company` só tem
+  quem teve PDF) `contains` basta; o fuzzy volta se a busca ficar insuficiente (backlog).
+- **Ordenação por período em Python** (`db.queries.period_sort_key`): `period` é texto e a
+  ordem lexicográfica erra entre anos (`1T26 < 4T25`). O `UNIQUE (company_id, report_type,
+  period)` limita as linhas por empresa e a consulta usa esse índice; formatos atípicos
+  (`7M25`, lixo) vão para o fim sem quebrar. Sem mexer no schema. Se pesar, a saída é uma
+  coluna `period_sort` (backlog).
+- **Funções de leitura em `db/queries.py`**, não em `repository.py`: o repositório é o
+  caminho de escrita do batch e importa o pacote do LLM. Teste garante que a API não carrega
+  `resumo`, `batch`, `spacy` nem `fitz`.
+- **Resposta de `/relatorios/{id}`:** o resumo **mais recente por método** (`created_at`,
+  desempate por id); o heurístico tem sempre uma versão e o LLM acumula histórico que o site
+  não precisa. O conteúdo é tipado: `content_format` + `content_json` (heurístico,
+  `HeuristicSummary`, espelho de `ExecutiveSummary.to_dict()`) **ou** `content_markdown`
+  (LLM). Um teste faz ida e volta com o `to_dict()` real: se o summarizer mudar, a API
+  falha no teste e não em produção. JSON gravado fora do contrato vira **500 explícito com
+  log** (`CorruptSummaryError`), nunca resumo vazio. `file_hash`/`file_name` não saem.
+- **Paginação só em `/empresas`**: `limit` 1–50 (padrão 20), `offset` 0–10 000, `q` até 100
+  caracteres (422 fora disso), envelope `{items, total, limit, offset}`. A lista de
+  relatórios de uma empresa não é paginada (limitada pelo schema; ordenada em Python).
+- **Ticker na URL:** `strip().upper()`; formato impossível (fora de `[A-Z0-9]{5,7}`) ou
+  desconhecido = 404 `Ticker 'X' não encontrado` (eco truncado em 20 caracteres) sem ir ao
+  banco quando o formato já é inválido. Empresa sem relatório: 200 com lista vazia.
+  `id` de relatório limitado a `1..2**31-1`: sem o teto, um inteiro enorme estoura
+  `OverflowError` no driver e vira 500.
+- **Sessão somente leitura:** `make_readonly_engine` (SQLite com `PRAGMA query_only=ON`;
+  banco inexistente falha com `DatabaseNotFoundError` em vez de criar um arquivo vazio) e
+  `deps.get_session`, uma sessão por requisição, sem commit. O engine é preguiçoso (importar
+  `site_backend.main` não toca o banco) e o startup do uvicorn falha cedo (banco ausente ou
+  desatualizado); em requisição, vira 503 sem vazar caminho. Testes usam a fixture
+  `api_client` (`temp_db` + engine somente leitura: escrita acidental quebra o teste).
+  No Postgres (Fase 6) a defesa equivalente é um **role só com SELECT**.
+- **Proteções web básicas** (`config.py`, `security.py`; tudo por variável de ambiente,
+  validado ao subir): `CORS_ORIGINS` (recusa `*`; sem credenciais; só GET/POST e
+  `Content-Type`), `ALLOWED_HOSTS` (Host confiável), `ENABLE_DOCS=0` desliga `/docs`,
+  headers `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy` e CSP `default-src 'none'`
+  (fora de `/docs`), e limite por IP (`RATE_LIMIT_PER_MINUTE`, padrão 120, janela fixa em
+  memória; `/health` e preflight não contam; 429 com `Retry-After` e com headers de CORS).
+  HSTS e TLS ficam na hospedagem (Fase 6).
+- **Mutação conferida:** tirar `autoescape` da busca derruba 12 testes.
+- **Achado no banco real (`data/app.db`) e correção:** das 4 empresas, BR Partners e Cemig
+  tinham `tickers: []` (gravadas por nome/CNPJ, de execuções anteriores do batch). Com rotas
+  só por ticker, os relatórios delas eram inalcançáveis. **Fluxo adotado:** busca no site →
+  usuário escolhe a empresa → o front usa o `id` que a busca devolveu → `GET
+  /empresas/id/{id}` e `/empresas/id/{id}/relatorios` → `GET /relatorios/{id}`. O `id` vale
+  para toda empresa; as rotas por ticker continuam como conveniência e devolvem o mesmo
+  resultado (testado). `id` limitado a `1..2**31-1` e `/id/` registrada antes de
+  `/{ticker}`. Empresa sem ticker só é achável pela busca por nome (o ticker não entra).
+- **Contrato com o summarizer (dependência documentada).** `summary.content` do método
+  heurístico é `ExecutiveSummary.to_dict()` (`resumo/summarizer/models.py`), servido por
+  `/relatorios/{id}` e tipado em `site_backend.schemas.HeuristicSummary`. Quem mudar chave,
+  tipo ou nulabilidade no `to_dict()` precisa atualizar o schema: o teste
+  `test_contrato_acompanha_o_summarizer` (ida e volta com o dict real) falha se esquecer, e
+  o `to_dict()` tem um aviso no docstring. Relatórios já gravados seguem o formato antigo e
+  só são regerados subindo `HEURISTIC_VERSION`; enquanto isso, um conteúdo fora do contrato
+  vira 500 explícito (`CorruptSummaryError`), não resumo vazio.
+- **Escala da busca e ordenação (medido, SQLite, sem índice útil para `contains`):** busca
+  com total + página: **~30 ms com 20 mil empresas e ~90–155 ms com 100 mil**; listar os
+  relatórios de uma empresa: ~1–2 ms (usa a árvore B do `UNIQUE (company_id, report_type,
+  period)`). A B3 tem ~900 tickers, então a margem é de ordens de grandeza. Sobre
+  estruturas: `sorted()` do Python já é **Timsort** (merge sort híbrido, O(n log n),
+  estável), então um merge sort manual não ganha nada; o gargalo, se vier, é a busca por
+  *substring*, que **uma árvore B não acelera** (só prefixo). Caminhos, em ordem de custo:
+  índice em `name_normalized` + `startswith` (árvore B, só prefixo); FTS5 (SQLite) ou
+  `pg_trgm` com índice GIN (Postgres) para `contains`; trie em memória só se houver
+  autocomplete por prefixo com latência de milissegundos (custa invalidação de cache).
+  Nada disso é necessário no MVP; está no backlog.
 
 ---
 
@@ -468,6 +542,22 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
   - Formato proposto: registro ordenado por ticker (ticker, nome comum, razão social,
     CNPJ, tipo ACAO/FII, status) como fonte, e o `ticker_map.json` plano (ticker →
     nome) gerado dele, ordem alfabética, com relatório de diferenças a cada atualização.
+- **Busca em escala (se `company` passar de ~100 mil linhas ou o p95 passar de ~100 ms):**
+  FTS5/`pg_trgm` para `contains`, índice em `name_normalized` para prefixo; trie só para
+  autocomplete em memória. Números e análise na seção da Fase 4.
+- **Busca fuzzy (rapidfuzz) em `?q=`.** Tolerar erro de digitação ("petrobas"). Hoje é
+  `contains` + prefixo de ticker. Exige carregar `name_normalized` (e aliases) e decidir
+  onde roda (memória do processo ou índice trigram no Postgres, `pg_trgm`).
+- **`period_sort` no schema** (coluna ou expressão indexada) se a ordenação em Python pesar
+  (FIIs com relatório mensal), junto com o Alembic da Fase 6.
+- **Histórico de resumos na API** (`?historico=true`): hoje só o mais recente por método.
+- **Rate limit compartilhado.** O limite atual é em memória, por processo e por IP; atrás de
+  proxy exige `uvicorn --proxy-headers` (e `--forwarded-allow-ips`). Com várias instâncias,
+  mover para o proxy/hospedagem ou Redis.
+- **Erro 422 ecoa a entrada** no JSON padrão do FastAPI. Não é XSS (a resposta é JSON), mas o
+  frontend nunca deve injetar `detail` como HTML.
+- **Marcopolo sem keypoints no banco real** (relatório 3, 0 keypoints, resumo LLM presente):
+  heurística/tipo da teleconferência; ver "Tipos de documento que faltam".
 - **Semear `company`/`asset`** a partir do mapa, só se a Fase 4 precisar listar
   empresas sem relatório. Até lá o mapa só identifica (decisão 8 do `CLAUDE.md`).
 - Apelidos de empresa (tabela de aliases) para casar "Cia Energética de Minas
