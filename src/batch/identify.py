@@ -28,6 +28,7 @@ Regras:
 
 from __future__ import annotations
 
+import difflib
 import json
 import re
 from dataclasses import dataclass, field, replace
@@ -60,7 +61,7 @@ SKIP_NO_PERIOD = "período não identificado"
 # Lookarounds em vez de \b: '_' é caractere de palavra e quebraria
 # 'Earnings_Release_3T25.pdf'.
 _PERIOD_RE = re.compile(
-    r"(?<![A-Za-z0-9])([1-4]T\d{2}|[1-2]S\d{2}|\d{1,2}M\d{2})(?![A-Za-z0-9])",
+    r"(?<![A-Za-z0-9])([1-4][TQ]\d{2}|[1-2]S\d{2}|\d{1,2}M\d{2})(?![A-Za-z0-9])",
     re.IGNORECASE,
 )
 _ISO_DATE_RE = re.compile(r"(?<!\d)(20\d{2})-(\d{2})-(\d{2})(?!\d)")
@@ -91,6 +92,7 @@ def normalize_period(raw: str) -> str:
     """'9m25' -> '3T25', '12M25' -> '4T25', '1S26' -> '2T26'. O que não casa com
     o formato (ex.: '7M25') volta em maiúsculas, sem tradução."""
     p = raw.strip().upper()
+    p = re.sub(r"^([1-4])Q(\d{2})$", r"\g<1>T\g<2>", p)      # 3Q26 (inglês) == 3T26
     m = re.fullmatch(r"(\d{1,2}[TMS])(\d{2})", p)
     if not m:
         return p
@@ -134,9 +136,21 @@ class Identification:
 
 # --- fonte: nome do arquivo (uma função por campo) ---------------------------
 
+_PERIOD_GLUED_RE = re.compile(
+    r"(?i)(?<![A-Za-z0-9])(?:[1-4][TQ]\d{2}|[1-2]S\d{2}|\d{1,2}M\d{2})(?=[A-Za-z])"   # 1T26pomo
+    r"|(?<=[A-Za-z])(?:[1-4][TQ]\d{2}|[1-2]S\d{2}|\d{1,2}M\d{2})(?![A-Za-z0-9])"        # pomo1T26
+)
+
+
+def _unglue_period(name: str) -> str:
+    """'Release 1T26pomo' -> 'Release 1T26 pomo': o período colado numa palavra impede
+    achar os dois. Só separa o que casa EXATAMENTE com o formato de período."""
+    return _PERIOD_GLUED_RE.sub(lambda m: f" {m.group(0)} ", name)
+
+
 def _tokens(filename: str) -> list[str]:
     stem = re.sub(r"\.\w+$", "", Path(filename).name)
-    return [t for t in re.split(r"[\s_\-.]+", stem) if t]
+    return [t for t in re.split(r"[\s_\-.]+", _unglue_period(stem)) if t]
 
 
 def ticker_from_filename(filename: str, ticker_map: dict) -> Optional[str]:
@@ -147,19 +161,50 @@ def ticker_from_filename(filename: str, ticker_map: dict) -> Optional[str]:
     return None
 
 
+FUZZY_CUTOFF = 0.88   # similaridade mínima (difflib) para aceitar um nome com erro de grafia
+
+
+def _unique(achados: set) -> Optional[str]:
+    """O candidato, só se for exatamente um: ambíguo (BB Seguridade x Caixa Seguridade) = nenhum."""
+    return next(iter(achados)) if len(achados) == 1 else None
+
+
 def name_from_filename(filename: str, ticker_map: dict,
                        alias_map: Optional[dict] = None) -> Optional[str]:
-    """Nome da empresa no arquivo, SE existir no ticker_map ou nos aliases (compara
-    normalizado). Devolve o nome canônico do mapa. Sobra de arquivo não conta.
-    `alias_map`: alias -> nome canônico (razão social, nome de outras fontes)."""
+    """Nome da empresa no arquivo, SE existir no ticker_map ou nos aliases. Devolve o
+    nome canônico do mapa. Sobra de arquivo ("Demonstrações Financeiras") nunca conta.
+    `alias_map`: alias -> nome canônico (razão social, nome de outras fontes).
+
+    A informação está no arquivo, só vem misturada com lixo (data, código do portal,
+    período colado). Por isso, em ordem e sempre exigindo resultado ÚNICO:
+      1. sequência contígua de palavras igual ao nome (da maior para a menor), o que
+         ignora o lixo em volta: `bb-seguridade-2026-03-31-CrHpbBDJ`;
+      2. a mesma sequência com pequena diferença de grafia (fuzzy);
+      3. palavra de 4 letras = raiz de ticker (`1T26pomo` -> POMO3/POMO4 -> Marcopolo)."""
     canonico = {normalize_name(a): n for a, n in (alias_map or {}).items()}
     canonico.update({normalize_name(v): v for v in ticker_map.values()})   # nome do mapa vence
     leftovers = [t for t in _tokens(filename) if not _is_noise_token(t)]
-    # tenta a sequência inteira e depois cada token isolado
-    candidatos = [" ".join(leftovers)] + leftovers
-    for c in candidatos:
+
+    janelas = [" ".join(leftovers[i:j]) for n in range(len(leftovers), 0, -1)
+               for i in range(len(leftovers) - n + 1) for j in [i + n]]
+    for c in janelas:
         if c and normalize_name(c) in canonico:
             return canonico[normalize_name(c)]
+
+    for c in janelas:
+        alvo = normalize_name(c)
+        if len(alvo) < 5:          # curto demais: fuzzy casaria qualquer coisa
+            continue
+        achados = {canonico[k] for k in difflib.get_close_matches(alvo, canonico, n=3, cutoff=FUZZY_CUTOFF)}
+        if (n := _unique(achados)):
+            return n
+
+    for t in leftovers:
+        if re.fullmatch(r"[A-Za-z]{4}", t):
+            raiz = t.upper()
+            achados = {v for k, v in ticker_map.items() if re.fullmatch(raiz + r"\d{1,2}", k)}
+            if (n := _unique(achados)):
+                return n
     return None
 
 
@@ -167,7 +212,7 @@ def period_from_filename(filename: str) -> Optional[Candidate]:
     """Período explícito (3T25, 1S26, 12M25) ou derivado de data no nome.
     Data de fim de trimestre = aquele trimestre. Outra data é publicação:
     trimestre anterior, marcado como inferido."""
-    name = Path(filename).name
+    name = _unglue_period(Path(filename).name)
     m = _PERIOD_RE.search(name)
     if m:
         return Candidate(normalize_period(m.group(1)))
@@ -193,12 +238,14 @@ def type_from_filename(filename: str) -> Optional[KindValue]:
     tokens = {t.lower() for t in _tokens(filename)}
     if tokens & {"comunicado", "comunicados"} or {"fato", "relevante"} <= tokens:
         return NON_PERIODIC
-    if "release" in tokens:
+    if tokens & {"release", "earnings"} or "desempenho" in tokens:
         return ReportType.EARNINGS_RELEASE
     if "itr" in tokens:
         return ReportType.ITR
     if "dfp" in tokens:
         return ReportType.DFP
+    if {"relatorio", "relatório"} & tokens and {"administracao", "administração"} & tokens:
+        return ReportType.RELATORIO_ADMINISTRACAO
     if {"formulario", "formulário"} & tokens and {"referencia", "referência"} & tokens:
         return ReportType.FORMULARIO_REFERENCIA
     return None

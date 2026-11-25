@@ -406,7 +406,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--ticker", default=None, help="Ticker para o lote inteiro, ex.: PETR3")
     p.add_argument("--type", dest="report_type", type=ReportType,
                    choices=[ReportType.ITR, ReportType.DFP, ReportType.EARNINGS_RELEASE,
-                            ReportType.FORMULARIO_REFERENCIA],
+                            ReportType.FORMULARIO_REFERENCIA, ReportType.RELATORIO_ADMINISTRACAO],
                    default=None, help="Tipo para o lote inteiro")
     p.add_argument("--period", default=None, help="Período para o lote inteiro, ex.: 3T25")
     p.add_argument("--max-pages", type=int, default=MAX_PAGES,

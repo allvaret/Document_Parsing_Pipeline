@@ -54,7 +54,7 @@ def upgrade() -> None:
     sa.Column('extractor_version', sa.String(), server_default='', nullable=False),
     sa.Column('parsed_at', sa.DateTime(timezone=True), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.Column('reviewed_at', sa.DateTime(timezone=True), nullable=True),
-    sa.CheckConstraint("report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE', 'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'OUTRO')", name='ck_report_type'),
+    sa.CheckConstraint("report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE', 'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'RELATORIO_ADMINISTRACAO', 'OUTRO')", name='ck_report_type'),
     sa.CheckConstraint('length(file_hash) = 64', name='ck_report_hash_len'),
     sa.CheckConstraint('page_count >= 0', name='ck_report_page_count'),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ondelete='CASCADE'),

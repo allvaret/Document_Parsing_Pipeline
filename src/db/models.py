@@ -104,7 +104,7 @@ class Report(Base):
     __table_args__ = (
         CheckConstraint(
             "report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE', "
-            "'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'OUTRO')",
+            "'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'RELATORIO_ADMINISTRACAO', 'OUTRO')",
             name="ck_report_type",
         ),
         CheckConstraint("length(file_hash) = 64", name="ck_report_hash_len"),

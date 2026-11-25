@@ -135,5 +135,6 @@ export const reportTypeLabels: Record<string, string> = {
   EARNINGS_RELEASE: 'Release de resultados',
   FATO_RELEVANTE: 'Fato relevante',
   FORMULARIO_REFERENCIA: 'Formulário de referência',
+  RELATORIO_ADMINISTRACAO: 'Relatório da administração',
   OUTRO: 'Outro',
 }
