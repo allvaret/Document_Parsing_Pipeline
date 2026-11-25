@@ -18,6 +18,13 @@ import requests
 DEFAULT_MODEL = "qwen2.5:3b"
 DEFAULT_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
+# Janela de contexto pedida ao Ollama. Cada chamada é independente (sem `context`, sem
+# histórico): nada vaza de um PDF para o seguinte. O risco real é o prompt de um PDF
+# longo passar da janela: o Ollama então CORTA o início do prompt sem erro, e o resumo
+# sairia de um texto incompleto. `generate` detecta isso e falha (ver NUM_CTX_MARGEM).
+NUM_CTX = 12288
+NUM_CTX_MARGEM = 0.97   # prompt_eval_count >= NUM_CTX * margem => prompt provavelmente cortado
+
 # Erros HTTP que valem uma nova tentativa: o runner do Ollama (llama-server) pode
 # morrer numa chamada (HTTP 500) e o servidor sobe outro na seguinte. Timeout NÃO
 # repete (custaria outro `timeout` inteiro) e 4xx é erro de quem chamou.
@@ -67,7 +74,7 @@ def generate(
         "stream": False,
         "options": {
             "temperature": 0.2,   # baixo para respostas mais factuais
-            "num_ctx": 12288,     # contexto máximo
+            "num_ctx": NUM_CTX,   # contexto máximo
             "num_predict": 8192,
             "num_gpu": 18,        # varia de hardware para hardware
         },
@@ -106,6 +113,13 @@ def generate(
         for chave, destino in (("load_duration", "load_s"), ("total_duration", "total_s")):
             if chave in data:                      # o Ollama informa em nanossegundos
                 stats[destino] = round(data[chave] / 1e9, 2)
+
+    # O Ollama não avisa quando o prompt estoura num_ctx: ele descarta o começo e
+    # `prompt_eval_count` fica colado no teto. Melhor falhar do que resumir um texto cortado.
+    if data.get("prompt_eval_count", 0) >= NUM_CTX * NUM_CTX_MARGEM:
+        raise LLMResponseError(
+            f"Prompt provavelmente cortado: {data['prompt_eval_count']} tokens para uma "
+            f"janela de {NUM_CTX}. Reduza o documento ou aumente NUM_CTX.")
 
     # Ollama marca done_reason="length" quando bateu no num_predict:
     # a resposta veio cortada no meio. Melhor falhar do que salvar meio resumo.

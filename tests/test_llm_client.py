@@ -166,3 +166,16 @@ def test_resposta_vazia_falha(monkeypatch):
     _patch_post(monkeypatch, response=FakeResponse({"response": "   ", "done_reason": "stop"}))
     with pytest.raises(LLMResponseError, match="vazia"):
         generate("p")
+
+
+def test_prompt_no_teto_da_janela_falha_em_vez_de_resumir_texto_cortado(monkeypatch):
+    _patch_post(monkeypatch, response=FakeResponse(
+        {"response": "resumo", "done_reason": "stop", "prompt_eval_count": client.NUM_CTX}))
+    with pytest.raises(client.LLMResponseError, match="cortado"):
+        client.generate("p")
+
+
+def test_prompt_dentro_da_janela_passa(monkeypatch):
+    _patch_post(monkeypatch, response=FakeResponse(
+        {"response": "resumo", "done_reason": "stop", "prompt_eval_count": 9902}))
+    assert client.generate("p") == "resumo"
