@@ -26,6 +26,20 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # Postgres de teste: a suíte roda duas vezes (SQLite e Postgres), porque o SQLite
+    # não garante o mesmo comportamento de dialeto e de transação.
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: finance
+          POSTGRES_PASSWORD: finance_ci
+          POSTGRES_DB: finance_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U finance -d finance_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
     steps:
       # Actions fixadas por SHA (imutável); o comentário indica a versão.
       # O Dependabot atualiza os dois (ver .github/dependabot.yml).
@@ -62,5 +76,10 @@ jobs:
           pip install ~/.cache/spacy-models/"$WHL"
 
       # -ra lista no log o motivo de qualquer teste pulado.
-      - name: Rodar pytest
+      - name: Rodar pytest (SQLite)
+        run: python -m pytest -ra
+
+      - name: Rodar pytest (Postgres)
+        env:
+          TEST_DATABASE_URL: postgresql+psycopg://finance:finance_ci@127.0.0.1:5432/finance_test
         run: python -m pytest -ra

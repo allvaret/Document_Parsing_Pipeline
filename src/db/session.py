@@ -104,7 +104,8 @@ def make_session_factory(engine: Engine) -> sessionmaker[Session]:
 
 
 def init_db(engine: Engine) -> None:
-    """Cria as tabelas que faltam (MVP; Alembic fica para a v1.1)."""
+    """Cria as tabelas que faltam. Só para testes e SQLite local: em produção (Postgres)
+    o schema vem das migrações do Alembic (`alembic upgrade head`)."""
     Base.metadata.create_all(engine)
 
 
