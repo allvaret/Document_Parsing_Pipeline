@@ -29,9 +29,12 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className="border-t border-rule">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-sm text-ink-soft">
-          <p>{t('footer.disclaimer')} {t('footer.credit')}.</p>
-          <Link to="/calculadora" className="underline hover:text-ink">{t('calc.nav')}</Link>
+        <div className="mx-auto max-w-5xl space-y-3 px-4 py-4 text-sm text-ink-soft">
+          <p>{t('footer.disclaimer')}</p>
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-rule pt-3">
+            <Link to="/calculadora" className="underline hover:text-ink">{t('calc.nav')}</Link>
+            <p>{t('footer.credit')}</p>
+          </div>
         </div>
       </footer>
     </div>

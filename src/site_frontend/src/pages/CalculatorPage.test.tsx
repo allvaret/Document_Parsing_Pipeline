@@ -65,6 +65,14 @@ describe('calculadora', () => {
     expect(screen.getByText(/Não é recomendação de investimento/)).toBeInTheDocument()
   })
 
+  it('"(opcional)" aparece uma vez só por campo', async () => {
+    api(() => jsonResponse({}))
+    open()
+    const campo = await screen.findByLabelText(/Cotação atual/)
+    const rotulo = document.querySelector(`label[for="${campo.id}"]`)
+    expect(rotulo?.textContent?.match(/opcional/g)).toHaveLength(1)
+  })
+
   it('rodapé traz o aviso e a autoria', async () => {
     api(() => jsonResponse({}))
     open()

@@ -117,7 +117,7 @@ export const pt = {
     optional: '(opcional)',
     defaultHint: 'Se vazio, usa {value}.',
     example: 'ex.: {value}',
-    priceLabel: 'Cotação atual (opcional)',
+    priceLabel: 'Cotação atual',
     priceHelp: 'Informe para ver a margem em relação ao preço teto.',
     submit: 'Calcular',
     resultTitle: 'Preço teto',
