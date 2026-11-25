@@ -739,6 +739,29 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   `scripts/` (deslocar metade + mesclar bordas) e converter para WebP (~200–400 KB). A
   `leather.jpg` original (4 MB) fica fora do git; o hero usa `public/textures/leather.webp`.
 
+### Auditoria externa (25/11) — o que foi tratado e o que ficou
+
+Tratado: `.gitignore` ignorava `src/site_frontend/src/lib/` (um clone limpo não compilava; agora
+versionado e conferido com clone limpo); cabeçalhos de segurança (CSP, `frame-ancestors`, etc.) no
+`public/_headers` do Pages e no nginx (agora sem root, com HEALTHCHECK); porta do compose de dev presa a
+127.0.0.1 e `npm ci`; aviso de "não é recomendação" e fonte dos dados no rodapé; `npm audit fix`
+(vite) e PyMuPDF 1.26.7 (`pip-audit` limpo).
+
+Decidido não fazer: tirar PDFs do histórico (os relatórios são documentos públicos das companhias).
+
+Adiado (baixo risco; entra depois do deploy):
+- **Rate limit atrás do proxy:** com `FORWARDED_ALLOW_IPS=*` um cliente pode forjar `X-Forwarded-For`
+  e driblar os 120 req/min. O limite de verdade fica na borda (Cloudflare); o do app é só um freio.
+- **Prompt injection no resumo LLM:** delimitar o documento no prompt e mandar ignorar ordens dele
+  (sobe `PROMPT_VERSION`, regera os resumos: fazer junto com o ajuste de documento longo). Os números
+  nunca passam pelo LLM; o pior caso é texto enganoso.
+- **Batch:** teto de bytes e timeout por PDF; limite de `read()`/zip no `fetcher`/`ticker_registry`.
+- **Qualidade:** ~25 `print()` de debug em `resumo/extractor` viram `logging`; renomear `LLM/` →
+  `llm/`, `PdfReader.py`/`TextAtom.py`/`summarizerLocal.py` para snake_case; tirar docstrings que
+  contam o passado ("Antes: ..."); atualizar `src/resumo/data/README.md` (fala só do `ticker_map.json`).
+- Documentar a origem/licença de `public/textures/leather.webp` e do favicon.
+- ReDoS: regexes de `build_section.py`, `metadata_extractor.py` e `indicator_extractor.py` não foram revisadas.
+
 ### Achados do 2º lote real (25/11) — automação para depois do deploy
 
 Corrigido (com testes): nome do arquivo com lixo/grafia/ticker colado, "desempenho" = release,
