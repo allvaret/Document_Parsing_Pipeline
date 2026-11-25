@@ -1,4 +1,6 @@
-# Postgres local para desenvolvimento e testes (nunca para produção).
+# Tudo com um comando (precisa do .env com POSTGRES_PASSWORD):
+#   docker compose up --build        # site em http://localhost:8080, API em http://localhost:8000
+# Só o Postgres (desenvolvimento e testes; nunca para produção):
 #   docker compose up -d db
 #   docker compose down        # mantém os dados (volume `pgdata`)
 #   docker compose down -v     # apaga os dados
@@ -22,6 +24,32 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  # API somente leitura. Aplica as migrações ao subir; o banco começa vazio (rode o batch ou restaure um dump).
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://finance:${POSTGRES_PASSWORD}@db:5432/finance
+      CORS_ORIGINS: http://localhost:8080
+      ALLOWED_HOSTS: localhost,127.0.0.1
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Site estático (nginx). A URL da API é fixada no build e usada pelo navegador.
+  web:
+    build:
+      context: src/site_frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
 
 volumes:
   pgdata:
