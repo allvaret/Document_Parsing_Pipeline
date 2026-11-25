@@ -26,7 +26,7 @@ from batch_helpers import (
 )
 from db.models import Asset, Company, Keypoint, Report, Summary
 from resumo.LLM.summarize_pipeline import SummaryMode
-from resumo.result import HEURISTIC_VERSION, ReportType
+from resumo.result import HEURISTIC_VERSION, PROMPT_VERSION, ReportType
 
 MODELOS = (Company, Asset, Report, Summary, Keypoint)
 
@@ -199,7 +199,7 @@ def test_subir_heuristic_version_regera_keypoints_e_o_resto_continua_skip(
     heuristicos = [k for k in resumos(file_session) if k[1] == "heuristic"]
     assert sorted(v for _, _, v in heuristicos) == ["heuristic-v99"] * 2           # a v1 foi substituída
     assert contagens(file_session)["keypoint"] == 2                              # sem keypoint duplicado
-    # o narrativo (prompt-v1) não precisava de nada e foi mantido no banco
+    # o narrativo (PROMPT_VERSION atual) não precisava de nada e foi mantido no banco
     assert {k for k in resumos(file_session) if k[1] == "llm"} == set(llm_antes)
 
     # estável: a rodada seguinte, com a mesma versão, é só SKIP
@@ -226,7 +226,7 @@ def test_subir_prompt_version_regera_so_o_resumo_llm(
     heuristico_antes = {k: v for k, v in resumos(file_session).items() if k[1] == "heuristic"}
     keypoints_antes = keypoints(file_session)
 
-    subir_versao(monkeypatch, prompt="prompt-v2")
+    subir_versao(monkeypatch, prompt="prompt-vFUTURA")
     # em modo heurístico a mudança de prompt é irrelevante: tudo SKIP
     so_heuristico = Chamadas()
     r0 = rodar(pdf_dir, log_dir, temp_db, so_heuristico)
@@ -236,7 +236,7 @@ def test_subir_prompt_version_regera_so_o_resumo_llm(
     assert r.counts["regerados"] == 2
     todos = resumos(file_session)
     # as duas versões do narrativo ficam, para comparar a qualidade ao longo do tempo
-    assert sorted(v for _, m, v in todos if m == "llm") == ["prompt-v1"] * 2 + ["prompt-v2"] * 2
+    assert sorted(v for _, m, v in todos if m == "llm") == sorted([PROMPT_VERSION] * 2 + ["prompt-vFUTURA"] * 2)
     # o heurístico é reescrito pelo pipeline (mesma chave) mas a chave não mudou
     assert {k for k in todos if k[1] == "heuristic"} == set(heuristico_antes)
     assert contagens(file_session)["summary"] == 6 and contagens(file_session)["keypoint"] == 2
