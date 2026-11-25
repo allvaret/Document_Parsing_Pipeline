@@ -305,7 +305,10 @@ export interface components {
             id: number;
             /** Page Count */
             page_count: number;
-            /** Parsed At */
+            /**
+             * Parsed At
+             * Format: date-time
+             */
             parsed_at: string;
             /** Period */
             period: string;
@@ -336,7 +339,10 @@ export interface components {
             id: number;
             /** Page Count */
             page_count: number;
-            /** Parsed At */
+            /**
+             * Parsed At
+             * Format: date-time
+             */
             parsed_at: string;
             /** Period */
             period: string;
@@ -369,7 +375,10 @@ export interface components {
             content_json?: components["schemas"]["HeuristicSummary"] | null;
             /** Content Markdown */
             content_markdown?: string | null;
-            /** Created At */
+            /**
+             * Created At
+             * Format: date-time
+             */
             created_at: string;
             /**
              * Method

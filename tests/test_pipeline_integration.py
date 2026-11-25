@@ -10,7 +10,7 @@ from resumo.LLM import summarize_pipeline
 from resumo.LLM.client import LLMUnavailableError
 from resumo.LLM.summarize_pipeline import SummaryMode
 
-PDF = Path(__file__).resolve().parents[1] / "assets" / "Earnings Release 3T25.pdf"
+PDF = Path(__file__).resolve().parents[1] / "assets" / "readed" / "Earnings Release 3T25.pdf"
 
 pytestmark = pytest.mark.integration
 
