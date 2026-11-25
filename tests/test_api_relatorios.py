@@ -1,14 +1,12 @@
 """GET /relatorios/{id}."""
 
-import hashlib
 import json
 import logging
-from pathlib import Path
 from urllib.parse import quote
 
 import pytest
 
-from api_helpers import HEURISTIC_CONTENT, heuristic, llm, seed_report
+from api_helpers import HEURISTIC_CONTENT, heuristic, llm, seed_report, banco_sha
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.result import HEURISTIC_MODEL, HEURISTIC_VERSION, KeypointRecord, SummaryRecord
 from resumo.summarizer.models import (
@@ -23,8 +21,6 @@ from site_backend.schemas import HeuristicSummary
 from test_sql_injection import PAYLOADS
 
 
-def banco_sha(temp_db) -> str:
-    return hashlib.sha256(Path(temp_db.engine.url.database).read_bytes()).hexdigest()
 
 
 @pytest.fixture

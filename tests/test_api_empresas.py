@@ -1,18 +1,14 @@
 """GET /empresas e GET /empresas/{ticker}."""
 
-import hashlib
-from pathlib import Path
 from urllib.parse import quote
 
 import pytest
 
-from api_helpers import seed_company, seed_report, seed_ticker
+from api_helpers import seed_company, seed_report, seed_ticker, banco_sha
 from resumo.result import ReportType
 from test_sql_injection import PAYLOADS, TICKER_PAYLOADS
 
 
-def banco_sha(temp_db) -> str:
-    return hashlib.sha256(Path(temp_db.engine.url.database).read_bytes()).hexdigest()
 
 
 @pytest.fixture

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from sqlalchemy import text
 
+from api_helpers import so_sqlite
 from db.models import Company
 from db.session import DEFAULT_DATABASE_URL, get_database_url, init_db, make_engine
 
@@ -24,6 +25,7 @@ def test_make_engine_sem_url_usa_banco_descartavel(tmp_path):
         engine.dispose()
 
 
+@so_sqlite
 def test_temp_db_e_arquivo_em_tmp_path_com_fk_ativa(temp_db, tmp_path):
     assert Path(temp_db.engine.url.database).is_relative_to(tmp_path)
     with temp_db.engine.connect() as conn:

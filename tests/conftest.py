@@ -16,13 +16,16 @@ Regras (nenhum teste pode escrever no banco real `data/app.db`):
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
 from sqlalchemy import Engine
+from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, sessionmaker
 
+from db.models import Base
 from db.session import init_db, make_engine, make_session_factory
 
 _ROOT = Path(__file__).resolve().parents[1]
@@ -71,9 +74,35 @@ class TempDb:
     factory: sessionmaker[Session]
 
 
+def _postgres_de_teste() -> str | None:
+    """`TEST_DATABASE_URL` (Postgres) liga a suíte contra Postgres em vez de SQLite.
+    Trava de segurança: a suíte APAGA todas as tabelas do banco, então o nome do banco
+    precisa terminar em `_test` (o `docker compose` cria `finance_test`)."""
+    url = os.environ.get("TEST_DATABASE_URL")
+    if not url:
+        return None
+    nome = make_url(url).database or ""
+    if not nome.endswith("_test"):
+        raise pytest.UsageError(
+            f"TEST_DATABASE_URL aponta para '{nome}': por segurança o banco de teste "
+            "precisa terminar em '_test' (a suíte apaga todas as tabelas)."
+        )
+    return url
+
+
 @pytest.fixture
 def temp_db(tmp_path):
-    """SQLite em arquivo, novo por teste, com FKs ativas e tabelas criadas."""
+    """Banco descartável, novo por teste, com FKs ativas e tabelas criadas.
+    SQLite em arquivo no `tmp_path` (padrão) ou, com `TEST_DATABASE_URL`, Postgres
+    com as tabelas apagadas e recriadas a cada teste."""
+    pg = _postgres_de_teste()
+    if pg:
+        engine = make_engine(pg)
+        Base.metadata.drop_all(engine)
+        init_db(engine)
+        yield TempDb(pg, engine, make_session_factory(engine))
+        engine.dispose()
+        return
     url = f"sqlite:///{(tmp_path / 'test.db').as_posix()}"
     engine = make_engine(url)
     init_db(engine)
@@ -136,8 +165,12 @@ def log_dir(tmp_path):
 
 @pytest.fixture
 def session():
-    """Sessão SQLite em memória, com FKs ativas e tabelas criadas pelo ORM."""
-    engine = make_engine("sqlite:///:memory:")
+    """Sessão em SQLite em memória (ou Postgres, com `TEST_DATABASE_URL`), com FKs ativas
+    e tabelas criadas pelo ORM."""
+    pg = _postgres_de_teste()
+    engine = make_engine(pg or "sqlite:///:memory:")
+    if pg:
+        Base.metadata.drop_all(engine)
     init_db(engine)
     with make_session_factory(engine)() as s:
         yield s

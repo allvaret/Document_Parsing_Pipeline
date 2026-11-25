@@ -4,7 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 
+import pytest
+
+from sqlalchemy import select
+
+from db.models import Base
 from db.repository import get_or_create_company, save_result
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.result import (
@@ -72,3 +78,21 @@ def seed_company(session, name, ticker=None):
     company = get_or_create_company(session, CompanyRef(name, "t", ticker))
     session.commit()
     return company
+
+
+def banco_sha(temp_db) -> str:
+    """Impressão digital do CONTEÚDO de todas as tabelas (não do arquivo), para provar
+    que uma requisição não alterou nada. Funciona em SQLite e Postgres."""
+    h = hashlib.sha256()
+    with temp_db.engine.connect() as conn:
+        for tabela in Base.metadata.sorted_tables:
+            rows = conn.execute(select(tabela).order_by(*tabela.primary_key.columns)).all()
+            h.update(f"{tabela.name}:{rows!r}".encode())
+    return h.hexdigest()
+
+
+# PRAGMAs e arquivo de banco são coisas do SQLite; no Postgres a defesa equivalente
+# (role só com SELECT) é testada à parte, no deploy.
+so_sqlite = pytest.mark.skipif(
+    bool(os.environ.get("TEST_DATABASE_URL")), reason="específico do SQLite"
+)
