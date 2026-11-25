@@ -752,4 +752,9 @@ Pendente (hoje se resolve com `--ticker/--type`, ver `scripts/popular_assets.sh`
 - **`--ticker/--type` por arquivo** (manifesto `lote.csv`), em vez de um lote por combinação.
 - **ITR x DFP por conteúdo** (Vale IFRS, "Demonstrações Financeiras"): hoje exige `--type`.
 - **Golden set** de keypoints (certo/errado/ausente por PDF x indicador) e `scripts/audit_keypoints.py`.
-- Role Postgres só-leitura para a API; `ONLY_REVIEWED` e `python -m batch.review`.
+- `ONLY_REVIEWED` e `python -m batch.review`. (O role Postgres só-leitura já existe: `database/readonly_role.sql`.)
+- **Resumo LLM de documento longo** (2 falhas no lote LLM de 25/11, `qwen2.5:3b` na GTX 1650):
+  Petrobras 3T26 (43 págs., prompt de ~40 mil caracteres) estourou o timeout de 600 s; Cemig 1T26
+  (press release) chegou a 12.229 tokens para uma janela de 12.288 e a guarda de contexto barrou
+  (certo: o resumo sairia cortado). Ficam só com os keypoints da heurística. Ideias: limitar o
+  texto por seção, resumir seção a seção e juntar, ou aumentar `NUM_CTX`/timeout por documento.

@@ -294,3 +294,6 @@ __marimo__/
 # Saídas do pipeline e bancos locais
 output/
 *.db
+
+# Dumps do banco
+backups/

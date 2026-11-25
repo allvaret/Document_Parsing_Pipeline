@@ -21,5 +21,6 @@ EXPOSE 8000
 HEALTHCHECK --interval=10s --timeout=3s --retries=10 \
   CMD python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/health')" || exit 1
 
-# Aplica as migrações e sobe a API. --proxy-headers: o IP real do cliente vem do proxy da hospedagem.
-CMD ["sh", "-c", "alembic upgrade head && exec uvicorn site_backend.main:app --host 0.0.0.0 --port 8000 --proxy-headers"]
+# --proxy-headers: o IP real do cliente vem do proxy da hospedagem.
+# As migrações rodam à parte (`alembic upgrade head`, com a URL do dono do banco): a API só lê.
+CMD ["uvicorn", "site_backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]

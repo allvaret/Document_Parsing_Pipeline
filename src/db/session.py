@@ -75,12 +75,15 @@ def make_readonly_engine(url: str | None = None) -> Engine:
 
     SQLite: arquivo inexistente lança DatabaseNotFoundError (em vez de criar um
     banco vazio) e `PRAGMA query_only=ON` faz qualquer escrita falhar, mesmo que um
-    bug a tente. Outros bancos: a defesa equivalente é um role só com SELECT
-    (Fase 6); aqui só se abre o engine."""
+    bug a tente. Postgres: a defesa de verdade é um role só com SELECT
+    (`database/readonly_role.sql`); aqui a sessão ainda nasce somente leitura, de modo que
+    mesmo com a URL do dono do banco qualquer escrita falha."""
     url = url or get_database_url()
     parsed = make_url(url)
     if parsed.get_backend_name() != "sqlite":
-        return create_engine(url)
+        return create_engine(
+            url, connect_args={"options": "-c default_transaction_read_only=on"}
+        )
 
     db_path = parsed.database
     if db_path in (None, "", ":memory:"):
