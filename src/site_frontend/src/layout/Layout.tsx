@@ -18,7 +18,10 @@ export function Layout() {
             >
               {t('app.name')}
             </Link>
-            <SearchBox variant="compact" />
+            <nav className="flex items-center gap-4">
+              <Link to="/calculadora" className="text-ink-soft underline hover:text-ink">{t('calc.nav')}</Link>
+              <SearchBox variant="compact" />
+            </nav>
           </div>
         </header>
       )}
@@ -26,7 +29,10 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className="border-t border-rule">
-        <p className="mx-auto max-w-5xl px-4 py-4 text-sm text-ink-soft">{t('footer.disclaimer')}</p>
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-sm text-ink-soft">
+          <p>{t('footer.disclaimer')}</p>
+          <Link to="/calculadora" className="underline hover:text-ink">{t('calc.nav')}</Link>
+        </div>
       </footer>
     </div>
   )

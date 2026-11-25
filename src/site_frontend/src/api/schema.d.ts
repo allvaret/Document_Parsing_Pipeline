@@ -4,6 +4,26 @@
  */
 
 export interface paths {
+    "/calcular/metodos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Metodos
+         * @description Métodos de cálculo e os campos de cada um (o formulário do site é gerado daqui).
+         */
+        get: operations["metodos_calcular_metodos_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/calcular/{metodo}": {
         parameters: {
             query?: never;
@@ -174,6 +194,26 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** CampoInfo */
+        CampoInfo: {
+            /** Ajuda */
+            ajuda: string;
+            /** Exemplo */
+            exemplo?: number | null;
+            /** Nome */
+            nome: string;
+            /** Obrigatorio */
+            obrigatorio: boolean;
+            /** Padrao */
+            padrao?: number | null;
+            /** Rotulo */
+            rotulo: string;
+            /**
+             * Unidade
+             * @enum {string}
+             */
+            unidade: "moeda" | "percentual" | "numero";
+        };
         /** CompanyOut */
         CompanyOut: {
             /** Cnpj */
@@ -283,6 +323,23 @@ export interface components {
             value_text: string;
             /** Variation Text */
             variation_text: string | null;
+        };
+        /** MetodoInfo */
+        MetodoInfo: {
+            /**
+             * Aplicacao
+             * @enum {string}
+             */
+            aplicacao: "acao" | "fii";
+            /** Campos */
+            campos: components["schemas"]["CampoInfo"][];
+            /** Descricao */
+            descricao: string;
+            /** Formula */
+            formula: string;
+            metodo: components["schemas"]["MetodoPreco"];
+            /** Nome */
+            nome: string;
         };
         /**
          * MetodoPreco
@@ -412,6 +469,26 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    metodos_calcular_metodos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MetodoInfo"][];
+                };
+            };
+        };
+    };
     calcular_calcular__metodo__post: {
         parameters: {
             query?: never;
@@ -424,7 +501,7 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    [key: string]: unknown;
+                    [key: string]: number;
                 };
             };
         };

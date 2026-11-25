@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from db.errors import DatabaseError
@@ -20,6 +21,13 @@ def install_error_handlers(app: FastAPI) -> None:
         return JSONResponse(
             status_code=503, content={"detail": "Banco de dados indisponível."}
         )
+
+    @app.exception_handler(RequestValidationError)
+    async def _validation(request: Request, exc: RequestValidationError) -> JSONResponse:
+        # O padrão do FastAPI devolve o valor recebido (`input`): com inf/NaN a própria
+        # resposta de erro não vira JSON (500), e ecoar entrada hostil não ajuda ninguém.
+        erros = [{"loc": list(e["loc"]), "msg": e["msg"], "type": e["type"]} for e in exc.errors()]
+        return JSONResponse(status_code=422, content={"detail": erros})
 
     @app.exception_handler(CorruptSummaryError)
     async def _corrupt_summary(request: Request, exc: CorruptSummaryError) -> JSONResponse:
