@@ -122,6 +122,8 @@ class Report(Base):
     page_count: Mapped[int]
     extractor_version: Mapped[str] = mapped_column(server_default="")
     parsed_at: Mapped[datetime] = mapped_column(UTCDateTime, server_default=_NOW)
+    # Revisão humana dos keypoints; None = não revisado (ver schema.sql).
+    reviewed_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime)
 
     company: Mapped[Company] = relationship(back_populates="reports")
     summaries: Mapped[list[Summary]] = relationship(

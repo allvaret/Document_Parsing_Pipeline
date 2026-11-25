@@ -60,6 +60,10 @@ CREATE TABLE IF NOT EXISTS report (
     -- '' = desconhecida: qualquer versão atual força a regeração.
     extractor_version TEXT NOT NULL DEFAULT '',
     parsed_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- Revisão humana dos keypoints (python -m batch.review). NULL = não revisado.
+    -- Volta a NULL se os keypoints mudarem ou o PDF for reapresentado: a revisão
+    -- vale para aqueles números, não para o relatório "em geral".
+    reviewed_at  DATETIME,
     -- Chave de negócio: um relatório por empresa/tipo/período.
     -- Reapresentação (mesmo período, PDF novo) = hash novo na MESMA linha:
     -- o batch atualiza file_hash e regera summary/keypoint.

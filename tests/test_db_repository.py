@@ -1,6 +1,8 @@
 """Repositório e save_result, em SQLite em memória."""
 
 import pytest
+from datetime import datetime, timezone
+
 from sqlalchemy import func, select
 
 from db.errors import (
@@ -373,3 +375,35 @@ def test_cnpj_invalido_lanca_e_nao_grava(session, raw):
     with pytest.raises(InvalidCnpjError):
         get_or_create_company(session, CompanyRef("X", "t", "XPTO3", raw))
     assert _count(session, Company) == 0
+
+
+# --- revisão humana (reviewed_at) -------------------------------------------
+
+def _revisar(session, report):
+    report.reviewed_at = datetime(2026, 11, 25, 12, 0, tzinfo=timezone.utc)
+    session.flush()
+
+
+def test_novo_relatorio_nasce_nao_revisado(session):
+    assert save_result(session, _result()).reviewed_at is None
+
+
+def test_regravar_com_os_mesmos_keypoints_mantem_a_revisao(session):
+    r = save_result(session, _result())
+    _revisar(session, r)
+    r2 = save_result(session, _result(), replace_summaries=True)
+    assert r2.id == r.id
+    assert r2.reviewed_at == datetime(2026, 11, 25, 12, 0, tzinfo=timezone.utc)
+
+
+def test_keypoints_diferentes_derrubam_a_revisao(session):
+    r = save_result(session, _result())
+    _revisar(session, r)
+    novos = (KeypointRecord("Lucro Líquido", "R$ 2,0 bi", "+5% a/a", "3T25", 3),)
+    assert save_result(session, _result(keypoints=novos)).reviewed_at is None
+
+
+def test_pdf_reapresentado_derruba_a_revisao_mesmo_com_os_mesmos_keypoints(session):
+    r = save_result(session, _result(h=H1))
+    _revisar(session, r)
+    assert save_result(session, _result(h=H2)).reviewed_at is None
