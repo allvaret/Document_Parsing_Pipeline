@@ -65,6 +65,15 @@ describe('calculadora', () => {
     expect(screen.getByText(/Não é recomendação de investimento/)).toBeInTheDocument()
   })
 
+  it('rodapé traz o aviso e a autoria', async () => {
+    api(() => jsonResponse({}))
+    open()
+    await screen.findByRole('heading', { name: 'Calculadora de preço teto' })
+    const rodape = screen.getByRole('contentinfo')
+    expect(rodape).toHaveTextContent('não é recomendação de investimento')
+    expect(rodape).toHaveTextContent('Desenvolvido por Alvaro Danko')
+  })
+
   it('campo vazio opcional fica fora do corpo', async () => {
     const calc = vi.fn((_body: unknown) => jsonResponse({ preco_teto: 22.67, metodo: 'metodo_bazin', detalhes: {} }))
     api(calc)

@@ -12,7 +12,10 @@ export const pt = {
     search: 'Buscar empresa',
     searchPlaceholder: 'Nome ou ticker (ex.: Cemig, PETR4)',
   },
-  footer: { disclaimer: 'Conteúdo informativo; não é recomendação de investimento.' },
+  footer: {
+    disclaimer: 'Conteúdo informativo, gerado a partir de relatórios públicos das companhias; não é recomendação de investimento.',
+    credit: 'Desenvolvido por Alvaro Danko',
+  },
   state: {
     loading: 'Carregando…',
     emptyTitle: 'Nada por aqui',

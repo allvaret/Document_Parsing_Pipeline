@@ -119,7 +119,7 @@ export function CalculatorPage() {
   const priceNumber = price.trim() ? parseDecimal(price) : null
 
   return (
-    <div className="mx-auto max-w-2xl space-y-8">
+    <div className="space-y-6">
       <header>
         <h1 className="font-serif text-4xl text-ink">{t('calc.title')}</h1>
         <p className="mt-2 text-ink-soft">{t('calc.intro')}</p>
@@ -127,11 +127,11 @@ export function CalculatorPage() {
 
       <fieldset>
         <legend className="mb-2 font-medium text-ink">{t('calc.methodLabel')}</legend>
-        <div className="space-y-4">
+        <div className="grid gap-4 md:grid-cols-2">
           {groups.map(([title, list]) => list.length > 0 && (
             <div key={title} role="radiogroup" aria-label={title}>
               <p className="mb-1 text-sm text-ink-soft">{title}</p>
-              <div className="grid gap-2 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                 {list.map((m) => (
                   <label
                     key={m.metodo}
@@ -157,32 +157,36 @@ export function CalculatorPage() {
         </p>
       </section>
 
-      <form onSubmit={submit} noValidate className="space-y-5">
-        <h2 className="font-serif text-2xl text-ink">{t('calc.premises')}</h2>
-        {method.campos.map((f) => (
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <form onSubmit={submit} noValidate className="grid content-start gap-x-6 gap-y-5 sm:grid-cols-2">
+          <h2 className="font-serif text-2xl text-ink sm:col-span-2">{t('calc.premises')}</h2>
+          {method.campos.map((f) => (
+            <Field
+              key={`${method.metodo}-${f.nome}`}
+              field={f}
+              value={values[f.nome] ?? ''}
+              error={errors[f.nome]}
+              onChange={(v) => setValues((cur) => ({ ...cur, [f.nome]: v }))}
+            />
+          ))}
           <Field
-            key={`${method.metodo}-${f.nome}`}
-            field={f}
-            value={values[f.nome] ?? ''}
-            error={errors[f.nome]}
-            onChange={(v) => setValues((cur) => ({ ...cur, [f.nome]: v }))}
+            field={{
+              nome: 'cotacao', rotulo: t('calc.priceLabel'), unidade: 'moeda', ajuda: t('calc.priceHelp'),
+              obrigatorio: false, padrao: null, exemplo: 12.34,
+            }}
+            value={price}
+            error={errors.cotacao}
+            onChange={setPrice}
           />
-        ))}
-        <Field
-          field={{
-            nome: 'cotacao', rotulo: t('calc.priceLabel'), unidade: 'moeda', ajuda: t('calc.priceHelp'),
-            obrigatorio: false, padrao: null, exemplo: 12.34,
-          }}
-          value={price}
-          error={errors.cotacao}
-          onChange={setPrice}
-        />
-        {Object.keys(errors).length > 0 && <p role="alert" className="text-danger">{t('calc.formErrors')}</p>}
-        <button type="submit" className="btn" disabled={busy}>{t('calc.submit')}</button>
-      </form>
+          {Object.keys(errors).length > 0 && <p role="alert" className="text-danger sm:col-span-2">{t('calc.formErrors')}</p>}
+          <button type="submit" className="btn sm:col-span-2 sm:justify-self-start" disabled={busy}>{t('calc.submit')}</button>
+        </form>
 
-      {failure !== null && <ErrorState error={failure} />}
-      {result && <Result result={result} method={method} price={priceNumber && priceNumber > 0 ? priceNumber : null} />}
+        <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
+          {failure !== null && <ErrorState error={failure} />}
+          {result && <Result result={result} method={method} price={priceNumber && priceNumber > 0 ? priceNumber : null} />}
+        </aside>
+      </div>
     </div>
   )
 }

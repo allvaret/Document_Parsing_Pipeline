@@ -30,7 +30,7 @@ export function Layout() {
       </main>
       <footer className="border-t border-rule">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-sm text-ink-soft">
-          <p>{t('footer.disclaimer')}</p>
+          <p>{t('footer.disclaimer')} {t('footer.credit')}.</p>
           <Link to="/calculadora" className="underline hover:text-ink">{t('calc.nav')}</Link>
         </div>
       </footer>
