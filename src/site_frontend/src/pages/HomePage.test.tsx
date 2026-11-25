@@ -50,11 +50,14 @@ afterEach(() => vi.unstubAllGlobals())
 
 describe('home', () => {
   it('mostra hero, últimos relatórios, todas as empresas e "Como funciona"', async () => {
-    api()
+    const fetchMock = api()
     open()
     expect(screen.getByRole('heading', { level: 1, name: 'RQ' })).toBeInTheDocument()
 
     const ultimos = await screen.findByRole('region', { name: 'Últimos relatórios' })
+    await within(ultimos).findByRole('link', { name: /Cemig/ })
+    const pedido = fetchMock.mock.calls.map(([u]) => new URL(u)).find((u) => u.pathname === '/relatorios')
+    expect(pedido?.searchParams.get('limit')).toBe('3')   // só os 3 mais recentes
     expect(within(ultimos).getByRole('link', { name: /Cemig/ })).toHaveAttribute('href', '/relatorios/2')
 
     const grade = await screen.findByRole('region', { name: 'Empresas disponíveis' })
