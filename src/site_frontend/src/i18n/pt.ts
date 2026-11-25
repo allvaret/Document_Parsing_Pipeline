@@ -108,7 +108,7 @@ export const pt = {
   calc: {
     nav: 'Calculadora',
     title: 'Calculadora de preço teto',
-    intro: 'Escolha um método, informe as premissas e veja o preço máximo que ele sugere pagar. A conta roda no servidor e nada do que você digita é guardado.',
+    intro: 'Escolha um método, informe as premissas e veja o preço máximo que ele sugere pagar.',
     methodLabel: 'Método',
     stocks: 'Ações',
     fiis: 'Fundos imobiliários',

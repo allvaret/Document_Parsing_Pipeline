@@ -1,0 +1,7 @@
+# Cabeçalhos de segurança no Cloudflare Pages. Se a API mudar de domínio, ajuste o connect-src.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://*.onrender.com; base-uri 'none'; form-action 'self'; frame-ancestors 'none'

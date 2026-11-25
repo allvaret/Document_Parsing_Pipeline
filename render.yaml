@@ -20,5 +20,5 @@ services:
         sync: false
       - key: CORS_ORIGINS            # URL do site no Cloudflare Pages, sem barra final
         sync: false
-      - key: ALLOWED_HOSTS           # host da API, ex.: finance-api.onrender.com
+      - key: ALLOWED_HOSTS           # host da API + 127.0.0.1, ex.: finance-api.onrender.com,127.0.0.1
         sync: false
