@@ -410,6 +410,7 @@
             "type": "integer"
           },
           "parsed_at": {
+            "format": "date-time",
             "title": "Parsed At",
             "type": "string"
           },
@@ -503,6 +504,7 @@
             "type": "integer"
           },
           "parsed_at": {
+            "format": "date-time",
             "title": "Parsed At",
             "type": "string"
           },
@@ -594,6 +596,7 @@
             "title": "Content Markdown"
           },
           "created_at": {
+            "format": "date-time",
             "title": "Created At",
             "type": "string"
           },

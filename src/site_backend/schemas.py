@@ -3,6 +3,7 @@ são o contrato com o frontend e não mudam quando o ORM muda."""
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Literal, Optional
 
 from pydantic import BaseModel
@@ -34,7 +35,7 @@ class ReportItem(BaseModel):
     report_type: str
     period: str
     page_count: int
-    parsed_at: str
+    parsed_at: datetime
     source_url: Optional[str]
     extractor_version: str          # '' = versão desconhecida (gravado antes do campo existir)
 
@@ -142,7 +143,7 @@ class SummaryOut(BaseModel):
     method: Literal["heuristic", "llm"]
     model: str                      # 'heuristic' ou o modelo do LLM
     prompt_version: str
-    created_at: str
+    created_at: datetime
     content_format: Literal["json", "markdown"]
     content_json: Optional[HeuristicSummary] = None
     content_markdown: Optional[str] = None
