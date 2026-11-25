@@ -2,13 +2,14 @@
 #   docker compose up -d db
 #   docker compose down        # mantém os dados (volume `pgdata`)
 #   docker compose down -v     # apaga os dados
+# A senha vem do .env (ignorado pelo git); nada sensível neste arquivo.
 # Porta 5433 no host, para não colidir com um Postgres instalado na máquina.
 services:
   db:
     image: postgres:17-alpine
     environment:
       POSTGRES_USER: finance
-      POSTGRES_PASSWORD: finance_dev
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env (veja .env.example)}
       POSTGRES_DB: finance
     ports:
       - "127.0.0.1:5433:5432"
