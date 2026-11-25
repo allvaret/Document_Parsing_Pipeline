@@ -434,7 +434,7 @@ def build_document_payload(
     metadata = {
         "company_name": company_name,
         "company_name_method": company_method,
-        "period": extract_period(combined),
+        "period": extract_period(f"{cover_text}\n{source_title}"),   # só a capa: o resto traz períodos de comparação
         "report_type": extract_report_type(combined),
     }
 

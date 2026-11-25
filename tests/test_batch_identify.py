@@ -238,12 +238,21 @@ def test_alias_igual_a_um_nome_do_mapa_nao_o_sobrescreve():
 
 # --- prioridade e conflitos -----------------------------------------------------
 
-def test_conteudo_vence_nome_do_arquivo_e_o_conflito_e_logado():
+def test_periodo_explicito_no_nome_vence_a_capa_e_o_conflito_e_logado():
     r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
                 period="3T25")
     i = identify(r, "Release 2T25.pdf", TICKER_MAP)
-    assert i.period == "3T25" and i.sources["period"] == "content"
-    assert any("conflito de período" in w and "2T25" in w for w in i.warnings)
+    assert i.period == "2T25" and i.sources["period"] == "filename"
+    assert any("conflito de período" in w and "content=3T25" in w for w in i.warnings)
+
+
+def test_periodo_inferido_de_data_perde_para_a_capa():
+    """Data no nome é só a publicação (chute); o período da capa é do próprio relatório."""
+    r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
+                period="2T26")
+    i = identify(r, "Release 2026-11-05.pdf", TICKER_MAP)
+    assert i.period == "2T26" and i.sources["period"] == "content" and i.inferred == ()
+    assert any("conflito de período" in w and "(inferido)" in w for w in i.warnings)
 
 
 def test_tipo_explicito_no_nome_vence_o_conteudo_e_o_conflito_e_logado():

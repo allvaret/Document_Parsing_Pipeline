@@ -86,3 +86,13 @@ def test_tipo_do_conteudo_vem_da_palavra_que_aparece_primeiro():
     assert extract_report_type(texto) == "Earnings Release"
     assert extract_report_type("Formulário de Referência 2026") == "Formulário de Referência"
     assert extract_report_type("arbitragem e vitrine") is None
+
+
+def test_periodo_do_metadata_so_vem_da_capa():
+    """Última página e corpo trazem períodos de comparação (1T25 numa tabela do 2T26)."""
+    from resumo.extractor.section.build_section import DocumentSection, build_document_payload
+    capa = DocumentSection("Relatório da Administração", 0, ["sem período aqui"])
+    fim = DocumentSection("Anexos", 5, ["1T25 1T25 1T25 comparativo"])
+    assert build_document_payload([capa, fim], "x.pdf")["metadata"]["period"] is None
+    capa2 = DocumentSection("Resultados 2T26", 0, ["texto"])
+    assert build_document_payload([capa2, fim], "x.pdf")["metadata"]["period"] == "2T26"

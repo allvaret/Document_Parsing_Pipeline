@@ -738,3 +738,18 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   página de teste 3×3 ladrilhada; se aparecer emenda, corrigir com script Pillow em
   `scripts/` (deslocar metade + mesclar bordas) e converter para WebP (~200–400 KB). A
   `leather.jpg` original (4 MB) fica fora do git; o hero usa `public/textures/leather.webp`.
+
+### Achados do 2º lote real (25/11) — automação para depois do deploy
+
+Corrigido (com testes): nome do arquivo com lixo/grafia/ticker colado, "desempenho" = release,
+tipo `RELATORIO_ADMINISTRACAO`, seções perdidas (cabeçalho repetido, título x linha, título colado
+em tabela), período = nome explícito > capa > data do nome, tipo do conteúdo = 1ª palavra.
+
+Pendente (hoje se resolve com `--ticker/--type`, ver `scripts/popular_assets.sh`):
+- **Tipo pelo conteúdo, mais esperto**: a Cemig sem "release" no nome é lida como
+  FORMULARIO_REFERENCIA; BB Seguridade tem "Análise do Desempenho" só na pág. 2 (a capa é
+  "#Pública"). Idéia: procurar o título nas primeiras N páginas, ponderar por posição.
+- **`--ticker/--type` por arquivo** (manifesto `lote.csv`), em vez de um lote por combinação.
+- **ITR x DFP por conteúdo** (Vale IFRS, "Demonstrações Financeiras"): hoje exige `--type`.
+- **Golden set** de keypoints (certo/errado/ausente por PDF x indicador) e `scripts/audit_keypoints.py`.
+- Role Postgres só-leitura para a API; `ONLY_REVIEWED` e `python -m batch.review`.

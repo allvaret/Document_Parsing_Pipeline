@@ -6,7 +6,9 @@ nos PDFs reais a heurística de conteúdo errou empresa e tipo):
 
     empresa  cli > ticker/nome do arquivo no ticker_map > conteúdo
     tipo     cli > palavra explícita no nome do arquivo > conteúdo
-    período  cli > conteúdo > nome do arquivo   (tudo normalizado: 9M25 == 3T25)
+    período  cli > nome do arquivo (explícito) > capa do PDF > nome (inferido de data)
+                (tudo normalizado: 9M25 == 3T25)
+
     (origin: metadados do scraper, v1.1, ainda não existe)
 
 A fonte usada fica em `Identification.sources` (auditoria e log do batch).
@@ -336,19 +338,23 @@ def identify(
     from_file = period_from_filename(filename)
     content_period = result.report.period
     period = None
+    # cli > nome (explícito) > capa do PDF > nome (inferido de data de publicação). O nome
+    # é deliberado; o conteúdo só conta se vier da capa (o extrator não lê mais o resto).
     if o.period:
         period, sources["period"] = o.period, "cli"
+    elif from_file and not from_file.inferred:
+        period, sources["period"] = from_file.value, "filename"
     elif content_period:
         period, sources["period"] = normalize_period(content_period), "content"
     elif from_file:
         period, sources["period"] = from_file.value, "filename"
-        if from_file.inferred:
-            inferred.append("period")
-    if from_file and period and from_file.value != period:
-        warnings.append(
-            f"conflito de período: {sources['period']}={period}, filename={from_file.value}"
-            + (" (inferido)" if from_file.inferred else "")
-        )
+        inferred.append("period")
+    others = {"filename": from_file.value if from_file else None,
+              "content": normalize_period(content_period) if content_period else None}
+    for origin, value in others.items():
+        if value and period and origin != sources.get("period") and value != period:
+            warnings.append(f"conflito de período: {sources['period']}={period}, {origin}={value}"
+                            + (" (inferido)" if origin == "filename" and from_file.inferred else ""))
 
     # ---- tipo: cli > filename > content. Uma palavra explícita no nome
     # ('release', 'itr', 'dfp') é deliberada; a busca de palavra-chave no texto da
