@@ -684,7 +684,7 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   (portal/scraper). O scraper da v1.1 deve entregar a categoria real (fonte 1 da
   identificação); até lá vale a regra de tamanho. O texto da "Decisão de abertura" da Fase 3
   (comunicado com protocolo da CVM no nome) vale só para eventos de verdade, que são curtos.
-- **Documentos longos.** Acima de 150 páginas o PDF é pulado. Processá-los exigiria escolher
+- **Documentos longos.** *Plano em "Relatórios médios e grandes".* Acima de 150 páginas o PDF é pulado. Processá-los exigiria escolher
   seções ou dividir o documento para caber no contexto; avaliar se compensa.
 - **Crash do `llama-server` (`0xc0000409`, `STATUS_STACK_BUFFER_OVERRUN`).**
   `Desempenho Financeiro Petrobras 3T25.pdf` (44 págs) falhou aos 40 s com HTTP 500. Foi a
@@ -708,7 +708,7 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
 - **Classificar o `Desempenho Financeiro …`.** Sem palavra no nome e sem palavra-chave no
   conteúdo, ele só entra com `--type EARNINGS_RELEASE`. Com a nova ordem, isso é descoberto
   **antes** do LLM (sem gastar 40 s a 3 min).
-- **Contexto do LLM.** O log novo mostra ~2 caracteres por token nesses payloads (muito
+- **Contexto do LLM.** *Feito (25/11, `fix/llm-contexto`): ver "Relatórios médios e grandes", passo 0.* O log novo mostra ~2 caracteres por token nesses payloads (muito
   número e tabela): 17.947 caracteres viraram 8.726 tokens, 71% do `num_ctx` de 12.288. Um
   payload maior (o do Cemig tinha 22,5 KB numa execução antiga) pode estourar o contexto, e
   pelo que sei o Ollama trunca o prompt sem erro, o que degradaria o resumo sem aviso.
@@ -738,3 +738,59 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   página de teste 3×3 ladrilhada; se aparecer emenda, corrigir com script Pillow em
   `scripts/` (deslocar metade + mesclar bordas) e converter para WebP (~200–400 KB). A
   `leather.jpg` original (4 MB) fica fora do git; o hero usa `public/textures/leather.webp`.
+
+### Relatórios médios e grandes (25/11) — caso: Análise Gerencial da Operação do Itaú
+
+O narrativo hoje é **uma chamada** com o payload inteiro (`summarizeLLM`), em `num_ctx=12288`.
+Medido: o lote real dá ~2 caracteres por token (tabelas e números; o Qwen separa cada dígito)
+e o filtro de qualidade mantém ~63% do texto bruto (`Earnings Release 3T25.pdf`: 24,6 mil →
+15,6 mil caracteres). Na densidade dos releases testados, **~20 a 25 páginas** enchem a
+janela. Para o Itaú (~150 págs) a estimativa é de **60 a 150 mil tokens** de payload (**não
+medido**: depende da densidade do PDF), de 5 a 12 vezes a janela, e nem os 32k nativos do
+Qwen2.5 bastam. Ou seja: documento grande exige dividir o trabalho (map-reduce) ou um
+provedor de janela longa (Gemini).
+
+**Passo 0 — falhas silenciosas de contexto. Feito (25/11, `fix/llm-contexto`).**
+- `client.generate` recusa **antes** de chamar o prompt acima de `num_ctx × 4` caracteres
+  (estouro certo até para prosa pura) e, **depois** da resposta, trata
+  `prompt_eval_count + eval_count ≥ num_ctx − 64` como corte (`LLMContextOverflowError`,
+  filha de `LLMResponseError`). *Por quê:* o Ollama corta a entrada sem erro, e as instruções
+  ficam no começo do prompt; o resumo saía sem formato e era gravado como sucesso. Agora é
+  `falha` no log, com a telemetria.
+- `stats["ctx_usage"]` (fração da janela usada pelo prompt) vai para o log, e ≥ 90%
+  (`CTX_WARN_RATIO`) vira aviso: ainda coube, mas o próximo relatório da empresa pode não caber.
+- Seções em JSON compacto (−13% de caracteres no PDF de exemplo). `PROMPT_VERSION` →
+  `prompt-v2`: o próximo `--mode llm` regera os narrativos (o histórico v1 fica no banco).
+- Limite conhecido: o Ollama não conta em `prompt_eval_count` o prefixo reaproveitado do
+  cache; um corte menor que esse prefixo (as instruções, centenas de tokens) pode passar.
+
+**Essencial para rodar um relatório médio a grande (MVP de documentos longos), em ordem:**
+1. **Medir antes de construir.** Rodar o Itaú com `--dry-run --max-pages 0` e registrar os
+   caracteres do payload por página; acrescentar `prompt_eval_duration`/`eval_duration` ao
+   `stats` (ver "Tempo por documento"). Sem isso, orçamento e tempo são chute.
+2. **Orçamento de tokens configurável.** `num_ctx`, `num_gpu` e a reserva de saída saem do
+   código fixo para env/CLI (`num_gpu=18` deixa metade das 36 camadas do 3B na CPU; testar
+   com `ollama ps`, lembrando do crash na carga a frio). Orçamento do prompt =
+   `num_ctx − reserva de saída − instruções`, em tokens estimados a 2 caracteres por token.
+3. **Roteamento por tamanho**, decidido antes de chamar: cabe → uma chamada (como hoje); não
+   cabe → map-reduce (local) ou provedor de janela longa. O caminho usado vai para o log.
+4. **Map-reduce por seções.** A unidade é a seção do `build_sections` (tabela e o texto dela
+   juntos, nunca separados). Agrupar seções consecutivas até o orçamento; o prompt *map* pede
+   notas estruturadas (fato, número, período, página); o *reduce* é o prompt atual sobre as
+   notas. `PROMPT_VERSION` cobre os dois. Falha de qualquer grupo = falha do PDF (nada pela
+   metade); telemetria por grupo no log. Seção maior que o orçamento sozinha: dividir por
+   blocos; tabela não se divide (se uma tabela sozinha não couber, cortar linhas com aviso).
+5. **Conferir os números do narrativo** contra o payload/keypoints (item "Números no
+   narrativo"). Com map-reduce o risco cresce (o *reduce* resume resumos), então isto passa a
+   ser pré-requisito, não melhoria.
+6. **Teto de páginas e tempo.** `MAX_PAGES=150` pode barrar o Itaú; rever junto com o tempo
+   medido no passo 1 (hipótese: dezenas de minutos por documento com map-reduce local). O
+   `timeout` de 600 s vale por chamada, então serve por grupo.
+7. **`GeminiProvider` (alternativa de uma chamada só).** Mesmo contrato `LLMProvider`, chave
+   por variável de ambiente, rodando só no batch local (nunca no servidor). Tratar HTTP 429
+   (cota) com espera, que hoje não está em `RETRY_STATUS`. Plano gratuito: cota diária por
+   projeto e dados usados pelo Google para treino (aceitável: os relatórios são públicos).
+   `SummaryRecord.model` = `gemini:<modelo>` separa os resumos no banco para comparar.
+8. **Keypoints de banco.** O `config.py` já tem Basileia/ROE; conferir o que o
+   `IndicatorExtractor` acha na Análise Gerencial antes de confiar no heurístico dela.
+
