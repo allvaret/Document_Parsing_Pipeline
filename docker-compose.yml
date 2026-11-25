@@ -1,0 +1,26 @@
+# Postgres local para desenvolvimento e testes (nunca para produção).
+#   docker compose up -d db
+#   docker compose down        # mantém os dados (volume `pgdata`)
+#   docker compose down -v     # apaga os dados
+# Porta 5433 no host, para não colidir com um Postgres instalado na máquina.
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: finance
+      POSTGRES_PASSWORD: finance_dev
+      POSTGRES_DB: finance
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Roda só na 1ª criação do volume: cria o banco dos testes.
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finance -d finance"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

@@ -12,6 +12,8 @@ fastapi==0.163.1
 pydantic==2.13.5
 uvicorn==0.54.0
 sqlalchemy==2.0.58
+alembic==1.20.1
+psycopg[binary]==3.3.9
 pytest==9.1.1
 httpx2==2.16.2
 -e .
