@@ -36,13 +36,32 @@ class ReportItem(BaseModel):
     page_count: int
     parsed_at: str
     source_url: Optional[str]
+    extractor_version: str          # '' = versão desconhecida (gravado antes do campo existir)
 
     @classmethod
     def from_orm_report(cls, report: Report) -> "ReportItem":
         return cls(
             id=report.id, report_type=report.report_type, period=report.period,
             page_count=report.page_count, parsed_at=report.parsed_at,
-            source_url=report.source_url,
+            source_url=report.source_url, extractor_version=report.extractor_version,
+        )
+
+
+class ReportCard(ReportItem):
+    """Relatório + a empresa dele: o que a home precisa para listar 'últimos relatórios'
+    sem uma chamada extra por card."""
+    company_id: int
+    company_name: str
+    tickers: list[str]
+
+    @classmethod
+    def from_orm_report(cls, report: Report) -> "ReportCard":
+        base = ReportItem.from_orm_report(report)
+        return cls(
+            **base.model_dump(),
+            company_id=report.company_id,
+            company_name=report.company.name,
+            tickers=sorted(a.ticker for a in report.company.assets),
         )
 
 

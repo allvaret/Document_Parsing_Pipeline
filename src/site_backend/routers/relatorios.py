@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Path, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
@@ -17,6 +17,7 @@ from site_backend.schemas import (
     CompanyOut,
     HeuristicSummary,
     KeypointOut,
+    ReportCard,
     ReportDetail,
     ReportItem,
     SummaryOut,
@@ -37,6 +38,15 @@ def summary_out(s: Summary) -> SummaryOut:
     except ValidationError as exc:
         raise CorruptSummaryError(s.id, f"{exc.error_count()} erro(s) de contrato") from exc
     return SummaryOut(**common, content_json=content)
+
+
+@router.get("", response_model=list[ReportCard])
+def ultimos_relatorios(
+    session: Annotated[Session, Depends(get_session)],
+    limit: Annotated[int, Query(ge=1, le=queries.MAX_LATEST)] = 8,
+) -> list[ReportCard]:
+    """Últimos relatórios gravados, do mais novo ao mais antigo (home do site)."""
+    return [ReportCard.from_orm_report(r) for r in queries.latest_reports(session, limit)]
 
 
 @router.get("/{report_id}", response_model=ReportDetail)

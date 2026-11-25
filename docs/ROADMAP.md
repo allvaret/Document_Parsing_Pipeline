@@ -483,16 +483,35 @@ todos os endpoints, inclusive 404 e paginação.
 
 ---
 
-## Fase 5 — Frontend mínimo (22–23/11)
+## Fase 5 — Frontend "RQ" (22–27/11) — feito, exceto a maleta
 
-- Busca por ticker/nome → lista de relatórios → página do relatório
-  (keypoints em tabela + resumo).
-- URL da API por variável de ambiente do Vite.
-- Estados de carregando, vazio e erro. Sem login, sem carteira.
-- Mostrar a origem do resumo (heurístico/LLM e modelo) — transparência.
+Branch `feat/fase-5-frontend`. React 19 + Vite + TypeScript + Tailwind 4, sem login e sem carteira.
+
+- **Rotas:** `/` (hero, busca, abas, últimos relatórios, todas as empresas, "Como funciona"),
+  `/empresas/:id`, `/relatorios/:id`, 404. Navegação por **id** (acha empresa sem ticker).
+- **Duas camadas separadas na página do relatório:** resumo narrativo (serifa, selo
+  `Gerado por IA · modelo · prompt_version`, aviso "números: confira na tabela") e tabela de
+  indicadores heurísticos (`tabular-nums`), mais o bloco de transparência (método, modelo,
+  versões, data). Sem keypoints (caso Marcopolo): mensagem explicando, sem tabela vazia.
+- **Segurança:** o markdown do LLM vira elementos React (sem `dangerouslySetInnerHTML`);
+  texto de busca vai por `URLSearchParams`; id inválido nem chama a API.
+- **Contrato:** `schema.d.ts` é gerado do OpenAPI (`python -m site_backend.dump_openapi` +
+  `npm run gen:api`); testes barram `openapi.json` e `schema.d.ts` desatualizados.
+- **API (só aditivo):** `GET /relatorios?limit=` (últimos, teto 20) e `extractor_version` no
+  relatório; com testes, incluindo `PAYLOADS` de SQL injection e banco intocado.
+- **Visual (paleta B):** couro preto no hero, interior em veludo por CSS/SVG, cartões de
+  papel, um único acento de latão (texto sobre papel usa `brass-ink`; AA verificado em teste).
+- **Logos:** estáticos em `public/logos/{TICKER}.svg|png`, sem busca na web; sem arquivo (ou
+  sem ticker) cai no monograma. Nenhum logo foi adicionado ainda.
+- **i18n:** todo texto da interface em `src/i18n/pt.ts`; traduzir os resumos é v1.1.
+- **Maleta animada: adiada para a v1.1** (ver backlog), para proteger o prazo de 27/11.
 
 **Pronto quando:** o fluxo completo funciona contra a API local com o banco
-gerado pelo batch.
+gerado pelo batch. *Verificado:* a API local com `data/app.db` responde 200 para os 4
+relatórios, 404 para id inexistente e libera CORS para `localhost:5173`; `npm run build`
+passa; 61 testes do front cobrem o fluxo busca → empresa → relatório com a API simulada.
+*Não verificado:* inspeção visual em navegador (hero, veludo, fecho de latão), a cargo do
+Alvaro.
 
 ---
 
@@ -607,6 +626,40 @@ do deploy na Fase 6 (Alembic, `DateTime`, testes em massa dos keypoints).
   `CHECK` do banco já barram valores inválidos).
 - Trocar `session.refresh` por `append` em `get_or_create_company`.
 
+- **Enxugar a suíte de testes (branch própria, a cargo do Alvaro).** A suíte tem **756
+  testes** (24/11, com a Fase 5 em andamento) e a decisão é reduzi-la ao essencial. *Por
+  quê:* manter muitos testes redundantes custa tempo de execução (~2,5 min) e de leitura, e
+  dilui o sinal quando um falha. **Não é para apagar cobertura:** o critério é manter o que
+  protege uma decisão de arquitetura ou um bug já visto. Pontos de partida (**hipóteses, não
+  medidos**): os `PAYLOADS` de `test_sql_injection.py` são parametrizados (13 payloads) e
+  repetidos em cada endpoint e função de leitura, o que multiplica a contagem; testes que
+  verificam o mesmo comportamento em camadas diferentes (consulta, rota, ORM). Antes de
+  cortar: medir a contagem por arquivo, e conferir por mutação (como já feito com
+  `autoescape` e `extractor_version`) que o teste removido não era o único a pegar aquela
+  falha. Mantêm-se os guardas: banco real intocado, SQL só `SELECT`, paridade ORM x
+  `schema.sql`, contrato do summarizer e `openapi.json` em dia. A Fase 5 **não** mexe nisso.
+
+- **Empresas gravadas sem ticker (investigar junto com a redução de testes; a cargo do
+  Alvaro).** Achado na Fase 5 (24/11), lendo o `data/app.db`: das 4 empresas, **3 não têm
+  `asset`** (BR Partners, Cemig e Petrobras); só a Marcopolo tem (`POMO4`, passada por
+  `--ticker`). Efeito no site: sem ticker não há logo por ticker e o monograma usa o nome;
+  a busca por ticker não acha a empresa (só por nome) e a página dela não mostra ticker.
+  A navegação por `id` contorna isso, mas o dado está incompleto. *Esperado:* o cruzamento
+  nome → ticker (o `ticker_map` tem o nome comum de cada ticker e o registro tem o CNPJ)
+  deveria preencher o ticker. **Hipótese pela leitura do código (não confirmada):** em
+  `batch/identify.py`, o ticker só vem de `--ticker` ou de um token no formato de ticker no
+  nome do arquivo; quando a empresa é achada **só pelo nome** do arquivo (ex.: "Cemig"), o
+  CNPJ é preenchido (se todos os tickers daquele nome tiverem o mesmo CNPJ), mas `ticker`
+  fica `None`, e `get_or_create_company` só cria `Asset` quando `ref.ticker` existe. Ou seja,
+  a função que cruza nome com ticker pode existir para o CNPJ e **não ser acionada** para o
+  ticker. Pontos a verificar: (1) reproduzir com `--dry-run` e um nome de arquivo sem
+  ticker; (2) decidir a regra quando um nome tem **vários** tickers (PETR3/PETR4: gravar
+  todos? o mais líquido? nenhum até haver evidência no PDF?); (3) como corrigir o que já
+  está gravado (reprocessar com `--force`, ou um comando de backfill por CNPJ/nome, sem
+  duplicar empresa); (4) teste que reproduz: arquivo só com o nome da empresa grava os
+  tickers esperados. Relacionado: `aliases` no banco (`company_alias`, Fase 4 do plano
+  original) e o item "Semear `company`/`asset` a partir do mapa".
+
 ### Achados do 1º lote real em modo LLM (23/11) — registrados, **não** implementados
 
 Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e 128 s),
@@ -674,3 +727,14 @@ Lote de 5 PDFs com `qwen2.5:3b`: 2 resumos gerados (BR Partners e Cemig, 174 s e
   `IndicatorExtractor` não achou indicador nas 22 páginas (400 a 900 caracteres por página e
   muitas imagens: **hipótese**, números em gráficos). Investigar o extrator e, se for o caso,
   tratar apresentação/teleconferência como tipo próprio (ver "Tipos de documento que faltam").
+
+- **Maleta animada na home (adiada da Fase 5).** Seção fixa de 150vh em que a tampa abre com
+  `perspective` + `rotateX` conforme a rolagem; 2D/CSS, sem WebGL. *Por quê adiada:* é
+  opcional e o prazo era 27/11; a home estática já entrega o hero. Plano: preferir CSS
+  scroll-driven (`animation-timeline: view()` dentro de `@supports`) à biblioteca `motion`
+  (zero dependência; onde não houver suporte, a maleta fica aberta e estática). Com
+  `prefers-reduced-motion` e em telas < 768px também fica aberta e estática, e a busca tem de
+  ser alcançável sem atravessar a animação. Antes de usar a textura de couro, montar uma
+  página de teste 3×3 ladrilhada; se aparecer emenda, corrigir com script Pillow em
+  `scripts/` (deslocar metade + mesclar bordas) e converter para WebP (~200–400 KB). A
+  `leather.jpg` original (4 MB) fica fora do git; o hero usa `public/textures/leather.webp`.

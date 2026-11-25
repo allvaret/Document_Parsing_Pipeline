@@ -163,7 +163,7 @@ def test_relatorios_ordenados_por_periodo_entre_anos(api_client, temp_db):
     assert r.status_code == 200
     assert [x["period"] for x in r.json()] == ["1T26", "4T25", "3T25", "1T25"]
     item = r.json()[0]
-    assert set(item) == {"id", "report_type", "period", "page_count", "parsed_at", "source_url"}
+    assert set(item) == {"id", "report_type", "period", "page_count", "parsed_at", "source_url", "extractor_version"}
     assert item["report_type"] == "EARNINGS_RELEASE" and item["page_count"] == 10
 
 
