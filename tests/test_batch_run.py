@@ -348,6 +348,26 @@ def test_log_traz_telemetria_do_provedor_e_retry_vira_aviso(pdf_dir, log_dir, te
     assert any("2 tentativas" in linha for linha in saida)       # retry não é silencioso
 
 
+def test_prompt_perto_do_teto_da_janela_vira_aviso(pdf_dir, log_dir, temp_db):
+    stats = {"prompt_chars": 22000, "attempts": 1, "ctx_usage": 0.93}
+    resumo, saida = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,
+                          provider=ProviderComTelemetria(), telemetria=stats)
+
+    cemig = next(x for x in ler_log(resumo.log_path) if x.get("file") == CEMIG)
+    assert cemig["status"] == "novo"                             # coube: grava, mas avisa
+    assert any("93% da janela" in w for w in cemig["warnings"])
+    assert any("93% da janela" in linha for linha in saida)
+
+
+def test_prompt_folgado_na_janela_nao_avisa(pdf_dir, log_dir, temp_db):
+    stats = {"prompt_chars": 9000, "attempts": 1, "ctx_usage": 0.45}
+    resumo, _ = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,
+                      provider=ProviderComTelemetria(), telemetria=stats)
+
+    cemig = next(x for x in ler_log(resumo.log_path) if x.get("file") == CEMIG)
+    assert not any("janela" in w for w in cemig.get("warnings", []))
+
+
 def test_telemetria_do_llm_fica_no_log_mesmo_quando_o_llm_falha(pdf_dir, log_dir, temp_db):
     stats = {"prompt_chars": 20000, "attempts": 2, "retry_errors": ["HTTP 500: crash"]}
     resumo, _ = rodar(pdf_dir, log_dir, temp_db, mode=SummaryMode.LLM,

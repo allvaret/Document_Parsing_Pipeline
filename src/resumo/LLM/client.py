@@ -25,6 +25,16 @@ RETRY_STATUS = frozenset({500, 502, 503, 504})
 DEFAULT_RETRIES = 1
 DEFAULT_RETRY_WAIT = 5.0   # segundos: dá tempo de o Ollama subir outro runner
 
+# Janela de contexto (prompt + resposta), em tokens. O Ollama NÃO falha quando o prompt
+# não cabe: corta a entrada e responde normalmente, então o corte precisa ser detectado aqui.
+NUM_CTX = 12288
+# Teto de caracteres por token usado só para recusar ANTES de chamar. É otimista de
+# propósito (o lote real mediu ~2 com tabelas; prosa pura fica perto de 4): passar de
+# `num_ctx * 4` caracteres é estouro certo, então não vale gastar minutos de LLM.
+MAX_CHARS_PER_TOKEN = 4.0
+# Folga para considerar que a janela encheu (o corte deixa o prompt colado no teto).
+CTX_MARGIN = 64
+
 
 class LLMError(Exception):
     """Base para qualquer falha na geração via LLM."""
@@ -42,6 +52,13 @@ class LLMResponseError(LLMError):
     """Resposta recebida, mas inválida: HTTP de erro, vazia ou truncada."""
 
 
+class LLMContextOverflowError(LLMResponseError):
+    """O prompt (ou prompt + resposta) não cabe na janela de contexto.
+
+    O Ollama descartaria parte da entrada sem avisar, e as instruções ficam no começo
+    do prompt: o resumo sairia sem formato, sobre um pedaço do documento."""
+
+
 def generate(
     prompt: str,
     model: str = DEFAULT_MODEL,
@@ -50,6 +67,7 @@ def generate(
     retries: int = DEFAULT_RETRIES,
     retry_wait: float = DEFAULT_RETRY_WAIT,
     stats: Optional[dict] = None,
+    num_ctx: int = NUM_CTX,
 ) -> str:
     """Gera texto com o Ollama. Lança LLMError em qualquer falha.
 
@@ -57,17 +75,30 @@ def generate(
     `retry_wait` segundos de espera. A repetição não é silenciosa: se `stats` for
     passado (dict do chamador), recebe `prompt_chars`, `attempts`, `retry_errors`
     (o erro de cada tentativa que falhou) e, quando o Ollama informa, contagens e
-    durações da geração. Os dados ficam no dict mesmo quando a chamada falha."""
+    durações da geração. Os dados ficam no dict mesmo quando a chamada falha.
+
+    Contexto: prompt maior que `num_ctx * MAX_CHARS_PER_TOKEN` caracteres falha antes
+    de chamar; depois da resposta, `prompt_eval_count + eval_count` colado no `num_ctx`
+    falha como corte (`LLMContextOverflowError`). `stats["ctx_usage"]` registra a fração
+    da janela ocupada pelo prompt. Limite: o Ollama reaproveita o prefixo em cache e não
+    o conta em `prompt_eval_count`; o prefixo comum aqui são as instruções (centenas de
+    tokens), então um corte por menos que isso pode passar."""
     if stats is not None:
         stats.clear()
         stats.update(prompt_chars=len(prompt), attempts=0)
+    if len(prompt) > num_ctx * MAX_CHARS_PER_TOKEN:
+        raise LLMContextOverflowError(
+            f"Prompt de {len(prompt)} caracteres não cabe em num_ctx={num_ctx} "
+            f"(teto de {int(num_ctx * MAX_CHARS_PER_TOKEN)}); documento longo demais "
+            "para uma chamada só."
+        )
     payload = {
         "model": model,
         "prompt": prompt,
         "stream": False,
         "options": {
             "temperature": 0.2,   # baixo para respostas mais factuais
-            "num_ctx": 12288,     # contexto máximo
+            "num_ctx": num_ctx,   # janela total: prompt + resposta
             "num_predict": 8192,
             "num_gpu": 18,        # varia de hardware para hardware
         },
@@ -106,6 +137,18 @@ def generate(
         for chave, destino in (("load_duration", "load_s"), ("total_duration", "total_s")):
             if chave in data:                      # o Ollama informa em nanossegundos
                 stats[destino] = round(data[chave] / 1e9, 2)
+
+    prompt_tokens = data.get("prompt_eval_count")
+    if prompt_tokens is not None:
+        if stats is not None:
+            stats["ctx_usage"] = round(prompt_tokens / num_ctx, 3)
+        usados = prompt_tokens + (data.get("eval_count") or 0)
+        if usados >= num_ctx - CTX_MARGIN:
+            raise LLMContextOverflowError(
+                f"Janela de contexto cheia: {prompt_tokens} tokens de prompt + "
+                f"{data.get('eval_count') or 0} de resposta >= num_ctx={num_ctx} - "
+                f"{CTX_MARGIN}. O Ollama cortou a entrada; resumo descartado."
+            )
 
     # Ollama marca done_reason="length" quando bateu no num_predict:
     # a resposta veio cortada no meio. Melhor falhar do que salvar meio resumo.
