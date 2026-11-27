@@ -27,7 +27,9 @@ from resumo.LLM.summarize_pipeline import SummaryMode
 # levava o que a capa achou, ex. "Teleconferência"); sobe para regerar o que já está gravado.
 HEURISTIC_VERSION = "heuristic-v2"
 HEURISTIC_MODEL = "heuristic"    # `model` do summary heurístico (não há modelo)
-PROMPT_VERSION = "prompt-v1"   # suba a versão sempre que mudar prompts.py
+# Suba a versão sempre que mudar o texto enviado ao LLM (prompts.py ou a serialização).
+# v2: seções em JSON compacto (sem indentação).
+PROMPT_VERSION = "prompt-v2"
 
 
 class ReportType(str, Enum):

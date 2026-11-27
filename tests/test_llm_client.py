@@ -3,6 +3,8 @@ import requests
 
 from resumo.LLM import client
 from resumo.LLM.client import (
+    NUM_CTX,
+    LLMContextOverflowError,
     LLMResponseError,
     LLMTimeoutError,
     LLMUnavailableError,
@@ -144,7 +146,8 @@ def test_stats_traz_as_metricas_do_ollama_em_segundos(monkeypatch):
     generate("abc", stats=stats)
 
     assert stats == {"prompt_chars": 3, "attempts": 1, "prompt_eval_count": 5400,
-                     "eval_count": 610, "load_s": 2.5, "total_s": 128.43}
+                     "eval_count": 610, "load_s": 2.5, "total_s": 128.43,
+                     "ctx_usage": round(5400 / NUM_CTX, 3)}
 
 
 def test_stats_e_opcional_e_reiniciado_a_cada_chamada(monkeypatch):
@@ -168,6 +171,7 @@ def test_resposta_vazia_falha(monkeypatch):
         generate("p")
 
 
+<<<<<<< HEAD
 def test_prompt_no_teto_da_janela_falha_em_vez_de_resumir_texto_cortado(monkeypatch):
     _patch_post(monkeypatch, response=FakeResponse(
         {"response": "resumo", "done_reason": "stop", "prompt_eval_count": client.NUM_CTX}))
@@ -179,3 +183,56 @@ def test_prompt_dentro_da_janela_passa(monkeypatch):
     _patch_post(monkeypatch, response=FakeResponse(
         {"response": "resumo", "done_reason": "stop", "prompt_eval_count": 9902}))
     assert client.generate("p") == "resumo"
+=======
+# --- janela de contexto: o Ollama corta a entrada sem erro, então o client detecta ---
+
+def test_prompt_grande_demais_falha_antes_de_chamar_o_ollama(monkeypatch):
+    chamadas = _patch_post_sequencia(monkeypatch, [])
+    stats = {}
+    prompt = "x" * (NUM_CTX * 4 + 1)               # nem a 4 caracteres/token caberia
+
+    with pytest.raises(LLMContextOverflowError, match="não cabe"):
+        generate(prompt, stats=stats)
+
+    assert chamadas == [] and stats["prompt_chars"] == len(prompt)
+
+
+def test_prompt_no_limite_do_teto_ainda_e_enviado(monkeypatch):
+    chamadas = _patch_post_sequencia(monkeypatch, [FakeResponse(
+        {"response": "ok", "done_reason": "stop", "prompt_eval_count": 6000, "eval_count": 400})])
+
+    assert generate("x" * (NUM_CTX * 4)) == "ok"
+    assert len(chamadas) == 1
+
+
+@pytest.mark.parametrize("prompt_tokens, saida", [
+    (NUM_CTX, 0),                 # o Ollama cortou o prompt para caber na janela
+    (NUM_CTX - 300, 400),         # o prompt coube, mas a resposta empurrou para fora o começo
+])
+def test_janela_cheia_falha_como_corte(monkeypatch, prompt_tokens, saida):
+    _patch_post(monkeypatch, response=FakeResponse({
+        "response": "resumo sem formato", "done_reason": "stop",
+        "prompt_eval_count": prompt_tokens, "eval_count": saida}))
+    stats = {}
+
+    with pytest.raises(LLMContextOverflowError, match="Janela de contexto cheia"):
+        generate("p", stats=stats)
+
+    assert stats["prompt_eval_count"] == prompt_tokens      # telemetria fica para o log
+
+
+def test_corte_de_contexto_e_um_erro_de_resposta(monkeypatch):
+    # quem já trata LLMResponseError (o batch) continua tratando, sem mudança
+    assert issubclass(LLMContextOverflowError, LLMResponseError)
+
+
+def test_num_ctx_vai_para_as_opcoes_e_para_a_conta(monkeypatch):
+    chamadas = _patch_post_sequencia(monkeypatch, [FakeResponse(
+        {"response": "ok", "done_reason": "stop", "prompt_eval_count": 1000, "eval_count": 100})])
+    stats = {}
+
+    generate("p", stats=stats, num_ctx=4096)
+
+    assert chamadas[0]["json"]["options"]["num_ctx"] == 4096
+    assert stats["ctx_usage"] == round(1000 / 4096, 3)
+>>>>>>> origin/develop

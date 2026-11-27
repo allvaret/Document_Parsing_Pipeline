@@ -32,6 +32,7 @@ from db.repository import (
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.result import (
     HEURISTIC_VERSION,
+    PROMPT_VERSION,
     CompanyRef,
     KeypointRecord,
     ReportInfo,
@@ -151,7 +152,7 @@ def test_has_summary(session):
 
 # --- needs_processing (SKIP barato) -----------------------------------------
 
-LLM_REC = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", "prompt-v1", "texto", "markdown")
+LLM_REC = SummaryRecord(SummaryMode.LLM, "qwen2.5:3b", PROMPT_VERSION, "texto", "markdown")
 
 
 def test_hash_desconhecido_precisa_processar(session):
@@ -185,7 +186,7 @@ def test_subir_heuristic_version_manda_reprocessar(session, monkeypatch):
 
 def test_subir_prompt_version_reprocessa_so_o_modo_llm(session, monkeypatch):
     save_result(session, _result(summaries=(_result().summaries[0], LLM_REC)))
-    monkeypatch.setattr(repository, "PROMPT_VERSION", "prompt-v2")
+    monkeypatch.setattr(repository, "PROMPT_VERSION", "prompt-vFUTURA")
     assert needs_processing(session, H1, SummaryMode.LLM, "qwen2.5:3b")
     assert not needs_processing(session, H1, SummaryMode.HEURISTIC)
 

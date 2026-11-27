@@ -67,6 +67,10 @@ LOCK_NAME = "batch.lock"
 
 EXIT_OK, EXIT_FAILURES, EXIT_CANNOT_START = 0, 1, 2
 
+# Fração da janela de contexto ocupada pelo prompt a partir da qual o log avisa: ainda
+# cabe, mas um relatório um pouco maior da mesma empresa vai estourar (e falhar).
+CTX_WARN_RATIO = 0.9
+
 Process = Callable[..., tuple[ReportResult, dict]]
 # Acrescenta o resumo do LLM a um resultado já identificado (resumo.pipeline.attach_llm_summary).
 Narrate = Callable[[ReportResult, dict, LLMProvider], ReportResult]
@@ -280,6 +284,10 @@ def _narrate(result: ReportResult, payload: dict, rec: dict, ctx: _Ctx) -> Repor
                 rec.setdefault("warnings", []).append(
                     f"LLM precisou de {stats['attempts']} tentativas "
                     f"(1ª: {(stats.get('retry_errors') or ['?'])[0]})")
+            uso = stats.get("ctx_usage")
+            if uso is not None and uso >= CTX_WARN_RATIO:
+                rec.setdefault("warnings", []).append(
+                    f"prompt ocupou {uso:.0%} da janela de contexto do LLM")
 
 
 def _process_file(pdf: Path, ctx: _Ctx) -> dict:
