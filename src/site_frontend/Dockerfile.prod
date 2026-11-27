@@ -1,0 +1,21 @@
+# Build estático do site, servido por nginx. VITE_API_URL é fixado no build (é a URL
+# que o NAVEGADOR usa para chamar a API).
+FROM node:24-slim AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+# Sem padrão: o build falha se VITE_API_URL não vier (docker compose passa a local).
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+# O connect-src do nginx recebe a origem exata da API (mesma regra do _headers no vite.config.ts).
+RUN npm run build \
+ && ORIGIN=$(node -e "console.log(new URL(process.env.VITE_API_URL).origin)") \
+ && sed "s#__API_ORIGIN__#$ORIGIN#g" security-headers.conf > /tmp/security-headers.conf
+
+FROM nginxinc/nginx-unprivileged:1.27-alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /tmp/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 8080
+HEALTHCHECK --interval=10s --timeout=3s --retries=5 CMD wget -qO- http://127.0.0.1:8080/ >/dev/null || exit 1

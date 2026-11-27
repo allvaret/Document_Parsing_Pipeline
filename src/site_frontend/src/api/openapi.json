@@ -1,0 +1,1228 @@
+{
+  "components": {
+    "schemas": {
+      "CampoInfo": {
+        "properties": {
+          "ajuda": {
+            "title": "Ajuda",
+            "type": "string"
+          },
+          "exemplo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exemplo"
+          },
+          "nome": {
+            "title": "Nome",
+            "type": "string"
+          },
+          "obrigatorio": {
+            "title": "Obrigatorio",
+            "type": "boolean"
+          },
+          "padrao": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Padrao"
+          },
+          "rotulo": {
+            "title": "Rotulo",
+            "type": "string"
+          },
+          "unidade": {
+            "enum": [
+              "moeda",
+              "percentual",
+              "numero"
+            ],
+            "title": "Unidade",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nome",
+          "rotulo",
+          "unidade",
+          "ajuda",
+          "obrigatorio"
+        ],
+        "title": "CampoInfo",
+        "type": "object"
+      },
+      "CompanyOut": {
+        "properties": {
+          "cnpj": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cnpj"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "tickers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tickers",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "cnpj",
+          "tickers"
+        ],
+        "title": "CompanyOut",
+        "type": "object"
+      },
+      "CompanyPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CompanyOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "CompanyPage",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HeuristicHeader": {
+        "properties": {
+          "empresa": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Empresa"
+          },
+          "num_paginas": {
+            "title": "Num Paginas",
+            "type": "integer"
+          },
+          "periodo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Periodo"
+          }
+        },
+        "required": [
+          "empresa",
+          "periodo",
+          "num_paginas"
+        ],
+        "title": "HeuristicHeader",
+        "type": "object"
+      },
+      "HeuristicIndicator": {
+        "properties": {
+          "nome": {
+            "title": "Nome",
+            "type": "string"
+          },
+          "periodo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Periodo"
+          },
+          "valor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor"
+          },
+          "variacao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variacao"
+          }
+        },
+        "required": [
+          "nome",
+          "valor",
+          "variacao",
+          "periodo"
+        ],
+        "title": "HeuristicIndicator",
+        "type": "object"
+      },
+      "HeuristicObservations": {
+        "properties": {
+          "extras": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Extras",
+            "type": "array"
+          },
+          "secoes_alta_confianca": {
+            "title": "Secoes Alta Confianca",
+            "type": "integer"
+          },
+          "total_notas_explicativas": {
+            "title": "Total Notas Explicativas",
+            "type": "integer"
+          },
+          "total_secoes": {
+            "title": "Total Secoes",
+            "type": "integer"
+          },
+          "total_tabelas": {
+            "title": "Total Tabelas",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total_secoes",
+          "total_tabelas",
+          "total_notas_explicativas",
+          "secoes_alta_confianca",
+          "extras"
+        ],
+        "title": "HeuristicObservations",
+        "type": "object"
+      },
+      "HeuristicSection": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "rank": {
+            "title": "Rank",
+            "type": "integer"
+          },
+          "relevance_score": {
+            "title": "Relevance Score",
+            "type": "number"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rank",
+          "title",
+          "page",
+          "description",
+          "relevance_score"
+        ],
+        "title": "HeuristicSection",
+        "type": "object"
+      },
+      "HeuristicSummary": {
+        "properties": {
+          "header": {
+            "$ref": "#/components/schemas/HeuristicHeader"
+          },
+          "indicadores": {
+            "items": {
+              "$ref": "#/components/schemas/HeuristicIndicator"
+            },
+            "title": "Indicadores",
+            "type": "array"
+          },
+          "observacoes": {
+            "$ref": "#/components/schemas/HeuristicObservations"
+          },
+          "principais_assuntos": {
+            "items": {
+              "$ref": "#/components/schemas/HeuristicTopic"
+            },
+            "title": "Principais Assuntos",
+            "type": "array"
+          },
+          "secoes_relevantes": {
+            "items": {
+              "$ref": "#/components/schemas/HeuristicSection"
+            },
+            "title": "Secoes Relevantes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "header",
+          "principais_assuntos",
+          "secoes_relevantes",
+          "indicadores",
+          "observacoes"
+        ],
+        "title": "HeuristicSummary",
+        "type": "object"
+      },
+      "HeuristicTopic": {
+        "properties": {
+          "keyword_count": {
+            "title": "Keyword Count",
+            "type": "integer"
+          },
+          "matched_sections": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Matched Sections",
+            "type": "array"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic",
+          "matched_sections",
+          "keyword_count"
+        ],
+        "title": "HeuristicTopic",
+        "type": "object"
+      },
+      "KeypointOut": {
+        "properties": {
+          "metric": {
+            "title": "Metric",
+            "type": "string"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Period"
+          },
+          "value_numeric": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value Numeric"
+          },
+          "value_text": {
+            "title": "Value Text",
+            "type": "string"
+          },
+          "variation_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variation Text"
+          }
+        },
+        "required": [
+          "metric",
+          "value_text",
+          "value_numeric",
+          "variation_text",
+          "period",
+          "page"
+        ],
+        "title": "KeypointOut",
+        "type": "object"
+      },
+      "MetodoInfo": {
+        "properties": {
+          "aplicacao": {
+            "enum": [
+              "acao",
+              "fii"
+            ],
+            "title": "Aplicacao",
+            "type": "string"
+          },
+          "campos": {
+            "items": {
+              "$ref": "#/components/schemas/CampoInfo"
+            },
+            "title": "Campos",
+            "type": "array"
+          },
+          "descricao": {
+            "title": "Descricao",
+            "type": "string"
+          },
+          "formula": {
+            "title": "Formula",
+            "type": "string"
+          },
+          "metodo": {
+            "$ref": "#/components/schemas/MetodoPreco"
+          },
+          "nome": {
+            "title": "Nome",
+            "type": "string"
+          }
+        },
+        "required": [
+          "metodo",
+          "nome",
+          "aplicacao",
+          "descricao",
+          "formula",
+          "campos"
+        ],
+        "title": "MetodoInfo",
+        "type": "object"
+      },
+      "MetodoPreco": {
+        "enum": [
+          "graham_number",
+          "formula_graham",
+          "metodo_bazin",
+          "gordon_dividendo",
+          "fiis_yield_renda"
+        ],
+        "title": "MetodoPreco",
+        "type": "string"
+      },
+      "ReportCard": {
+        "description": "Relatório + a empresa dele: o que a home precisa para listar 'últimos relatórios'\nsem uma chamada extra por card.",
+        "properties": {
+          "company_id": {
+            "title": "Company Id",
+            "type": "integer"
+          },
+          "company_name": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "extractor_version": {
+            "title": "Extractor Version",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "page_count": {
+            "title": "Page Count",
+            "type": "integer"
+          },
+          "parsed_at": {
+            "format": "date-time",
+            "title": "Parsed At",
+            "type": "string"
+          },
+          "period": {
+            "title": "Period",
+            "type": "string"
+          },
+          "report_type": {
+            "title": "Report Type",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "tickers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tickers",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "report_type",
+          "period",
+          "page_count",
+          "parsed_at",
+          "source_url",
+          "extractor_version",
+          "company_id",
+          "company_name",
+          "tickers"
+        ],
+        "title": "ReportCard",
+        "type": "object"
+      },
+      "ReportDetail": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/CompanyOut"
+          },
+          "keypoints": {
+            "items": {
+              "$ref": "#/components/schemas/KeypointOut"
+            },
+            "title": "Keypoints",
+            "type": "array"
+          },
+          "report": {
+            "$ref": "#/components/schemas/ReportItem"
+          },
+          "summaries": {
+            "items": {
+              "$ref": "#/components/schemas/SummaryOut"
+            },
+            "title": "Summaries",
+            "type": "array"
+          }
+        },
+        "required": [
+          "report",
+          "company",
+          "keypoints",
+          "summaries"
+        ],
+        "title": "ReportDetail",
+        "type": "object"
+      },
+      "ReportItem": {
+        "description": "Relatório numa listagem (sem keypoints nem resumos).",
+        "properties": {
+          "extractor_version": {
+            "title": "Extractor Version",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "page_count": {
+            "title": "Page Count",
+            "type": "integer"
+          },
+          "parsed_at": {
+            "format": "date-time",
+            "title": "Parsed At",
+            "type": "string"
+          },
+          "period": {
+            "title": "Period",
+            "type": "string"
+          },
+          "report_type": {
+            "title": "Report Type",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          }
+        },
+        "required": [
+          "id",
+          "report_type",
+          "period",
+          "page_count",
+          "parsed_at",
+          "source_url",
+          "extractor_version"
+        ],
+        "title": "ReportItem",
+        "type": "object"
+      },
+      "ResultadoCalculo": {
+        "properties": {
+          "detalhes": {
+            "additionalProperties": true,
+            "title": "Detalhes",
+            "type": "object"
+          },
+          "metodo": {
+            "$ref": "#/components/schemas/MetodoPreco"
+          },
+          "preco_teto": {
+            "title": "Preco Teto",
+            "type": "number"
+          }
+        },
+        "required": [
+          "preco_teto",
+          "metodo",
+          "detalhes"
+        ],
+        "title": "ResultadoCalculo",
+        "type": "object"
+      },
+      "SummaryOut": {
+        "description": "Um resumo. Exatamente um entre `content_json` (heurístico) e\n`content_markdown` (LLM) vem preenchido, conforme `content_format`.",
+        "properties": {
+          "content_format": {
+            "enum": [
+              "json",
+              "markdown"
+            ],
+            "title": "Content Format",
+            "type": "string"
+          },
+          "content_json": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HeuristicSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "content_markdown": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Markdown"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "heuristic",
+              "llm"
+            ],
+            "title": "Method",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "prompt_version": {
+            "title": "Prompt Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "method",
+          "model",
+          "prompt_version",
+          "created_at",
+          "content_format"
+        ],
+        "title": "SummaryOut",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/calcular/metodos": {
+      "get": {
+        "description": "Métodos de cálculo e os campos de cada um (o formulário do site é gerado daqui).",
+        "operationId": "metodos_calcular_metodos_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoInfo"
+                  },
+                  "title": "Response Metodos Calcular Metodos Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Metodos"
+      }
+    },
+    "/calcular/{metodo}": {
+      "post": {
+        "description": "Calcula preço teto com base em um modelo e suas premissas",
+        "operationId": "calcular_calcular__metodo__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "metodo",
+            "required": true,
+            "schema": {
+              "title": "Metodo",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "title": "Premissas",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultadoCalculo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calcular"
+      }
+    },
+    "/empresas": {
+      "get": {
+        "operationId": "buscar_empresas_empresas_get",
+        "parameters": [
+          {
+            "description": "Nome ou início do ticker",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Nome ou início do ticker",
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 10000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Buscar Empresas",
+        "tags": [
+          "empresas"
+        ]
+      }
+    },
+    "/empresas/id/{company_id}": {
+      "get": {
+        "operationId": "obter_empresa_por_id_empresas_id__company_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "title": "Company Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Obter Empresa Por Id",
+        "tags": [
+          "empresas"
+        ]
+      }
+    },
+    "/empresas/id/{company_id}/relatorios": {
+      "get": {
+        "operationId": "listar_relatorios_por_id_empresas_id__company_id__relatorios_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "title": "Company Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ReportItem"
+                  },
+                  "title": "Response Listar Relatorios Por Id Empresas Id  Company Id  Relatorios Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Listar Relatorios Por Id",
+        "tags": [
+          "empresas"
+        ]
+      }
+    },
+    "/empresas/{ticker}": {
+      "get": {
+        "operationId": "obter_empresa_empresas__ticker__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticker",
+            "required": true,
+            "schema": {
+              "title": "Ticker",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Obter Empresa",
+        "tags": [
+          "empresas"
+        ]
+      }
+    },
+    "/empresas/{ticker}/relatorios": {
+      "get": {
+        "description": "Relatórios da empresa, do período mais recente ao mais antigo. Os relatórios\nsão da empresa (PETR3 e PETR4 devolvem a mesma lista). Sem relatório: lista vazia.",
+        "operationId": "listar_relatorios_empresas__ticker__relatorios_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticker",
+            "required": true,
+            "schema": {
+              "title": "Ticker",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ReportItem"
+                  },
+                  "title": "Response Listar Relatorios Empresas  Ticker  Relatorios Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Listar Relatorios",
+        "tags": [
+          "empresas"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Verifica se API está rodando",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/relatorios": {
+      "get": {
+        "description": "Últimos relatórios gravados, do mais novo ao mais antigo (home do site).",
+        "operationId": "ultimos_relatorios_relatorios_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 8,
+              "maximum": 20,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ReportCard"
+                  },
+                  "title": "Response Ultimos Relatorios Relatorios Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ultimos Relatorios",
+        "tags": [
+          "relatórios"
+        ]
+      }
+    },
+    "/relatorios/{report_id}": {
+      "get": {
+        "operationId": "obter_relatorio_relatorios__report_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "title": "Report Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Obter Relatorio",
+        "tags": [
+          "relatórios"
+        ]
+      }
+    }
+  }
+}

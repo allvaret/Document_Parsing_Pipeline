@@ -1,0 +1,8 @@
+# Cabeçalhos de segurança no Cloudflare Pages. __API_ORIGIN__ é trocado no build pela origem
+# de VITE_API_URL (vite.config.ts), então o connect-src libera só o host exato da API.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' __API_ORIGIN__; base-uri 'none'; form-action 'self'; frame-ancestors 'none'

@@ -1,5 +1,10 @@
+# Banco local e logs do batch (raiz do projeto; 'data/' sem barra inicial pegaria src/resumo/data)
+/data/
+/logs/
+
 # Code stuff
 assets/
+test_results/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -17,8 +22,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -53,6 +58,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+
 
 # Translations
 *.mo
@@ -146,6 +152,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.venv*
 
 # Spyder project settings
 .spyderproject
@@ -283,3 +290,10 @@ http-client.private.env.json
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Saídas do pipeline e bancos locais
+output/
+*.db
+
+# Dumps do banco
+backups/

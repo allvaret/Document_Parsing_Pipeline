@@ -1,0 +1,85 @@
+name: Testes
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+# Privilégio mínimo: o job só precisa ler o código.
+permissions:
+  contents: read
+
+# Um push novo no mesmo PR cancela a execução anterior (que ficou obsoleta).
+# Em main/develop nunca cancela: cada merge precisa do seu resultado de teste.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  # Deve ser compatível com spacy>=3.8,<3.9 (pyproject.toml).
+  SPACY_MODEL_VERSION: "3.8.0"
+  SPACY_MODEL_SHA256: "54382cda034e41f3ec605ceeb924cd6cfdbced00a65f7afa12218520ba7008c5"
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Postgres de teste: a suíte roda duas vezes (SQLite e Postgres), porque o SQLite
+    # não garante o mesmo comportamento de dialeto e de transação.
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: finance
+          POSTGRES_PASSWORD: finance_ci
+          POSTGRES_DB: finance_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U finance -d finance_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    steps:
+      # Actions fixadas por SHA (imutável); o comentário indica a versão.
+      # O Dependabot atualiza os dois (ver .github/dependabot.yml).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.11" # mínimo suportado (requires-python >= 3.11)
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Instalar dependências
+        run: pip install -e ".[dev]"
+
+      # Sem o modelo, os testes de integração seriam PULADOS (skipif) e o CI
+      # passaria sem exercitar o pipeline de verdade.
+      # O wheel fica em cache (chave = versão do modelo); ao subir de versão,
+      # troque SPACY_MODEL_VERSION e SPACY_MODEL_SHA256 juntos.
+      - name: Cache do modelo spaCy
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/spacy-models
+          key: spacy-${{ runner.os }}-pt_core_news_md-${{ env.SPACY_MODEL_VERSION }}
+
+      - name: Instalar modelo spaCy
+        run: |
+          WHL="pt_core_news_md-${SPACY_MODEL_VERSION}-py3-none-any.whl"
+          URL="https://github.com/explosion/spacy-models/releases/download/pt_core_news_md-${SPACY_MODEL_VERSION}/${WHL}"
+          mkdir -p ~/.cache/spacy-models
+          [ -f ~/.cache/spacy-models/"$WHL" ] || curl -fsSL --retry 3 -o ~/.cache/spacy-models/"$WHL" "$URL"
+          echo "${SPACY_MODEL_SHA256}  $HOME/.cache/spacy-models/$WHL" | sha256sum --check
+          pip install ~/.cache/spacy-models/"$WHL"
+
+      # -ra lista no log o motivo de qualquer teste pulado.
+      - name: Rodar pytest (SQLite)
+        run: python -m pytest -ra
+
+      - name: Rodar pytest (Postgres)
+        env:
+          TEST_DATABASE_URL: postgresql+psycopg://finance:finance_ci@127.0.0.1:5432/finance_test
+        run: python -m pytest -ra

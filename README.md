@@ -1,303 +1,183 @@
-# Document Parsing Pipeline
+# Finance Data Platform
 
+[![Tests](https://github.com/allvaret/Document_Parsing_Pipeline/actions/workflows/tests.yml/badge.svg)](https://github.com/allvaret/Document_Parsing_Pipeline/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React_19-TypeScript-61DAFB?logo=react&logoColor=black)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)  ![Static Badge](https://img.shields.io/badge/LICENSE-MIT-GREEN?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/Stable%20V1-green?style=for-the-badge)
+**English** · [Português](README.pt-BR.md)
 
-PDF → Structured Sections → JSON → Executive Summary
+Finance Data Platform extracts and summarizes quarterly reports from companies listed on
+the Brazilian stock exchange (B3). The PDFs are processed **once, offline**: a layout-aware
+parser rebuilds sections and tables, a **deterministic heuristic** extracts the key
+indicators, and an optional **local LLM** writes only the narrative. A person reviews every
+report before a **read-only API** and a React site publish it.
 
-A document parsing pipeline that extracts the structural hierarchy of financial PDF reports, identifies semantic sections through layout heuristics and NLP scoring, and produces structured data for high-quality LLM summarization.  
+**Live site:** <SITE_URL>
 
-## Overview
-
-Financial reports are among the most valuable sources of information for investors, analysts, and businesses. However, they are often lengthy, highly structured documents that require significant time to read, interpret, and analyze.
-
-Although Large Language Models (LLMs) can assist in summarizing these reports, directly processing raw PDF text frequently leads to the loss of structural context. Headings, tables, page layouts, and document hierarchy are essential for understanding the information correctly, yet they are often discarded during text extraction.
-
-This project addresses that challenge by introducing a document parsing pipeline that reconstructs the logical structure of financial reports before any interaction with an LLM. Using layout heuristics, typographic analysis, and NLP-based title scoring, the parser identifies document sections and generates a structured JSON representation of the report.
-
-Instead of asking the LLM to understand an unstructured document, the parser provides a clean, hierarchical representation, allowing the language model to focus solely on generating accurate and context-aware executive summaries. The result is a pipeline that reduces information loss while helping transform lengthy financial documents into insights that can be consumed more efficiently.  
-
-## Architecture
-
-The parser separates document understanding from language generation.
-
-Instead of relying on an LLM to infer the structure of a raw PDF, the pipeline first reconstructs the document hierarchy and organizes its content into structured sections. Only then is the resulting JSON passed to the language model for summarization.
-
-## Architecture
-
-The parser separates **document understanding** from **language generation**. Rather than relying on an LLM to infer document structure, the pipeline first reconstructs the logical hierarchy of the PDF and produces a structured JSON representation. Only then is the content passed to the language model for summarization.
-
-```mermaid
-flowchart TD
-
-    %% ---------- INPUT ----------
-    A["📄 Financial PDF Report"]
-
-    %% ---------- PARSING ----------  
-    subgraph Parsing  
-        B["Extract Text<br/>(PyMuPDF)"]
-        C["Clean Document<br/>Remove headers, footers and noise"]
-        D["Group Words into Lines"]
-    end
-
-    %% ---------- TITLE DETECTION ----------
-    subgraph Document Understanding
-        E["Detect Title Candidates"]
-        F["Layout Heuristics"]
-        G["Semantic NLP Scoring"]
-        H["Select Valid Titles"]
-        I["Detect Content Regions"]
-        J["Build Document Sections"]
-    end
-
-    %% ---------- OUTPUT ----------
-    K["Structured JSON"]
-
-    %% ---------- LLM ----------
-    subgraph Language Generation
-        L["Local LLM (Ollama)"]
-        M["Executive Summary"]
-    end
-
-    A --> B
-    B --> C
-    C --> D
-
-    D --> E
-
-    E --> F
-    E --> G
-
-    F --> H
-    G --> H
-
-    H --> I
-    I --> J
-    J --> K
-
-    K --> L
-    L --> M
-```
-
-## Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/allvaret/Document_Parsing_Pipeline.git
-cd Document_Parsing_Pipeline
-```
-
-### 2. Create a virtual environment
-
-```bash
-python -m venv .venv
-```
-
-Activate it:
-
-**Windows**
-
-```bash
-.venv\Scripts\activate
-```
-
-**Linux / macOS**
-
-```bash
-source .venv/bin/activate
-```
-
-### 3. Install Python dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Download the spaCy language model
-
-```bash
-python -m spacy download pt_core_news_md
-```
-
-### 5. Install Ollama
-
-Download and install Ollama from the official website:
-
-[https://ollama.com
-](https://ollama.com/search)  
-### 6. Download a language model
-
-The project uses **Qwen2.5:3B** by default.
-
-```bash
-ollama pull qwen2.5:3b
-```
-
-You may use another compatible model by changing the model name in:
-
-```text
-src/LLM/client.py
-```
-
-## Quick Start
-
-Place a financial PDF report inside the `assets/` directory.
-
-By default, the project expects an input file defined in `src/main.py`:
-
-```python
-INPUT_FILE = "assets/example_report.pdf"
-```
-
-Run the application:
-
-```bash
-python src/main.py
-```
-
-The pipeline will:
-
-1. Extract the document text.
-2. Reconstruct its logical structure.
-3. Generate a structured JSON representation.
-4. Produce an executive summary using a local LLM.
-
-Generated files are saved alongside the original document:
-
-```text
-example_report.pdf
-example_report_sections.json
-example_report_summary.json
-```
-## Project Structure
-
-```text
-financial-report-parsing-pipeline/
-│
-├── assets/                # Sample PDF reports and results
-├── src/
-│   ├── extractor/         # Parsing pipeline and section reconstruction
-│   ├── llm/               # Local LLM client and prompt templates
-│   ├── utils/             # Shared utilities and helper functions
-│   └── main.py            # Application entry point
-│
-├── requirements.txt
-├── pyproject.toml
-└── README.md
-```
-
-The project is organized into three main components:
-
-* **Extractor** — Responsible for document understanding, including text extraction, title detection, region detection, and section building.
-* **LLM** — Handles communication with the local language model and prompt management.
-* **Utils** — Provides reusable utilities shared across the parsing pipeline.
-
-## Example Output
-
-### Input
-
-[assets/Earnings Release 3T25.pdf](assets/Earnings%20Release%203T25.pdf)
-
-
-### Generated Section
-
-#### Table example: DRE Gerencial Trimestral 
-* **Confiança da Extração:** Alta (`high`)
-
-| R$ milhões | 3T25 | 2T25 | 3T24 | 3T25 x 2T25 | 3T25 x 3T24 |
-| --- | --- | --- | --- | --- | --- |
-| **Receita Total** | 133,3 | 139,3 | 157,7 | -4,3% | -15,5% |
-| Receita com Clientes | 100,0 | 101,6 | 125,8 | -1,6% | -20,5% |
-| Investment Banking (fees) + CM (fees) | 67,2 | 73,9 | 101,4 | -9,1% | -33,7% |
-| Treasury Sales & Structuring (capital) | 28,7 | 23,9 | 21,3 | 20,3% | 34,9% |
-| Gestão de Patrimônio (fees) | 4,0 | 3,8 | 3,1 | 5,3% | 29,9% |
-| Remuneração do Capital (capital) | 33,3 | 37,7 | 31,9 | -11,5% | 4,3% |
-| **Despesas** | (68,9) | (75,4) | (92,3) | -8,6% | -25,3% |
-| Pessoal | (26,2) | (34,7) | (32,1) | -24,5% | -18,1% |
-| Administrativas | (31,4) | (20,0) | (43,9) | 56,8% | -28,4% |
-| Impostos sobre a receita | (10,2) | (10,9) | (14,7) | -5,9% | -30,6% |
-| Outras | (1,1) | (9,8) | (1,7) | -89,1% | -35,5% |
-| **Resultado Operacional** | 64,4 | 63,9 | 65,4 | 0,8% | -1,6% |
-| IR & CSLL | (22,1) | (18,7) | (15,3) | 18,6% | 44,7% |
-| **Lucro Líquido** | 42,2 | 45,2 | 50,1 | -6,6% | -15,8% |
-
-<details>
-<summary> Visualizar JSON de Origem</summary>
-
-```json
-{
-  "title": "DRE Gerencial Trimestral",
-  "page": 9,
-  "confidence": "high",
-  "content": [
-    {
-      "type": "table",
-      "confidence": "high",
-      "markdown": "| R$ milhões | 3T25 | 2T25 | 3T24 | 3T25 x 2T25 | 3T25 x 3T24 |\n| --- | --- | --- | --- | --- | --- |\n| Receita Total | 133,3 | 139,3 | 157,7 | -4,3% | -15,5% |\n| Receita com Clientes | 100,0 | 101,6 | 125,8 | -1,6% | -20,5% |\n| Investment Banking (fees) + CM (fees) | 67,2 | 73,9 | 101,4 | -9,1% | -33,7% |\n| Treasury Sales & Structuring (capital) | 28,7 | 23,9 | 21,3 | 20,3% | 34,9% |\n| Gestão de Patrimônio (fees) | 4,0 | 3,8 | 3,1 | 5,3% | 29,9% |\n| Remuneração do Capital (capital) | 33,3 | 37,7 | 31,9 | -11,5% | 4,3% |\n| Despesas | (68,9) | (75,4) | (92,3) | -8,6% | -25,3% |\n| Pessoal | (26,2) | (34,7) | (32,1) | -24,5% | -18,1% |\n| Administrativas | (31,4) | (20,0) | (43,9) | 56,8% | -28,4% |\n| Impostos sobre a receita | (10,2) | (10,9) | (14,7) | -5,9% | -30,6% |\n| Outras | (1,1) | (9,8) | (1,7) | -89,1% | -35,5% |\n| Resultado Operacional | 64,4 | 63,9 | 65,4 | 0,8% | -1,6% |\n| IR & CSLL | (22,1) | (18,7) | (15,3) | 18,6% | 44,7% |\n| Lucro Líquido | 42,2 | 45,2 | 50,1 | -6,6% | -15,8% |"
-    }
-  ]
-}
-```
-</details>
-    
-### Executive Summary
-
-```text
-#### Período Principal: 9M25 vs 9M24
-
-**Resultado do Período:** O resultado financeiro da empresa mostrou uma receita total de R$ 400,1 milhões (-8,5% em relação ao 9M24), lucro líquido de R$ 130,5 milhões (-13,9% em relação ao 9M24) e margem líquida de 32,6% (-2,0 pontos percentuais ou p.p. em relação ao 9M24). A receita com clientes teve uma queda significativa de -10,1%, enquanto a margem líquida apresentou um leve aumento de -2,0 p.p.
-
-**Pontos de Atenção:** A principal preocupação é a redução da atividade de M&A no período, que afetou negativamente as receitas e lucros. Além disso, o crescimento do volume de emissões de renda fixa no mercado de capitais foi de 11%, apesar da queda na receita com clientes.
-
-**Destaque Positivo:** A evolução positiva do índice de eficiência (45,8% vs. 47,7%) e o aumento do índice de remuneração (23,8% vs. 24,9%) indicam uma melhoria na gestão operacional.
-
-**Contexto de Mercado:** O cenário econômico mostrou um crescimento moderado no mercado de capitais, com volume de emissões aumentando em 11%, embora a taxa Selic tenha diminuído significativamente. No entanto, o mercado de capitais ainda enfrenta desafios relacionados à volatilidade e ao aumento da incerteza macroeconômica.
+![Screenshot](docs/screenshot.png)
 
 ---
 
-Este resumo sintetiza os principais pontos do relatório financeiro, destacando as variações relevantes em receita total, lucro líquido e margem, assim como os riscos e tendências preocupantes no mercado de capitais.
+## Why
 
+Earnings releases run 30 to 80 pages, and each company lays them out differently. Asking an
+LLM to read the raw PDF loses the structure (headings, tables, the page a number came from),
+and it lets a model rewrite numbers that investors will act on. This project splits the work
+in two. Code reads the document and pulls out the numbers deterministically. The LLM is only
+allowed to write prose.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    PDF["📄 B3 report PDFs"] --> BATCH
+
+    subgraph LOCAL["Local machine (generate once)"]
+        BATCH["batch.run<br/>identify → verify"] --> PARSER["Parser<br/>PyMuPDF + spaCy"]
+        PARSER --> HEUR["Heuristic KPIs<br/>(deterministic)"]
+        PARSER -.optional.-> LLM["Narrative summary<br/>Ollama (local LLM)"]
+        REVIEW["batch.review approve<br/>(human gate)"]
+    end
+
+    CVM[("CVM open data<br/>ticker_map")] --> BATCH
+    HEUR --> DB
+    LLM --> DB
+    REVIEW --> DB
+    DB[("PostgreSQL<br/>Neon")]
+
+    DB -- "SELECT-only role" --> API["FastAPI<br/>read-only (Render)"]
+    API --> WEB["React + TypeScript<br/>static site (Cloudflare Pages)"]
 ```
 
-## Technical Challenges
+| Layer | Path | Responsibility |
+|---|---|---|
+| Parser and summarizer | `src/resumo/` | PDF → sections → heuristic keypoints + summary; LLM providers |
+| Batch | `src/batch/` | Identifies company, type and period; idempotent writes; review CLI |
+| Company registry | `src/data_pipeline/` | CVM registry (CNPJ, tickers, aliases), fuzzy search |
+| Database | `src/db/`, `migrations/` | SQLAlchemy models, repository, read queries, Alembic |
+| API | `src/site_backend/` | Read-only FastAPI + price-ceiling calculator |
+| Site | `src/site_frontend/` | React 19 + Vite + TypeScript + Tailwind |
 
-| Challenge                         | Solution                                                                                                           |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Recovering document structure** | Combined layout heuristics and typographic analysis to reconstruct the logical hierarchy of PDF reports.           |
-| **Reliable title detection**      | Introduced a hybrid scoring approach that combines layout-based heuristics with NLP semantic scoring.              |
-| **Repeated section titles**       | Implemented structural deduplication to remove recurring headers while preserving legitimate section titles.       |
-| **Mixed document content**        | Distinguished narrative text from tabular regions before section reconstruction.                                   |
-| **LLM context quality**           | Generated a structured JSON representation instead of sending raw PDF text, reducing noise and preserving context. |
+## Engineering decisions
 
+| Decision | Why |
+|---|---|
+| **Generate once.** A local batch produces the summaries and stores them. No endpoint calls an LLM. | Predictable cost and latency. The site runs on free hosting with no GPU. |
+| **Numbers never go through the LLM.** Keypoints always come from the heuristic. | An LLM can quietly change a number. Deterministic extraction can be tested. |
+| **Idempotent by schema.** Reports are unique by file hash and by (company, type, period). Summaries are unique by (report, method, model, prompt version). | Running the batch twice never duplicates anything. The database enforces it, not just the application code. |
+| **Explicit versions decide what to regenerate.** `extractor_version` governs keypoints and `prompt_version` governs summaries. | Changing a prompt regenerates only the summaries. The skip check runs before the PDF is opened. |
+| **No silent failure.** Errors are typed exceptions (`LLMError`, `SchemaOutdatedError`, …), with no fallback that doesn't warn. | An error string stored as data in a financial product is worse than a crash. |
+| **Human review gate.** Only reports with `reviewed_at` are public. If the numbers change, the approval is revoked. | Heuristics make mistakes. Publishing is a decision a person makes. |
+| **Read-only in depth.** The API uses a SELECT-only database role and read-only sessions, and tests assert that only `SELECT` is ever emitted. | The public surface cannot write, even if it has a bug. |
+| **The registry decides, the PDF confirms.** The company is resolved from CVM data (CNPJ → ticker → normalized name). The text on the cover only cross-checks it. | Cover-page detection got real PDFs wrong. Official data is the source of truth. |
+
+## Highlights
+
+- **Layout-aware PDF parser**: titles detected by font size and position, spaCy semantic scoring, and reconstruction of tables and sections.
+- **Pluggable LLM provider** (local Ollama behind a `Protocol`): typed errors, retries on transient failures, and detection of prompts truncated by the context window.
+- **Batch you can operate**: file lock, JSONL logs, exit codes `0/1/2`, `--dry-run`, and a cheap skip based on hash and versions.
+- **Hardened API**: strict CORS and trusted hosts, security headers and CSP, per-IP rate limiting, input validation, and docs disabled by default.
+- **SQL injection safety net**: only SQLAlchemy expressions with bound parameters, canary tests, and a lint that rejects raw SQL in `src/db` and `src/site_backend`.
+- **End-to-end typed contract**: Pydantic schemas → committed OpenAPI → generated TypeScript types. Tests fail on drift in both directions.
+- **Safe rendering of LLM output**: a custom Markdown renderer builds React elements (no raw HTML), under a strict CSP pinned to the exact API origin at build time.
+- **Schema safety net**: ORM/SQL parity tests and Alembic migrations compared against the models on PostgreSQL in CI.
+- **Accessible UI**: ARIA live regions, a labeled combobox search, and color-contrast tests.
+- **Price-ceiling calculator** (Graham number, Graham formula, Bazin, Gordon DDM, REIT yield vs. NTN-B) built with Strategy/Factory.
+
+## Measured results
+
+| What | Before | After |
+|---|---|---|
+| Pre-filter for event documents (by file name, before parsing) | 68 s / file | **0.04 s / file** |
+| Re-running an already stored PDF (skip by hash + versions) | 6–10 s | **0.1–0.5 s** |
+| Tickers mapped (manual list → CVM FCA official data) | 499 | **809** |
+| Tests | — | **846 backend** (SQLite + PostgreSQL in CI) + **92 frontend** |
+
+## Running locally
+
+### Full stack with Docker
+
+```bash
+cp .env.example .env          # set POSTGRES_PASSWORD and READONLY_POSTGRES_PASSWORD
+docker compose up --build     # db → read-only role → migrations → api → web
+```
+
+- Site: http://localhost:8080
+- API: http://localhost:8000. Docs are at `/docs`, enabled locally only.
+
+The database starts empty. Fill it with the batch, or restore a dump with `scripts/dump_banco.sh`.
+
+### Backend and batch (Python 3.11+)
+
+```bash
+pip install -e ".[dev]"
+python -m spacy download pt_core_news_md
+
+# generate the company registry from CVM open data
+python -m data_pipeline.ticker_registry
+
+# process a folder of PDFs (heuristic only, or with the local LLM)
+python -m batch.run --dir <folder> --mode heuristic
+python -m batch.run --dir <folder> --mode llm          # requires `ollama serve`
+
+# review and publish
+python -m batch.review list --pending
+python -m batch.review show <report_id>
+python -m batch.review approve <report_id>
+
+# API
+uvicorn site_backend.main:app --reload
+```
+
+Without `DATABASE_URL`, the project uses SQLite at `data/app.db`. To use PostgreSQL, set
+`DATABASE_URL` and run `alembic upgrade head` first.
+
+### Frontend
+
+```bash
+cd src/site_frontend
+npm ci && npm run dev                       # dev server
+VITE_API_URL=https://<api> npm run build    # production build fails without VITE_API_URL
+```
+
+## Tests and quality
+
+```bash
+pytest                    # full suite (integration tests need the sample PDF + spaCy model)
+pytest -m "not integration"
+```
+
+- Tests never touch `data/app.db`. Each test gets its own database, and `conftest.py` fails the suite if the real database is created or changed.
+- CI runs the suite against SQLite **and** PostgreSQL 17, and checks that the migrations match the models.
+- Frontend: `npm run lint`, `tsc -b`, and `npm test` (Vitest + Testing Library).
+
+## Deployment
+
+| Piece | Host | Notes |
+|---|---|---|
+| Database | Neon (PostgreSQL) | Two URLs: the owner URL for migrations and the batch, `finance_ro` (SELECT only) for the API |
+| API | Render (Docker) | Non-root `python:3.11-slim` image with API dependencies only; `/health` check |
+| Site | Cloudflare Pages | Static build. `VITE_API_URL` is fixed at build time and written into the CSP |
+
+The batch still runs on the developer's machine against the production database. The public side only reads.
+
+## Known limitations
+
+- Some keypoints come out with value and variation swapped. This is a limitation of the heuristic, and it will be addressed with mass testing over real PDFs rather than by hiding the keypoint.
+- Real estate funds (FIIs) are not supported yet.
+- The heuristic was tuned on a limited set of real reports, so new layouts may need adjustments.
+- The free API tier sleeps after 15 minutes of inactivity, so the first request can take about a minute.
 
 ## Roadmap
 
-The current release focuses on building a robust document parsing pipeline capable of reconstructing the logical structure of financial reports before LLM summarization.
-
-Future improvements include:
-
-### Version 1.x
-
-* Command-line interface (CLI)
-* Improved logging and configuration
-* Additional prompt templates
-* Performance optimizations
-
-### Version 2
-
-* OCR support for scanned PDFs
-* Enhanced table extraction
-* Improved multi-column document parsing
-* More robust section reconstruction
-
-### Version 3
-
-* Structured financial fact extraction
-* Relevance ranking pipeline
-* Knowledge-oriented JSON generation
-* Multi-document analysis
+- Mass testing of keypoints on real reports
+- Company aliases in the database and better search
+- FII support
+- Frontend and Docker image builds in CI
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+[MIT](LICENSE) © 2026 Alvaro Danko
