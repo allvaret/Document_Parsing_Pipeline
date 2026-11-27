@@ -1,5 +1,5 @@
 # Blueprint do Render: só a API (o banco é o Neon; o site é o Cloudflare Pages).
-# Passo a passo e variáveis: docs/DEPLOY.md
+# Passo a passo e variáveis: assets/docs/DEPLOY.md (local, fora do git)
 services:
   - type: web
     name: finance-api
