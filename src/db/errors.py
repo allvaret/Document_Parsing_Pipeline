@@ -16,6 +16,18 @@ class DatabaseNotFoundError(DatabaseError):
         )
 
 
+class SchemaNotMigratedError(DatabaseError):
+    """Banco que não é SQLite sem as tabelas dos modelos. Em Postgres o schema vem
+    só do Alembic; criar por `create_all` deixaria o banco sem `alembic_version`."""
+
+    def __init__(self, missing: list[str]):
+        self.missing = missing
+        super().__init__(
+            "banco sem as tabelas: " + ", ".join(missing)
+            + ". Aplique as migrações: alembic upgrade head"
+        )
+
+
 class IncompleteResultError(DatabaseError):
     """O ReportResult não tem as chaves mínimas para ser gravado."""
 
