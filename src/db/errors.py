@@ -59,6 +59,14 @@ class CompanyConflictError(DatabaseError):
     """CNPJ, ticker e nome apontam para empresas diferentes (ou o CNPJ diverge)."""
 
 
+class ReportNotFoundError(DatabaseError):
+    """Não existe relatório com este id."""
+
+    def __init__(self, report_id: int):
+        self.report_id = report_id
+        super().__init__(f"relatório {report_id} não encontrado")
+
+
 class InvalidCnpjError(DatabaseError):
     """CNPJ que, sem máscara, não tem 14 dígitos."""
 

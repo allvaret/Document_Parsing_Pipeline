@@ -20,6 +20,7 @@ from db.models import Asset, Company, Keypoint, Report, Summary
 from db.repository import (
     find_report,
     find_report_by_hash,
+    find_reports,
     get_or_create_company,
     has_summary,
     normalize_cnpj,
@@ -179,6 +180,9 @@ def test_buscas_do_repositorio_com_payload_nao_devolvem_nada(seeded, payload):
     assert find_report(seeded, company_id, "ITR", payload) is None
     assert find_report_by_hash(seeded, payload) is None
     assert not has_summary(seeded, 1, payload, payload, payload)
+    assert find_reports(seeded, ticker=payload) == []
+    assert find_reports(seeded, period=payload) == []
+    assert find_reports(seeded, ticker=payload, period=payload, reviewed=False) == []
     assert _estado(seeded) == antes
 
 

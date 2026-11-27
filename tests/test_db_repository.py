@@ -10,6 +10,7 @@ from db.errors import (
     IncompleteResultError,
     InvalidCnpjError,
     ReportIdentityMismatchError,
+    ReportNotFoundError,
     StorageConstraintError,
 )
 from db import repository
@@ -18,11 +19,15 @@ from db.repository import (
     find_company,
     find_report,
     find_report_by_hash,
+    find_reports,
     get_or_create_company,
+    get_report,
     has_summary,
+    mark_reviewed,
     needs_processing,
     normalize_cnpj,
     save_result,
+    unmark_reviewed,
 )
 from resumo.LLM.summarize_pipeline import SummaryMode
 from resumo.result import (
@@ -407,3 +412,57 @@ def test_pdf_reapresentado_derruba_a_revisao_mesmo_com_os_mesmos_keypoints(sessi
     r = save_result(session, _result(h=H1))
     _revisar(session, r)
     assert save_result(session, _result(h=H2)).reviewed_at is None
+
+# --- marcar/desmarcar revisão (CLI batch.review) -----------------------------
+
+def test_mark_reviewed_marca_e_e_idempotente(session):
+    r = save_result(session, _result())
+    assert r.reviewed_at is None
+    t1 = datetime(2026, 11, 25, 12, 0, tzinfo=timezone.utc)
+    t2 = datetime(2026, 11, 26, 12, 0, tzinfo=timezone.utc)
+    assert mark_reviewed(session, r.id, now=t1).reviewed_at == t1
+    assert mark_reviewed(session, r.id, now=t2).reviewed_at == t1   # mantém o original
+
+
+def test_mark_reviewed_sem_now_usa_o_horario_atual(session):
+    r = save_result(session, _result())
+    assert mark_reviewed(session, r.id).reviewed_at is not None
+
+
+def test_unmark_reviewed_volta_a_pendente(session):
+    r = save_result(session, _result())
+    mark_reviewed(session, r.id)
+    assert unmark_reviewed(session, r.id).reviewed_at is None
+    assert unmark_reviewed(session, r.id).reviewed_at is None       # idempotente
+
+
+def test_revisao_inexistente_lanca_erro_tipado(session):
+    with pytest.raises(ReportNotFoundError):
+        mark_reviewed(session, 999)
+    with pytest.raises(ReportNotFoundError):
+        unmark_reviewed(session, 999)
+    with pytest.raises(ReportNotFoundError):
+        get_report(session, 999)
+
+
+def test_revisao_marcada_por_mark_reviewed_cai_se_os_keypoints_mudam(session):
+    r = save_result(session, _result())
+    mark_reviewed(session, r.id)
+    novos = (KeypointRecord("Lucro Líquido", "R$ 2,0 bi", "+9% a/a", "3T25", 3),)
+    assert save_result(session, _result(keypoints=novos)).reviewed_at is None
+
+
+def test_find_reports_filtra_por_ticker_periodo_e_status(session):
+    a = save_result(session, _result(h=H1, ticker="BBSE3", period="3T25"))
+    b = save_result(session, _result(h=H2, ticker="BBSE3", period="2T25"))
+    c = save_result(session, _result(h="3" * 64, ticker="CMIG4", name="Cemig", period="3T25"))
+    mark_reviewed(session, a.id)
+
+    assert {r.id for r in find_reports(session)} == {a.id, b.id, c.id}
+    assert {r.id for r in find_reports(session, ticker="BBSE3")} == {a.id, b.id}
+    assert {r.id for r in find_reports(session, period="3T25")} == {a.id, c.id}
+    assert {r.id for r in find_reports(session, reviewed=True)} == {a.id}
+    assert {r.id for r in find_reports(session, reviewed=False)} == {b.id, c.id}
+    assert {r.id for r in find_reports(session, ticker="BBSE3", period="3T25",
+                                       reviewed=False)} == set()
+    assert find_reports(session, ticker="XXXX9") == []
