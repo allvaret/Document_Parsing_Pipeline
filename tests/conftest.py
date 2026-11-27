@@ -99,7 +99,7 @@ def temp_db(tmp_path):
     if pg:
         engine = make_engine(pg)
         Base.metadata.drop_all(engine)
-        init_db(engine)
+        Base.metadata.create_all(engine)
         yield TempDb(pg, engine, make_session_factory(engine))
         engine.dispose()
         return
@@ -171,7 +171,9 @@ def session():
     engine = make_engine(pg or "sqlite:///:memory:")
     if pg:
         Base.metadata.drop_all(engine)
-    init_db(engine)
+        Base.metadata.create_all(engine)
+    else:
+        init_db(engine)
     with make_session_factory(engine)() as s:
         yield s
     engine.dispose()
