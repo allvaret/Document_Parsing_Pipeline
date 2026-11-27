@@ -1,7 +1,11 @@
 // Único ponto de contato com a API. O site é somente leitura (decisão 1): tudo é GET, exceto
 // `post`, usado só pela calculadora (conta sem estado, não grava nada).
 
-const BASE_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:8000').replace(/\/+$/, '')
+// Fallback para localhost só em dev/teste. No build de produção o vite.config.ts falha se
+// VITE_API_URL faltar (decisão 4: nada de cair em localhost em silêncio).
+const BASE_URL = (
+  import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://localhost:8000' : '')
+).replace(/\/+$/, '')
 
 /** A API respondeu, mas com erro (4xx/5xx). `message` é o `detail` do FastAPI. */
 export class ApiError extends Error {
