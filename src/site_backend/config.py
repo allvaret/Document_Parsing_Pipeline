@@ -5,7 +5,7 @@ Variáveis (todas opcionais):
   "*" é recusado de propósito: só o frontend pode chamar a API pelo navegador.
 - ALLOWED_HOSTS: valores aceitos no header Host, separados por vírgula
   (padrão: localhost e 127.0.0.1). Em produção, o domínio da API.
-- ENABLE_DOCS: "0" desliga /docs, /redoc e /openapi.json (padrão: ligado).
+- ENABLE_DOCS: "1" liga /docs, /redoc e /openapi.json (padrão: desligado; falha fechado em produção).
 - RATE_LIMIT_PER_MINUTE: requisições por IP por minuto; 0 desliga (padrão: 120).
 """
 
@@ -35,7 +35,7 @@ def _split(raw: str) -> tuple[str, ...]:
 class Settings:
     cors_origins: tuple[str, ...] = DEFAULT_CORS_ORIGINS
     allowed_hosts: tuple[str, ...] = DEFAULT_ALLOWED_HOSTS
-    docs_enabled: bool = True
+    docs_enabled: bool = False
     rate_limit_per_minute: int = DEFAULT_RATE_LIMIT
 
     def __post_init__(self) -> None:
@@ -67,6 +67,6 @@ class Settings:
         return cls(
             cors_origins=origins or DEFAULT_CORS_ORIGINS,
             allowed_hosts=hosts or DEFAULT_ALLOWED_HOSTS,
-            docs_enabled=environ.get("ENABLE_DOCS", "1").strip() != "0",
+            docs_enabled=environ.get("ENABLE_DOCS", "0").strip() == "1",
             rate_limit_per_minute=limit,
         )

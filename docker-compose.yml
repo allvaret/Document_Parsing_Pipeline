@@ -57,6 +57,7 @@ services:
       READONLY_DATABASE_URL: postgresql+psycopg://finance_ro:${READONLY_POSTGRES_PASSWORD}@db:5432/finance
       CORS_ORIGINS: http://localhost:8080
       ALLOWED_HOSTS: localhost,127.0.0.1
+      ENABLE_DOCS: "1"  # local; em produção o padrão (desligado) vale
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:

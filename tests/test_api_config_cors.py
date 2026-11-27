@@ -20,7 +20,7 @@ def test_padroes_sem_variaveis():
     s = Settings.from_env({})
     assert s.cors_origins == (FRONT,)
     assert s.allowed_hosts == ("localhost", "127.0.0.1")
-    assert s.docs_enabled is True and s.rate_limit_per_minute == 120
+    assert s.docs_enabled is False and s.rate_limit_per_minute == 120
 
 
 def test_origens_em_lista_com_espacos_e_barra_final():
@@ -46,6 +46,11 @@ def test_demais_variaveis_invalidas_impedem_subir(env):
 
 def test_docs_desligadas_por_variavel():
     assert Settings.from_env({"ENABLE_DOCS": "0"}).docs_enabled is False
+
+
+def test_docs_so_ligam_com_valor_explicito():
+    assert Settings.from_env({"ENABLE_DOCS": "1"}).docs_enabled is True
+    assert Settings.from_env({"ENABLE_DOCS": "true"}).docs_enabled is False
 
 
 # --- CORS -------------------------------------------------------------------

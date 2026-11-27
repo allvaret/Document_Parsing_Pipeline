@@ -32,7 +32,7 @@ def test_headers_tambem_em_erro_404_e_422():
 
 
 def test_docs_nao_recebem_csp_restritiva():
-    r = _client().get("/docs")
+    r = _client(docs_enabled=True).get("/docs")
     assert r.status_code == 200
     assert "content-security-policy" not in r.headers
     assert r.headers["x-content-type-options"] == "nosniff"
