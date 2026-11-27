@@ -26,9 +26,11 @@ def detect_titles(atoms: List[TextAtom], body_size:float ):
         for a in survivors
     ]
 
-    best_candidates = best_title_candidates(candidates, min_score=0.3)
-
-    cleaned_titles = remove_repeated(best_candidates)
+    # Cabeçalho repetido ("2T26" no topo de toda página) sai ANTES de escolher o título da
+    # página: se a escolha vier primeiro, ele ganha por estar mais no topo e leva embora
+    # o título de verdade (Cemig 2T26: 1 título em 42 páginas, zero seções).
+    scored = [c for c in candidates if c.h_score >= 0.3]
+    cleaned_titles = best_title_candidates(remove_repeated(scored), min_score=0.0)
 
     for c in cleaned_titles:
         

@@ -194,6 +194,28 @@ def is_footer_region(region: LineRegion | TableRegion, page_height: float) -> bo
     return (region.y_start / page_height) > 0.85 and len(region.lines) <= 5
 
 
+def title_matcher(candidates):
+    """Devolve `eh_titulo(texto_da_linha, pagina0) -> bool`.
+
+    O título nasce de um átomo (trecho com a mesma fonte); a linha pode juntar o título
+    com o resto da frase em outra fonte ("Desempenho Operacional" + " e Financeiro da
+    Itaúsa"). Então vale igualdade exata OU a linha começar pelo título, na mesma página.
+    Sem isto, o título certo era achado mas nunca casava com a linha, e o PDF ficava sem
+    seções (relatórios da Itaúsa)."""
+    por_pagina: dict[int, list[str]] = {}
+    for c in candidates:
+        por_pagina.setdefault(c.page - 1, []).append(c.text.strip())   # candidato é 1-based
+
+    def eh_titulo(texto: str, pagina0: int) -> bool:
+        texto = texto.strip()
+        # Só conta o título da PRÓPRIA página: o cabeçalho repetido ("Relatório da
+        # Administração" em toda página) só foi mantido na primeira; nas outras é texto.
+        return any(texto == t or (len(t) >= 8 and texto.startswith(t + " "))
+                   for t in por_pagina.get(pagina0, ()))
+
+    return eh_titulo
+
+
 def detect_regions(
     lines:             list[TextLine],
     title_candidates:  list[TitleCandidate],
@@ -208,7 +230,7 @@ def detect_regions(
     if not lines:
         return []
 
-    title_set: set[str] = {c.text.strip() for c in title_candidates}
+    eh_titulo = title_matcher(title_candidates)
 
     regions:       list[LineRegion | TableRegion] = []
     current_lines: list[TextLine]   = [lines[0]]
@@ -242,6 +264,10 @@ def detect_regions(
                 page_spans  = None,
             ))
 
+    titulo_aberto = eh_titulo(lines[0].text, lines[0].page)   # a linha anterior abriu região de título
+    if titulo_aberto:
+        current_title = lines[0].text.strip()
+
     for i in range(1, len(lines)):
         prev = lines[i - 1]
         curr = lines[i]
@@ -251,10 +277,13 @@ def detect_regions(
         large_gap   = gap_ratio > gap_ratio_threshold
 
         stripped    = curr.text.strip()
-        is_title    = stripped in title_set
+        is_title    = eh_titulo(stripped, curr.page)
         title_changed = is_title and stripped != current_title
 
-        if large_gap or title_changed:
+        # O título fica numa região só dele. Se a tabela vier colada (sem gap), a região
+        # do título era votada como tabela e `build_sections` nunca abria a seção.
+        if large_gap or title_changed or titulo_aberto:
+            titulo_aberto = title_changed
             flush(current_lines, current_type)
             current_lines = [curr]
             current_type  = "prose" if is_title else _vote_type_lines([curr])

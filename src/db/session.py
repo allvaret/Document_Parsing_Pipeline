@@ -10,7 +10,7 @@ from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from db.errors import DatabaseNotFoundError, SchemaOutdatedError
+from db.errors import DatabaseNotFoundError, SchemaNotMigratedError, SchemaOutdatedError
 from db.models import Base
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -75,12 +75,15 @@ def make_readonly_engine(url: str | None = None) -> Engine:
 
     SQLite: arquivo inexistente lança DatabaseNotFoundError (em vez de criar um
     banco vazio) e `PRAGMA query_only=ON` faz qualquer escrita falhar, mesmo que um
-    bug a tente. Outros bancos: a defesa equivalente é um role só com SELECT
-    (Fase 6); aqui só se abre o engine."""
+    bug a tente. Postgres: a defesa de verdade é um role só com SELECT
+    (`database/readonly_role.sql`); aqui a sessão ainda nasce somente leitura, de modo que
+    mesmo com a URL do dono do banco qualquer escrita falha."""
     url = url or get_database_url()
     parsed = make_url(url)
     if parsed.get_backend_name() != "sqlite":
-        return create_engine(url)
+        return create_engine(
+            url, connect_args={"options": "-c default_transaction_read_only=on"}
+        )
 
     db_path = parsed.database
     if db_path in (None, "", ":memory:"):
@@ -104,8 +107,27 @@ def make_session_factory(engine: Engine) -> sessionmaker[Session]:
 
 
 def init_db(engine: Engine) -> None:
-    """Cria as tabelas que faltam (MVP; Alembic fica para a v1.1)."""
+    """Cria as tabelas que faltam. Só para testes e SQLite local: em produção (Postgres)
+    o schema vem das migrações do Alembic (`alembic upgrade head`)."""
+    if engine.dialect.name != "sqlite":
+        raise ValueError(
+            f"init_db só cria tabelas em SQLite (recebeu {engine.dialect.name}); "
+            "use alembic upgrade head"
+        )
     Base.metadata.create_all(engine)
+
+
+def prepare_schema(engine: Engine) -> None:
+    """Deixa o banco pronto para o batch. SQLite: cria o que falta. Outros
+    (Postgres): exige as tabelas já migradas, sem criar nada. Lança
+    SchemaNotMigratedError."""
+    if engine.dialect.name == "sqlite":
+        init_db(engine)
+        return
+    insp = inspect(engine)
+    missing = [t.name for t in Base.metadata.sorted_tables if not insp.has_table(t.name)]
+    if missing:
+        raise SchemaNotMigratedError(missing)
 
 
 def ensure_schema_current(engine: Engine) -> None:

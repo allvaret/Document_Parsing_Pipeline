@@ -1,11 +1,16 @@
 import os
 from contextlib import asynccontextmanager
 
-from fastapi import APIRouter, FastAPI, HTTPException, status
+from typing import Annotated
+
+from fastapi import APIRouter, Body, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from pydantic import ValidationError
+import math
 
+from pydantic import Field, ValidationError
+
+from site_backend.calculadora.metodos import MetodoInfo, listar_metodos
 from site_backend.calculadora.orquestrador import CalculadoraTetoDePreco
 from site_backend.config import Settings
 from site_backend.deps import get_session, get_session_factory
@@ -24,8 +29,14 @@ def health():
     return {"status": "ok"}
 
 
+@router.get("/calcular/metodos", response_model=list[MetodoInfo])
+def metodos():
+    """Métodos de cálculo e os campos de cada um (o formulário do site é gerado daqui)."""
+    return listar_metodos()
+
+
 @router.post("/calcular/{metodo}", response_model=ResultadoCalculo)
-def calcular(metodo: str, premissas: dict):
+def calcular(metodo: str, premissas: Annotated[dict[str, Annotated[float, Field(allow_inf_nan=False)]], Body()]):
     """
     Calcula preço teto com base em um modelo e suas premissas
     """
@@ -55,7 +66,13 @@ def calcular(metodo: str, premissas: dict):
         )
 
     calculadora = CalculadoraTetoDePreco()
-    resultado = calculadora.calcular(metodo=metodo_enum, premissas=premissas_validadas)
+    try:
+        resultado = calculadora.calcular(metodo=metodo_enum, premissas=premissas_validadas)
+    except (ArithmeticError, ValueError):   # estouro de float, divisão por zero
+        resultado = None
+    # Números enormes passam nos limites e estouram no cálculo (inf não vira JSON: seria 500).
+    if resultado is None or not math.isfinite(resultado.preco_teto):
+        raise HTTPException(status_code=422, detail="Os valores informados geram um resultado fora do intervalo calculável.")
 
     return resultado
 

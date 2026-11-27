@@ -11,6 +11,7 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
 from db.errors import DatabaseNotFoundError
+from api_helpers import so_sqlite
 from db.models import Company
 from db.session import make_readonly_engine, make_session_factory
 from site_backend.deps import get_session, get_session_factory
@@ -38,6 +39,7 @@ def test_engine_somente_leitura_le(temp_db):
     engine.dispose()
 
 
+@so_sqlite
 def test_engine_somente_leitura_recusa_escrita(temp_db):
     engine = make_readonly_engine(temp_db.url)
     with make_session_factory(engine)() as s:

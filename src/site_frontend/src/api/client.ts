@@ -1,6 +1,11 @@
-// Único ponto de contato com a API. Só GET: o site é somente leitura (decisão 1).
+// Único ponto de contato com a API. O site é somente leitura (decisão 1): tudo é GET, exceto
+// `post`, usado só pela calculadora (conta sem estado, não grava nada).
 
-const BASE_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:8000').replace(/\/+$/, '')
+// Fallback para localhost só em dev/teste. No build de produção o vite.config.ts falha se
+// VITE_API_URL faltar (decisão 4: nada de cair em localhost em silêncio).
+const BASE_URL = (
+  import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://localhost:8000' : '')
+).replace(/\/+$/, '')
 
 /** A API respondeu, mas com erro (4xx/5xx). `message` é o `detail` do FastAPI. */
 export class ApiError extends Error {
@@ -38,6 +43,14 @@ async function detailOf(res: Response): Promise<string> {
   try {
     const body = await res.json()
     if (typeof body?.detail === 'string') return body.detail
+    if (Array.isArray(body?.detail)) {
+      // Erros de validação do FastAPI: só as regras nossas (em português) vão para a tela;
+      // o resto ("Input should be…") não ajuda quem digitou.
+      const nossa = body.detail
+        .map((d: { msg?: unknown }) => (typeof d?.msg === 'string' ? d.msg : ''))
+        .find((m: string) => m.startsWith('Value error, '))
+      return nossa ? nossa.slice('Value error, '.length) : 'Confira os valores informados.'
+    }
   } catch {
     /* corpo não é JSON */
   }
@@ -48,6 +61,23 @@ export async function get<T>(path: string, query?: Query, signal?: AbortSignal):
   let res: Response
   try {
     res = await fetch(buildUrl(path, query), { signal, headers: { Accept: 'application/json' } })
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') throw err
+    throw new NetworkError(err)
+  }
+  if (!res.ok) throw new ApiError(res.status, await detailOf(res))
+  return (await res.json()) as T
+}
+
+export async function post<T>(path: string, body: unknown, signal?: AbortSignal): Promise<T> {
+  let res: Response
+  try {
+    res = await fetch(buildUrl(path), {
+      method: 'POST',
+      signal,
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') throw err
     throw new NetworkError(err)

@@ -73,7 +73,10 @@ def test_sem_periodo_no_nome(arquivo):
     (COMUNICADO, NON_PERIODIC),
     ("Fato Relevante - Acordo.pdf", NON_PERIODIC),
     ("ITR 3T25 Petrobras.pdf", ReportType.ITR),
-    (PETRO, None),                                   # o nome não diz o tipo
+    (PETRO, ReportType.EARNINGS_RELEASE),            # 'Desempenho Financeiro' é o release da Petrobras
+    ("Desempenho da Vale no 1T26.pdf", ReportType.EARNINGS_RELEASE),
+    ("Relatório da Administração 1T26 itausa.pdf", ReportType.RELATORIO_ADMINISTRACAO),
+    ("relatorio_da_administracao_3t26_pt itausa.pdf", ReportType.RELATORIO_ADMINISTRACAO),
     (DEMONSTR, None),
 ])
 def test_tipo_do_nome_do_arquivo(arquivo, tipo):
@@ -109,10 +112,9 @@ def test_cemig_press_release_tudo_pelo_nome_do_arquivo():
     assert i.inferred == ()
 
 
-def test_petrobras_desempenho_tipo_vem_do_conteudo():
-    r = _result(rtype=ReportType.EARNINGS_RELEASE)
-    i = identify(r, PETRO, TICKER_MAP)
-    assert i.ok and i.sources["report_type"] == "content" and i.sources["period"] == "filename"
+def test_petrobras_desempenho_tipo_vem_do_nome():
+    i = identify(_result(), PETRO, TICKER_MAP)
+    assert i.ok and i.sources["report_type"] == "filename" and i.sources["period"] == "filename"
     assert (i.company.name, i.period) == ("Petrobras", "3T25")
 
 
@@ -236,12 +238,21 @@ def test_alias_igual_a_um_nome_do_mapa_nao_o_sobrescreve():
 
 # --- prioridade e conflitos -----------------------------------------------------
 
-def test_conteudo_vence_nome_do_arquivo_e_o_conflito_e_logado():
+def test_periodo_explicito_no_nome_vence_a_capa_e_o_conflito_e_logado():
     r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
                 period="3T25")
     i = identify(r, "Release 2T25.pdf", TICKER_MAP)
-    assert i.period == "3T25" and i.sources["period"] == "content"
-    assert any("conflito de período" in w and "2T25" in w for w in i.warnings)
+    assert i.period == "2T25" and i.sources["period"] == "filename"
+    assert any("conflito de período" in w and "content=3T25" in w for w in i.warnings)
+
+
+def test_periodo_inferido_de_data_perde_para_a_capa():
+    """Data no nome é só a publicação (chute); o período da capa é do próprio relatório."""
+    r = _result(name="Ambev S.A.", method="razao_social", rtype=ReportType.EARNINGS_RELEASE,
+                period="2T26")
+    i = identify(r, "Release 2026-11-05.pdf", TICKER_MAP)
+    assert i.period == "2T26" and i.sources["period"] == "content" and i.inferred == ()
+    assert any("conflito de período" in w and "(inferido)" in w for w in i.warnings)
 
 
 def test_tipo_explicito_no_nome_vence_o_conteudo_e_o_conflito_e_logado():
@@ -398,3 +409,41 @@ def test_apply_identification_recusa_identificacao_incompleta():
     r = _result()
     with pytest.raises(ValueError):
         apply_identification(r, identify(r, EARN, TICKER_MAP))
+
+
+# --- nome do arquivo com lixo: a informação existe, só precisa ser achada ----------------
+
+MAPA_FUZZY = {**TICKER_MAP, "CXSE3": "Caixa Seguridade", "ITSA4": "Itaúsa", "VALE3": "Vale",
+              "KLBN11": "Klabin S/A", "KLBN4": "Klabin"}
+
+
+@pytest.mark.parametrize("arquivo, nome", [
+    ("bb-seguridade-2026-03-31-CrHpbBDJ.pdf", "BB Seguridade"),   # código do portal em volta
+    ("BB_Seguridade_release_xYz123.pdf", "BB Seguridade"),
+    ("Release de Resultados 1T26pomo.pdf", "Marcopolo"),          # ticker (raiz) colado no período
+    ("release_3t26pomo.pdf", "Marcopolo"),
+    ("Release Itausa 3T25.pdf", "Itaúsa"),                         # sem acento
+    ("Release Petrobas 3T25.pdf", "Petrobras"),                    # erro de grafia
+    ("Release Klabin 3T25.pdf", "Klabin"),
+])
+def test_nome_no_arquivo_tolera_lixo_colagem_e_grafia(arquivo, nome):
+    assert name_from_filename(arquivo, MAPA_FUZZY) == nome
+
+
+@pytest.mark.parametrize("arquivo", [
+    "Release Seguridade 3T25.pdf",       # BB Seguridade x Caixa Seguridade: ambíguo => nenhum
+    "Release xpto 3T25.pdf",             # nada no mapa
+    "Release de Resultados 3T25.pdf",
+])
+def test_nome_ambiguo_ou_ausente_nunca_chuta(arquivo):
+    assert name_from_filename(arquivo, MAPA_FUZZY) is None
+
+
+@pytest.mark.parametrize("arquivo, periodo", [
+    ("Release de Resultados 1T26pomo.pdf", "1T26"),
+    ("pomo1T26.pdf", "1T26"),
+    ("vale_ifrs_3q26_por_1.pdf", "3T26"),      # trimestre em inglês
+    ("Earnings 2Q25.pdf", "2T25"),
+])
+def test_periodo_colado_e_trimestre_em_ingles(arquivo, periodo):
+    assert period_from_filename(arquivo).value == periodo

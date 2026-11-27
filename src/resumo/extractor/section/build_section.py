@@ -7,7 +7,7 @@ from collections import Counter
 from pathlib import Path
 
 
-from resumo.extractor.section.detect_region_text import LineRegion, TableRegion
+from resumo.extractor.section.detect_region_text import LineRegion, TableRegion, title_matcher
 from resumo.extractor.title.title_candidate_filter import TitleCandidate
 
 
@@ -51,7 +51,7 @@ def build_sections(
         regions: List[LineRegion | TableRegion],
         candidates: List[TitleCandidate]) -> List[DocumentSection]:
     
-    title_set = {c.text.strip() for c in candidates}
+    eh_titulo = title_matcher(candidates)
     sections, current = [], None
 
     for region in regions:
@@ -61,7 +61,7 @@ def build_sections(
             continue
 
         first_line    = region.lines[0].text.strip() if region.lines else ""
-        is_title      = first_line in title_set
+        is_title      = bool(first_line) and eh_titulo(first_line, region.page)
         title_changed = is_title and first_line != (current.title if current else None)
 
         if title_changed:
@@ -143,6 +143,7 @@ REPORT_TYPE_KEYWORDS = {
     "release de resultados": "Earnings Release",
     "divulgação de resultados": "Earnings Release",
     "earnings release": "Earnings Release",
+    "análise do desempenho": "Earnings Release",      # BB Seguridade
     "formulário de referência": "Formulário de Referência",
     "itr": "ITR",
     "dfp": "DFP",
@@ -318,17 +319,39 @@ def extract_company_name(
     return None, "none"
 
 
+_PERIODO_EXTENSO = re.compile(r"(?<!\d)([1-4])\s*[ºo°]?\s*trimestre\s+de\s+(20\d{2})", re.IGNORECASE)
+
+
+def _period_key(p: str) -> tuple:
+    """Ordem cronológica de '3T25' (ano, trimestre); o que não é trimestre vem antes."""
+    m = re.fullmatch(r"([1-4])T(\d{2})", p)
+    return (int(m.group(2)), int(m.group(1))) if m else (-1, 0)
+
+
 def extract_period(text: str) -> Optional[str]:
-    m = PERIOD_PATTERN.search(text)
-    return m.group(1).upper() if m else None
+    """Período do relatório = o mais citado no texto da capa/última página (o próprio
+    período aparece no título, no cabeçalho e nos números; o do ano anterior só como
+    comparação). Empate: o mais recente. Antes valia o PRIMEIRO achado, e um
+    "1T25" de comparação ganhou do "2T26" do relatório. Aceita "1º trimestre de 2026"."""
+    achados = [m.group(1).upper() for m in PERIOD_PATTERN.finditer(text)]
+    achados += [f"{m.group(1)}T{m.group(2)[2:]}" for m in _PERIODO_EXTENSO.finditer(text)]
+    if not achados:
+        return None
+    contagem = Counter(achados)
+    return max(contagem, key=lambda p: (contagem[p], _period_key(p)))
 
 def extract_report_type(text: str) -> Optional[str]:
+    """Tipo pela palavra-chave que aparece PRIMEIRO no texto. A capa vem antes do rodapé
+    legal: um release da Cemig citava "Formulário de Referência" no aviso final e era
+    classificado por ele, porque a escolha seguia a ordem do dicionário, não a do texto."""
     lowered = text.lower()
+    melhor: Optional[tuple[int, str]] = None
     for termo, label in REPORT_TYPE_KEYWORDS.items():
         # Palavra inteira: 'itr' não pode casar dentro de 'arbitragem' ou 'vitrine'.
-        if re.search(rf"(?<!\w){re.escape(termo)}(?!\w)", lowered):
-            return label
-    return None
+        m = re.search(rf"(?<!\w){re.escape(termo)}(?!\w)", lowered)
+        if m and (melhor is None or m.start() < melhor[0]):
+            melhor = (m.start(), label)
+    return melhor[1] if melhor else None
 
 
 # --- Lógica de corte, extraída de serialize_for_llm para reuso ---
@@ -411,7 +434,7 @@ def build_document_payload(
     metadata = {
         "company_name": company_name,
         "company_name_method": company_method,
-        "period": extract_period(combined),
+        "period": extract_period(f"{cover_text}\n{source_title}"),   # só a capa: o resto traz períodos de comparação
         "report_type": extract_report_type(combined),
     }
 

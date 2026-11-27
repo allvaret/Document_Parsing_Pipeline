@@ -76,3 +76,37 @@ def test_banco_antigo_sem_coluna_nova_falha_cedo_e_diz_qual(tmp_path):
         assert exc.value.missing == ["report.extractor_version"]
     finally:
         engine.dispose()
+
+
+# --- B3: batch não cria tabelas fora do Alembic em Postgres --------------------
+
+def test_init_db_recusa_banco_que_nao_e_sqlite():
+    from sqlalchemy import create_engine
+    engine = create_engine("postgresql+psycopg://u:p@localhost:1/x")  # não conecta
+    with pytest.raises(ValueError, match="alembic"):
+        init_db(engine)
+
+
+def test_prepare_schema_sem_tabelas_em_nao_sqlite_pede_migracao(monkeypatch):
+    from sqlalchemy import create_engine
+    from db.errors import SchemaNotMigratedError
+    from db.session import prepare_schema
+
+    engine = create_engine("sqlite://")
+    # Finge outro dialeto: o inspector continua sendo o do SQLite vazio.
+    monkeypatch.setattr(engine.dialect, "name", "postgresql")
+    with pytest.raises(SchemaNotMigratedError, match="alembic upgrade head"):
+        prepare_schema(engine)
+    assert inspect_tables(engine) == []  # nada foi criado
+
+
+def test_prepare_schema_em_sqlite_cria_tabelas():
+    from db.session import prepare_schema
+    engine = make_engine("sqlite://")
+    prepare_schema(engine)
+    assert "report" in inspect_tables(engine)
+
+
+def inspect_tables(engine):
+    from sqlalchemy import inspect
+    return inspect(engine).get_table_names()

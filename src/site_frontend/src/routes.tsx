@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { CompanyPage } from './pages/CompanyPage'
 import { ReportPage } from './pages/ReportPage'
+import { CalculatorPage } from './pages/CalculatorPage'
 
 // Exportadas à parte para os testes montarem com `createMemoryRouter`.
 export const routes: RouteObject[] = [
@@ -13,6 +14,7 @@ export const routes: RouteObject[] = [
       { path: '/', element: <HomePage /> },
       { path: '/empresas/:id', element: <CompanyPage /> },
       { path: '/relatorios/:id', element: <ReportPage /> },
+      { path: '/calculadora', element: <CalculatorPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

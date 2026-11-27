@@ -8,6 +8,7 @@ Fase 3 faz uma transação por PDF, com rollback em caso de erro).
 from __future__ import annotations
 
 import re
+from datetime import datetime, timezone
 
 from sqlalchemy import delete, or_, select
 from sqlalchemy.exc import IntegrityError
@@ -18,6 +19,7 @@ from db.errors import (
     IncompleteResultError,
     InvalidCnpjError,
     ReportIdentityMismatchError,
+    ReportNotFoundError,
     StorageConstraintError,
 )
 from db.models import Asset, Company, Keypoint, Report, Summary
@@ -118,6 +120,58 @@ def find_report_by_hash(session: Session, file_hash: str) -> Report | None:
     return session.scalar(select(Report).where(Report.file_hash == file_hash))
 
 
+# --- revisão humana (reviewed_at) --------------------------------------------
+
+def get_report(session: Session, report_id: int) -> Report:
+    """Lança ReportNotFoundError se o id não existe."""
+    report = session.get(Report, report_id)
+    if report is None:
+        raise ReportNotFoundError(report_id)
+    return report
+
+
+def find_reports(
+    session: Session,
+    *,
+    ticker: str | None = None,
+    period: str | None = None,
+    reviewed: bool | None = None,
+) -> list[Report]:
+    """Relatórios para a revisão, por empresa e período. `reviewed`: True = só os
+    revisados, False = só os pendentes, None = todos. Não faz commit."""
+    stmt = select(Report).join(Company).order_by(Company.name, Report.period, Report.id)
+    if ticker is not None:
+        stmt = stmt.where(
+            Report.company_id.in_(select(Asset.company_id).where(Asset.ticker == ticker))
+        )
+    if period is not None:
+        stmt = stmt.where(Report.period == period)
+    if reviewed is True:
+        stmt = stmt.where(Report.reviewed_at.is_not(None))
+    elif reviewed is False:
+        stmt = stmt.where(Report.reviewed_at.is_(None))
+    return list(session.scalars(stmt))
+
+
+def mark_reviewed(
+    session: Session, report_id: int, *, now: datetime | None = None
+) -> Report:
+    """Marca o relatório como revisado. Idempotente: se já estava, mantém o
+    `reviewed_at` original. Não faz commit. Lança ReportNotFoundError."""
+    report = get_report(session, report_id)
+    if report.reviewed_at is None:
+        report.reviewed_at = now or datetime.now(timezone.utc)
+    return report
+
+
+def unmark_reviewed(session: Session, report_id: int) -> Report:
+    """Tira a marca de revisado (volta a pendente). Não faz commit.
+    Lança ReportNotFoundError."""
+    report = get_report(session, report_id)
+    report.reviewed_at = None
+    return report
+
+
 def has_summary(
     session: Session, report_id: int, method: str, model: str, prompt_version: str
 ) -> bool:
@@ -178,6 +232,8 @@ def save_result(
     - Hash novo, chave existente (reapresentação): troca o hash e apaga todos
       os summaries antigos DESSE report.
     Keypoints e `extractor_version` são sempre substituídos (DELETE + INSERT).
+    `reviewed_at` (revisão humana) volta a None se o PDF mudou ou se os keypoints
+    novos diferem dos antigos; keypoints idênticos mantêm a revisão.
 
     Summaries:
     - O heurístico acompanha os keypoints: ao gravar um heurístico, os de outra
@@ -233,8 +289,23 @@ def _save_result(session: Session, result: ReportResult, replace_summaries: bool
             report.file_name = info.file_name
             report.file_hash = info.file_hash
             report.page_count = info.page_count
+            report.reviewed_at = None  # PDF novo: a revisão antiga não vale mais
     report.extractor_version = info.extractor_version
     session.flush()
+
+    novos = {
+        (k.metric, k.value_text, k.value_numeric, k.variation_text, k.period, k.page)
+        for k in result.keypoints
+    }
+    antigos = set(session.execute(
+        select(Keypoint.metric, Keypoint.value_text, Keypoint.value_numeric,
+               Keypoint.variation_text, Keypoint.period, Keypoint.page)
+        .where(Keypoint.report_id == report.id)
+    ).tuples().all())
+    if antigos != novos:
+        # Números diferentes dos que foram revisados: a revisão cai. Se forem
+        # idênticos (ex.: só o resumo LLM foi regerado), a revisão se mantém.
+        report.reviewed_at = None
 
     session.execute(delete(Keypoint).where(Keypoint.report_id == report.id))
     session.add_all(

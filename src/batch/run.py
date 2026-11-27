@@ -41,7 +41,7 @@ from batch.identify import (
     validate_overrides,
 )
 from batch.verify import content_text
-from db.errors import ReportIdentityMismatchError, SchemaOutdatedError
+from db.errors import ReportIdentityMismatchError, SchemaNotMigratedError, SchemaOutdatedError
 from db.repository import (
     find_company,
     find_report,
@@ -54,9 +54,9 @@ from db.session import (
     describe_url,
     ensure_schema_current,
     get_database_url,
-    init_db,
     make_engine,
     make_session_factory,
+    prepare_schema,
 )
 from resumo.LLM.provider import LLMProvider
 from resumo.LLM.summarize_pipeline import SummaryMode
@@ -414,7 +414,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--ticker", default=None, help="Ticker para o lote inteiro, ex.: PETR3")
     p.add_argument("--type", dest="report_type", type=ReportType,
                    choices=[ReportType.ITR, ReportType.DFP, ReportType.EARNINGS_RELEASE,
-                            ReportType.FORMULARIO_REFERENCIA],
+                            ReportType.FORMULARIO_REFERENCIA, ReportType.RELATORIO_ADMINISTRACAO],
                    default=None, help="Tipo para o lote inteiro")
     p.add_argument("--period", default=None, help="Período para o lote inteiro, ex.: 3T25")
     p.add_argument("--max-pages", type=int, default=MAX_PAGES,
@@ -484,10 +484,10 @@ def main(argv: list[str] | None = None, *, process: Optional[Process] = None) ->
 
     engine = make_engine(url)
     try:
-        init_db(engine)
         try:
+            prepare_schema(engine)
             ensure_schema_current(engine)
-        except SchemaOutdatedError as e:
+        except (SchemaNotMigratedError, SchemaOutdatedError) as e:
             return _fail(str(e))
         try:
             with BatchLock(args.log_dir / LOCK_NAME):

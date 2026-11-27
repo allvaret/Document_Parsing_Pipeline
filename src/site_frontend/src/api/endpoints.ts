@@ -1,5 +1,7 @@
-import { get } from './client'
-import type { Company, CompanyPage, ReportCard, ReportDetail, ReportItem } from './types'
+import { get, post } from './client'
+import type {
+  Company, CompanyPage, MethodInfo, ReportCard, ReportDetail, ReportItem, CeilingResult,
+} from './types'
 
 // O site navega por id (acha também empresa sem ticker). Só GET.
 
@@ -29,3 +31,9 @@ export const latestReports = (limit = 8, signal?: AbortSignal) =>
 
 export const getReport = (id: number | string, signal?: AbortSignal) =>
   get<ReportDetail>(`/relatorios/${encodeURIComponent(String(id))}`, undefined, signal)
+
+// Calculadora: o formulário é gerado do catálogo da API; o cálculo é uma conta sem estado.
+export const listMethods = (signal?: AbortSignal) => get<MethodInfo[]>('/calcular/metodos', undefined, signal)
+
+export const calculate = (method: string, premises: Record<string, number>, signal?: AbortSignal) =>
+  post<CeilingResult>(`/calcular/${encodeURIComponent(method)}`, premises, signal)

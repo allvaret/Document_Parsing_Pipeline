@@ -110,17 +110,17 @@ def test_curinga_literal_acha_so_nome_feito_de_pontuacao(file_session):
     # normalize_name mantém o texto quando o nome não tem nenhum alfanumérico.
     seed_company(file_session, "%")
     seed_company(file_session, "Outra")
-    assert _nomes(search_companies(file_session, "%", 20, 0)) == ["%"]     # não casa "Outra"
-    assert search_companies(file_session, "_", 20, 0) == ([], 0)
+    assert _nomes(search_companies(file_session, "%", 20, 0, only_reviewed=False)) == ["%"]     # não casa "Outra"
+    assert search_companies(file_session, "_", 20, 0, only_reviewed=False) == ([], 0)
 
 
 def test_paginacao_total_e_ordem_estavel(file_session):
     for i in range(5):
         seed_company(file_session, f"Empresa {i}")
-    p1, total = search_companies(file_session, None, 2, 0)
-    p2, _ = search_companies(file_session, None, 2, 2)
-    p3, _ = search_companies(file_session, None, 2, 4)
-    p4, _ = search_companies(file_session, None, 2, 99)
+    p1, total = search_companies(file_session, None, 2, 0, only_reviewed=False)
+    p2, _ = search_companies(file_session, None, 2, 2, only_reviewed=False)
+    p3, _ = search_companies(file_session, None, 2, 4, only_reviewed=False)
+    p4, _ = search_companies(file_session, None, 2, 99, only_reviewed=False)
     assert total == 5
     assert [c.name for c in p1 + p2 + p3] == [f"Empresa {i}" for i in range(5)]
     assert p4 == []
@@ -205,3 +205,43 @@ def test_detalhe_com_payload_nao_quebra(file_session):
     seed_report(file_session)
     assert get_report_detail(file_session, 0) is None
     assert get_report_detail(file_session, -1) is None
+
+
+
+# --- filtro reviewed_at -------------------------------------------------------
+
+def test_relatorio_nao_revisado_nao_aparece_na_listagem(file_session):
+    s = file_session
+    seed_report(s, "Cemig", "CMIG4", "3T25", reviewed=True)
+    seed_report(s, "Cemig", "CMIG4", "1T26", reviewed=False)
+    c = get_company_by_ticker(s, "CMIG4")
+    assert [r.period for r in list_reports(s, c.id)] == ["3T25"]
+
+
+def test_empresa_so_com_nao_revisado_nao_aparece_na_busca(file_session):
+    s = file_session
+    seed_report(s, "Cemig", "CMIG4", "3T25", reviewed=True)
+    seed_report(s, "Gerdau", "GGBR4", "3T25", reviewed=False)
+    comp, total = search_companies(s, None, 20, 0)
+    assert total == 1
+    assert [c.name for c in comp] == ["Cemig"]
+
+
+def test_detalhe_de_relatorio_nao_revisado_retorna_none(file_session):
+    r = seed_report(file_session, reviewed=False)
+    assert get_report_detail(file_session, r.id) is None
+
+
+def test_detalhe_de_relatorio_revisado_retorna_dados(file_session):
+    r = seed_report(file_session, reviewed=True)
+    d = get_report_detail(file_session, r.id)
+    assert d is not None and d.report.id == r.id
+
+
+def test_only_reviewed_false_mostra_tudo(file_session):
+    s = file_session
+    seed_report(s, "Cemig", "CMIG4", "3T25", reviewed=True)
+    seed_report(s, "Gerdau", "GGBR4", "3T25", reviewed=False)
+    comp, total = search_companies(s, None, 20, 0, only_reviewed=False)
+    assert total == 2
+    assert sorted(c.name for c in comp) == ["Cemig", "Gerdau"]

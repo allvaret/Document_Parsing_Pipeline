@@ -1,18 +1,15 @@
 """GET /relatorios?limit= (home: últimos relatórios). Só leitura, limite fixo, entrada hostil."""
 
-import hashlib
-from pathlib import Path
+from datetime import datetime
 
 import pytest
 from sqlalchemy import update
 
-from api_helpers import seed_report, seed_ticker
+from api_helpers import seed_report, seed_ticker, banco_sha
 from db.models import Report
 from test_sql_injection import PAYLOADS
 
 
-def banco_sha(temp_db) -> str:
-    return hashlib.sha256(Path(temp_db.engine.url.database).read_bytes()).hexdigest()
 
 
 @pytest.fixture
@@ -26,7 +23,7 @@ def seeded(temp_db):
         seed_ticker(s, "Petrobras", "PETR3")
         # created/parsed_at tem resolução de segundo: fixa datas distintas e fora da ordem de id.
         for rid, dia in zip(ids, ("2026-11-03", "2026-11-01", "2026-11-02")):
-            s.execute(update(Report).where(Report.id == rid).values(parsed_at=f"{dia} 10:00:00"))
+            s.execute(update(Report).where(Report.id == rid).values(parsed_at=datetime.fromisoformat(f"{dia}T10:00:00+00:00")))
         s.commit()
     return temp_db
 

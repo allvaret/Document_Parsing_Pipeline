@@ -8,12 +8,15 @@ tests/test_orm_parity.py garante que os dois não divergem.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlalchemy import (
     CheckConstraint,
+    DateTime,
     ForeignKey,
     Index,
+    TypeDecorator,
     UniqueConstraint,
     event,
     func,
@@ -23,6 +26,29 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from db.normalize import normalize_name
 
 _NOW = func.current_timestamp()
+
+
+class UTCDateTime(TypeDecorator):
+    """Data e hora sempre em UTC e com fuso, em qualquer banco.
+
+    Postgres guarda `TIMESTAMP WITH TIME ZONE` e devolve datas com fuso. SQLite não
+    tem tipo de data: guarda texto e devolve datas SEM fuso. Sem esta camada, o mesmo
+    código leria `datetime` diferentes em cada banco (e a API serializaria "...Z" em um
+    e sem "Z" no outro). Aqui, o que sai do banco é sempre UTC com fuso; o que entra
+    precisa ter fuso (data sem fuso é erro de quem chamou, não chute de fuso local)."""
+
+    impl = DateTime(timezone=True)
+    cache_ok = True
+
+    def process_bind_param(self, value, dialect):
+        if value is not None and value.tzinfo is None:
+            raise ValueError("data sem fuso: use datetime.now(timezone.utc) ou similar.")
+        return value.astimezone(timezone.utc) if value is not None else None
+
+    def process_result_value(self, value, dialect):
+        if value is not None and value.tzinfo is None:  # SQLite: o texto já está em UTC
+            return value.replace(tzinfo=timezone.utc)
+        return value
 
 
 class Base(DeclarativeBase):
@@ -42,7 +68,7 @@ class Company(Base):
     cnpj: Mapped[Optional[str]] = mapped_column(unique=True)
     cvm_code: Mapped[Optional[str]] = mapped_column(unique=True)
     kind: Mapped[str] = mapped_column(server_default="ACAO")
-    created_at: Mapped[str] = mapped_column(server_default=_NOW)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, server_default=_NOW)
 
     assets: Mapped[list[Asset]] = relationship(
         back_populates="company", cascade="all, delete-orphan", passive_deletes=True
@@ -78,7 +104,7 @@ class Report(Base):
     __table_args__ = (
         CheckConstraint(
             "report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE', "
-            "'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'OUTRO')",
+            "'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'RELATORIO_ADMINISTRACAO', 'OUTRO')",
             name="ck_report_type",
         ),
         CheckConstraint("length(file_hash) = 64", name="ck_report_hash_len"),
@@ -95,7 +121,9 @@ class Report(Base):
     source_url: Mapped[Optional[str]]
     page_count: Mapped[int]
     extractor_version: Mapped[str] = mapped_column(server_default="")
-    parsed_at: Mapped[str] = mapped_column(server_default=_NOW)
+    parsed_at: Mapped[datetime] = mapped_column(UTCDateTime, server_default=_NOW)
+    # Revisão humana dos keypoints; None = não revisado (ver schema.sql).
+    reviewed_at: Mapped[Optional[datetime]] = mapped_column(UTCDateTime)
 
     company: Mapped[Company] = relationship(back_populates="reports")
     summaries: Mapped[list[Summary]] = relationship(
@@ -124,7 +152,7 @@ class Summary(Base):
     prompt_version: Mapped[str]
     content: Mapped[str]
     content_format: Mapped[str]
-    created_at: Mapped[str] = mapped_column(server_default=_NOW)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, server_default=_NOW)
 
     report: Mapped[Report] = relationship(back_populates="summaries")
 

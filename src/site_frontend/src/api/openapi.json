@@ -1,6 +1,66 @@
 {
   "components": {
     "schemas": {
+      "CampoInfo": {
+        "properties": {
+          "ajuda": {
+            "title": "Ajuda",
+            "type": "string"
+          },
+          "exemplo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exemplo"
+          },
+          "nome": {
+            "title": "Nome",
+            "type": "string"
+          },
+          "obrigatorio": {
+            "title": "Obrigatorio",
+            "type": "boolean"
+          },
+          "padrao": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Padrao"
+          },
+          "rotulo": {
+            "title": "Rotulo",
+            "type": "string"
+          },
+          "unidade": {
+            "enum": [
+              "moeda",
+              "percentual",
+              "numero"
+            ],
+            "title": "Unidade",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nome",
+          "rotulo",
+          "unidade",
+          "ajuda",
+          "obrigatorio"
+        ],
+        "title": "CampoInfo",
+        "type": "object"
+      },
       "CompanyOut": {
         "properties": {
           "cnpj": {
@@ -375,6 +435,50 @@
         "title": "KeypointOut",
         "type": "object"
       },
+      "MetodoInfo": {
+        "properties": {
+          "aplicacao": {
+            "enum": [
+              "acao",
+              "fii"
+            ],
+            "title": "Aplicacao",
+            "type": "string"
+          },
+          "campos": {
+            "items": {
+              "$ref": "#/components/schemas/CampoInfo"
+            },
+            "title": "Campos",
+            "type": "array"
+          },
+          "descricao": {
+            "title": "Descricao",
+            "type": "string"
+          },
+          "formula": {
+            "title": "Formula",
+            "type": "string"
+          },
+          "metodo": {
+            "$ref": "#/components/schemas/MetodoPreco"
+          },
+          "nome": {
+            "title": "Nome",
+            "type": "string"
+          }
+        },
+        "required": [
+          "metodo",
+          "nome",
+          "aplicacao",
+          "descricao",
+          "formula",
+          "campos"
+        ],
+        "title": "MetodoInfo",
+        "type": "object"
+      },
       "MetodoPreco": {
         "enum": [
           "graham_number",
@@ -410,6 +514,7 @@
             "type": "integer"
           },
           "parsed_at": {
+            "format": "date-time",
             "title": "Parsed At",
             "type": "string"
           },
@@ -503,6 +608,7 @@
             "type": "integer"
           },
           "parsed_at": {
+            "format": "date-time",
             "title": "Parsed At",
             "type": "string"
           },
@@ -594,6 +700,7 @@
             "title": "Content Markdown"
           },
           "created_at": {
+            "format": "date-time",
             "title": "Created At",
             "type": "string"
           },
@@ -672,6 +779,29 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/calcular/metodos": {
+      "get": {
+        "description": "Métodos de cálculo e os campos de cada um (o formulário do site é gerado daqui).",
+        "operationId": "metodos_calcular_metodos_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MetodoInfo"
+                  },
+                  "title": "Response Metodos Calcular Metodos Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Metodos"
+      }
+    },
     "/calcular/{metodo}": {
       "post": {
         "description": "Calcula preço teto com base em um modelo e suas premissas",
@@ -691,7 +821,9 @@
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
+                "additionalProperties": {
+                  "type": "number"
+                },
                 "title": "Premissas",
                 "type": "object"
               }

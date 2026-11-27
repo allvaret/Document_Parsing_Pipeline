@@ -1,9 +1,10 @@
 -- =====================================================================
 -- Schema dos relatórios — v1
 --
--- Dialeto: SQLite (dev local e testes). Na Fase 2 os modelos SQLAlchemy
--- espelham este arquivo e geram o equivalente em Postgres para o deploy
--- (INTEGER PRIMARY KEY -> IDENTITY, TEXT -> VARCHAR/TEXT, etc.).
+-- Dialeto: SQLite (dev local e testes). Os modelos SQLAlchemy espelham este
+-- arquivo; o Postgres (deploy) é criado pela migração do Alembic (migrations/),
+-- que parte dos mesmos modelos: DATETIME aqui vira TIMESTAMP WITH TIME ZONE lá.
+-- As datas são sempre UTC (db.models.UTCDateTime).
 --
 -- SQLite só aplica FOREIGN KEY com:  PRAGMA foreign_keys = ON;
 --
@@ -30,7 +31,7 @@ CREATE TABLE IF NOT EXISTS company (
     cvm_code      TEXT    UNIQUE,                 -- código CVM (dados abertos)
     kind          TEXT    NOT NULL DEFAULT 'ACAO'
                   CHECK (kind IN ('ACAO', 'FII')),
-    created_at    TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS asset (
@@ -48,7 +49,7 @@ CREATE TABLE IF NOT EXISTS report (
                   REFERENCES company (id) ON DELETE CASCADE,
     report_type   TEXT    NOT NULL
                   CHECK (report_type IN ('ITR', 'DFP', 'EARNINGS_RELEASE',
-                                         'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'OUTRO')),
+                                         'FATO_RELEVANTE', 'FORMULARIO_REFERENCIA', 'RELATORIO_ADMINISTRACAO', 'OUTRO')),
     period        TEXT    NOT NULL,               -- trimestre em que fecha: 1T26..4T26 (9M25 = 3T25; 1S26 = 2T26)
     file_name     TEXT    NOT NULL,
     file_hash     TEXT    NOT NULL UNIQUE         -- SHA-256 do PDF: o mesmo arquivo nunca entra 2x
@@ -58,7 +59,11 @@ CREATE TABLE IF NOT EXISTS report (
     -- Versão da heurística que gerou os keypoints (HEURISTIC_VERSION).
     -- '' = desconhecida: qualquer versão atual força a regeração.
     extractor_version TEXT NOT NULL DEFAULT '',
-    parsed_at    TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    parsed_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- Revisão humana dos keypoints (python -m batch.review). NULL = não revisado.
+    -- Volta a NULL se os keypoints mudarem ou o PDF for reapresentado: a revisão
+    -- vale para aqueles números, não para o relatório "em geral".
+    reviewed_at  DATETIME,
     -- Chave de negócio: um relatório por empresa/tipo/período.
     -- Reapresentação (mesmo período, PDF novo) = hash novo na MESMA linha:
     -- o batch atualiza file_hash e regera summary/keypoint.
@@ -74,7 +79,7 @@ CREATE TABLE IF NOT EXISTS summary (
     prompt_version TEXT    NOT NULL,             -- 'prompt-v1' | 'heuristic-v1'
     content        TEXT    NOT NULL CHECK (length(content) > 0),
     content_format TEXT    NOT NULL CHECK (content_format IN ('json', 'markdown')),
-    created_at     TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     -- "Gerar uma única vez": se esta combinação existe, o batch pula.
     -- Mudou o prompt? Sobe prompt_version e só então gera de novo.
     UNIQUE (report_id, method, model, prompt_version)

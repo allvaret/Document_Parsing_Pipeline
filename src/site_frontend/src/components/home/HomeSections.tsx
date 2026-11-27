@@ -15,9 +15,11 @@ function OnPaper({ children }: { children: React.ReactNode }) {
 
 const cardClass = 'flex items-center gap-4 rounded-sm bg-paper px-4 py-3 text-ink hover:bg-paper-deep'
 
+const LATEST_LIMIT = 3 // só os 3 mais recentes na home
+
 /** Cada seção busca e falha sozinha: erro nos últimos relatórios não derruba a grade. */
 export function LatestReports() {
-  const { state, reload } = useAsync((signal) => latestReports(8, signal), [])
+  const { state, reload } = useAsync((signal) => latestReports(LATEST_LIMIT, signal), [])
   return (
     <section aria-labelledby="ultimos-titulo">
       <h2 id="ultimos-titulo" className="section-title">{t('home.latestTitle')}</h2>

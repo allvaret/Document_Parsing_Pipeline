@@ -25,15 +25,15 @@ class PremissasGrahamFormula(BaseModel):
     lpa: float = Field(..., gt=0, examples=[5.0, 1.69], description="ex: 5.0")
     growth: float = Field(..., ge=0, le=1, examples=[0.3], description="ex: 0.30 (30%)")
     yield_base: float = Field(..., ge=0, examples=[0.055], description="ex: 0.055 (5,5%)")
-    yield_atual: float = Field(..., ge=0, examples=[0.0783], description="ex: 0.0783 (7,83%)")
+    yield_atual: float = Field(..., gt=0, examples=[0.0783], description="ex: 0.0783 (7,83%)")
 
 class PremissasBazin(BaseModel):
     dpa: float = Field(..., gt=0, examples=[1.36, 2.2], description="ex: (R$) 1.1")
-    dy_minimo: float = Field(default=0.06, examples=[0.08, 0.1], description="ex: 0.08 (8%)")
+    dy_minimo: float = Field(default=0.06, gt=0, examples=[0.08, 0.1], description="ex: 0.08 (8%)")
 
 class PremissasGordon(BaseModel):
     dpa: float = Field(..., gt=0, examples=[1.36, 2.2], description="ex: (R$)1.1")
-    retorno: float = Field(..., examples=[0.08, 0.1], description="ex: 0.08 (8%)")
+    retorno: float = Field(..., gt=0, examples=[0.08, 0.1], description="ex: 0.08 (8%)")
     growth: float = Field(..., ge=0, le=1, examples=[0.05], description="ex: 0.05 (5%)")
 
     @model_validator(mode="after")
@@ -48,6 +48,13 @@ class PremissasFiiNtnb(BaseModel):
     dpa: float = Field(..., gt=0, examples=[1.36, 2.2], description="dividendo anual por cota, ex: (R$)1.1")
     retorno: float = Field(..., ge=0, examples=[0.02], description="prêmio sobre a NTN-B, ex: 0.02 (2%)")
     ntnb: float = Field(..., ge=0, le=1, examples=[0.065], description="ex: 0.065 (6,5%)")
+
+    @model_validator(mode="after")
+    def yield_exigido_positivo(self):
+        # Preço = dpa / (ntnb + retorno): com os dois em zero seria divisão por zero (HTTP 500).
+        if self.ntnb + self.retorno <= 0:
+            raise ValueError("ntnb + retorno deve ser maior que zero")
+        return self
 
 class ResultadoCalculo(BaseModel):
     preco_teto: float
