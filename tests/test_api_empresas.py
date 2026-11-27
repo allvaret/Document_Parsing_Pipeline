@@ -28,8 +28,8 @@ def test_lista_paginada_com_envelope_e_tickers(api_client, seeded):
     r = api_client.get("/empresas")
     assert r.status_code == 200
     body = r.json()
-    assert (body["total"], body["limit"], body["offset"]) == (4, 20, 0)
-    assert [c["name"] for c in body["items"]] == ["Cemig", "Gerdau S.A.", "Petrobras", "Sem Relatorio"]
+    assert (body["total"], body["limit"], body["offset"]) == (3, 20, 0)
+    assert [c["name"] for c in body["items"]] == ["Cemig", "Gerdau S.A.", "Petrobras"]
     petro = body["items"][2]
     assert petro["tickers"] == ["PETR3", "PETR4"] and petro["kind"] == "ACAO"
     assert set(petro) == {"id", "name", "kind", "cnpj", "tickers"}   # sem campo vazado do ORM
@@ -48,10 +48,10 @@ def test_busca_sem_resultado_e_200_vazio(api_client, seeded):
 
 
 def test_paginacao(api_client, seeded):
-    p1 = api_client.get("/empresas", params={"limit": 3, "offset": 0}).json()
-    p2 = api_client.get("/empresas", params={"limit": 3, "offset": 3}).json()
-    assert (p1["total"], len(p1["items"]), len(p2["items"])) == (4, 3, 1)
-    assert p2["items"][0]["name"] == "Sem Relatorio" and p2["offset"] == 3
+    p1 = api_client.get("/empresas", params={"limit": 2, "offset": 0}).json()
+    p2 = api_client.get("/empresas", params={"limit": 2, "offset": 2}).json()
+    assert (p1["total"], len(p1["items"]), len(p2["items"])) == (3, 2, 1)
+    assert p2["items"][0]["name"] == "Petrobras" and p2["offset"] == 2
     assert api_client.get("/empresas", params={"offset": 1000}).json()["items"] == []
 
 
@@ -73,10 +73,10 @@ def test_q_hostil_e_tratado_como_dado(api_client, seeded, payload):
     r = api_client.get("/empresas", params={"q": payload})
     assert r.status_code == 200
     body = r.json()
-    assert body["total"] < 4 and len(body["items"]) == body["total"]   # não casou tudo
+    assert body["total"] < 3 and len(body["items"]) == body["total"]   # não casou tudo
     assert banco_sha(seeded) == antes
     # nada sumiu
-    assert api_client.get("/empresas").json()["total"] == 4
+    assert api_client.get("/empresas").json()["total"] == 3
 
 
 @pytest.mark.parametrize("q", ["%", "_", "\\", "%%%", "_____"])
@@ -103,9 +103,9 @@ def test_ticker_inexistente_404_com_mensagem(api_client, seeded):
     assert r.json() == {"detail": "Ticker 'VALE3' não encontrado."}
 
 
-def test_empresa_sem_relatorio_existe(api_client, seeded):
+def test_empresa_sem_relatorio_revisado_fica_invisivel(api_client, seeded):
     r = api_client.get("/empresas/SEMR3")
-    assert r.status_code == 200 and r.json()["name"] == "Sem Relatorio"
+    assert r.status_code == 404
 
 
 @pytest.mark.parametrize("payload", PAYLOADS + TICKER_PAYLOADS)
@@ -115,7 +115,7 @@ def test_ticker_hostil_na_url_da_404_sem_tocar_no_banco(api_client, seeded, payl
     assert r.status_code == 404
     assert len(r.json()["detail"]) < 60                # eco truncado
     assert banco_sha(seeded) == antes
-    assert api_client.get("/empresas").json()["total"] == 4
+    assert api_client.get("/empresas").json()["total"] == 3
 
 
 def test_ticker_gigante_da_404_com_eco_curto(api_client, seeded):
@@ -169,9 +169,9 @@ def test_relatorios_sao_da_empresa_nao_do_ticker(api_client, seeded):
     assert a == b and len(a) == 1
 
 
-def test_empresa_sem_relatorio_devolve_lista_vazia(api_client, seeded):
+def test_empresa_sem_relatorio_revisado_404_nos_relatorios(api_client, seeded):
     r = api_client.get("/empresas/SEMR3/relatorios")
-    assert r.status_code == 200 and r.json() == []
+    assert r.status_code == 404
 
 
 def test_relatorios_de_ticker_inexistente_404(api_client, seeded):
@@ -228,10 +228,9 @@ def test_id_e_ticker_dao_o_mesmo_resultado(api_client, sem_ticker):
             == api_client.get(f"/empresas/id/{cemig['id']}/relatorios").json())
 
 
-def test_id_de_empresa_sem_relatorio_da_lista_vazia(api_client, seeded):
-    sem = _id_de(api_client, "sem relatorio")
-    r = api_client.get(f"/empresas/id/{sem['id']}/relatorios")
-    assert r.status_code == 200 and r.json() == []
+def test_id_de_empresa_sem_relatorio_nao_aparece_na_busca(api_client, seeded):
+    r = api_client.get("/empresas", params={"q": "sem relatorio"})
+    assert r.json()["total"] == 0 and r.json()["items"] == []
 
 
 @pytest.mark.parametrize("sufixo", ["", "/relatorios"])

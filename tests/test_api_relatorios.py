@@ -150,3 +150,19 @@ def test_contrato_acompanha_o_summarizer():
 def test_conteudo_de_exemplo_do_helper_segue_o_contrato():
     assert HeuristicSummary.model_validate(HEURISTIC_CONTENT).model_dump() == HEURISTIC_CONTENT
     assert json.loads(heuristic().content) == HEURISTIC_CONTENT
+
+
+# --- filtro reviewed_at --------------------------------------------------------
+
+def test_relatorio_nao_revisado_da_404_no_detalhe(api_client, temp_db):
+    with temp_db.factory() as s:
+        rid = seed_report(s, "Cemig", "CMIG4", "3T25", reviewed=False).id
+    assert api_client.get(f"/relatorios/{rid}").status_code == 404
+
+
+def test_relatorio_nao_revisado_fica_fora_de_latest_e_da_lista(api_client, temp_db):
+    with temp_db.factory() as s:
+        seed_report(s, "Cemig", "CMIG4", "3T25", reviewed=True)
+        seed_report(s, "Cemig", "CMIG4", "1T26", reviewed=False)
+    assert [r["period"] for r in api_client.get("/empresas/CMIG4/relatorios").json()] == ["3T25"]
+    assert [r["period"] for r in api_client.get("/relatorios").json()] == ["3T25"]

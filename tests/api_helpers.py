@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from datetime import datetime, timezone
 
 import pytest
 
@@ -52,6 +53,7 @@ def heuristic(content=None):
 def seed_report(
     session, name="Cemig", ticker="CMIG4", period="3T25",
     report_type=ReportType.EARNINGS_RELEASE, cnpj=None, keypoints=None, summaries=None,
+    reviewed=True,
 ):
     """Grava e commita um relatório; devolve o `Report`."""
     h = hashlib.sha256(f"{name}|{period}|{report_type.value}".encode()).hexdigest()
@@ -63,6 +65,8 @@ def seed_report(
         summaries=tuple(summaries) if summaries is not None else (heuristic(),),
     )
     report = save_result(session, result)
+    if reviewed:
+        report.reviewed_at = datetime(2026, 11, 25, 12, 0, 0, tzinfo=timezone.utc)
     session.commit()
     return report
 

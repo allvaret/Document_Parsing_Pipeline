@@ -52,7 +52,8 @@ def _company_query() -> Select:
 
 
 def search_companies(
-    session: Session, q: str | None, limit: int, offset: int
+    session: Session, q: str | None, limit: int, offset: int,
+    *, only_reviewed: bool = True,
 ) -> tuple[list[Company], int]:
     """Empresas cujo nome normalizado CONTÉM `q` ou cujo ticker COMEÇA com `q`.
     Sem `q` (ou só espaços), lista todas. Devolve (página, total).
@@ -62,6 +63,13 @@ def search_companies(
     stmt = _company_query()
     total_stmt = select(func.count()).select_from(Company)
     order = [Company.name_normalized, Company.id]
+
+    if only_reviewed:
+        has_reviewed = exists().where(
+            Report.company_id == Company.id, Report.reviewed_at.is_not(None),
+        )
+        stmt = stmt.where(has_reviewed)
+        total_stmt = total_stmt.where(has_reviewed)
 
     term = normalize_name(q) if q and q.strip() else None
     if term:
@@ -89,27 +97,38 @@ def search_companies(
     return list(companies), total
 
 
-def get_company_by_ticker(session: Session, ticker: str) -> Company | None:
+def get_company_by_ticker(session: Session, ticker: str, *, only_reviewed: bool = True) -> Company | None:
     """Empresa dona do ticker (case-insensitive). Ticker mal formado -> None."""
     normalized = normalize_ticker(ticker)
     if normalized is None:
         return None
-    return session.scalar(
-        _company_query().join(Asset).where(Asset.ticker == normalized)
-    )
+    stmt = _company_query().join(Asset).where(Asset.ticker == normalized)
+    if only_reviewed:
+        stmt = stmt.where(exists().where(
+            Report.company_id == Company.id, Report.reviewed_at.is_not(None),
+        ))
+    return session.scalar(stmt)
 
 
-def get_company_by_id(session: Session, company_id: int) -> Company | None:
+def get_company_by_id(session: Session, company_id: int, *, only_reviewed: bool = True) -> Company | None:
     """Empresa pelo id (o que a busca devolve). É a chave que alcança também as empresas
     sem ticker (achadas só por nome/CNPJ)."""
-    return session.scalar(_company_query().where(Company.id == company_id))
+    stmt = _company_query().where(Company.id == company_id)
+    if only_reviewed:
+        stmt = stmt.where(exists().where(
+            Report.company_id == Company.id, Report.reviewed_at.is_not(None),
+        ))
+    return session.scalar(stmt)
 
 
 # --- relatórios -------------------------------------------------------------
 
-def list_reports(session: Session, company_id: int) -> list[Report]:
+def list_reports(session: Session, company_id: int, *, only_reviewed: bool = True) -> list[Report]:
     """Relatórios da empresa, do período mais recente ao mais antigo."""
-    reports = session.scalars(select(Report).where(Report.company_id == company_id)).all()
+    stmt = select(Report).where(Report.company_id == company_id)
+    if only_reviewed:
+        stmt = stmt.where(Report.reviewed_at.is_not(None))
+    reports = session.scalars(stmt).all()
     return sorted(
         reports, key=lambda r: (period_sort_key(r.period), r.report_type, r.id)
     )
@@ -118,14 +137,17 @@ def list_reports(session: Session, company_id: int) -> list[Report]:
 MAX_LATEST = 20
 
 
-def latest_reports(session: Session, limit: int) -> list[Report]:
+def latest_reports(session: Session, limit: int, *, only_reviewed: bool = True) -> list[Report]:
     """Os últimos relatórios GRAVADOS (`parsed_at`, desempate por id), de qualquer empresa.
     É 'o que entrou por último', não o período mais recente: ordenar por período exigiria
     ler todas as linhas (o período é texto; ver `period_sort_key`). `limit` é cortado em
     1..MAX_LATEST aqui também, e não só na rota."""
     limit = max(1, min(limit, MAX_LATEST))
+    stmt = select(Report)
+    if only_reviewed:
+        stmt = stmt.where(Report.reviewed_at.is_not(None))
     stmt = (
-        select(Report)
+        stmt
         .order_by(Report.parsed_at.desc(), Report.id.desc())
         .limit(limit)
         .options(selectinload(Report.company).selectinload(Company.assets))
@@ -141,13 +163,15 @@ class ReportDetail:
     summaries: list[Summary]    # no máximo um por método: o mais recente
 
 
-def get_report_detail(session: Session, report_id: int) -> ReportDetail | None:
+def get_report_detail(session: Session, report_id: int, *, only_reviewed: bool = True) -> ReportDetail | None:
     report = session.scalar(
         select(Report)
         .where(Report.id == report_id)
         .options(selectinload(Report.company).selectinload(Company.assets))
     )
     if report is None:
+        return None
+    if only_reviewed and report.reviewed_at is None:
         return None
 
     keypoints = session.scalars(
