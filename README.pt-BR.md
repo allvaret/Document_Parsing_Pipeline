@@ -15,7 +15,7 @@ uma **heurística determinística** extrai os indicadores e um **LLM local** opc
 narrativa. Todo relatório passa por revisão humana antes de ser publicado por uma **API somente
 leitura** e um site React.
 
-**Site:** <SITE_URL>
+**Site:** [document-parsing-pipeline.pages.dev](https://document-parsing-pipeline.pages.dev/)
 
 ![Screenshot](docs/screenshot.png)
 
