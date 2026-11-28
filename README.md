@@ -15,7 +15,7 @@ parser rebuilds sections and tables, a **deterministic heuristic** extracts the 
 indicators, and an optional **local LLM** writes only the narrative. A person reviews every
 report before a **read-only API** and a React site publish it.
 
-**Live site:** <SITE_URL>
+**Live site:** [document-parsing-pipeline.pages.dev](https://document-parsing-pipeline.pages.dev/)
 
 ![Screenshot](docs/screenshot.png)
 
